@@ -1,0 +1,77 @@
+.home-section {
+    position: relative;
+    /* background: #E4E9F7; */
+    min-height: 100vh;
+    left: 260px;
+    top: 73px;
+    margin-top: 28px;
+    width: calc(100% - 260px);
+    transition: all 0.5s ease;
+}
+
+.sidebar.close~.home-section {
+    left: 87px;
+    width: calc(100% - 100px);
+    top: 73px;
+}
+
+.home-section .home-content {
+    /* height: 60px; */
+    display: flex;
+    align-items: center;
+}
+
+.home-section .home-content .bx-menu,
+.home-section .home-content .text {
+    color: #11101d;
+    font-size: 35px;
+}
+
+.home-section .home-content .bx-menu {
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.home-section .home-content .text {
+    font-size: 26px;
+    font-weight: 600;
+}
+.css-1elwnq4-MuiPaper-root-MuiAccordion-root.Mui-expanded{
+    margin-top: 0px !important;   
+}
+.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded{
+    min-height: 48px !important;
+}
+.css-15v22id-MuiAccordionDetails-root{
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    margin-top: -3px !important;
+}
+.Client_table_narrow__wqgFp{
+    vertical-align: top !important;
+    padding-top: 12px !important;
+}
+.css-6hp17o-MuiList-root-MuiMenu-list{
+    padding-top: 0px !important;
+}
+.css-ahj2mt-MuiTypography-root{
+    line-height: 1 !important;
+}
+@media(max-width: 767px){
+    .home-section {
+        min-height: 80vh;
+        left: 0px;
+        top: 130px;
+        margin-top: 28px;
+        width: 100vw;
+    }
+    .css-6qfsqn-MuiTableCell-root{
+        padding-right: 30px !important;
+    }
+    .sidebar.close~.home-section {
+        left: 0px;
+        width: 100vw;
+        top: 130px;
+    }
+}
