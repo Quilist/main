@@ -30,7 +30,7 @@ export default function StorehouseEditModal({ open, setOpenEditModal, id }) {
   const api = new API()
 
   React.useEffect(() => {
-    api.getStorehouse(id).then(data => {
+    api.find(id, 'storehouse').then(data => {
       if (data.status === "error") alert(data.message)
       else setItem(data.message); setName(data.message.name);
     })
@@ -41,7 +41,7 @@ export default function StorehouseEditModal({ open, setOpenEditModal, id }) {
     const body = item;
     body.name = name;
 
-    api.editStorehouse(id, body).then(data => {
+    api.deit(id, body, 'storehouse').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -49,7 +49,7 @@ export default function StorehouseEditModal({ open, setOpenEditModal, id }) {
   }
   
   const handleDelete = () => {
-    api.removeStorehouse(id).then(data => {
+    api.remove(id, 'storehouse').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })

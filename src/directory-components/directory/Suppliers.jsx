@@ -240,7 +240,7 @@ export default function Suppliers() {
    const [rows, setRows] = React.useState([])
    const api = new API()
    React.useEffect(() => {
-      api.getSuppliers().then(data => {
+      api.all('suppliers').then(data => {
          if (data.status === "error") alert(data.message)
          else setRows(data.message)
       })

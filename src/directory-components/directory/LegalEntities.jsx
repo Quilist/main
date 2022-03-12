@@ -213,7 +213,7 @@ export default function LegalEntities() {
    const [rows, setRows] = React.useState([])
    const api = new API()
    React.useEffect(() => {
-      api.getLegalEntites().then(data => {
+      api.all('legal_entites').then(data => {
          if (data.status === "error") alert(data.message)
          else setRows(data.message)
       })

@@ -26,7 +26,7 @@ function BankDetailEdit() {
 
   const api = new API();
   React.useEffect(() => {
-    api.getBankDetail(id).then(data => {
+    api.find(id, 'banks_details').then(data => {
       const res = data.message
       setData(res)
       setName(res.bank_name)
@@ -47,7 +47,7 @@ function BankDetailEdit() {
 
   const handleRemove = () => {
     setTimeout(() => {
-      api.removeBankDetail(id).then(data => {
+      api.remove(id, 'banks_details').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -62,7 +62,7 @@ function BankDetailEdit() {
       checking_account: checkingAccount
     };
 
-    api.editBankDetail(id, body).then(data => {
+    api.edit(id, body, 'banks_details').then(data => {
       if (data.status === "error") return alert(data.message)
       setIsSuccess(null)
       setIsRedirect(true)

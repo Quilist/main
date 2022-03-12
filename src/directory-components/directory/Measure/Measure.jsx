@@ -35,7 +35,7 @@ export default function Measure() {
   const api = new API()
   React.useEffect(() => {
     if(!openEditModal && !open) {
-      api.getMeasureList().then(data => {
+      api.all('measure').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
       })

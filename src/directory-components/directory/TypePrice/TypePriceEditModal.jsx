@@ -30,7 +30,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
   const api = new API()
 
   React.useEffect(() => {
-    api.getTypePrice(id).then(data => {
+    api.find(id, 'type_price').then(data => {
       if (data.status === "error") alert(data.message)
       else setItem(data.message); setName(data.message.name);
     })
@@ -41,7 +41,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
     const body = item;
     body.name = name;
 
-    api.editTypePrice(id, body).then(data => {
+    api.edit(id, body, 'type_price').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -49,7 +49,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
   }
   
   const handleDelete = () => {
-    api.removeTypePrice(id).then(data => {
+    api.remove(id, 'type_price').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })

@@ -31,7 +31,7 @@ export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }
   const api = new API()
 
   React.useEffect(() => {
-    api.getCurrency(currencyId).then(data => {
+    api.find(currencyId, 'currencies').then(data => {
       if (data.status === "error") alert(data.message)
       else setCurrentCurrency(data.message); setExchangeRate(data.message.exchange_rate);
     })
@@ -42,7 +42,7 @@ export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }
     const body = currentCurrency;
     body.exchange_rate = exchangeRate;
 
-    api.editCurrency(currencyId, body).then(data => {
+    api.edit(currencyId, body, 'currencies').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -50,7 +50,7 @@ export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }
   }
   
   const handleDelete = () => {
-    api.removeCurrency(currencyId).then(data => {
+    api.remove(currencyId, 'currencies').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })

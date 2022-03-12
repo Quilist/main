@@ -35,7 +35,7 @@ export default function TypePrice() {
   const api = new API()
   React.useEffect(() => {
     if(!openEditModal && !open) {
-      api.getTypePriceList().then(data => {
+      api.all('type_price').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
       })

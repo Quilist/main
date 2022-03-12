@@ -35,7 +35,7 @@ export default function Expenditure() {
   const api = new API()
   React.useEffect(() => {
     if(!openEditModal && !open) {
-      api.getExpenditureList().then(data => {
+      api.all('expenditure').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
       })

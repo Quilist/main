@@ -31,7 +31,7 @@ export default function MeasureModal({ open, setOpen }) {
       name: name
     }
 
-    api.addMeasure(body).then(data => {
+    api.add(body, 'measure').then(data => {
       if (data.status === "error") return alert(data.message)
       setName('');
       setOpen(false);

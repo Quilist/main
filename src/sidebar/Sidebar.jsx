@@ -60,14 +60,14 @@ export default function Sidebar() {
     }
   }
 
-  if (!document.cookie.length) {
-    window.location.href = '/registration'
-  }
+  // if (!document.cookie.length) {
+  //   window.location.href = '/registration'
+  // }
 
-  let decodeToken = Buffer.from(document.cookie.split("token=")[1], 'base64').toString('ascii');
+  //let decodeToken = Buffer.from(document.cookie.split("token=")[1], 'base64').toString('ascii');
 
-  try { decodeToken = JSON.parse(decodeToken.substring(0, decodeToken.length - decodeToken.slice(decodeToken.indexOf("}") + 1).length)); }
-  catch (e) { logout() }
+  // try { decodeToken = JSON.parse(decodeToken.substring(0, decodeToken.length - decodeToken.slice(decodeToken.indexOf("}") + 1).length)); }
+  // catch (e) { logout() }
 
 
   return (
@@ -287,12 +287,12 @@ export default function Sidebar() {
                       {/* <Typography textAlign="center">Выйти</Typography> */}
                     </MenuItem>
                   </Menu>
-                  <span className="link_name" style={{ wordBreak: 'break-word' }}>{`${decodeToken.email}`}</span>
+                  {/*<span className="link_name" style={{ wordBreak: 'break-word' }}>{`${decodeToken.email}`}</span>*/}
                   {/* <span className="link_name" style={{wordBreak: 'break-word'}}>example@mail.ru</span> */}
                 </Link>
                 <ul className="sub-menu blank">
                   <li style={{ padding: '6px 0' }}>
-                    <span className="link_mail">{`${decodeToken.email}`}</span>
+                    {/*<span className="link_mail">{`${decodeToken.email}`}</span>*/}
                     {/* <span className="link_mail">example@mail.ru</span> */}
                   </li>
                 </ul>

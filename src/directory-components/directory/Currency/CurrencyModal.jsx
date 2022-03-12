@@ -44,7 +44,7 @@ export default function CurrencyModal({ open, setOpen }) {
       exchange_rate: exchangeRate
     }
 
-    api.addCurrency(body).then(data => {
+    api.add(body, 'currencies').then(data => {
       if (data.status === "error") return alert(data.message)
       setFromRepresent(null);
       setToRepresent(null);

@@ -30,7 +30,7 @@ export default function MeasureEditModal({ open, setOpenEditModal, id }) {
   const api = new API()
 
   React.useEffect(() => {
-    api.getMeasure(id).then(data => {
+    api.find(id, 'measure').then(data => {
       if (data.status === "error") alert(data.message)
       else setItem(data.message); setName(data.message.name);
     })
@@ -41,7 +41,7 @@ export default function MeasureEditModal({ open, setOpenEditModal, id }) {
     const body = item;
     body.name = name;
 
-    api.editMeasure(id, body).then(data => {
+    api.edit(id, body, 'measure').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -49,7 +49,7 @@ export default function MeasureEditModal({ open, setOpenEditModal, id }) {
   }
   
   const handleDelete = () => {
-    api.removeMeasure(id).then(data => {
+    api.remove(id, 'measure').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })

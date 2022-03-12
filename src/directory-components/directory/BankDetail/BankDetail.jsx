@@ -248,7 +248,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([])
   const api = new API()
   React.useEffect(() => {
-    api.getBankDetailList().then(data => {
+    api.all('banks_details').then(data => {
       if (data.status === "error") alert(data.message)
       else setRows(data.message)
     })

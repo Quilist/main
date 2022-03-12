@@ -35,7 +35,7 @@ export default function Storehouse() {
   const api = new API()
   React.useEffect(() => {
     if(!openEditModal && !open) {
-      api.getStorehouseList().then(data => {
+      api.all('storehouse').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
       })
