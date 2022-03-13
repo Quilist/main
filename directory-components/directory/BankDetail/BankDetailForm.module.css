@@ -1,0 +1,116 @@
+.buttonsWrapper{
+  width: 100%;
+  border: 1px solid #1976D2;
+  border-radius: 8px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.button:first-child{
+  margin-right: 15px;
+}
+.boxesWrapper{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  text-align: center;
+}
+.boxesWrapper__user{
+  border: 1px solid #1976D2;
+  border-radius: 8px;
+  padding: 10px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.boxesWrapper__information{
+  padding: 10px 20px;
+  border: 1px solid #1976D2;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.standard-multiline-flexible{
+  margin-bottom: 10px;
+}
+.success{
+  margin: 0 auto;
+  margin-bottom: 20px;
+  color: rgb(40, 189, 40);
+  font-size: 18px;
+}
+.menu_arrow{
+  padding: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+.menu_arrow:hover{
+  background: none !important;
+}
+
+@media(max-width: 470px){
+  .buttonsWrapper{
+    display: flex;
+    flex-direction: column;
+  }
+  .button:first-child{
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .button:last-child{
+    margin: 0;
+  }
+  .button{
+    width: 45vw;
+  }
+  .main_btns{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-bottom: 15px;
+  }
+  /* .buttonsWrapper{
+    flex-direction: column;
+  }
+  .button{
+    width: 45vw;
+  }
+  .button:first-child{
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+  .main_btns{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 15px;
+  } */
+}
+@media(max-width: 767px){
+  body{
+    overflow-x:hidden;
+  }
+  .boxesWrapper{
+    max-width: 85vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .buttonsWrapper{
+    max-width: 85vw;
+    margin: 0 auto;
+    margin-bottom: 14px;
+  }
+  .boxesWrapper__user{
+    margin-bottom: 30px;
+    margin-right: 0;
+  }
+}
