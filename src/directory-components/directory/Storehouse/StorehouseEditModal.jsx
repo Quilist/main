@@ -41,7 +41,7 @@ export default function StorehouseEditModal({ open, setOpenEditModal, id }) {
     const body = item;
     body.name = name;
 
-    api.deit(id, body, 'storehouse').then(data => {
+    api.edit(id, body, 'storehouse').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })

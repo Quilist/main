@@ -31,7 +31,7 @@ export default function StorehouseModal({ open, setOpen }) {
       name: name
     }
 
-    api.addStorehouse(body).then(data => {
+    api.add(body, 'storehouse').then(data => {
       if (data.status === "error") return alert(data.message)
       setName('');
       setOpen(false);

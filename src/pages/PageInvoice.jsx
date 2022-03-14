@@ -12,4 +12,5 @@ const PageInvoice = () => {
     </DocumentTitle>
   );
 };
+
 export default PageInvoice;

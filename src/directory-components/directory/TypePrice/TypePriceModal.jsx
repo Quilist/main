@@ -31,7 +31,7 @@ export default function TypePriceModal({ open, setOpen }) {
       name: name
     }
 
-    api.addTypePrice(body).then(data => {
+    api.add(body, 'typePrice').then(data => {
       if (data.status === "error") return alert(data.message)
       setName('');
       setOpen(false);
