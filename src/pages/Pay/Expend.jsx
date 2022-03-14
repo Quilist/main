@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../sidebar/Sidebar";
-import AllMoves from '../allMoves/AllMoves';
+import Sidebar from "@/sidebar/Sidebar";
+import AllMoves from '@/allMoves/AllMoves';
 
 
 const PageAllMoves = () => {

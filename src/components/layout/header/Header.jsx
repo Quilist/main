@@ -29,24 +29,13 @@ const payOptions = [
   { name: 'Клиенту(возврат)', link: '/pay_customer'},
   { name: 'Прочий расход', link: '/expend'},
   { name: 'Зарплата', link: '/salary'},
-  { name: 'Собственнику', link: '/pay_owner'}
-];
-
-const receiveOptions = [
-  { name: 'От клиента', link: '/receive_customer'},
-  { name: 'От поставщика', link: '/receive_supplier'},
-  { name: 'Прочее поступление', link: '/receive_income'},
-  { name: 'Взнос от собственника', link: '/receive_owner'},
-  { name: 'Ввод остатков', link: '/receive_balance'}
+  { name: 'Собственнику', link: '/pay_owner'},
 ];
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
-  const [openReceive, setOpenReceive] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const anchorReceiveRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -63,23 +52,6 @@ const Header = () => {
     }
 
     setOpen(false);
-  };
-
-  const handleMenuItemClickReceive = (event, index) => {
-    setSelectedReceiveIndex(index);
-    setOpenReceive(false);
-  };
-
-  const handleToggleReceive = () => {
-    setOpenReceive((prevOpen) => !prevOpen);
-  };
-
-  const handleCloseReceive = (event) => {
-    if (anchorReceiveRef.current && anchorReceiveRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpenReceive(false);
   };
 
   return (
@@ -158,47 +130,12 @@ const Header = () => {
                 </Popper>
               </div>
             </Link>
-            <Link to='#'>
+            <Link to='/accept'>
               <div className={styles.wrapper}>
-                <IconButton onClick={handleToggleReceive} className={styles.nav__button} style={{ background: '#fff', height: '47px', width: '47px' }} sx={{ p: 0 }}>
-                  <img className={styles.nav__img} src={PayImg} alt="" />
+                <IconButton className={styles.nav__button} style={{ background: '#fff', height: '47px', width: '47px' }} sx={{ p: 0 }}>
+                  <img className={styles.nav__img} src={AcceptImg} alt="" />
                 </IconButton>
-                <span onClick={handleToggleReceive} className={styles.wrapper__text}>Принять</span>
-                <ButtonGroup variant="contained" ref={anchorReceiveRef} aria-label="split button">
-                </ButtonGroup>
-                <Popper
-                  open={openReceive}
-                  anchorEl={anchorReceiveRef.current}
-                  role={undefined}
-                  transition
-                  disablePortal
-                >
-                  {({ TransitionProps, placement }) => (
-                    <Grow
-                      {...TransitionProps}
-                      style={{
-                        transformOrigin:
-                          placement === 'bottom' ? 'center top' : 'center bottom',
-                      }}
-                    >
-                      <Paper>
-                        <ClickAwayListener onClickAway={handleCloseReceive}>
-                          <MenuList id="split-button-menu">
-                            {receiveOptions.map((option, index) => (
-                              <MenuItem
-                                key={option.name}
-                                selected={index === selectedReceiveIndex}
-                                onClick={(event) => handleMenuItemClickReceive(event, index)}
-                              >
-                                <Link to={option.link} style={{ color: 'black' }}>{option.name}</Link>
-                              </MenuItem>
-                            ))}
-                          </MenuList>
-                        </ClickAwayListener>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
+                <span className={styles.wrapper__text}>Принять</span>
               </div>
             </Link>
             <Link to='/retrieve' className={styles.nav__wide}> 

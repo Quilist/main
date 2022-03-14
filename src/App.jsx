@@ -59,7 +59,7 @@ import PageEmployeesEditing from './pages/directory/PageEmployeesEditing';
 
 import PageСurrencies from './pages/directory/PageСurrencies'
 
-import Pay from "./pay/Pay";
+import Pay from "./pages/Pay/Pay";
 
 
 import PageInvoice from './pages/PageInvoice';
@@ -153,6 +153,12 @@ function App() {
               <Route path="/expend" element={<Pay />} />
               <Route path="/salary" element={<Pay />} />
               <Route path="/pay_owner" element={<Pay />} />
+
+              <Route path="/receive_customer" element={<Pay />} />
+              <Route path="/receive_supplier" element={<Pay />} />
+              <Route path="/receive_income" element={<Pay />} />
+              <Route path="/receive_owner" element={<Pay />} />
+              <Route path="/receive_balance" element={<Pay />} />
 
               {/* Справочник  */}
               <Route path="/cash_accounts" element={<PageСashAndAccounts />} />

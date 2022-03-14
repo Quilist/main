@@ -16,7 +16,7 @@ import FormLabel from '@mui/material/FormLabel';
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 
-import styles from "./Pay.module.css";
+import styles from './../css/PayForm.module.css'
 
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -24,9 +24,20 @@ import DatePicker from '@mui/lab/DatePicker';
 
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-function UserForm({ name, setName, mfo, setMfo, checkingAccount, setCheckingAccount }) {
+function UserForm({ item, setItem }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
-  const pageTypes = { pay_supplier: 'Поставщик', pay_customer: 'Клиенту(возврат)', expend: 'Прочий расход', salary: 'Зарплата', pay_owner: 'Собственнику' }
+  const pageTypes = {
+    pay_supplier: 'Поставщик',
+    pay_customer: 'Клиенту(возврат)',
+    expend: 'Прочий расход',
+    salary: 'Зарплата',
+    pay_owner: 'Собственнику',
+    receive_customer: 'От клиента',
+    receive_supplier: 'От поставщика',
+    receive_income: 'Прочее поступление',
+    receive_owner: 'Взнос от собственника',
+    receive_balance: 'Ввод остатков',
+  }
   const [payType, setPayType] = React.useState('cash');
   const [paymentList, setPaymentList] = React.useState([{ currency: null, value: null}]);
   const [changeList, setChangeList] = React.useState([{ currency: null, value: null}]);
@@ -45,27 +56,41 @@ function UserForm({ name, setName, mfo, setMfo, checkingAccount, setCheckingAcco
     setChangeList([...changeList, { currency: null, value: null}]);
   }
 
+  const removePayment = (index) => {
+    setPaymentList(paymentList.filter((o, i) => index !== i));
+  };
+
   const removeChange = (index) => {
     setChangeList(changeList.filter((o, i) => index !== i));
   };
 
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setItem(prevItem => ({
+      ...prevItem,
+      [name]: value
+    }));
+  };
+
   return (
     <>
-      <div className={styles.boxesWrapper}>
-        <h5>Кому</h5>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">{pageTypes[currentPathName]}</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={name}
-            label="Поставщик"
-          >
-            <MenuItem >Нету данных</MenuItem>
-          </Select>
-        </FormControl>
+      <div className={styles.boxesWrapper__user}>
+        {currentPathName !== 'receive_balance' && <div>
+          <h3>Кому</h3>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">{pageTypes[currentPathName]}</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={item.supplier}
+              label="Поставщик"
+            >
+              <MenuItem >Нету данных</MenuItem>
+            </Select>
+          </FormControl>
+        </div>}
 
-        <h5>Откуда</h5>
+        <h3 style={{ marginBottom: '15px', marginTop: '15px' }}>Откуда</h3>
         <FormControl >
           <FormLabel id="demo-row-radio-buttons-group-label">Вид оплаты</FormLabel>
           <RadioGroup
@@ -84,8 +109,9 @@ function UserForm({ name, setName, mfo, setMfo, checkingAccount, setCheckingAcco
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={name}
+            value={item.supplier2}
             label="Поставщик"
+            sx={{ marginBottom: '15px' }}
           >
             <MenuItem >Нету данных</MenuItem>
           </Select>
@@ -94,24 +120,40 @@ function UserForm({ name, setName, mfo, setMfo, checkingAccount, setCheckingAcco
         <LocalizationProvider dateAdapter={DateAdapter}>
           <DatePicker
             label="Дата"
+            value={item.date}
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
 
-        <TextareaAutosize
-          aria-label="minimum height"
-          minRows={4}
-          placeholder="Заметки"
-          style={{ width: 200 }}
+        <TextField
+          sx={{marginBottom: '15px'}}
+          label="Заметки:"
+          type="text"
+          variant="standard"
+          value={item.note}
+          name="note"
+          onChange={handleChange}
         />
+
       </div>
 
-      <div className={styles.boxesWrapper__information}>
+      <div className={styles.boxesWrapper__information} >
         {payType == 'bank_account' &&
           <div>
             <TextField
               sx={{ marginBottom: '15px' }} id="standard-multiline-flexible" label="Сумма:" multiline   variant="standard"
             />
+            <h3>Печать</h3>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Организация</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Организация"
+              >
+                <MenuItem >Нету данных</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         }
         {payType == 'cash' &&
@@ -136,13 +178,11 @@ function UserForm({ name, setName, mfo, setMfo, checkingAccount, setCheckingAcco
                   type="number"
                   variant="standard"
                 />
+                <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePayment(i)}>X</button>
               </div>)
             })}
-            <div className={styles.buttonsWrapper}>
-              <div>
-                <Button onClick={addPayment}  className={styles.button}  variant="outlined">+ Добавить валюту</Button>
-              </div>
-            </div>
+            <Button onClick={addPayment}  className={styles.button}  variant="outlined">+ Добавить валюту</Button>
+            <br/>
 
             {changeList.map((c, i) => {
               return (<div key={i}>
@@ -160,33 +200,27 @@ function UserForm({ name, setName, mfo, setMfo, checkingAccount, setCheckingAcco
                 </FormControl>
                 <TextField
                   sx={{marginBottom: '15px'}}
-                  label="Оплата:"
+                  label="Сдача:"
                   type="number"
                   variant="standard"
                 />
-                <p onClick={() => removeChange(i)}>Удалить</p>
+                <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removeChange(i)}>X</button>
               </div>)
             })}
-            <div className={styles.buttonsWrapper}>
-              <div>
-                <Button onClick={addChange}  className={styles.button}  variant="outlined">+ Добавить валюту</Button>
-              </div>
-            </div>
+            <Button onClick={addChange}  className={styles.button}  variant="outlined">+ Добавить валюту</Button>
+            <h3>Печать</h3>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Организация</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Организация"
+              >
+                <MenuItem >Нету данных</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         }
-
-        <h5>Печать</h5>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Организация</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={name}
-            label="Организация"
-          >
-            <MenuItem >Нету данных</MenuItem>
-          </Select>
-        </FormControl>
 
       </div>
     </>
