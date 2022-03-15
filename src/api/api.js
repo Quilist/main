@@ -11,19 +11,19 @@ class API {
             clients: '/clients',
             employees: '/employees',
             suppliers: '/suppliers',
-            legal_entites: '/legal_entites',
+            legalEntites: '/legal_entites',
             currencies: '/currencies',
             storehouse: '/storehouse',
             measure: '/measure',
             expenditure: '/expenditure',
-            income_items: '/income_items',
-            type_price: '/type_price',
-            banks_details: '/banks_details',
-            pay_supplier: '/pay_supplier',
-            pay_customer: '/pay_customer',
+            incomeItems: '/income_items',
+            typePrice: '/type_price',
+            banksDetails: '/banks_details',
+            paySupplier: '/pay_supplier',
+            payCustomer: '/pay_customer',
             expend: '/expend',
             salary: '/salary',
-            pay_owner: '/pay_owner'
+            payOwner: '/pay_owner'
         }
 
         return types[type];
