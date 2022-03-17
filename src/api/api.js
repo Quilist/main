@@ -8,22 +8,22 @@ class API {
 
     endpoints(type) {
         const types = {
-            clients: '/clients',
-            employees: '/employees',
-            suppliers: '/suppliers',
-            legal_entites: '/legal_entites',
-            currencies: '/currencies',
+            client: '/clients',
+            employee: '/employees',
+            supplier: '/suppliers',
+            legalEntity: '/legal_entites',
+            currency: '/currencies',
             storehouse: '/storehouse',
             measure: '/measure',
             expenditure: '/expenditure',
-            income_items: '/income_items',
-            type_price: '/type_price',
-            banks_details: '/banks_details',
-            pay_supplier: '/pay_supplier',
-            pay_customer: '/pay_customer',
+            incomeItem: '/income_items',
+            typePrice: '/type_price',
+            bankDetail: '/banks_details',
+            paySupplier: '/pay_supplier',
+            payCustomer: '/pay_customer',
             expend: '/expend',
             salary: '/salary',
-            pay_owner: '/pay_owner'
+            payOwner: '/pay_owner'
         }
 
         return types[type];

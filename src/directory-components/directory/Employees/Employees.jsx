@@ -25,7 +25,7 @@ export default function Employees() {
   const [rows, setRows] = React.useState([]);
   const api = new API()
   React.useEffect(() => {
-     api.all('employees').then(data => {
+     api.all('employee').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
      })

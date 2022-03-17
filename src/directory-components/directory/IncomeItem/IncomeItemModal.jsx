@@ -31,7 +31,7 @@ export default function IncomeItemModal({ open, setOpen }) {
       name: name
     }
 
-    api.addIncomeItem(body).then(data => {
+    api.add(body, 'incomeItem').then(data => {
       if (data.status === "error") return alert(data.message)
       setName('');
       setOpen(false);

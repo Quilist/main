@@ -35,7 +35,7 @@ export default function IncomeItem() {
   const api = new API()
   React.useEffect(() => {
     if(!openEditModal && !open) {
-      api.all('incomeItems').then(data => {
+      api.all('incomeItem').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
       })

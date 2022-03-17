@@ -24,7 +24,7 @@ function UserEditing() {
   const api = new API();
   React.useEffect(() => {
     if (!isAdd) {
-      api.getClient(userId).then(data => {
+      api.find(userId, 'client').then(data => {
         setCurrentUser(data.message)
       })
     }
@@ -92,7 +92,7 @@ function UserEditing() {
         notes
       }
 
-      api.addClient(body).then(data => {
+      api.add(body, 'client').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -103,7 +103,7 @@ function UserEditing() {
   const handleRemove = () => {
     userId !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
     setTimeout(() => {
-      api.removeClient(userId).then(data => {
+      api.remove(userId, 'client').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -127,7 +127,7 @@ function UserEditing() {
         notes
       }
 
-      api.editClient(userId, body).then(data => {
+      api.edit(userId, body, 'client').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)

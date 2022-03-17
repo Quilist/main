@@ -47,7 +47,7 @@ function BankDetailCreate() {
       checking_account: checkingAccount
     };
 
-    api.add(body, 'banksDetails').then(data => {
+    api.add(body, 'bankDetail').then(data => {
       if (data.status === "error") return alert(data.message)
       setIsSuccess(null)
       setIsRedirect(true)

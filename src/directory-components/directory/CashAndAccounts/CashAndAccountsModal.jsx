@@ -30,22 +30,22 @@ const friendOptions = [
   {
     key: 'Privat Bank (Privat24)',
     text: 'Privat Bank (Privat24)',
-    value: '1',
+    value: 'OpenChildModalPrivat',
   },
   {
     key: 'Privat Bank Business(Privat24 Business)',
     text: 'Privat Bank Business(Privat24 Business)',
-    value: '2',
+    value: 'OpenChildModalPrivat',
   },
   {
     key: 'Monobank (UniversakBank)',
     text: 'Monobank (UniversakBank)',
-    value: '3',
+    value: 'OpenChildModalPrivat',
   },
   {
     key: 'PUMB (ПУМБ)',
     text: 'PUMB (ПУМБ)',
-    value: '4',
+    value: 'OpenChildModalPrivat',
   },
 ]
 export default function CashAndAccountsModal({ open, setOpen }) {
@@ -91,9 +91,10 @@ export default function CashAndAccountsModal({ open, setOpen }) {
     setOpenChildModal(false);
   }
 
-  const [value, setValue] = React.useState('');
-  const handleChange = (id) => {
-    setValue(value)
+  const [bankFunction, setBankFunction] = React.useState('');
+  const handleChange = (event, { value } ) => {
+
+    setBankFunction(value)
   }
 
 
@@ -104,12 +105,10 @@ export default function CashAndAccountsModal({ open, setOpen }) {
     setOpenChildModalPrivat(false);
   }
   const handleModelBank = () => {
-
-    if (value === 1) {
-      setOpenChildModalPrivat(true);
-    } else {
-      setOpenChildModalPrivat(true);
-    }
+    console.log('bankFunction', bankFunction)
+    let i = `set${bankFunction}`
+    console.log('i', i)
+    setOpenChildModalPrivat(true);
   };
 
 
@@ -140,8 +139,8 @@ export default function CashAndAccountsModal({ open, setOpen }) {
               search
               selection
               options={friendOptions}
-              onChange={() => handleChange(friendOptions)}
-              key={friendOptions.value}
+              onChange={handleChange}
+              value={bankFunction}
             />
             <div style={{ margin: '20px' }}>
               <Button variant="contained" color="success" onClick={handleModelBank} className={styles.modal_bankbtn}>Продолжить</Button>
