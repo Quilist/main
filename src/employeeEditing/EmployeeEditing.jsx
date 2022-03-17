@@ -58,7 +58,7 @@ const EmployeesEditing = () => {
   const [add_order_supplier, setAdd_order_supplier] = React.useState(employeeId === 0 || isAdd ? defaultOrderSupplier : null);
 
   React.useEffect(() => {
-    api.getEmploye(employeeId).then(data => {
+    api.find(employeeId, 'employee').then(data => {
       setEmployee(data.message);
     })
   }, [])
@@ -67,7 +67,7 @@ const EmployeesEditing = () => {
   React.useEffect(() => {
     if (!isAdd) {
       //=====================================================
-      api.getEmploye(employeeId).then(data => {
+      api.find(employeeId, 'employee').then(data => {
         const { f_name, s_name, mobile, mail, password, id_role, order_supplier } = data.message;
         setF_Name(f_name)
         setS_Name(s_name)
@@ -104,7 +104,7 @@ const EmployeesEditing = () => {
       body.add_order_supplier = add_order_supplier;
 
       // =======================================
-      api.addEmployees(body).then(data => {
+      api.add(body, 'employee').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -117,7 +117,7 @@ const EmployeesEditing = () => {
     employeeId !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
     setTimeout(() => {
       // =================================
-      api.removeEmployees(employeeId).then(data => {
+      api.remove(employeeId, 'employee').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -139,7 +139,7 @@ const EmployeesEditing = () => {
       body.add_order_supplier = add_order_supplier;
 
       // ====================================
-      api.editEmployees(employeeId, body).then(data => {
+      api.edit(employeeId, body, 'employee').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)

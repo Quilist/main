@@ -24,7 +24,7 @@ function LegalEntitesEditing() {
   const api = new API();
   React.useEffect(() => {
     if (!isAdd) {
-      api.getLegalEntite(userId).then(data => {
+      api.find(userId, 'legalEntity').then(data => {
         setCurrentLegalEntite(data.message)
       })
     }
@@ -102,7 +102,7 @@ function LegalEntitesEditing() {
         director
       }
 
-      api.addLegalEntites(body).then(data => {
+      api.add(body, 'legalEntity').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -113,7 +113,7 @@ function LegalEntitesEditing() {
   const handleRemove = () => {
     userId !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
     setTimeout(() => {
-      api.removeLegalEntites(userId).then(data => {
+      api.remove(userId, 'legalEntity').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -140,7 +140,7 @@ function LegalEntitesEditing() {
         director
       }
 
-      api.editLegalEntites(userId, body).then(data => {
+      api.edit(userId, body, 'legalEntity').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)

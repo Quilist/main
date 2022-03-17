@@ -24,7 +24,7 @@ function UserEditing() {
   const api = new API();
   React.useEffect(() => {
     if (!isAdd) {
-      api.getSupplier(userId).then(data => {
+      api.find(userId, 'supplier').then(data => {
         setCurrentUser(data.message)
       })
     }
@@ -97,7 +97,7 @@ function UserEditing() {
         edrpou
       }
 
-      api.addSuppliers(body).then(data => {
+      api.add(body, 'supplier').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -108,7 +108,7 @@ function UserEditing() {
   const handleRemove = () => {
     userId !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
     setTimeout(() => {
-      api.removeSuppliers(userId).then(data => {
+      api.remove(userId, 'supplier').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -133,7 +133,7 @@ function UserEditing() {
         edrpou
       }
 
-      api.editSuppliers(userId, body).then(data => {
+      api.edit(userId, body, 'supplier').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)

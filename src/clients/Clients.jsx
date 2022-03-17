@@ -302,7 +302,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([])
   const api = new API()
   React.useEffect(() => {
-    api.all('clients').then(data => {
+    api.all('client').then(data => {
       if (data.status === "error") alert(data.message)
       else setRows(data.message)
     })

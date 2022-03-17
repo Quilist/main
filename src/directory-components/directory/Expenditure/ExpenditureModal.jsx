@@ -31,7 +31,7 @@ export default function ExpenditureModal({ open, setOpen }) {
       name: name
     }
 
-    api.addExpenditure(body).then(data => {
+    api.add(body, 'expenditure').then(data => {
       if (data.status === "error") return alert(data.message)
       setName('');
       setOpen(false);

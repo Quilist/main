@@ -43,7 +43,7 @@ export default function Currency() {
         if (data.status === "error") alert(data.message)
         else currenciesList = data.message
       })
-      api.all('currencies').then(data => {
+      api.all('currency').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message)
       })

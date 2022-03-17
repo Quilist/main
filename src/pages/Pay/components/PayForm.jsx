@@ -85,7 +85,7 @@ function UserForm({ item, setItem }) {
               value={item.supplier}
               label="Поставщик"
             >
-              <MenuItem >Нету данных</MenuItem>
+              <MenuItem value={1}>Тестовый</MenuItem>
             </Select>
           </FormControl>
         </div>}
@@ -113,7 +113,7 @@ function UserForm({ item, setItem }) {
             label="Поставщик"
             sx={{ marginBottom: '15px' }}
           >
-            <MenuItem >Нету данных</MenuItem>
+            <MenuItem value={1}>Тестовый</MenuItem>
           </Select>
         </FormControl>
 
@@ -151,7 +151,7 @@ function UserForm({ item, setItem }) {
                 id="demo-simple-select"
                 label="Организация"
               >
-                <MenuItem >Нету данных</MenuItem>
+                <MenuItem value={1}>Тестовая</MenuItem>
               </Select>
             </FormControl>
           </div>
