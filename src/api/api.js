@@ -19,11 +19,7 @@ class API {
             incomeItem: '/income_items',
             typePrice: '/type_price',
             bankDetail: '/banks_details',
-            paySupplier: '/pay_supplier',
-            payCustomer: '/pay_customer',
-            expend: '/expend',
-            salary: '/salary',
-            payOwner: '/pay_owner'
+            payment: '/payments',
         }
 
         return types[type];

@@ -33,23 +33,16 @@ function Pay() {
 
   React.useEffect(() => {
     if (data) {
-      const { name, mfo, checkingAccount } = data;
-      setName(name)
-      setMfo(mfo)
-      setCheckingAccount(checkingAccount)
+      const { item } = data;
+      setItem(item)
     }
     // eslint-disable-next-line
   }, [data])
 
   const handleAdd = () => {
     console.log('item', item)
-    const body = {
-      bank_name: name,
-      MFO: mfo,
-      checking_account: checkingAccount
-    };
 
-    api.add(body, 'pay').then(data => {
+    api.add(item, 'payment').then(data => {
       if (data.status === "error") return alert(data.message)
       setIsSuccess(null)
       setIsRedirect(true)

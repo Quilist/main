@@ -82,7 +82,7 @@ function UserForm({ item, setItem }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={item.supplier}
+              value={item.id_type}
               label="Поставщик"
             >
               <MenuItem value={1}>Тестовый</MenuItem>
@@ -109,8 +109,8 @@ function UserForm({ item, setItem }) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={item.supplier2}
-            label="Поставщик"
+            value={item.id_cash_accounts}
+            label="Касса"
             sx={{ marginBottom: '15px' }}
           >
             <MenuItem value={1}>Тестовый</MenuItem>
@@ -149,6 +149,7 @@ function UserForm({ item, setItem }) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                value={item.id_legal_entites}
                 label="Организация"
               >
                 <MenuItem value={1}>Тестовая</MenuItem>
