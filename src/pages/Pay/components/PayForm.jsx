@@ -44,7 +44,7 @@ function PayForm({ item, setItem }) {
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
 
   React.useEffect(() => {
-    setItem({"type_order": 'cash'});
+    setItem({"type_order": 'cash', "type": "payment"});
     // eslint-disable-next-line
   }, [] )
 
