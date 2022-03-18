@@ -58,10 +58,6 @@ function Pay() {
           <div className={styles.main_btns}>
             <Button onClick={handleAdd} className={styles.button} variant="contained">Сохранить</Button>
           </div>
-          <div>
-            <Button className={styles.button} variant="outlined">Печать</Button>
-            <Button className={styles.button} variant="outlined">Отправить</Button>
-          </div>
         </div>
         {isSuccess &&
           <div className={styles.success}>
