@@ -21,6 +21,7 @@ import styles from './../css/PayForm.module.css'
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import {currenciesList} from "../../../directory-components/directory/Currency/Currency";
 
 function PayForm({ item, setItem }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
@@ -37,32 +38,49 @@ function PayForm({ item, setItem }) {
     receive_balance: 'Ввод остатков',
   }
   const [payType, setPayType] = React.useState('cash');
-  const [paymentList, setPaymentList] = React.useState([{ currency: null, value: null}]);
-  const [changeList, setChangeList] = React.useState([{ currency: null, value: null}]);
+  const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null}]);
+  const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null}]);
 
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
+
+  React.useEffect(() => {
+    setItem({"type_order": 'cash'});
+    // eslint-disable-next-line
+  }, [] )
 
   const togglePayType = (e) => {
 
     setPayType(e.target.value)
-
-    if(e.target.value === 'cash') {
-      e.target.name = 'cash'
-    }
-
-    if(e.target.value === 'bank_account') {
-      e.target.name = 'bank_account'
-    }
+    e.target.name = 'type_order'
+    // if(e.target.value === 'cash') {
+    //
+    // }
+    //
+    // if(e.target.value === 'bank_account') {
+    //   e.target.name = 'bank_account'
+    // }
 
     handleChange(e)
   }
 
+  const paymentTypes = {
+    payment: {
+      "type_pay": "payment",
+      "type_amount": "debit"
+    },
+    change: {
+      "type_pay": "change",
+      "type_amount": "debit"
+    }
+  }
+
   const addPayment = (e) => {
-    setPaymentList([...paymentList, { currency: null, value: null}]);
+    setPaymentList([...paymentList, { currency_id: null, amount: null}]);
+    handleAddValues()
   }
 
   const addChange = (e) => {
-    setChangeList([...changeList, { currency: null, value: null}]);
+    setChangeList([...changeList, { currency_id: null, amount: null}]);
   }
 
   const removePayment = (index) => {
@@ -73,8 +91,65 @@ function PayForm({ item, setItem }) {
     setChangeList(changeList.filter((o, i) => index !== i));
   };
 
+  const handleAddValues = () => {
+    setItem(prevItem => ({
+      ...prevItem,
+      payments: paymentList
+    }));
+  }
+
+  const updatePayment = (e, index, type) => {
+    const { name, value } = e.target;
+    paymentList[index][name] = value
+    paymentList[index] = Object.assign({}, paymentList[index], paymentTypes[type]);
+    setItem(prevItem => ({
+      ...prevItem,
+      payments: paymentList
+    }));
+    handleTotalPay();
+  };
+
+  const updateChange = (e, index, type) => {
+    const { name, value } = e.target;
+    changeList[index][name] = value
+    changeList[index] = Object.assign({}, changeList[index], paymentTypes[type]);
+    setItem(prevItem => ({
+      ...prevItem,
+      changes: changeList
+    }));
+    handleTotalPay();
+  };
+
+  const handleTotalPay = () => {
+    let totalList = []
+    paymentList.map((item, i) => {
+      const indexChange = changeList.findIndex((itemChange) => item.currency_id === itemChange.currency_id)
+      if (indexChange !== -1) {
+        let itemChange = changeList[indexChange];
+        totalList.push({
+          "currency_id": item.currency_id,
+          "amount": item.amount - itemChange.amount,
+          "type_pay": "total",
+          "type_amount": "debit"
+        })
+      }
+    });
+    if(totalList.length > 0) {
+      setItem(prevItem => ({
+        ...prevItem,
+        totals: totalList
+      }));
+    }
+  };
+
+  const handleDate = (value) => {
+    setItem(prevItem => ({
+      ...prevItem,
+      date: value
+    }));
+  }
+
   const handleChange = e => {
-    console.log('e', e)
     const { name, value } = e.target;
     setItem(prevItem => ({
       ...prevItem,
@@ -135,6 +210,9 @@ function PayForm({ item, setItem }) {
           <DatePicker
             label="Дата"
             value={item.date}
+            onChange={(newValue) => {
+              handleDate(newValue);
+            }}
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
@@ -155,7 +233,13 @@ function PayForm({ item, setItem }) {
         {payType == 'bank_account' &&
           <div>
             <TextField
-              sx={{ marginBottom: '15px' }} id="standard-multiline-flexible" label="Сумма:" multiline   variant="standard"
+              sx={{ marginBottom: '15px' }} id="standard-multiline-flexible"
+              label="Сумма:"
+              multiline
+              variant="standard"
+              type="number"
+              name="amount"
+              onChange={handleChange}
             />
             <h3>Печать</h3>
             <FormControl fullWidth>
@@ -165,6 +249,8 @@ function PayForm({ item, setItem }) {
                 id="demo-simple-select"
                 value={item.id_legal_entites}
                 label="Организация"
+                name="id_legal_entites"
+                onChange={handleChange}
               >
                 <MenuItem value={1}>Тестовая</MenuItem>
               </Select>
@@ -180,6 +266,9 @@ function PayForm({ item, setItem }) {
                   <Select
                     autoWidth
                     label="Тип цены:"
+                    value={c.currency}
+                    name="currency_id"
+                    onChange={(e) => updatePayment(e, i, 'payment')}
                   >
                     <MenuItem value={'UAH'}>UAH</MenuItem>
                     <MenuItem value={'RUB'}>RUB</MenuItem>
@@ -192,6 +281,9 @@ function PayForm({ item, setItem }) {
                   label="Оплата:"
                   type="number"
                   variant="standard"
+                  value={c.value}
+                  name="amount"
+                  onChange={(e) => updatePayment(e, i, 'payment')}
                 />
                 <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePayment(i)}>X</button>
               </div>)
@@ -206,6 +298,8 @@ function PayForm({ item, setItem }) {
                   <Select
                     autoWidth
                     label="Тип цены:"
+                    name="currency_id"
+                    onChange={(e) => updateChange(e, i, 'change')}
                   >
                     <MenuItem value={'UAH'}>UAH</MenuItem>
                     <MenuItem value={'RUB'}>RUB</MenuItem>
@@ -218,6 +312,8 @@ function PayForm({ item, setItem }) {
                   label="Сдача:"
                   type="number"
                   variant="standard"
+                  name="amount"
+                  onChange={(e) => updateChange(e, i, 'change')}
                 />
                 <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removeChange(i)}>X</button>
               </div>)
@@ -230,8 +326,10 @@ function PayForm({ item, setItem }) {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Организация"
+                name="id_legal_entites"
+                onChange={handleChange}
               >
-                <MenuItem >Нету данных</MenuItem>
+                <MenuItem value={1}>Тестовая</MenuItem>
               </Select>
             </FormControl>
           </div>
