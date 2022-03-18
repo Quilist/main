@@ -270,10 +270,10 @@ function PayForm({ item, setItem }) {
                     name="currency_id"
                     onChange={(e) => updatePayment(e, i, 'payment')}
                   >
-                    <MenuItem value={'UAH'}>UAH</MenuItem>
-                    <MenuItem value={'RUB'}>RUB</MenuItem>
-                    <MenuItem value={'USD'}>USD</MenuItem>
-                    <MenuItem value={'EUR'}>EUR</MenuItem>
+                    <MenuItem value={1}>UAH</MenuItem>
+                    <MenuItem value={2}>RUB</MenuItem>
+                    <MenuItem value={3}>USD</MenuItem>
+                    <MenuItem value={4}>EUR</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField
@@ -301,10 +301,10 @@ function PayForm({ item, setItem }) {
                     name="currency_id"
                     onChange={(e) => updateChange(e, i, 'change')}
                   >
-                    <MenuItem value={'UAH'}>UAH</MenuItem>
-                    <MenuItem value={'RUB'}>RUB</MenuItem>
-                    <MenuItem value={'USD'}>USD</MenuItem>
-                    <MenuItem value={'EUR'}>EUR</MenuItem>
+                    <MenuItem value={1}>UAH</MenuItem>
+                    <MenuItem value={2}>RUB</MenuItem>
+                    <MenuItem value={3}>USD</MenuItem>
+                    <MenuItem value={4}>EUR</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField
