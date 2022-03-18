@@ -22,9 +22,7 @@ import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-
-function UserForm({ item, setItem }) {
+function PayForm({ item, setItem }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
   const pageTypes = {
     pay_supplier: 'Поставщик',
@@ -45,7 +43,18 @@ function UserForm({ item, setItem }) {
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
 
   const togglePayType = (e) => {
+
     setPayType(e.target.value)
+
+    if(e.target.value === 'cash') {
+      e.target.name = 'cash'
+    }
+
+    if(e.target.value === 'bank_account') {
+      e.target.name = 'bank_account'
+    }
+
+    handleChange(e)
   }
 
   const addPayment = (e) => {
@@ -65,6 +74,7 @@ function UserForm({ item, setItem }) {
   };
 
   const handleChange = e => {
+    console.log('e', e)
     const { name, value } = e.target;
     setItem(prevItem => ({
       ...prevItem,
@@ -84,6 +94,8 @@ function UserForm({ item, setItem }) {
               id="demo-simple-select"
               value={item.id_type}
               label="Поставщик"
+              name="id_type"
+              onChange={handleChange}
             >
               <MenuItem value={1}>Тестовый</MenuItem>
             </Select>
@@ -112,6 +124,8 @@ function UserForm({ item, setItem }) {
             value={item.id_cash_accounts}
             label="Касса"
             sx={{ marginBottom: '15px' }}
+            name="id_cash_accounts"
+            onChange={handleChange}
           >
             <MenuItem value={1}>Тестовый</MenuItem>
           </Select>
@@ -227,4 +241,4 @@ function UserForm({ item, setItem }) {
     </>
   )
 }
-export default UserForm
+export default PayForm

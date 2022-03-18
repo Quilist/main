@@ -97,7 +97,7 @@ class API {
 
     //Currencies
     async getCurrenciesList() {
-        return await this.request("GET", "/currencies/all");
+        return await this.request("GET", "/auxiliary/all_currencies");
     }
 }
 

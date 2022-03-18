@@ -18,9 +18,6 @@ function Pay() {
   const [data, setData] = React.useState(null)
   const api = new API();
 
-  const [name, setName] = React.useState('');
-  const [mfo, setMfo] =  React.useState('');
-  const [checkingAccount, setCheckingAccount] = React.useState('');
   const [item, setItem] = React.useState({});
 
   const navigate = useNavigate()
