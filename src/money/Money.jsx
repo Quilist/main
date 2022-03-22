@@ -42,6 +42,8 @@ import styles from "./Money.module.css";
 import CurrencyExchangeModal from "./CurrencyExchangeModal";
 import MovingMoneyModal from "./MovingMoneyModal";
 
+import store from "../store/store";
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -74,28 +76,40 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "name",
+    id: "date",
     numeric: false,
     disablePadding: true,
-    label: "Касса",
+    label: "Дата",
   },
   {
-    id: "mobile",
-    numeric: true,
-    disablePadding: false,
-    label: "Валюта",
+    id: "pay_type",
+    numeric: false,
+    disablePadding: true,
+    label: "Тип оплаты",
   },
   {
-    id: "duty",
+    id: "cash_account",
+    numeric: false,
+    disablePadding: true,
+    label: "Касса/Счет",
+  },
+  {
+    id: "user",
     numeric: true,
+    disablePadding: true,
+    label: "Контрагент",
+  },
+  {
+    id: "totals",
+    numeric: false,
     disablePadding: false,
     label: "Сумма",
   },
   {
-    id: "actions",
+    id: "note",
     numeric: true,
     disablePadding: false,
-    label: "Действия",
+    label: "Комментарий",
   },
 ];
 
@@ -306,10 +320,74 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([])
   const api = new API()
   React.useEffect(() => {
-    api.all('client').then(data => {
-      if (data.status === "error") alert(data.message)
-      else setRows(data.message)
-    })
+    setRows([
+      {
+        "id": 2,
+        "id_user": 1,
+        "date": "22.03.2022 17:16:45",
+        "user":  { "id": 1, "name": "Николай" },
+        "type": "pay_supplier",
+        "type_order": "cash",
+        "id_type": 1,
+        "pay_type":  { "id": 1, "name": "От клиента" }, //id_type_obj - какое там наименование релейшна с бэка?
+        "id_cash_accounts": 2,
+        "cash_account": { "id": 1, "name": "ФОП Руднев" },
+        "note": "Какие-то заметки",
+        "id_legal_entites": 1,
+        "payments": [
+          {
+            "currency_id": 1,
+            "currency": { "id": 1, "name": "UAH" },
+            "amount": 100,
+            "type_pay": "payment",
+            "type_amount": "debit"
+          },
+          {
+            "currency_id": 2,
+            "currency": { "id": 1, "name": "USD" },
+            "amount": 50,
+            "type_pay": "payment",
+            "type_amount": "debit"
+          }
+        ],
+        "changes": [
+          {
+            "currency_id": 1,
+            "currency": { "id": 1, "name": "UAH" },
+            "amount": 20,
+            "type_pay": "change",
+            "type_amount": "debit"
+          },
+          {
+            "currency_id": 2,
+            "currency": { "id": 1, "name": "USD" },
+            "amount": 10,
+            "type_pay": "change",
+            "type_amount": "debit"
+          }
+        ],
+        "totals": [
+          {
+            "currency_id": 1,
+            "currency": { "id": 1, "name": "UAH" },
+            "amount": 80,
+            "type_pay": "total",
+            "type_amount": "debit"
+          },
+          {
+            "currency_id": 2,
+            "currency": { "id": 1, "name": "USD" },
+            "amount": 40,
+            "type_pay": "total",
+            "type_amount": "debit"
+          }
+        ]
+      }
+    ])
+    // api.all('client').then(data => {
+    //   if (data.status === "error") alert(data.message)
+    //   else setRows(data.message)
+    // })
     // eslint-disable-next-line 
   }, [])
   // ============================================
@@ -358,7 +436,7 @@ export default function EnhancedTable() {
   };
   React.useEffect(() => {
     if (isRedirect) {
-      navigate("/editing");
+      navigate("/money/1");
     }
     // eslint-disable-next-line
   }, [isRedirect]);
@@ -423,7 +501,7 @@ export default function EnhancedTable() {
                         page * rowsPerPage + rowsPerPage
                       )
                       .map((row, index) => {
-                        const isItemSelected = isSelected(row.name);
+                        const isItemSelected = isSelected(row.id);
                         const labelId = `enhanced-table-checkbox-${index}`;
 
                         return (
@@ -432,70 +510,20 @@ export default function EnhancedTable() {
                             role="checkbox"
                             aria-checked={isItemSelected}
                             tabIndex={-1}
-                            key={row.name}
+                            key={row.id}
                             className={styles.table_row}
                           >
-                            <TableCell className={styles.user_editing_icon} padding="checkbox">
-                              <i
-                                className="fas fa-pen"
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleRedirect(row.id)}
-                              ></i>
+                            <TableCell className={styles.table_wide} style={{ fontSize: '17px', marginLeft: "15px" }}>{row.date}</TableCell>
+                            <TableCell className={styles.table_wide} align="center" style={{ fontSize: '17px' }}>{row.pay_type.name}</TableCell>
+                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.cash_account.name}</TableCell>
+                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.user.name}</TableCell>
+                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>
+                              { row.totals.map((total, totalIndex) => {
+                                  <p key={totalIndex}>{total.currency.name}: {total.amount}</p>
+                                })
+                              }
                             </TableCell>
-                            <TableCell onClick={() => openUser(row.id)} component="th" id={labelId} scope="row" padding="none" className={styles.table_narrow_name}>
-                              <div className={styles.table__name_wide}>{row.name}</div>
-                              <Accordion className={styles.table_accordion}>
-                                <AccordionSummary className={styles.user__name}>
-                                  <div className={styles.accordion__name}>{row.name}</div>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                  <div style={{ marginTop: '10px' }}>
-                                    <div style={{ marginBottom: '14px', lineHeight: '1' }} className={styles.row__mobile}>
-
-                                    </div>
-                                    <div style={{ marginBottom: '14px', lineHeight: '1' }} className={styles.row__mobile}>
-
-                                    </div>
-                                    <div style={{ marginBottom: '14px', lineHeight: '0.9' }} className={styles.row__mobile}>
-
-                                    </div>
-                                    <div style={{ marginBottom: '14px', lineHeight: '0.9' }} className={styles.row__mobile}>
-
-                                    </div>
-                                  </div>
-                                </AccordionDetails>
-                              </Accordion>
-                            </TableCell>
-                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.mobile[0]}</TableCell>
-                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.duty}</TableCell>
-                            <TableCell align="right" className={styles.table_narrow}>
-                              <div className={styles.table__action__wide} style={{ marginRight: '10px' }}>
-                                <span onClick={handleClick} className={styles.action__btn}>
-                                  <i style={{ marginRight: '6px' }} className="fas fa-angle-down"></i>
-                                  Создать
-                                </span>
-                              </div>
-                              <div className={styles.table__action__narrow} style={{ marginRight: '-6px' }}>
-                                <span onClick={handleClick} className={styles.action__btn}>
-                                  <div>Создать <i style={{ marginRight: '6px' }} className="fas fa-angle-down"></i></div>
-                                </span>
-                              </div>
-                              <Menu
-                                elevation={0}
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                              >
-                                <div className={styles.table_menu}>
-                                  <Link className={styles.link} to="/invoice"><MenuItem className={styles.table_menu_item} onClick={handleClose}>Счёт</MenuItem></Link>
-                                  <Link className={styles.link} to="/sell"><MenuItem className={styles.table_menu_item} onClick={handleClose}>Продажа</MenuItem></Link>
-                                  <Link className={styles.link} to="/order"><MenuItem className={styles.table_menu_item} onClick={handleClose}>Заказы</MenuItem></Link>
-                                  <Link className={styles.link} to="/pay"><MenuItem className={styles.table_menu_item} onClick={handleClose}>Оплата</MenuItem></Link>
-                                </div>
-                              </Menu>
-                            </TableCell>
-                            {/* <TableCell align="right">{row.carbs}</TableCell> */}
-                            {/* <TableCell align="right">{row.protein}</TableCell> */}
+                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.note}</TableCell>
                           </TableRow>
                         );
                       })}
