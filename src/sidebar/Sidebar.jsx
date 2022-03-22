@@ -293,7 +293,6 @@ export default function Sidebar() {
                 <ul className="sub-menu blank">
                   <li style={{ padding: '6px 0' }}>
                     <span className="link_mail">{`${decodeToken.email}`}</span>
-                     <span className="link_mail">example@mail.ru</span>
                   </li>
                 </ul>
               </li>
