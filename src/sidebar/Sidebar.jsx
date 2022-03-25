@@ -288,7 +288,6 @@ export default function Sidebar() {
                     </MenuItem>
                   </Menu>
                   <span className="link_name" style={{ wordBreak: 'break-word' }}>{`${decodeToken.email}`}</span>
-                   <span className="link_name" style={{wordBreak: 'break-word'}}>example@mail.ru</span>
                 </Link>
                 <ul className="sub-menu blank">
                   <li style={{ padding: '6px 0' }}>
