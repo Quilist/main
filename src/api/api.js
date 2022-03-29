@@ -20,6 +20,9 @@ class API {
             typePrice: '/type_price',
             bankDetail: '/banks_details',
             payment: '/payments',
+            money: '/money',
+            moneyExchange: '/money/currency_exchange',
+            moneyMoving: '/money/moving_money',
         }
 
         return types[type];

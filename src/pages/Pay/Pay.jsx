@@ -13,6 +13,11 @@ function Pay() {
   const [isSuccess, setIsSuccess] = React.useState(null)
 
   const [isRedirect, setIsRedirect] = React.useState(false)
+  React.useEffect(() => {
+    document.title = "B-Fin: Оплата"
+    // eslint-disable-next-line
+  }, [])
+
 
   // ========================================
   const [data, setData] = React.useState(null)

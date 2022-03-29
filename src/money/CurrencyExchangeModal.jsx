@@ -30,17 +30,29 @@ const style = {
 
 export default function CurrencyExchangeModal({ open, setOpen }) {
   const handleClose = () => setOpen(false);
-  const [name, setName] = React.useState('');
+  const [item, setItem] = React.useState({});
   const api = new API();
 
-  const handleAdd = () => {
-    const body = {
-      name: name
-    }
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setItem(prevItem => ({
+      ...prevItem,
+      [name]: value
+    }));
+  };
 
-    api.add(body, 'measure').then(data => {
+  const handleDate = (value) => {
+    const date = new Date(value);
+    const milliseconds = date.getTime();
+    setItem(prevItem => ({
+      ...prevItem,
+      created_at: milliseconds
+    }));
+  }
+
+  const handleAdd = () => {
+    api.add(item, 'moneyExchange').then(data => {
       if (data.status === "error") return alert(data.message)
-      setName('');
       setOpen(false);
     })
 
@@ -65,8 +77,11 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               id="demo-simple-select"
               label="Касса"
               sx={{ marginBottom: '15px' }}
+              value={item.cash_account_id}
+              name="cash_account_id"
+              onChange={handleChange}
             >
-              <MenuItem >Нету данных</MenuItem>
+              <MenuItem value={1}>Тестовая Касса</MenuItem>
             </Select>
           </FormControl>
 
@@ -76,6 +91,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               autoWidth
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
+              value={item.amount_pay}
+              name="amount_pay"
+              onChange={handleChange}
             >
               <MenuItem value={'UAH'}>UAH</MenuItem>
               <MenuItem value={'RUB'}>RUB</MenuItem>
@@ -89,6 +107,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               autoWidth
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
+              value={item.amount_receive}
+              name="amount_receive"
+              onChange={handleChange}
             >
               <MenuItem value={'UAH'}>UAH</MenuItem>
               <MenuItem value={'RUB'}>RUB</MenuItem>
@@ -97,12 +118,40 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             </Select>
           </FormControl>
           <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+            <TextField
+              sx={{marginBottom: '15px'}}
+              label="Сумма:"
+              type="text"
+              variant="standard"
+              value={item.amount}
+              name="amount"
+              onChange={handleChange}
+            />
+          </FormControl>
+
+          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
             <LocalizationProvider dateAdapter={DateAdapter}>
               <DatePicker
                 label="Дата"
+                value={item.created_at}
+                onChange={(newValue) => {
+                  handleDate(newValue);
+                }}
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
+          </FormControl>
+
+          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+            <TextField
+              sx={{marginBottom: '15px'}}
+              label="Заметки:"
+              type="text"
+              variant="standard"
+              value={item.note}
+              name="note"
+              onChange={handleChange}
+            />
           </FormControl>
 
           <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>

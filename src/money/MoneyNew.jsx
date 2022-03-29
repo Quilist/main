@@ -35,7 +35,7 @@ import useUserId from "../hooks/useUserId";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import API from '../api/api';
+import API from '@/api/api';
 
 import styles from "./Money.module.css";
 import CurrencyExchangeModal from "./CurrencyExchangeModal";
@@ -51,12 +51,24 @@ import {cash_and_accounts} from '@/directory-components/directory/CashAndAccount
 // require('./css/main.css');
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
+  const [items, setItems] = React.useState([])
   const handleOpenCurrencyExchangeModal = () => setOpenCurrencyExchangeModal(true);
   const handleOpenMovingMoney = () => setOpenMovingMoney(true);
   const [openCurrencyExchangeModal, setOpenCurrencyExchangeModal] = React.useState(false);
   const [openMovingMoney, setOpenMovingMoney] = React.useState(false);
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
+
+  const api = new API()
+  React.useEffect(() => {
+    if(!openCurrencyExchangeModal || !openMovingMoney) {
+      api.all('money').then(data => {
+        if (data.status === "error") alert(data.message)
+        else setItems(data.message)
+      })
+    }
+    // eslint-disable-next-line
+  }, [openCurrencyExchangeModal, openMovingMoney])
 
   React.useEffect(() => {
     console.log('cashAndAccountsList', cashAndAccountsList)
@@ -184,12 +196,12 @@ export default function EnhancedTable() {
               </svg>
             </a>
 
-            {/*<div className={isOpen}>*/}
-            {/*  <ul>*/}
-            {/*    <li onClick={handleOpenCurrencyExchangeModal}>Перемещение денег</li>*/}
-            {/*    <li onClick={handleOpenMovingMoney}>Обмен валют</li>*/}
-            {/*  </ul>*/}
-            {/*</div>*/}
+            <div className={isOpen}>
+              <ul>
+                <li onClick={handleOpenCurrencyExchangeModal}>Обмен валют</li>
+                <li onClick={handleOpenMovingMoney}>Перемещение денег</li>
+              </ul>
+            </div>
             <div className="wrapper__mounth">
               <a href="#">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
