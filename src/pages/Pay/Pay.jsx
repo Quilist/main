@@ -11,8 +11,8 @@ import API from '@/api/api'
 
 function Pay() {
   const [isSuccess, setIsSuccess] = React.useState(null)
-
   const [isRedirect, setIsRedirect] = React.useState(false)
+
   React.useEffect(() => {
     document.title = "B-Fin: Оплата"
     // eslint-disable-next-line
@@ -52,6 +52,7 @@ function Pay() {
   }
 
   const handleReturn = () => {
+    navigate(-1)
     setIsRedirect(true)
   }
 

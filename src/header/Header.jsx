@@ -43,6 +43,7 @@ const receiveOptions = [
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
+  const [searchState, setSearchState] = React.useState('navigation');
   const [openReceive, setOpenReceive] = React.useState(false);
   const anchorRef = React.useRef(null);
   const anchorReceiveRef = React.useRef(null);
@@ -64,6 +65,15 @@ const Header = () => {
     }
 
     setOpen(false);
+  };
+
+  const handleSearchState = () => {
+    if(searchState == 'navigation') {
+      setSearchState('navigation active');
+    } else {
+      setSearchState('navigation');
+    }
+
   };
 
   const handleMenuItemClickReceive = (event, index) => {
@@ -257,7 +267,7 @@ const Header = () => {
 
       </div>
 
-      <div className="navigation">
+      <div className={searchState}>
         <a href="#" className="menu-gumb">
           <div className="button_container" id="toggle">
             <span className="top"></span>
@@ -273,7 +283,7 @@ const Header = () => {
             <input type="text" placeholder="Поиск" />
             <button type="submit"></button>
           </form>
-          <div className="btn-search" id="wrapper__search">
+          <div className="btn-search" id="wrapper__search" onClick={handleSearchState}>
             <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="6" cy="6" r="5.5" stroke="#7096FF"/>
               <rect x="3.37419" y="10.8394" width="1.31782" height="4.31965" rx="0.658908"
