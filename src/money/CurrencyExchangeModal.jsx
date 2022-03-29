@@ -33,6 +33,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   const [item, setItem] = React.useState({});
   const api = new API();
 
+  React.useEffect(() => {
+    const date = new Date();
+    const milliseconds = date.getTime();
+    setItem({exchange_rate: 1, created_at: milliseconds})
+    // eslint-disable-next-line
+  })
+
   const handleChange = e => {
     const { name, value } = e.target;
     setItem(prevItem => ({
