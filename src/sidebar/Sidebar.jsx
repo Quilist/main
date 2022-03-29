@@ -72,10 +72,10 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="header__title">
-        <img onClick={signUp} className={isActive ? "arrowImg" : "arrowImg active"} src={arrowImg} alt="arrow" />
-        <span className="page__title">{title}</span>
-      </div>
+      {/*<div className="header__title">*/}
+      {/*  <img onClick={signUp} className={isActive ? "arrowImg" : "arrowImg active"} src={arrowImg} alt="arrow" />*/}
+      {/*  <span className="page__title">{title}</span>*/}
+      {/*</div>*/}
       <Header />
       <ClickAwayListener onClickAway={(e) => handleClickAway(e)}>
         <div className={isActive ? "sidebar close" : "sidebar"}>
