@@ -22,21 +22,31 @@ export const cash_and_accounts = [
       id:1,
       id_user: 2,
       type_accounts: false,
-      Name: 'Касса в офисе',
-      Represent: 'USD', 
-      bank_name: null,
+      Name: 'Приватбанк',
+      Represent: 'UAH',
+      bank_name: 'privatbank',
       checking_account: null,
-      balance: 10
+      balance: 200
    },
+  {
+    id: 2,
+    id_user: 2,
+    type_accounts: true,
+    Name: 'Монобанк',
+    Represent: 'UAH',
+    bank_name: 'monobank',
+    checking_account: 'ua26001230986763718',
+    balance: 500
+  },
    {
-      id: 2,
+      id: 3,
       id_user: 2,
       type_accounts: true,
       Name: 'Счет в банке',
-      Represent: 'UAH', 
+      Represent: 'USD',
       bank_name: 'ооо банк',
       checking_account: 'ua26001230986763718',
-      balance: 600
+      balance: 100
    }
 ]
 // =====================================

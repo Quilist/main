@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
 import Sidebar from "../sidebar/Sidebar";
-import Money from '../money/Money';
+import Money from '../money/MoneyNew';
 
 
 const PageMoney = () => {

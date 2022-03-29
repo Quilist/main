@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import API from '../api/api';
+import API from '@/api/api';
 
 import './forma-auth.css';
 
@@ -18,7 +18,7 @@ import './forma-auth.css';
 // 3) Заменить всё, что подписано в return. Закоментированный блок в {/* */} раскоментируется и меняется на тот что находится ниже, в таких же скобках. 
 // ===========================================================================
 
-function FormAuth() {
+function Auth() {
    const api = new API()
 
    const [isActive, setActive] = useState(false);
@@ -93,13 +93,13 @@ function FormAuth() {
       setActive(!isActive);
    }
    return (
-      <div style={{marginRight: '15px', marginLeft: '15px'}}> 
-         <h2 className='form-reg_logo'>Форма регистрации B-Fin</h2> 
+      <div style={{marginRight: '15px', marginLeft: '15px'}}>
+         <h2 className='form-reg_logo text-black margin-head' >Форма регистрации B-Fin</h2>
          <div className={isActive ? "container right-panel-active" : "container"} id="container">
             <div className='main-form-wrapper'>
                <div className="form-container sign-up-container">
-                  <form action="#">
-                     <h1>Создать аккаунт</h1>
+                  <form action="#" className='form-blank-bg'>
+                     <h1 className='text-black'>Создать аккаунт</h1>
                      <div className="social-container">
                      
                         <a href={`${api.api}/auth/facebook`} className="social">
@@ -110,7 +110,7 @@ function FormAuth() {
                         </a>
                      
                      </div>
-                     <span>или используйте почту для входа</span>
+                     <span className='text-black'>или используйте почту для входа</span>
                      
                      <input type="text" name="login" placeholder="Логин" onChange={loginInput} />
                      <input type="email" name="email" placeholder="Почта" onChange={emailInput} />
@@ -120,8 +120,8 @@ function FormAuth() {
                   </form>
                </div>
                <div className="form-container sign-in-container">
-                  <form action="#">
-                     <h1>Войти</h1>
+                  <form action="#" className='form-blank-bg'>
+                     <h1 className='text-black'>Войти</h1>
                      <div className="social-container">
                      
                         <a href={`${api.api}/auth/facebook`} className="social">
@@ -132,7 +132,7 @@ function FormAuth() {
                         </a> 
 
                      </div>
-                     <span>или используйте свою почту</span>
+                     <span className='text-black'>или используйте свою почту</span>
 
                      <input type="email" name="email" placeholder="Почта" onChange={logEmailInput} />
                      <input type="password" name="pass" placeholder="Пароль" onChange={logPasswordInput} />
@@ -231,12 +231,12 @@ function FormAuth() {
                <div className="overlay">
                   <div className="overlay-panel overlay-left">
                      <h1>Привет!</h1>
-                     <p>Если у Вас уже есть аккаунт, пожалуйста, войдите под своей личной информацией</p>
+                     <p className='margin-space'>Если у Вас уже есть аккаунт, пожалуйста, войдите под своей личной информацией</p>
                      <button className="ghost" id="signIn" onClick={signUp}>Войти</button>
                   </div>
                   <div className="overlay-panel overlay-right">
                      <h1>Привет, Друг!</h1>
-                     <p>Введите свои личные данные и начните путешествие с нами</p>
+                     <p className='margin-space'>Введите свои личные данные и начните путешествие с нами</p>
                      <button className="ghost" id="signUp" onClick={signUp}>Зарегистрироваться</button>
                   </div>
                </div>
@@ -247,4 +247,4 @@ function FormAuth() {
    );
 }
 
-export default FormAuth;
+export default Auth;

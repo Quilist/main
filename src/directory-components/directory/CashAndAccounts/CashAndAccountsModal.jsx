@@ -12,6 +12,7 @@ import crossImg from './img/cross.png';
 import styles from './CashAndAccounts.module.css';
 
 import { Dropdown } from 'semantic-ui-react';
+import {useState} from "react";
 
 const style = {
   position: 'absolute',
@@ -35,12 +36,12 @@ const friendOptions = [
   {
     key: 'Privat Bank Business(Privat24 Business)',
     text: 'Privat Bank Business(Privat24 Business)',
-    value: 'OpenChildModalPrivat',
+    value: 'OpenChildModalPrivatL',
   },
   {
     key: 'Monobank (UniversakBank)',
     text: 'Monobank (UniversakBank)',
-    value: 'OpenChildModalPrivat',
+    value: 'OpenChildModalMono',
   },
   {
     key: 'PUMB (ПУМБ)',
@@ -67,6 +68,8 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   const [currency, setCurrency] = React.useState('UAH');
   const [balance, setBalance] = React.useState('');
 
+  const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
+
   const handleAdd = () => {
     const newId = (cash_and_accounts[cash_and_accounts.length - 1]).id + 1;
     let type;
@@ -82,8 +85,10 @@ export default function CashAndAccountsModal({ open, setOpen }) {
       balance: balance
     }
     cash_and_accounts.push(body);
-    console.log(cash_and_accounts);
 
+    //setCashAndAccountsList(cash_and_accounts);
+    console.log(cash_and_accounts);
+    // console.log(cashAndAccountsList);
     setName('');
     setType_accounts('');
     setBalance('');
@@ -101,14 +106,32 @@ export default function CashAndAccountsModal({ open, setOpen }) {
 
   // Child modal Privat24 for people
   const [openChildModalPrivat, setOpenChildModalPrivat] = React.useState(false);
+  const [openChildModalPrivatL, setOpenChildModalPrivatL] = React.useState(false);
+  const [openChildModalMono, setOpenChildModalMono] = React.useState(false);
+
   const handleCloseChildModalPrivat = () => {
     setOpenChildModalPrivat(false);
   }
+  const handleCloseChildModalPrivatL = () => {
+    setOpenChildModalPrivatL(false);
+  }
+  const handleCloseChildModalMono = () => {
+    setOpenChildModalMono(false);
+  }
   const handleModelBank = () => {
     console.log('bankFunction', bankFunction)
-    let i = `set${bankFunction}`
-    console.log('i', i)
-    setOpenChildModalPrivat(true);
+    //let i = `set${bankFunction}`
+    //console.log('i', i)
+    if(bankFunction == 'OpenChildModalPrivat') {
+      setOpenChildModalPrivat(true);
+    }
+    if(bankFunction == 'OpenChildModalPrivatL') {
+      setOpenChildModalPrivatL(true);
+    }
+    if(bankFunction == 'OpenChildModalMono') {
+      setOpenChildModalMono(true);
+    }
+
   };
 
 
@@ -257,13 +280,13 @@ export default function CashAndAccountsModal({ open, setOpen }) {
           <React.Fragment>
             <Modal
               hideBackdrop
-              open={openChildModalPrivat}
-              onClose={handleCloseChildModalPrivat}
+              open={openChildModalPrivatL}
+              onClose={handleCloseChildModalPrivatL}
               aria-labelledby="child-modal-title"
               aria-describedby="child-modal-description"
             >
               <Box sx={style} className={styles.childModal}>
-                <img className={styles.modal_img} onClick={handleCloseChildModalPrivat} src={crossImg} alt="cross" />
+                <img className={styles.modal_img} onClick={handleCloseChildModalPrivatL} src={crossImg} alt="cross" />
                 <div className={styles.modal_title}>Добавление нового счёта приват банк для юр лиц</div>
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
@@ -298,10 +321,29 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                   </Select>
                 </FormControl>
                 <TextField sx={{ marginBottom: '30px', width: '70%' }} value={balance || ''} onChange={(e) => setBalance(e.target.value)}
-                  label="Стартовый баланс:"
-                  type="number"
-                  variant="standard"
+                           label="Стартовый баланс:"
+                           type="number"
+                           variant="standard"
                 />
+                <Button variant="contained" className={styles.modal_bankbtn}>Ок</Button>
+              </Box>
+            </Modal>
+          </React.Fragment>
+          {/* добавление монобанка*/}
+          <React.Fragment>
+            <Modal
+              hideBackdrop
+              open={openChildModalMono}
+              onClose={handleCloseChildModalMono}
+              aria-labelledby="child-modal-title"
+              aria-describedby="child-modal-description"
+            >
+              <Box sx={style} className={styles.childModal}>
+                <img className={styles.modal_img} onClick={handleCloseChildModalMono} src={crossImg} alt="cross" />
+                <div className={styles.modal_title}>Добавление нового счёта приват банк для юр лиц</div>
+
+               <p>Для добавления просканируйте qr-код</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/250px-QR_code_for_mobile_English_Wikipedia.svg.png" alt=""/>
                 <Button variant="contained" className={styles.modal_bankbtn}>Ок</Button>
               </Box>
             </Modal>

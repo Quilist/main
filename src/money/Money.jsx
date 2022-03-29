@@ -329,7 +329,7 @@ export default function EnhancedTable() {
         "type": "pay_supplier",
         "type_order": "cash",
         "id_type": 1,
-        "pay_type":  { "id": 1, "name": "От клиента" }, //id_type_obj - какое там наименование релейшна с бэка?
+        "pay_type":  { "id": 1, "name": "От клиента" }, //pay_type - какое там наименование релейшна с бэка?
         "id_cash_accounts": 2,
         "cash_account": { "id": 1, "name": "ФОП Руднев" },
         "note": "Какие-то заметки",

@@ -2,10 +2,10 @@
 // import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 
 import { useState } from 'react';
-import API from '../api/api';
+import API from '@/api/api';
 import './forma-auth.css';
 
-function FormpPasswordRecovery() {
+function AuthPasswordRecovery() {
    const api = new API();
 
    const [password, setPassword] = useState("");
@@ -47,4 +47,4 @@ function FormpPasswordRecovery() {
    );
 }
 
-export default FormpPasswordRecovery;
+export default AuthPasswordRecovery;
