@@ -48,6 +48,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import CashAndAccountsModal from './CashAndAccountsModal';
 import {cash_and_accounts} from '@/directory-components/directory/CashAndAccounts/СashAndAccounts';
 
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-daterangepicker/daterangepicker.css';
+
 // require('./css/main.css');
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');

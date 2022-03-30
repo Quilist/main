@@ -44,6 +44,12 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
 
   const handleChange = e => {
     const { name, value } = e.target;
+    if(name === 'amount_pay') {
+      setItem(prevItem => ({
+        ...prevItem,
+        amount_receive: value
+      }));
+    }
     setItem(prevItem => ({
       ...prevItem,
       [name]: value
@@ -60,6 +66,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   }
 
   const handleAdd = () => {
+
     api.add(item, 'moneyExchange').then(data => {
       if (data.status === "error") return alert(data.message)
       setOpen(false);
@@ -100,14 +107,14 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               autoWidth
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
-              value={item.amount_pay}
-              name="amount_pay"
+              value={item.from_currency_id}
+              name="from_currency_id"
               onChange={handleChange}
             >
-              <MenuItem value={'UAH'}>UAH</MenuItem>
-              <MenuItem value={'RUB'}>RUB</MenuItem>
-              <MenuItem value={'USD'}>USD</MenuItem>
-              <MenuItem value={'EUR'}>EUR</MenuItem>
+              <MenuItem value={1}>UAH</MenuItem>
+              <MenuItem value={2}>RUB</MenuItem>
+              <MenuItem value={3}>USD</MenuItem>
+              <MenuItem value={4}>EUR</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
@@ -116,14 +123,14 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               autoWidth
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
-              value={item.amount_receive}
-              name="amount_receive"
+              value={item.to_currency_id}
+              name="to_currency_id"
               onChange={handleChange}
             >
-              <MenuItem value={'UAH'}>UAH</MenuItem>
-              <MenuItem value={'RUB'}>RUB</MenuItem>
-              <MenuItem value={'USD'}>USD</MenuItem>
-              <MenuItem value={'EUR'}>EUR</MenuItem>
+              <MenuItem value={1}>UAH</MenuItem>
+              <MenuItem value={2}>RUB</MenuItem>
+              <MenuItem value={3}>USD</MenuItem>
+              <MenuItem value={4}>EUR</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth  style={{ marginBottom: '15px' }}>
@@ -132,8 +139,8 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               label="Сумма:"
               type="text"
               variant="standard"
-              value={item.amount}
-              name="amount"
+              value={item.amount_pay}
+              name="amount_pay"
               onChange={handleChange}
             />
           </FormControl>

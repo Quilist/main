@@ -11,10 +11,10 @@ import AuthPasswordRecovery from '@/pages/Auth/AuthPasswordRecovery';
 
 //App layouts
 import Dashboard from '@/pages/Dashboard/Dashboard';
-import PageClients from '@/pages/PageClients';
+import Clients from '@/pages/Clients/Clients';
 
-import PageAllMoves from '@/pages/PageAllMoves';
-import PageProductsAndServices from '@/pages/PageProductsAndServices';
+import AllMoves from '@/pages/AllMoves/AllMoves';
+import ProductsAndServices from '@/pages/ProductsAndServices/ProductsAndServices';
 import PageOrdersAndSales from '@/pages/PageOrdersAndSales';
 import PageMoney from '@/pages/PageMoney';
 import PagePurchasesAndStorage from '@/pages/PagePurchasesAndStorage';
@@ -129,9 +129,11 @@ function App() {
 
               {/* Страницы категорий меню */}\
               <Route path="/dashboard" element={<> <AppLayout component={ <Dashboard /> }/> </>} />
-              <Route path="/allMoves" element={<PageAllMoves />} />
-              <Route path="/productsAndService" element={<PageProductsAndServices />} />
-              <Route path="/clients" element={<PageClients />} />
+              <Route path="/allMoves" element={<> <AppLayout component={ <AllMoves /> }/> </>} />
+              <Route path="/productsAndService" element={<> <AppLayout component={ <ProductsAndServices /> }/> </>} />
+              <Route path="/clients" element={<> <AppLayout component={ <Clients /> }/> </>} />
+
+
               <Route path="/ordersAndSales" element={<PageOrdersAndSales />} />
               <Route path="/reports" element={<PageReports />} />
               <Route path="/money" element={<PageMoney />} />
