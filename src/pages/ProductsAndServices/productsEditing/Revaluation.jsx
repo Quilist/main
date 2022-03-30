@@ -1,14 +1,12 @@
-
-function AllMoves() {
-  return (
-    <>
+function Revaluation() {
+    return <>
       <section className="home-section">
         <div className="home-content">
-          все движения
+          Переоценка
         </div>
       </section>
     </>
-  )
-}
-
-export default AllMoves;
+  }
+  
+  export default Revaluation;
+  
