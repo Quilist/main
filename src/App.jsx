@@ -78,13 +78,13 @@ import PageOrder from '@/pages/PageOrder';
 import PageImportClients from '@/pages/PageImportClients';
 import PageUserEditing from '@/pages/PageUserEditing';
 import PageSupplierEditing from '@/pages/directory/PageSupplierEditing'
-import './App.css';
+//import './styles/app.css';
 
 
 import { UserIdProvider } from './providers/UserIdProvider';
 import { EmployeeIdProvider } from './providers/EmployeeIdProvider';
 
-import Sidebar from "@/sidebar/Sidebar";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
 
 const AppLayout = ({ component }) => {
   return (

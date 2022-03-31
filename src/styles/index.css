@@ -12,3 +12,8 @@ code {
     monospace;
 }
 
+@import url('./app.css');
+@import url('./main.css');
+@import url('./media.css');
+
+

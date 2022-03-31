@@ -1,5 +1,5 @@
 import SavePriceList from "../../productsAndServices/productsEditing/SavePriceList"
-import Sidebar from "../../sidebar/Sidebar";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import DocumentTitle from 'react-document-title'
 
 function PageSavePriceList() {

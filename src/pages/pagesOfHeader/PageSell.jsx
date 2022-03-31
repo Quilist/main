@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../../sidebar/Sidebar";
-import Sell from "../../header/headersButtons/Sell";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Sell from "@/components/layout/Header/headersButtons/Sell";
 
 
 const PageSell = () => {

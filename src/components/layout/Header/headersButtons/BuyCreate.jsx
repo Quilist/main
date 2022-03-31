@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import Sidebar from '@/sidebar/Sidebar';
+import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 import BuyForm from './components/BuyForm';
 

@@ -1,6 +1,6 @@
 
 import AddProduct from "../../productsAndServices/productsEditing/AddProduct"
-import Sidebar from "../../sidebar/Sidebar";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import DocumentTitle from 'react-document-title'
 
 function PageAddProduct() {

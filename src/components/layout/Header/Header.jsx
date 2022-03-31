@@ -23,7 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
 import styles from './Header.module.css'
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import {useState} from "react";
 
 const payOptions = [

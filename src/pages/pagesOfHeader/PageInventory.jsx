@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../../sidebar/Sidebar";
-import Inventory from "../../header/headersButtons/Inventory";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Inventory from "@/components/layout/Header/headersButtons/Inventory";
 
 
 const PageInventory = () => {

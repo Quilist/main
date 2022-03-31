@@ -1,5 +1,5 @@
 import ImportOfGoods from "../../productsAndServices/productsEditing/ImportOfGoods"
-import Sidebar from "../../sidebar/Sidebar";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import DocumentTitle from 'react-document-title'
 
 function PageImportOfGoods() {

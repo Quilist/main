@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../../sidebar/Sidebar";
-import Buy from "../../header/headersButtons/Buy";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Buy from "@/components/layout/Header/headersButtons/Buy";
 
 
 const PageBuy = () => {

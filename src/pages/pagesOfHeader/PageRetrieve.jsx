@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../../sidebar/Sidebar";
-import Retrieve from "../../header/headersButtons/Retrieve";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Retrieve from "@/components/layout/Header/headersButtons/Retrieve";
 
 
 const PageRetrieve = () => {

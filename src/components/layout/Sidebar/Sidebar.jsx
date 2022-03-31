@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Header from "../header/Header";
+import Header from "@/components/layout/Header/Header";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Buffer } from "buffer";

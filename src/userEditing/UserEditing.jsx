@@ -6,7 +6,7 @@ import UserForm from './UserFrom';
 import InformationForm from './InformationForm';
 
 import Button from '@mui/material/Button';
-import Sidebar from '../sidebar/Sidebar';
+import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 import styles from './UserEditing.module.css'
 import API from '../api/api'

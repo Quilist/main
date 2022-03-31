@@ -264,7 +264,7 @@ input::placeholder {
 
 .wrapper__search button:before {
     content: "";
-    background: url(../img/search.svg) no-repeat center/cover;
+    background: url(../static/img/search.svg) no-repeat center/cover;
     display: block;
     width: 12px;
     height: 16px;

@@ -1,5 +1,5 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../../sidebar/Sidebar";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import EmployeeEditing from '../../employeeEditing/EmployeeEditing';  
 
 const PageLegalEntities = () => { 

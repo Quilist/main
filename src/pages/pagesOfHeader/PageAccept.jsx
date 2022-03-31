@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
-import Sidebar from "../../sidebar/Sidebar";
-import Accept from "../../header/headersButtons/Accept";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Accept from "@/components/layout/Header/headersButtons/Accept";
 
 
 const PageAccept = () => {
