@@ -78,10 +78,14 @@ input {
     font-weight: 700;
     font-size: 24px;
     line-height: 33px;
-    padding: 13px 0;
+    padding: 5px 0;
     display: block;
     color: #7096FF;
     text-decoration: none;
+}
+
+.navigation__logo__title {
+    font-size: 18px;
 }
 
 .navigation .navigation__logo {
@@ -646,9 +650,11 @@ input:checked+.slider.round:before {
 .dropdown {
     position: relative
 }
+
 .dropdown ul {
     display: none
 }
+
 .dropdown-open ul {
     display: block;
     position: absolute;

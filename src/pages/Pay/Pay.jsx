@@ -14,7 +14,7 @@ function Pay() {
   const [isRedirect, setIsRedirect] = React.useState(false)
 
   React.useEffect(() => {
-    document.title = "B-Fin: Оплата"
+    document.title = "Оплата"
     // eslint-disable-next-line
   }, [])
 

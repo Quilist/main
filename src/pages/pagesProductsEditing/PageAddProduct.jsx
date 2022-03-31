@@ -5,9 +5,9 @@ import DocumentTitle from 'react-document-title'
 
 function PageAddProduct() {
   return (
-    <DocumentTitle title='B-Fin: Изменить товар'><div>
+    <DocumentTitle title='Изменить товар'><div>
       <Sidebar />
-      <AddProduct/>
+      <AddProduct />
     </div></DocumentTitle>
 
   )

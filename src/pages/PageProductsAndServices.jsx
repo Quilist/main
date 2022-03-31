@@ -5,7 +5,7 @@ import ProductsAndServices from '../productsAndServices/ProductsAndServices';
 
 const PageProductsAndServices = () => {
   return (
-    <DocumentTitle title='B-Fin: Товары и услуги'>
+    <DocumentTitle title='Товары и услуги'>
       <div >
         <Sidebar />
         <ProductsAndServices />

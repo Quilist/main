@@ -4,7 +4,7 @@ import Sidebar from '../sidebar/Sidebar';
 
 function PageUserEditing() {
   return (
-    <DocumentTitle title='B-Fin: Изменить клиента'><div>
+    <DocumentTitle title='Изменить клиента'><div>
       <Sidebar />
       <UserEditing />
     </div></DocumentTitle>

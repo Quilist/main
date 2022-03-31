@@ -4,9 +4,9 @@ import DocumentTitle from 'react-document-title'
 
 function PageSavePriceList() {
   return (
-    <DocumentTitle title='B-Fin: Скачать прайс-лист'><div>
+    <DocumentTitle title='Скачать прайс-лист'><div>
       <Sidebar />
-      <SavePriceList/>
+      <SavePriceList />
     </div></DocumentTitle>
 
   )

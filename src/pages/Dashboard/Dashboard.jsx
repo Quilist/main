@@ -2,8 +2,7 @@ import * as React from "react";
 
 function Dashboard() {
   React.useEffect(() => {
-    document.title = "B-Fin: Показатели"
-    // eslint-disable-next-line
+    document.title = "Показатели"
   }, [])
 
   return (

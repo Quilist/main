@@ -32,16 +32,18 @@ export default function Sidebar() {
   const dropDownDirectory = () => {
     setIsDropDirectory(!isDropDirectory);
   };
+
   const handleClickAway = (e) => {
     // if (typeof e.target.className === 'string') {
     //   const component = (e.target.className).slice(0, 8)
-    //   if (component !== 'arrowImg') {
+    //   if (component !== 'sidebar close') {
     //     setActiveSidebar(true);
     //   }
     // } else {
     //   setActiveSidebar(true);
     // }
   }
+
   const dropDown = () => {
     setDrop(!isDrop);
   };
@@ -90,7 +92,7 @@ export default function Sidebar() {
       {/*  <span className="page__title">{title}</span>*/}
       {/*</div>*/}
       <div className={searchState}>
-        <a href="#" className="menu-gumb" onClick={toggleSidebar}>
+        <a href="#" className="menu-gumb" onClick={toggleSidebar} >
           <div className="button_container" >
             <span className="top"></span>
             <span className="middle"></span>
@@ -98,7 +100,8 @@ export default function Sidebar() {
           </div>
         </a>
         <a href="#" className="navigation__logo">
-          B-Fin:{headerTitle}
+          <i className="fas fa-wallet"></i> &nbsp;
+          B-Fin: {headerTitle}
         </a>
         <div className="wrapper__search">
           <form>
@@ -126,10 +129,10 @@ export default function Sidebar() {
             <img src={burgerImg} onClick={toggleSidebar} className={isActiveSidebar ? 'burger-menu__img' : 'icon-hide'} alt="burgerMenu" />
             <img src={crossImg} onClick={toggleSidebar} className={!isActiveSidebar ? "cross-menu__img" : "icon-hide"} alt="cross" />
           </div>
-          <div className="logo-details">
+          {/* <div className="logo-details">
             <i className="fas fa-wallet"></i>
             <span className="logo_name">B-Fin</span>
-          </div>
+          </div> */}
           <ul className="nav-links">
             <div>
               <li>
