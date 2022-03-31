@@ -5,7 +5,7 @@ import Money from '../money/MoneyNew';
 
 const PageMoney = () => {
   return (
-    <DocumentTitle title='B-Fin: Деньги'>
+    <DocumentTitle title='Деньги'>
       <div >
         <Sidebar />
         <Money />
