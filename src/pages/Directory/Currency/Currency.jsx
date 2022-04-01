@@ -50,7 +50,7 @@ export default function Currency() {
       })
       api.all('currency').then(data => {
         if (data.status === "error") alert(data.message)
-        else setRows(data.message)
+        else setRows(data.message.items)
       })
     }
     // eslint-disable-next-line

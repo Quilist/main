@@ -248,7 +248,7 @@ export default function Supplier() {
    React.useEffect(() => {
       api.all('supplier').then(data => {
          if (data.status === "error") alert(data.message)
-         else setRows(data.message)
+         else setRows(data.message.items)
       })
       // eslint-disable-next-line 
    }, [])

@@ -33,7 +33,7 @@ export default function Employee() {
   React.useEffect(() => {
      api.all('employee').then(data => {
         if (data.status === "error") alert(data.message)
-        else setRows(data.message)
+        else setRows(data.message.items)
      })
   }, [])
 

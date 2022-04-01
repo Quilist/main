@@ -37,7 +37,7 @@ export default function Storehouse() {
     if(!openEditModal && !open) {
       api.all('storehouse').then(data => {
         if (data.status === "error") alert(data.message)
-        else setRows(data.message)
+        else setRows(data.message.items)
       })
     }
     // eslint-disable-next-line
