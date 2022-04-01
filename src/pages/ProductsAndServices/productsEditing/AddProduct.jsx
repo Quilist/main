@@ -6,7 +6,7 @@ import ProductForm from './components/ProductForm';
 
 import Button from '@mui/material/Button';
 
-import styles from './css/ProductForm.module.css'
+import styles from '@/styles/modules/ProductForm.module.css'
 import API from '@/api/api'
 
 function Pay() {
@@ -15,7 +15,7 @@ function Pay() {
   const [isRedirect, setIsRedirect] = React.useState(false)
 
   // ========================================
-  const [data, setData] = React.useState(null)
+  const [data] = React.useState(null)
   const api = new API();
 
   const [item, setItem] = React.useState({});

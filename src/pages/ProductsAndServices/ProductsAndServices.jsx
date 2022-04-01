@@ -413,6 +413,11 @@ function ProductsAndServices() {
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
    const [isRedirect, setIsRedirect] = React.useState(false);
 
+
+  React.useEffect(() => {
+    document.title = "B-Fin: Товары и услуги"
+    // eslint-disable-next-line
+  }, [])
    
 
     const handleRequestSort = (event, property) => {

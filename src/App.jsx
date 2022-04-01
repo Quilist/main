@@ -15,71 +15,68 @@ import Clients from '@/pages/Clients/Clients';
 
 import AllMoves from '@/pages/AllMoves/AllMoves';
 import ProductsAndServices from '@/pages/ProductsAndServices/ProductsAndServices';
-import PageOrdersAndSales from '@/pages/PageOrdersAndSales';
-import PageMoney from '@/pages/PageMoney';
-import PagePurchasesAndStorage from '@/pages/PagePurchasesAndStorage';
-import PageReports from '@/pages/PageReports';
-import PageCosts from '@/pages/pagesOfReports/PageCosts';
-import PageDebts from '@/pages/pagesOfReports/PageDebts';
-import PageFinancialResult from '@/pages/pagesOfReports/PageFinancialResult';
-import PageIncome from '@/pages/pagesOfReports/PageIncome';
-import PagePriceList from '@/pages/pagesOfReports/PagePriceList';
-import PageProducts from '@/pages/pagesOfReports/PageProducts';
-import PagePurchasesAndReceipts from '@/pages/pagesOfReports/PagePurchasesAndReceipts';
-import PageReconciliationActs from '@/pages/pagesOfReports/PageReconciliationActs';
-import PageReportMoney from '@/pages/pagesOfReports/PageReportMoney';
-import PageSalesAndOrders from '@/pages/pagesOfReports/PageSalesAndOrders';
-import PageHistory from '@/pages/PageHistory';
-import PageSettings from '@/pages/PageSettings';
-import PageAccept from '@/pages/pagesOfHeader/PageAccept';
-import PageBuy from '@/pages/pagesOfHeader/PageBuy';
-import PageBuyCreate from '@/pages/pagesOfHeader/PageBuyCreate';
-import PageInventory from '@/pages/pagesOfHeader/PageInventory';
-import PagePay from '@/pages/pagesOfHeader/PagePay';
-import PageRetrieve from '@/pages/pagesOfHeader/PageRetrieve';
-import PageLegalEntitesEditing from '@/pages/directory/PageLegalEntitesEditing'
+import OrdersAndSales from '@/pages/OrdersAndSales/OrdersAndSales';
+import Money from '@/pages/Money/MoneyNew';
+import PurchasesAndStorage from '@/pages/PurchasesAndStorage/PurchasesAndStorage';
+import Reports from '@/pages/Reports/Reports';
+import Cost from '@/pages/pagesOfReports/PageCosts';
+import Debt from '@/pages/pagesOfReports/PageDebts';
+import FinancialResult from '@/pages/pagesOfReports/PageFinancialResult';
+import Income from '@/pages/pagesOfReports/PageIncome';
+import PriceList from '@/pages/pagesOfReports/PagePriceList';
+import Product from '@/pages/pagesOfReports/PageProducts';
+import PurchaseAndReceipt from '@/pages/pagesOfReports/PagePurchasesAndReceipts';
+import ReconciliationAct from '@/pages/pagesOfReports/PageReconciliationActs';
+import ReportMoney from '@/pages/pagesOfReports/PageReportMoney';
+import SaleAndOrder from '@/pages/pagesOfReports/PageSalesAndOrders';
+import History from '@/pages/History/History';
+import Settings from '@/pages/Settings/Settings';
+import Accept from '@/pages/pagesOfHeader/PageAccept';
+import Buy from '@/pages/pagesOfHeader/PageBuy';
+import BuyCreate from '@/pages/pagesOfHeader/PageBuyCreate';
+import Inventory from '@/pages/pagesOfHeader/PageInventory';
+import Retrieve from '@/pages/pagesOfHeader/PageRetrieve';
+import LegalEntityEditing from '@/pages/Directory/LegalEntity/Edit/LegalEntitesEditing'
 
-import PageSell from '@/pages/pagesOfHeader/PageSell';
-import PagePolitikaKonfidentsialnostiFacebook from '@/pages/low/PagePolitikaKonfidentsialnostiFacebook'
-import InstructionsForDeletingUserData from '@/pages/low/InstructionsForDeletingUserData';
-
+import Sell from '@/pages/pagesOfHeader/PageSell';
+import PolitikaKonfidentsialnostiFacebook from '@/pages/Low/PagePolitikaKonfidentsialnostiFacebook'
+import InstructionsForDeletingUserData from '@/pages/Low/InstructionsForDeletingUserData';
 
 
-import PageAddProduct from '@/pages/pagesProductsEditing/PageAddProduct';
-import PageImportOfGoods from '@/pages/pagesProductsEditing/PageImportOfGoods';
-import PageRevaluation from '@/pages/pagesProductsEditing/PageRevaluation';
-import PageSavePriceList from '@/pages/pagesProductsEditing/PageSavePriceList';
+
+import AddProduct from '@/pages/ProductsEditing/PageAddProduct';
+import ImportOfGoods from '@/pages/ProductsEditing/PageImportOfGoods';
+import Revaluation from '@/pages/ProductsEditing/PageRevaluation';
+import SavePriceList from '@/pages/ProductsEditing/PageSavePriceList';
 
 // справочник
-import PageDirectory from '@/pages/directory/PageDirectory'
-import PageLegalEntities from '@/pages/directory/PageLegalEntities'
-import PageСashAndAccounts from '@/pages/directory/PageСashAndAccounts';
-import PageEmployees from '@/pages/directory/PageEmployees'
-import PageMeasure from '@/pages/directory/PageMeasure'
-import PageStorehouse from '@/pages/directory/PageStorehouse'
-import PageSuppliers from '@/pages/directory/PageSuppliers'
-import PageTypePrice from '@/pages/directory/PageTypePrice'
-import PageBanksDetails from '@/pages/directory/PageBanksDetails'
-import PageBankDetailCreate from './directory-components/directory/BankDetail/BankDetailCreate'
-import PageBankDetailEdit from './directory-components/directory/BankDetail/BankDetailEdit'
-import PageIncomeItems from '@/pages/directory/PageIncomeItems'
-import PageExpenditure from '@/pages/directory/PageExpenditure'
+import DirectoryCategory from '@/pages/Directory/DirectoryCategory/DirectoryCategory'
+import LegalEntity from '@/pages/Directory/LegalEntity/LegalEntity'
+import CashAndAccount from '@/pages/Directory/CashAndAccount/CashAndAccount';
+import Employee from '@/pages/Directory/Employee/Employee'
+import Measure from '@/pages/Directory/Measure/Measure'
+import Storehouse from '@/pages/Directory/Storehouse/Storehouse'
+import Supplier from '@/pages/Directory/Supplier/Supplier'
+import TypePrice from '@/pages/Directory/TypePrice/TypePrice'
+import BanksDetail from '@/pages/Directory/BankDetail/BankDetail'
+import BankDetailCreate from '@/pages/Directory/BankDetail/BankDetailCreate'
+import BankDetailEdit from '@/pages/Directory/BankDetail/BankDetailEdit'
+import IncomeItem from '@/pages/Directory/IncomeItem/IncomeItem'
+import Expenditure from '@/pages/Directory/Expenditure/Expenditure'
 
 
-import PageEmployeesEditing from '@/pages/directory/PageEmployeesEditing';
+import EmployeesEditing from '@/pages/Directory/Employee/Edit/EmployeeEditing';
 
-import PageСurrencies from '@/pages/directory/PageСurrencies'
+import Сurrency from '@/pages/Directory/Currency/Currency'
 
 import Pay from "@/pages/Pay/Pay";
 
 
-import PageInvoice from '@/pages/PageInvoice';
-import PageOrder from '@/pages/PageOrder';
-import PageImportClients from '@/pages/PageImportClients';
-import PageUserEditing from '@/pages/PageUserEditing';
-import PageSupplierEditing from '@/pages/directory/PageSupplierEditing'
-//import './styles/app.css';
-
+import Invoice from '@/pages/Invoice/Invoice';
+import Order from '@/pages/Order/Order';
+import ImportClient from '@/pages/Clients/ImportClients';
+import UserEditing from '@/pages/Clients/Edit/UserEditing';
+import SupplierEditing from '@/pages/Directory/Supplier/Edit/SupplierEditing'
 
 import { UserIdProvider } from './providers/UserIdProvider';
 import { EmployeeIdProvider } from './providers/EmployeeIdProvider';
@@ -132,97 +129,91 @@ function App() {
               <Route path="/allMoves" element={<> <AppLayout component={ <AllMoves /> }/> </>} />
               <Route path="/productsAndService" element={<> <AppLayout component={ <ProductsAndServices /> }/> </>} />
               <Route path="/clients" element={<> <AppLayout component={ <Clients /> }/> </>} />
+              <Route path="/ordersAndSales" element={<> <AppLayout component={ <OrdersAndSales /> }/> </>} />
+              <Route path="/reports" element={<> <AppLayout component={ <Reports /> }/> </>} />
+              <Route path="/money" element={<> <AppLayout component={ <Money /> }/> </>} />
 
-
-              <Route path="/ordersAndSales" element={<PageOrdersAndSales />} />
-              <Route path="/reports" element={<PageReports />} />
-              <Route path="/money" element={<PageMoney />} />
-              <Route path="/purchasesAndStorage" element={<PagePurchasesAndStorage />} />
-              <Route path="/reports" element={<PageReports />} />
-              <Route path="/history" element={<PageHistory />} />
-              <Route path="/settings" element={<PageSettings />} />
-              <Route path="/directory" element={<PageDirectory />} />
-
+              <Route path="/purchasesAndStorage" element={<> <AppLayout component={ <PurchasesAndStorage /> }/> </>} />
+              <Route path="/history" element={<> <AppLayout component={ <History /> }/> </>} />
+              <Route path="/settings" element={<> <AppLayout component={ <Settings /> }/> </>} />
+              <Route path="/directory" element={<> <AppLayout component={ <DirectoryCategory /> }/> </>} />
 
 
 
               {/* Отчеты  */}
-              <Route path="/costs" element={<PageCosts />} />
-              <Route path="/debts" element={<PageDebts />} />
-              <Route path="/financial-result" element={<PageFinancialResult />} />
-              <Route path="/income" element={<PageIncome />} />
-              <Route path="/price-list" element={<PagePriceList />} />
-              <Route path="/products" element={<PageProducts />} />
-              <Route path="/purchases-and-receipts" element={<PagePurchasesAndReceipts />} />
-              <Route path="/reconciliation-acts" element={<PageReconciliationActs />} />
-              <Route path="/report-money" element={<PageReportMoney />} />
-              <Route path="/sales-and-orders" element={<PageSalesAndOrders />} />
+              <Route path="/costs" element={<> <AppLayout component={ <Cost /> }/> </>} />
+              <Route path="/debts" element={<> <AppLayout component={ <Debt /> }/> </>} />
+              <Route path="/financial-result" element={<> <AppLayout component={ <FinancialResult /> }/> </>} />
+              <Route path="/income" element={<> <AppLayout component={ <Income /> }/> </>} />
+              <Route path="/price-list" element={<> <AppLayout component={ <PriceList /> }/> </>} />
+              <Route path="/products" element={<> <AppLayout component={ <Product /> }/> </>} />
+              <Route path="/purchases-and-receipts" element={<> <AppLayout component={ <PurchaseAndReceipt /> }/> </>} />
+              <Route path="/reconciliation-acts" element={<> <AppLayout component={ <ReconciliationAct /> }/> </>} />
+              <Route path="/report-money" element={<> <AppLayout component={ <ReportMoney /> }/> </>} />
+              <Route path="/sales-and-orders" element={<> <AppLayout component={ <SaleAndOrder /> }/> </>} />
 
               {/*Обработка товаров и услуг*/}
-              <Route path="/add_product" element={<PageAddProduct />} />
-              <Route path="/revaluation" element={<PageRevaluation />} />
-              <Route path="/import_products" element={<PageImportOfGoods />} />
-              <Route path="/save_price_list" element={<PageSavePriceList />} />
+              <Route path="/add_product" element={<> <AppLayout component={ <AddProduct /> }/> </>} />
+              <Route path="/revaluation" element={<> <AppLayout component={ <Revaluation /> }/> </>} />
+              <Route path="/import_products" element={<> <AppLayout component={ <ImportOfGoods /> }/> </>} />
+              <Route path="/save_price_list" element={<> <AppLayout component={ <SavePriceList /> }/> </>} />
 
               {/* Обработка клиентов */}
-              <Route path="/editing" element={<PageUserEditing />} />
-              <Route path="/import_clients" element={<PageImportClients />} />
+              <Route path="/editing" element={<> <AppLayout component={ <UserEditing /> }/> </>} />
+              <Route path="/import_clients" element={<> <AppLayout component={ <ImportClient /> }/> </>} />
 
               {/* Обработка поставщиков */}
-              <Route path="/editing_supplier" element={<PageSupplierEditing />} />
+              <Route path="/editing_supplier" element={<> <AppLayout component={ <SupplierEditing /> }/> </>} />
 
               {/* Обработка сотрудников  */}
-              <Route path="/employees_editing" element={<PageEmployeesEditing />} />
+              <Route path="/employees_editing" element={<> <AppLayout component={ <EmployeesEditing /> }/> </>} />
 
               {/* Обработка моих юрлиц */}
-              <Route path="/editing_legal_entities" element={<PageLegalEntitesEditing />} />
-
-
+              <Route path="/editing_legal_entities" element={<> <AppLayout component={ <LegalEntityEditing /> }/> </>} />
 
 
               {/* Действия  */}
-              <Route path="/accept" element={<PageAccept />} />
-              <Route path="/buy" element={<PageBuy />} />
-              <Route path="/buy/create" element={<PageBuyCreate />} />
-              <Route path="/inventory" element={<PageInventory />} />
-              <Route path="/pay" element={<PagePay />} />
-              <Route path="/retrieve" element={<PageRetrieve />} />
-              <Route path="/sell" element={<PageSell />} />
-              <Route path="/invoice" element={<PageInvoice />} />
-              <Route path="/order" element={<PageOrder />} />
+              <Route path="/accept" element={<> <AppLayout component={ <Accept /> }/> </>} />
+              <Route path="/buy" element={<> <AppLayout component={ <Buy /> }/> </>} />
+              <Route path="/buy/create" element={<> <AppLayout component={ <BuyCreate /> }/> </>} />
+              <Route path="/inventory" element={<> <AppLayout component={ <Inventory /> }/> </>} />
+              <Route path="/pay" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/retrieve" element={<> <AppLayout component={ <Retrieve /> }/> </>} />
+              <Route path="/sell" element={<> <AppLayout component={ <Sell /> }/> </>} />
+              <Route path="/invoice" element={<> <AppLayout component={ <Invoice /> }/> </>} />
+              <Route path="/order" element={<> <AppLayout component={ <Order /> }/> </>} />
 
               {/* Оплата  */}
-              <Route path="/pay_supplier" element={<Pay />} />
-              <Route path="/pay_customer" element={<Pay />} />
-              <Route path="/expend" element={<Pay />} />
-              <Route path="/salary" element={<Pay />} />
-              <Route path="/pay_owner" element={<Pay />} />
+              <Route path="/pay_supplier" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/pay_customer" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/expend" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/salary" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/pay_owner" element={<> <AppLayout component={ <Pay /> }/> </>} />
 
-              <Route path="/receive_customer" element={<Pay />} />
-              <Route path="/receive_supplier" element={<Pay />} />
-              <Route path="/receive_income" element={<Pay />} />
-              <Route path="/receive_owner" element={<Pay />} />
-              <Route path="/receive_balance" element={<Pay />} />
+              <Route path="/receive_customer" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/receive_supplier" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/receive_income" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/receive_owner" element={<> <AppLayout component={ <Pay /> }/> </>} />
+              <Route path="/receive_balance" element={<> <AppLayout component={ <Pay /> }/> </>} />
 
               {/* Справочник  */}
-              <Route path="/cash_accounts" element={<PageСashAndAccounts />} />
-              <Route path="/banks_details" element={<PageBanksDetails />} />
-              <Route path="/banks_details/create" element={<PageBankDetailCreate />} />
-              <Route path="/banks_details/:id" element={<PageBankDetailEdit />} />
-              <Route path="/legal_entities" element={<PageLegalEntities />} />
-              <Route path="/storehouse" element={<PageStorehouse />} />
-              <Route path="/suppliers" element={<PageSuppliers />} />
-              <Route path="/employees" element={<PageEmployees />} />
-              <Route path="/measure" element={<PageMeasure />} />
-              <Route path="/income_items" element={<PageIncomeItems />} />
-              <Route path="/expenditure" element={<PageExpenditure />} />
-              <Route path="/currencies" element={<PageСurrencies />} />
-              <Route path="/type_price" element={<PageTypePrice />} />
+              <Route path="/cash_accounts" element={<> <AppLayout component={ <CashAndAccount /> }/> </>} />
+              <Route path="/banks_details" element={<> <AppLayout component={ <BanksDetail /> }/> </>} />
+              <Route path="/banks_details/create" element={<> <AppLayout component={ <BankDetailCreate /> }/> </>} />
+              <Route path="/banks_details/:id" element={<> <AppLayout component={ <BankDetailEdit /> }/> </>} />
+              <Route path="/legal_entities" element={<> <AppLayout component={ <LegalEntity /> }/> </>} />
+              <Route path="/storehouse" element={<> <AppLayout component={ <Storehouse /> }/> </>} />
+              <Route path="/suppliers" element={<> <AppLayout component={ <Supplier /> }/> </>} />
+              <Route path="/employees" element={<> <AppLayout component={ <Employee /> }/> </>} />
+              <Route path="/measure" element={<> <AppLayout component={ <Measure /> }/> </>} />
+              <Route path="/income_items" element={<> <AppLayout component={ <IncomeItem /> }/> </>} />
+              <Route path="/expenditure" element={<> <AppLayout component={ <Expenditure /> }/> </>} />
+              <Route path="/currencies" element={<> <AppLayout component={ <Сurrency /> }/> </>} />
+              <Route path="/type_price" element={<> <AppLayout component={ <TypePrice /> }/> </>} />
 
               {/* Политика безопасности */}
-              <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<PagePolitikaKonfidentsialnostiFacebook />} />
-              <Route path="/instructions-for-deleting-user-data" element={<InstructionsForDeletingUserData />} />
-
+              <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<> <AppLayout component={ <PolitikaKonfidentsialnostiFacebook /> }/> </>} />
+              <Route path="/instructions-for-deleting-user-data" element={<> <AppLayout component={ <InstructionsForDeletingUserData /> }/> </>} />
 
             </Routes>
           </Router>

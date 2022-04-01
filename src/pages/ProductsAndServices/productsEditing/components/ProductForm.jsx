@@ -8,43 +8,18 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-
-import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 
-import styles from './../css/ProductForm.module.css'
-
-import DateAdapter from '@mui/lab/AdapterMoment';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import styles from '@/styles/modules/ProductForm.module.css'
 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 const filterAutocomplete = createFilterOptions();
 
 function ProductForm({ item, setItem }) {
-  const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
-  const pageTypes = {
-    pay_supplier: 'Поставщик',
-    pay_customer: 'Клиенту(возврат)',
-    expend: 'Прочий расход',
-    salary: 'Зарплата',
-    pay_owner: 'Собственнику',
-    receive_customer: 'От клиента',
-    receive_supplier: 'От поставщика',
-    receive_income: 'Прочее поступление',
-    receive_owner: 'Взнос от собственника',
-    receive_balance: 'Ввод остатков',
-  }
-  const [payType, setPayType] = React.useState('cash');
   const [priceList, setPriceList] = React.useState([
     { name: 'Анкл ндс', price: null, currency: null },
     { name: 'Закупочная' },
@@ -55,10 +30,6 @@ function ProductForm({ item, setItem }) {
   ]);
 
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
-
-  const togglePayType = (e) => {
-    setPayType(e.target.value)
-  }
 
   const addPrice = (e) => {
     setPriceList([...priceList, { name: null, currency: null, value: null}]);
@@ -78,15 +49,6 @@ function ProductForm({ item, setItem }) {
     }));
   };
 
-  //цены
-  const prices = [
-    { name: 'Анкл ндс' },
-    { name: 'Закупочная' },
-    { name: 'Мини опт(от 5 до 10 ящ)' },
-    { name: 'Опт(от 10 до 22ящ)' },
-    { name: 'Цена обычная без НДС' },
-    { name: 'Цена обычная с НДС' }
-  ];
 
   //единицы измерения
   const units = [

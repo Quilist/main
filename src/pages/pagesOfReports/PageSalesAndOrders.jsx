@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
-import SalesAndOrders from "../../reports/linksOfReports/SalesAndOrders";
+import SalesAndOrders from "@/pages/Reports/linksOfReports/SalesAndOrders";
 
 
 const PageSalesAndOrders = () => {
