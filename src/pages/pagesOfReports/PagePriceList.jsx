@@ -1,6 +1,6 @@
 import DocumentTitle from 'react-document-title'
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
-import PriceList from "../../reports/linksOfReports/PriceList";
+import PriceList from "@/pages/Reports/linksOfReports/PriceList";
 
 
 const PagePriceList = () => {

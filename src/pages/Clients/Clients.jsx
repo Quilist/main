@@ -38,11 +38,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import API from '@/api/api';
 
-import phoneImg from './img/phone.png';
-import mailImg from './img/mail.png';
-import dutyImg from './img/duty.png';
+import phoneImg from '@/static/img/phone.png';
+import mailImg from '@/static/img/mail.png';
+import dutyImg from '@/static/img/duty.png';
 
-import styles from "./Client.module.css";
+import styles from "@/styles/modules/Client.module.css";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {

@@ -6,7 +6,7 @@ import PayForm from './components/PayForm';
 
 import Button from '@mui/material/Button';
 
-import styles from './css/PayForm.module.css'
+import styles from '@/styles/modules/PayForm.module.css'
 import API from '@/api/api'
 
 function Pay() {
@@ -20,7 +20,7 @@ function Pay() {
 
 
   // ========================================
-  const [data, setData] = React.useState(null)
+  const [data] = React.useState(null)
   const api = new API();
 
   const [item, setItem] = React.useState({});

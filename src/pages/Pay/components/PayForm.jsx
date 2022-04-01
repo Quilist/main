@@ -13,15 +13,13 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 
-import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 
-import styles from './../css/PayForm.module.css'
+import styles from '@/styles/modules/PayForm.module.css'
 
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import {currenciesList} from "../../../directory-components/directory/Currency/Currency";
 
 function PayForm({ item, setItem }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
@@ -122,6 +120,7 @@ function PayForm({ item, setItem }) {
 
   const handleTotalPay = () => {
     let totalList = []
+    // eslint-disable-next-line
     paymentList.map((item, i) => {
       const indexChange = changeList.findIndex((itemChange) => item.currency_id === itemChange.currency_id)
       if (indexChange !== -1) {
@@ -230,7 +229,7 @@ function PayForm({ item, setItem }) {
       </div>
 
       <div className={styles.boxesWrapper__information} >
-        {payType == 'bank_account' &&
+        {payType === 'bank_account' &&
           <div>
             <TextField
               sx={{ marginBottom: '15px' }} id="standard-multiline-flexible"
@@ -257,7 +256,7 @@ function PayForm({ item, setItem }) {
             </FormControl>
           </div>
         }
-        {payType == 'cash' &&
+        {payType === 'cash' &&
           <div>
             {paymentList.map((c, i) => {
               return (<div key={i}>
