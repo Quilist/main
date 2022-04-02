@@ -44,10 +44,17 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    if(name === 'amount_pay') {
+    if((name === 'exchange_rate' && item.amount_pay) || name === 'amount_pay') {
+      let amountReceive;
+      if(name === 'exchange_rate') {
+        amountReceive = item.amount_pay / value;
+      } else {
+        amountReceive = value / item.exchange_rate;
+      }
+      amountReceive = amountReceive.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
       setItem(prevItem => ({
         ...prevItem,
-        amount_receive: value
+        amount_receive: amountReceive
       }));
     }
     setItem(prevItem => ({
@@ -136,7 +143,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
           <FormControl fullWidth  style={{ marginBottom: '15px' }}>
             <TextField
               sx={{marginBottom: '15px'}}
-              label="Сумма:"
+              label="Сумма отдачи:"
               type="text"
               variant="standard"
               value={item.amount_pay}
@@ -144,6 +151,35 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               onChange={handleChange}
             />
           </FormControl>
+
+          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+            <TextField
+              sx={{marginBottom: '15px'}}
+              label="Курс обмена:"
+              type="text"
+              variant="standard"
+              value={item.exchange_rate}
+              name="exchange_rate"
+              onChange={handleChange}
+            />
+          </FormControl>
+
+          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+            <TextField
+              sx={{marginBottom: '15px'}}
+              label="Сумма получения:"
+              type="text"
+              name="amount_receive"
+              value={item.amount_receive}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+            />
+          </FormControl>
+
+
 
           <FormControl fullWidth  style={{ marginBottom: '15px' }}>
             <LocalizationProvider dateAdapter={DateAdapter}>

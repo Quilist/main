@@ -19,6 +19,7 @@ class API {
             incomeItem: '/income_items',
             typePrice: '/type_price',
             bankDetail: '/banks_details',
+            cashAndAccount: '/cash_and_accounts',
             payment: '/payments',
             money: '/money',
             moneyExchange: '/money/currency_exchange',
@@ -28,15 +29,27 @@ class API {
         return types[type];
     }
 
-    async request(method, path, body) {
-        const request = await fetch(`${this.api}${path}`, {
+    async request(method, path, body, params) {
+        let url = `${this.api}${path}`;
+        const data = {
             method: method,
-            body: JSON.stringify(body),
             headers: {
                 "content-type": "application/json",
             },
             credentials: "include"
-        });
+        }
+        if(body) {
+            data.body = JSON.stringify(body);
+        }
+        let query;
+        if(params) {
+            query = Object.keys(params)
+              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+              .join('&');
+            url = url + '?' + query;
+        }
+
+        const request = await fetch(url, data);
 
         return await request.json();
     }
@@ -95,6 +108,11 @@ class API {
     async remove(id, urlType) {
         const url = this.endpoints(urlType)
         return await this.request("POST", `${url}/${id}/remove`);
+    }
+
+    async auxiliary(urlType, params) {
+        const url = this.endpoints(urlType)
+        return await this.request("GET", `${url}/auxiliary/data`, null, params);
     }
 
 

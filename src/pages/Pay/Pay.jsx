@@ -12,12 +12,34 @@ import API from '@/api/api'
 function Pay() {
   const [isSuccess, setIsSuccess] = React.useState(null)
   const [isRedirect, setIsRedirect] = React.useState(false)
+  const [auxiliaryList, setAuxiliaryList] = React.useState(false)
+
+  const pageTypes = {
+    pay_supplier: 'Поставщик',
+    pay_customer: 'Клиенту(возврат)',
+    expend: 'Прочий расход',
+    salary: 'Зарплата',
+    pay_owner: 'Собственнику',
+    receive_customer: 'От клиента',
+    receive_supplier: 'От поставщика',
+    receive_income: 'Прочее поступление',
+    receive_owner: 'Взнос от собственника',
+    receive_balance: 'Ввод остатков',
+  }
+  const currentPathName = new URL(window.location.href).pathname.split('/')[1];
 
   React.useEffect(() => {
     document.title = "B-Fin: Оплата"
-    // eslint-disable-next-line
-  }, [])
 
+    const params = {
+      type: currentPathName
+    }
+    api.auxiliary('money', params).then(data => {
+      if (data.status === "error") alert(data.message)
+      else setAuxiliaryList(data.message)
+    })
+    // eslint-disable-next-line
+  }, [currentPathName])
 
   // ========================================
   const [data] = React.useState(null)
@@ -79,6 +101,8 @@ function Pay() {
           <PayForm
             item={item}
             setItem={setItem}
+            pageTypes={pageTypes}
+            currentPathName={currentPathName}
           />
         </div>
 

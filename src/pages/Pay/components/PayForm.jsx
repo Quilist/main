@@ -20,26 +20,71 @@ import styles from '@/styles/modules/PayForm.module.css'
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import {currenciesList} from "../../Directory/Currency/Currency";
 
-function PayForm({ item, setItem }) {
+function PayForm({ item, setItem, pageTypes, currentPathName }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
-  const pageTypes = {
-    pay_supplier: 'Поставщик',
-    pay_customer: 'Клиенту(возврат)',
-    expend: 'Прочий расход',
-    salary: 'Зарплата',
-    pay_owner: 'Собственнику',
-    receive_customer: 'От клиента',
-    receive_supplier: 'От поставщика',
-    receive_income: 'Прочее поступление',
-    receive_owner: 'Взнос от собственника',
-    receive_balance: 'Ввод остатков',
-  }
   const [payType, setPayType] = React.useState('cash');
   const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null}]);
-  const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null}]);
 
-  const currentPathName = new URL(window.location.href).pathname.split('/')[1];
+  const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null}]);
+  const [payCurrencyList, setPayCurrencyList] = React.useState([
+    {
+      name: 'UAH',
+      id: 1
+    },
+    {
+      name: 'RUB',
+      id: 2
+    },
+    {
+      name: 'USD',
+      id: 3
+    },
+    {
+      name: 'EUR',
+      id: 4
+    }
+    ]);
+  const [changeCurrencyList, setChangeCurrencyList] = React.useState([
+    {
+      name: 'UAH',
+      id: 1
+    },
+    {
+      name: 'RUB',
+      id: 2
+    },
+    {
+      name: 'USD',
+      id: 3
+    },
+    {
+      name: 'EUR',
+      id: 4
+    }
+  ]);
+  const [cashAccountList] = React.useState([
+    {
+      id: 1,
+      name: 'Тестовая ГРН',
+      currency_id: 1,
+      currency: {
+        name: 'UAH',
+        id: 1
+      }
+    },
+    {
+      id: 2,
+      name: 'Тестовая ДОЛ',
+      currency_id: 3,
+      currency: {
+        name: 'USD',
+        id: 3
+      }
+    }
+  ]);
+
 
   React.useEffect(() => {
     setItem({"type_order": 'cash', "type": "payment"});
@@ -98,6 +143,10 @@ function PayForm({ item, setItem }) {
 
   const updatePayment = (e, index, type) => {
     const { name, value } = e.target;
+
+    if(name === 'currency_id') {
+      //makeChangeCurrencyList(value);
+    }
     paymentList[index][name] = value
     paymentList[index] = Object.assign({}, paymentList[index], paymentTypes[type]);
     setItem(prevItem => ({
@@ -105,6 +154,16 @@ function PayForm({ item, setItem }) {
       payments: paymentList
     }));
     handleTotalPay();
+  };
+
+  const makeChangeCurrencyList = (currencyId) => {
+    const index = payCurrencyList.findIndex((item) => item.id === currencyId)
+
+    if (index !== -1) {
+      let n = payCurrencyList;
+
+      n.splice(index, 1)
+    }
   };
 
   const updateChange = (e, index, type) => {
@@ -201,7 +260,9 @@ function PayForm({ item, setItem }) {
             name="id_cash_accounts"
             onChange={handleChange}
           >
-            <MenuItem value={1}>Тестовый</MenuItem>
+            {cashAccountList.map((item, index) => {
+              return (<MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+            })}
           </Select>
         </FormControl>
 
@@ -269,10 +330,9 @@ function PayForm({ item, setItem }) {
                     name="currency_id"
                     onChange={(e) => updatePayment(e, i, 'payment')}
                   >
-                    <MenuItem value={1}>UAH</MenuItem>
-                    <MenuItem value={2}>RUB</MenuItem>
-                    <MenuItem value={3}>USD</MenuItem>
-                    <MenuItem value={4}>EUR</MenuItem>
+                    {payCurrencyList.map((currency, currencyIndex) => {
+                      return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                    })}
                   </Select>
                 </FormControl>
                 <TextField
@@ -300,10 +360,9 @@ function PayForm({ item, setItem }) {
                     name="currency_id"
                     onChange={(e) => updateChange(e, i, 'change')}
                   >
-                    <MenuItem value={1}>UAH</MenuItem>
-                    <MenuItem value={2}>RUB</MenuItem>
-                    <MenuItem value={3}>USD</MenuItem>
-                    <MenuItem value={4}>EUR</MenuItem>
+                    {changeCurrencyList.map((currency, currencyIndex) => {
+                      return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                    })}
                   </Select>
                 </FormControl>
                 <TextField
