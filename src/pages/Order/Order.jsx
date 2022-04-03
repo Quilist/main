@@ -2,7 +2,7 @@ import * as React from "react";
 
 function Order() {
   React.useEffect(() => {
-    document.title = "B-Fin: Заказы"
+    document.title = "Заказы"
     // eslint-disable-next-line
   }, [])
 

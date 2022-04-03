@@ -93,7 +93,7 @@ function Auth() {
       setActive(!isActive);
    }
    return (
-      <div style={{marginRight: '15px', marginLeft: '15px'}}>
+      <div style={{ marginRight: '15px', marginLeft: '15px' }}>
          <h2 className='form-reg_logo text-black margin-head' >Форма регистрации B-Fin</h2>
          <div className={isActive ? "container right-panel-active" : "container"} id="container">
             <div className='main-form-wrapper'>
@@ -101,35 +101,35 @@ function Auth() {
                   <form action="#" className='form-blank-bg'>
                      <h1 className='text-black'>Создать аккаунт</h1>
                      <div className="social-container">
-                     
+
                         <a href={`${api.api}/auth/facebook`} className="social">
                            <FontAwesomeIcon icon={faFacebookF} />
                         </a>
                         <a href={`${api.api}/auth/google`} className="social">
                            <FontAwesomeIcon icon={faGooglePlusG} />
                         </a>
-                     
+
                      </div>
                      <span className='text-black'>или используйте почту для входа</span>
-                     
+
                      <input type="text" name="login" placeholder="Логин" onChange={loginInput} />
                      <input type="email" name="email" placeholder="Почта" onChange={emailInput} />
                      <input type="password" name="pass" placeholder="Пароль" onChange={passwordInput} />
-                     <button onClick={registration}>Зарегистрироваться</button>
-                     
+                     <button onClick={registration} className='button__auth'>Зарегистрироваться</button>
+
                   </form>
                </div>
                <div className="form-container sign-in-container">
                   <form action="#" className='form-blank-bg'>
                      <h1 className='text-black'>Войти</h1>
                      <div className="social-container">
-                     
+
                         <a href={`${api.api}/auth/facebook`} className="social">
                            <FontAwesomeIcon icon={faFacebookF} />
                         </a>
                         <a href={`${api.api}/auth/google`} className="social">
                            <FontAwesomeIcon icon={faGooglePlusG} />
-                        </a> 
+                        </a>
 
                      </div>
                      <span className='text-black'>или используйте свою почту</span>
@@ -137,7 +137,7 @@ function Auth() {
                      <input type="email" name="email" placeholder="Почта" onChange={logEmailInput} />
                      <input type="password" name="pass" placeholder="Пароль" onChange={logPasswordInput} />
                      <Button variant="text" onClick={handleClickOpen}>Забыли пароль?</Button>
-                     <Dialog open={open} onClose={handleClose}>  
+                     <Dialog open={open} onClose={handleClose}>
 
                         <DialogTitle>Восстановление пароля</DialogTitle>
                         <DialogContent>
@@ -160,13 +160,13 @@ function Auth() {
                            <Button onClick={restoration}>Восстановить</Button>
                         </DialogActions>
                      </Dialog>
-                     <button onClick={login}>Войти</button>
+                     <button className='button__auth' onClick={login}>Войти</button>
                      <span className='polit'>Этот сайт защищен reCAPTCHA, а так же <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Политикой конфиденциальности</a> и <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Условиями использования</a> Google</span>
                   </form>
                </div>
 
 
-  {/*     <div>
+               {/*     <div>
          <h2>Форма регистрации B-Fin</h2>
          <div className={isActive ? "container right-panel-active" : "container"} id="container">
             <div className="form-container sign-up-container">
@@ -232,12 +232,12 @@ function Auth() {
                   <div className="overlay-panel overlay-left">
                      <h1>Привет!</h1>
                      <p className='margin-space'>Если у Вас уже есть аккаунт, пожалуйста, войдите под своей личной информацией</p>
-                     <button className="ghost" id="signIn" onClick={signUp}>Войти</button>
+                     <button className="button__auth ghost" id="signIn" onClick={signUp}>Войти</button>
                   </div>
                   <div className="overlay-panel overlay-right">
                      <h1>Привет, Друг!</h1>
                      <p className='margin-space'>Введите свои личные данные и начните путешествие с нами</p>
-                     <button className="ghost" id="signUp" onClick={signUp}>Зарегистрироваться</button>
+                     <button className="button__auth ghost" id="signUp" onClick={signUp}>Зарегистрироваться</button>
                   </div>
                </div>
             </div>

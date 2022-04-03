@@ -34,13 +34,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   const api = new API();
 
   React.useEffect(() => {
-    if(open) {
+    if (open) {
       const date = new Date();
       const milliseconds = date.getTime();
-      setItem({created_at: milliseconds})
+      setItem({ created_at: milliseconds })
     }
     // eslint-disable-next-line
-  },[open])
+  }, [open])
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -123,9 +123,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             </Select>
           </FormControl>
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <TextField
-              sx={{marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
               label="Сумма:"
               type="text"
               variant="standard"
@@ -135,7 +135,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             />
           </FormControl>
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <LocalizationProvider dateAdapter={DateAdapter}>
               <DatePicker
                 label="Дата"
@@ -148,9 +148,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             </LocalizationProvider>
           </FormControl>
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <TextField
-              sx={{marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
               label="Заметки:"
               type="text"
               variant="standard"

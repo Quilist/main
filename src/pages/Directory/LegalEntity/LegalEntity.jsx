@@ -21,7 +21,6 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -133,7 +132,7 @@ const EnhancedTableToolbar = (props) => {
    const navigate = useNavigate();
 
    React.useEffect(() => {
-      document.title = "B-Fin: Мои фирмы"
+      document.title = "Мои фирмы"
       // eslint-disable-next-line
    }, [])
 
@@ -295,13 +294,6 @@ export default function LegalEntity() {
          <section className="home-section">
             <div className="home-content">
                <Box sx={{ width: "100%" }}>
-                  <TextField
-                     fullWidth
-                     id="outlined-basic"
-                     label="Поиск"
-                     variant="outlined"
-                     size="small"
-                  />
                   <Paper sx={{ width: "100%", mb: 2, mt: 2 }}>
                      <EnhancedTableToolbar numSelected={selected.length} />
                      <TableContainer>

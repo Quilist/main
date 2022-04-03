@@ -21,7 +21,6 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import API from '@/api/api';
@@ -239,7 +238,7 @@ export default function EnhancedTable() {
 
 
   React.useEffect(() => {
-    document.title = "B-Fin: Справочник"
+    document.title = "Справочник"
     // eslint-disable-next-line
   }, [])
 
@@ -307,13 +306,6 @@ export default function EnhancedTable() {
       <section className="home-section">
         <div className="home-content">
           <Box sx={{ width: "100%" }}>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="Поиск"
-              variant="outlined"
-              size="small"
-            />
             <Paper sx={{ width: "100%", mb: 2, mt: 2 }}>
               <EnhancedTableToolbar numSelected={selected.length} />
               <TableContainer>

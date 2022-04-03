@@ -34,19 +34,19 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   const api = new API();
 
   React.useEffect(() => {
-    if(open) {
+    if (open) {
       const date = new Date();
       const milliseconds = date.getTime();
-      setItem({exchange_rate: 1, created_at: milliseconds})
+      setItem({ exchange_rate: 1, created_at: milliseconds })
     }
     // eslint-disable-next-line
-  },[open])
+  }, [open])
 
   const handleChange = e => {
     const { name, value } = e.target;
-    if((name === 'exchange_rate' && item.amount_pay) || name === 'amount_pay') {
+    if ((name === 'exchange_rate' && item.amount_pay) || name === 'amount_pay') {
       let amountReceive;
-      if(name === 'exchange_rate') {
+      if (name === 'exchange_rate') {
         amountReceive = item.amount_pay / value;
       } else {
         amountReceive = value / item.exchange_rate;
@@ -140,9 +140,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               <MenuItem value={4}>EUR</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <TextField
-              sx={{marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
               label="Сумма отдачи:"
               type="text"
               variant="standard"
@@ -152,9 +152,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             />
           </FormControl>
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <TextField
-              sx={{marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
               label="Курс обмена:"
               type="text"
               variant="standard"
@@ -164,9 +164,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             />
           </FormControl>
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <TextField
-              sx={{marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
               label="Сумма получения:"
               type="text"
               name="amount_receive"
@@ -181,7 +181,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
 
 
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <LocalizationProvider dateAdapter={DateAdapter}>
               <DatePicker
                 label="Дата"
@@ -194,9 +194,9 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
             </LocalizationProvider>
           </FormControl>
 
-          <FormControl fullWidth  style={{ marginBottom: '15px' }}>
+          <FormControl fullWidth style={{ marginBottom: '15px' }}>
             <TextField
-              sx={{marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
               label="Заметки:"
               type="text"
               variant="standard"

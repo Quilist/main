@@ -2,7 +2,7 @@ import * as React from "react";
 
 function History() {
   React.useEffect(() => {
-    document.title = "B-Fin: История изменений"
+    document.title = "История изменений"
     // eslint-disable-next-line
   }, [])
 
@@ -14,7 +14,7 @@ function History() {
         </div>
       </section>
     </>
-    
+
   )
 }
 

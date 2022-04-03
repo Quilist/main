@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import {TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import ExpenditureModal from './ExpenditureModal';
 import ExpenditureEditModal from './ExpenditureEditModal';
@@ -33,13 +33,13 @@ export default function Expenditure() {
   };
 
   React.useEffect(() => {
-    document.title = "B-Fin: Справочник"
+    document.title = "Справочник"
     // eslint-disable-next-line
   }, [])
 
   const api = new API()
   React.useEffect(() => {
-    if(!openEditModal && !open) {
+    if (!openEditModal && !open) {
       api.all('expenditure').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
@@ -61,7 +61,7 @@ export default function Expenditure() {
   return (
     <>
       <section className="home-section">
-        <div className="home-content" style={{display: 'flex', flexDirection: 'column'}}>
+        <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
           <ExpenditureModal
             open={open}
             setOpen={setOpen}
@@ -75,24 +75,16 @@ export default function Expenditure() {
               items={rows}
             />
           }
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Поиск"
-            variant="outlined"
-            size="small"
-            style={{marginBottom: '40px'}}
-          />
-          <div style={{marginBottom: '30px', width: '97%'}}>
+          <div style={{ marginBottom: '30px', width: '97%' }}>
             <Button onClick={handleOpen} variant="contained">Создать</Button>
           </div>
-          <Paper sx={{width: '100%', overflow: 'hidden'}}>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
                     <TableCell className={styles.table__head} align={'left'}
-                               style={{minWidth: '100px'}}>
+                      style={{ minWidth: '100px' }}>
                       Наименование
                     </TableCell>
                   </TableRow>
@@ -103,8 +95,8 @@ export default function Expenditure() {
                     .map((row, idx) => {
                       return (
                         <TableRow onClick={() => handleOpenEditModal(row.id)} hover
-                                  role="checkbox" tabIndex={-1} key={idx}
-                                  className={styles.table_row}>
+                          role="checkbox" tabIndex={-1} key={idx}
+                          className={styles.table_row}>
                           <TableCell style={{
                             display: 'flex',
                             alignItems: 'center',

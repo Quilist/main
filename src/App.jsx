@@ -38,7 +38,7 @@ import Inventory from '@/pages/pagesOfHeader/PageInventory';
 import Retrieve from '@/pages/pagesOfHeader/PageRetrieve';
 import LegalEntityEditing from '@/pages/Directory/LegalEntity/Edit/LegalEntitesEditing'
 
-import Sell from '@/pages/pagesOfHeader/PageSell';
+import Sell from '@/pages/pagesOfHeader/sell/PageSell';
 import PolitikaKonfidentsialnostiFacebook from '@/pages/Low/PagePolitikaKonfidentsialnostiFacebook'
 import InstructionsForDeletingUserData from '@/pages/Low/InstructionsForDeletingUserData';
 
@@ -114,110 +114,110 @@ function App() {
   return (
     <UserIdProvider>
       <EmployeeIdProvider>
-        <div>
-          <Router>
-            <Routes>
-              {/* Лендинг для рекламы */}
-              <Route path="/" element={<> <LandingLayout component={ <Landing /> }/> </>} />
 
-              {/* Аутентификация */}
-              <Route path="/registration" element={<> <AuthLayout component={ <Auth /> }/> </>} />
-              <Route path="/password-recovery" element={<> <AuthLayout component={ <AuthPasswordRecovery /> }/> </>} />
+        <Router>
+          <Routes>
+            {/* Лендинг для рекламы */}
+            <Route path="/" element={<> <LandingLayout component={<Landing />} /> </>} />
 
-              {/* Страницы категорий меню */}\
-              <Route path="/dashboard" element={<> <AppLayout component={ <Dashboard /> }/> </>} />
-              <Route path="/allMoves" element={<> <AppLayout component={ <AllMoves /> }/> </>} />
-              <Route path="/productsAndService" element={<> <AppLayout component={ <ProductsAndServices /> }/> </>} />
-              <Route path="/clients" element={<> <AppLayout component={ <Clients /> }/> </>} />
-              <Route path="/ordersAndSales" element={<> <AppLayout component={ <OrdersAndSales /> }/> </>} />
-              <Route path="/reports" element={<> <AppLayout component={ <Reports /> }/> </>} />
-              <Route path="/money" element={<> <AppLayout component={ <Money /> }/> </>} />
+            {/* Аутентификация */}
+            <Route path="/registration" element={<> <AuthLayout component={<Auth />} /> </>} />
+            <Route path="/password-recovery" element={<> <AuthLayout component={<AuthPasswordRecovery />} /> </>} />
 
-              <Route path="/purchasesAndStorage" element={<> <AppLayout component={ <PurchasesAndStorage /> }/> </>} />
-              <Route path="/history" element={<> <AppLayout component={ <History /> }/> </>} />
-              <Route path="/settings" element={<> <AppLayout component={ <Settings /> }/> </>} />
-              <Route path="/directory" element={<> <AppLayout component={ <DirectoryCategory /> }/> </>} />
+            {/* Страницы категорий меню */}\
+            <Route path="/dashboard" element={<> <AppLayout component={<Dashboard />} /> </>} />
+            <Route path="/allMoves" element={<> <AppLayout component={<AllMoves />} /> </>} />
+            <Route path="/productsAndService" element={<> <AppLayout component={<ProductsAndServices />} /> </>} />
+            <Route path="/clients" element={<> <AppLayout component={<Clients />} /> </>} />
+            <Route path="/ordersAndSales" element={<> <AppLayout component={<OrdersAndSales />} /> </>} />
+            <Route path="/reports" element={<> <AppLayout component={<Reports />} /> </>} />
+            <Route path="/money" element={<> <AppLayout component={<Money />} /> </>} />
 
-
-
-              {/* Отчеты  */}
-              <Route path="/costs" element={<> <AppLayout component={ <Cost /> }/> </>} />
-              <Route path="/debts" element={<> <AppLayout component={ <Debt /> }/> </>} />
-              <Route path="/financial-result" element={<> <AppLayout component={ <FinancialResult /> }/> </>} />
-              <Route path="/income" element={<> <AppLayout component={ <Income /> }/> </>} />
-              <Route path="/price-list" element={<> <AppLayout component={ <PriceList /> }/> </>} />
-              <Route path="/products" element={<> <AppLayout component={ <Product /> }/> </>} />
-              <Route path="/purchases-and-receipts" element={<> <AppLayout component={ <PurchaseAndReceipt /> }/> </>} />
-              <Route path="/reconciliation-acts" element={<> <AppLayout component={ <ReconciliationAct /> }/> </>} />
-              <Route path="/report-money" element={<> <AppLayout component={ <ReportMoney /> }/> </>} />
-              <Route path="/sales-and-orders" element={<> <AppLayout component={ <SaleAndOrder /> }/> </>} />
-
-              {/*Обработка товаров и услуг*/}
-              <Route path="/add_product" element={<> <AppLayout component={ <AddProduct /> }/> </>} />
-              <Route path="/revaluation" element={<> <AppLayout component={ <Revaluation /> }/> </>} />
-              <Route path="/import_products" element={<> <AppLayout component={ <ImportOfGoods /> }/> </>} />
-              <Route path="/save_price_list" element={<> <AppLayout component={ <SavePriceList /> }/> </>} />
-
-              {/* Обработка клиентов */}
-              <Route path="/editing" element={<> <AppLayout component={ <UserEditing /> }/> </>} />
-              <Route path="/import_clients" element={<> <AppLayout component={ <ImportClient /> }/> </>} />
-
-              {/* Обработка поставщиков */}
-              <Route path="/editing_supplier" element={<> <AppLayout component={ <SupplierEditing /> }/> </>} />
-
-              {/* Обработка сотрудников  */}
-              <Route path="/employees_editing" element={<> <AppLayout component={ <EmployeesEditing /> }/> </>} />
-
-              {/* Обработка моих юрлиц */}
-              <Route path="/editing_legal_entities" element={<> <AppLayout component={ <LegalEntityEditing /> }/> </>} />
+            <Route path="/purchasesAndStorage" element={<> <AppLayout component={<PurchasesAndStorage />} /> </>} />
+            <Route path="/history" element={<> <AppLayout component={<History />} /> </>} />
+            <Route path="/settings" element={<> <AppLayout component={<Settings />} /> </>} />
+            <Route path="/directory" element={<> <AppLayout component={<DirectoryCategory />} /> </>} />
 
 
-              {/* Действия  */}
-              <Route path="/accept" element={<> <AppLayout component={ <Accept /> }/> </>} />
-              <Route path="/buy" element={<> <AppLayout component={ <Buy /> }/> </>} />
-              <Route path="/buy/create" element={<> <AppLayout component={ <BuyCreate /> }/> </>} />
-              <Route path="/inventory" element={<> <AppLayout component={ <Inventory /> }/> </>} />
-              <Route path="/pay" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/retrieve" element={<> <AppLayout component={ <Retrieve /> }/> </>} />
-              <Route path="/sell" element={<> <AppLayout component={ <Sell /> }/> </>} />
-              <Route path="/invoice" element={<> <AppLayout component={ <Invoice /> }/> </>} />
-              <Route path="/order" element={<> <AppLayout component={ <Order /> }/> </>} />
 
-              {/* Оплата  */}
-              <Route path="/pay_supplier" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/pay_customer" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/expend" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/salary" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/pay_owner" element={<> <AppLayout component={ <Pay /> }/> </>} />
+            {/* Отчеты  */}
+            <Route path="/costs" element={<> <AppLayout component={<Cost />} /> </>} />
+            <Route path="/debts" element={<> <AppLayout component={<Debt />} /> </>} />
+            <Route path="/financial-result" element={<> <AppLayout component={<FinancialResult />} /> </>} />
+            <Route path="/income" element={<> <AppLayout component={<Income />} /> </>} />
+            <Route path="/price-list" element={<> <AppLayout component={<PriceList />} /> </>} />
+            <Route path="/products" element={<> <AppLayout component={<Product />} /> </>} />
+            <Route path="/purchases-and-receipts" element={<> <AppLayout component={<PurchaseAndReceipt />} /> </>} />
+            <Route path="/reconciliation-acts" element={<> <AppLayout component={<ReconciliationAct />} /> </>} />
+            <Route path="/report-money" element={<> <AppLayout component={<ReportMoney />} /> </>} />
+            <Route path="/sales-and-orders" element={<> <AppLayout component={<SaleAndOrder />} /> </>} />
 
-              <Route path="/receive_customer" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/receive_supplier" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/receive_income" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/receive_owner" element={<> <AppLayout component={ <Pay /> }/> </>} />
-              <Route path="/receive_balance" element={<> <AppLayout component={ <Pay /> }/> </>} />
+            {/*Обработка товаров и услуг*/}
+            <Route path="/add_product" element={<> <AppLayout component={<AddProduct />} /> </>} />
+            <Route path="/revaluation" element={<> <AppLayout component={<Revaluation />} /> </>} />
+            <Route path="/import_products" element={<> <AppLayout component={<ImportOfGoods />} /> </>} />
+            <Route path="/save_price_list" element={<> <AppLayout component={<SavePriceList />} /> </>} />
 
-              {/* Справочник  */}
-              <Route path="/cash_accounts" element={<> <AppLayout component={ <CashAndAccount /> }/> </>} />
-              <Route path="/banks_details" element={<> <AppLayout component={ <BanksDetail /> }/> </>} />
-              <Route path="/banks_details/create" element={<> <AppLayout component={ <BankDetailCreate /> }/> </>} />
-              <Route path="/banks_details/:id" element={<> <AppLayout component={ <BankDetailEdit /> }/> </>} />
-              <Route path="/legal_entities" element={<> <AppLayout component={ <LegalEntity /> }/> </>} />
-              <Route path="/storehouse" element={<> <AppLayout component={ <Storehouse /> }/> </>} />
-              <Route path="/suppliers" element={<> <AppLayout component={ <Supplier /> }/> </>} />
-              <Route path="/employees" element={<> <AppLayout component={ <Employee /> }/> </>} />
-              <Route path="/measure" element={<> <AppLayout component={ <Measure /> }/> </>} />
-              <Route path="/income_items" element={<> <AppLayout component={ <IncomeItem /> }/> </>} />
-              <Route path="/expenditure" element={<> <AppLayout component={ <Expenditure /> }/> </>} />
-              <Route path="/currencies" element={<> <AppLayout component={ <Сurrency /> }/> </>} />
-              <Route path="/type_price" element={<> <AppLayout component={ <TypePrice /> }/> </>} />
+            {/* Обработка клиентов */}
+            <Route path="/editing" element={<> <AppLayout component={<UserEditing />} /> </>} />
+            <Route path="/import_clients" element={<> <AppLayout component={<ImportClient />} /> </>} />
 
-              {/* Политика безопасности */}
-              <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<> <AppLayout component={ <PolitikaKonfidentsialnostiFacebook /> }/> </>} />
-              <Route path="/instructions-for-deleting-user-data" element={<> <AppLayout component={ <InstructionsForDeletingUserData /> }/> </>} />
+            {/* Обработка поставщиков */}
+            <Route path="/editing_supplier" element={<> <AppLayout component={<SupplierEditing />} /> </>} />
 
-            </Routes>
-          </Router>
-        </div>
+            {/* Обработка сотрудников  */}
+            <Route path="/employees_editing" element={<> <AppLayout component={<EmployeesEditing />} /> </>} />
+
+            {/* Обработка моих юрлиц */}
+            <Route path="/editing_legal_entities" element={<> <AppLayout component={<LegalEntityEditing />} /> </>} />
+
+
+            {/* Действия  */}
+            <Route path="/accept" element={<> <AppLayout component={<Accept />} /> </>} />
+            <Route path="/buy" element={<> <AppLayout component={<Buy />} /> </>} />
+            <Route path="/buy/create" element={<> <AppLayout component={<BuyCreate />} /> </>} />
+            <Route path="/inventory" element={<> <AppLayout component={<Inventory />} /> </>} />
+            <Route path="/pay" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/retrieve" element={<> <AppLayout component={<Retrieve />} /> </>} />
+            <Route path="/sell" element={<> <AppLayout component={<Sell />} /> </>} />
+            <Route path="/invoice" element={<> <AppLayout component={<Invoice />} /> </>} />
+            <Route path="/order" element={<> <AppLayout component={<Order />} /> </>} />
+
+            {/* Оплата  */}
+            <Route path="/pay_supplier" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_customer" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/expend" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/salary" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_owner" element={<> <AppLayout component={<Pay />} /> </>} />
+
+            <Route path="/receive_customer" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_supplier" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_income" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_owner" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_balance" element={<> <AppLayout component={<Pay />} /> </>} />
+
+            {/* Справочник  */}
+            <Route path="/cash_accounts" element={<> <AppLayout component={<CashAndAccount />} /> </>} />
+            <Route path="/banks_details" element={<> <AppLayout component={<BanksDetail />} /> </>} />
+            <Route path="/banks_details/create" element={<> <AppLayout component={<BankDetailCreate />} /> </>} />
+            <Route path="/banks_details/:id" element={<> <AppLayout component={<BankDetailEdit />} /> </>} />
+            <Route path="/legal_entities" element={<> <AppLayout component={<LegalEntity />} /> </>} />
+            <Route path="/storehouse" element={<> <AppLayout component={<Storehouse />} /> </>} />
+            <Route path="/suppliers" element={<> <AppLayout component={<Supplier />} /> </>} />
+            <Route path="/employees" element={<> <AppLayout component={<Employee />} /> </>} />
+            <Route path="/measure" element={<> <AppLayout component={<Measure />} /> </>} />
+            <Route path="/income_items" element={<> <AppLayout component={<IncomeItem />} /> </>} />
+            <Route path="/expenditure" element={<> <AppLayout component={<Expenditure />} /> </>} />
+            <Route path="/currencies" element={<> <AppLayout component={<Сurrency />} /> </>} />
+            <Route path="/type_price" element={<> <AppLayout component={<TypePrice />} /> </>} />
+
+            {/* Политика безопасности */}
+            <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<> <AppLayout component={<PolitikaKonfidentsialnostiFacebook />} /> </>} />
+            <Route path="/instructions-for-deleting-user-data" element={<> <AppLayout component={<InstructionsForDeletingUserData />} /> </>} />
+
+          </Routes>
+        </Router>
+
       </EmployeeIdProvider>
     </UserIdProvider>
   );

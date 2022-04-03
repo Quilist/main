@@ -53,14 +53,14 @@ export default function Sidebar() {
   };
 
   const handleSearchState = () => {
-    if(searchState === 'navigation') {
+    if (searchState === 'navigation') {
       setSearchState('navigation active');
     } else {
       setSearchState('navigation');
     }
 
   };
-  
+
   const logout = () => {
     const cookies = document.cookie.split(";");
 
@@ -90,31 +90,31 @@ export default function Sidebar() {
       {/*  <span className="page__title">{title}</span>*/}
       {/*</div>*/}
       <div className={searchState}>
-        <a href="#" className="menu-gumb" onClick={toggleSidebar}>
+        <Link to="#" className="menu-gumb" onClick={toggleSidebar}>
           <div className="button_container" >
             <span className="top"></span>
             <span className="middle"></span>
             <span className="bottom"></span>
           </div>
-        </a>
-        <a href="#" className="navigation__logo">
+        </Link>
+        <Link to="#" className="navigation__logo">
           {headerTitle}
-        </a>
+        </Link>
         <div className="wrapper__search">
           <form>
             <input type="text" placeholder="Поиск" />
             <button type="submit"></button>
           </form>
-          <div className="btn-search" id="wrapper__search"  onClick={handleSearchState}>
+          <div className="btn-search" id="wrapper__search" onClick={handleSearchState}>
             <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="6" cy="6" r="5.5" stroke="#7096FF"/>
+              <circle cx="6" cy="6" r="5.5" stroke="#7096FF" />
               <rect x="3.37419" y="10.8394" width="1.31782" height="4.31965" rx="0.658908"
-                    transform="rotate(26.9463 3.37419 10.8394)" fill="#7096FF"/>
+                transform="rotate(26.9463 3.37419 10.8394)" fill="#7096FF" />
             </svg>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="10" cy="10" r="10" fill="#F3F5F8"/>
+              <circle cx="10" cy="10" r="10" fill="#F3F5F8" />
               <path d="M6 6L14 14M14 6L6 14" stroke="#CDCDCD" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round"/>
+                stroke-linejoin="round" />
             </svg>
           </div>
         </div>
@@ -125,10 +125,6 @@ export default function Sidebar() {
           <div className={isActiveSidebar ? "burger-menu burger" : "burger-menu cross"}>
             <img src={burgerImg} onClick={toggleSidebar} className={isActiveSidebar ? 'burger-menu__img' : 'icon-hide'} alt="burgerMenu" />
             <img src={crossImg} onClick={toggleSidebar} className={!isActiveSidebar ? "cross-menu__img" : "icon-hide"} alt="cross" />
-          </div>
-          <div className="logo-details">
-            <i className="fas fa-wallet"></i>
-            <span className="logo_name">B-Fin</span>
           </div>
           <ul className="nav-links">
             <div>

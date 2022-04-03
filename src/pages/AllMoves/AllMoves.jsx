@@ -2,7 +2,7 @@ import * as React from "react";
 
 function AllMoves() {
   React.useEffect(() => {
-    document.title = "B-Fin: Все движения"
+    document.title = "Все движения"
     // eslint-disable-next-line
   }, [])
 

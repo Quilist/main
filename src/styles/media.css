@@ -8,7 +8,7 @@
     .wrapper__menu,
     .wrapper__filters,
     .table {
-        padding: 10px;
+        padding: 10px 10px 5px 10px;
     }
     .wrapper__company {
         padding: 15px 10px;
@@ -52,6 +52,7 @@
         top: 53%;
         transform: translateY(-50%);
         right: 15px;
+        padding: 10px;
     }
     .btn-search svg:last-child {
         display: none;
@@ -203,12 +204,12 @@
         display: block;
     }
     .menu-fixed {
-        padding: 80px 0 0;
+        /* padding: 0px 0 0; */
         position: static;
         background-color: #fff;
     }
     .navigation {
-        position: fixed;
+        /* position: fixed; */
         top: 0;
         left: 0;
         width: 100%;
@@ -218,7 +219,7 @@
 
 @media (max-width: 768px) {}
 
-@media (max-width: 576px) {
+@media (max-width: 992px) {
     .wrapper {
         margin-top: 5px;
     }

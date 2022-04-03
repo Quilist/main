@@ -36,12 +36,25 @@ h2 {
     margin: 20px 0 15px;
 }
 
+
 /*p {*/
+
+
 /*    font-size: 14px;*/
+
+
 /*    font-weight: 100;*/
+
+
 /*    line-height: 20px;*/
+
+
 /*    letter-spacing: 0.5px;*/
+
+
 /*    margin: 20px 0 30px;*/
+
+
 /*}*/
 
 span {
@@ -60,7 +73,7 @@ span {
     margin: 15px 0;
 } */
 
-button {
+.button__auth {
     border-radius: 20px;
     border: 1px solid #FF4B2B;
     background-color: #FF4B2B;
@@ -73,11 +86,11 @@ button {
     transition: transform 80ms ease-in;
 }
 
-button:active {
+.button__auth:active {
     transform: scale(0.95);
 }
 
-button:focus {
+.button__auth:focus {
     outline: none;
 }
 
@@ -86,7 +99,11 @@ button.ghost {
     border-color: #FFFFFF;
 }
 
-form {
+
+/* form {} */
+
+.form-blank-bg {
+    background-color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,10 +111,6 @@ form {
     padding: 0 50px;
     height: 100%;
     text-align: center;
-}
-
-.form-blank-bg {
-    background-color: #FFFFFF;
 }
 
 input {
@@ -275,21 +288,22 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
-@media(max-width: 600px){
-    .social-container{
+
+@media(max-width: 600px) {
+    .social-container {
         margin-top: 0px;
     }
-    .form-container{
+    .form-container {
         margin-top: 0px !important;
         width: 100%;
         height: 50%;
     }
-    .form-reg_logo{
+    .form-reg_logo {
         margin-bottom: 30px;
         margin-top: 30px;
         font-size: 23px;
     }
-    .container{
+    .container {
         height: 800px;
     }
     .overlay-container {
@@ -301,7 +315,7 @@ footer a {
         overflow: hidden;
         transition: transform 0.6s ease-in-out;
         z-index: 100;
-    } 
+    }
     .container.right-panel-active .overlay-container {
         transform: translateY(-100%);
     }
@@ -313,24 +327,22 @@ footer a {
         transform: translateY(0);
         transition: transform 0.6s ease-in-out;
     }
-    .overlay-panel{
+    .overlay-panel {
         height: 50% !important;
         width: 100% !important;
     }
-    
     .overlay-left {
         transform: translateY(0%) !important;
-    } 
+    }
     .container.right-panel-active .overlay-left {
         transform: translateY(100%) !important;
-    } 
+    }
     .overlay-right {
         transform: translateY(100%) !important;
-    }  
+    }
     .container.right-panel-active .overlay-right {
         transform: translateY(0%) !important;
     }
-    
     .container.right-panel-active .overlay {
         transform: translateY(0%) !important;
     }
@@ -339,17 +351,18 @@ footer a {
     }
     .container.right-panel-active .sign-up-container {
         transform: translateY(100%) !important;
-    } 
-}   
-@media(max-width: 400px){
-    h1{
+    }
+}
+
+@media(max-width: 400px) {
+    h1 {
         font-size: 24px;
     }
-    .social-container{
+    .social-container {
         margin-top: 0px;
         margin-bottom: 0px;
     }
-    .form-reg_logo{
+    .form-reg_logo {
         font-size: 19px;
     }
 }

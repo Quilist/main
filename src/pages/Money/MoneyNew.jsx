@@ -5,16 +5,16 @@ import API from '@/api/api';
 import CurrencyExchangeModal from "./CurrencyExchangeModal";
 import MovingMoneyModal from "./MovingMoneyModal";
 
-import {useState} from "react";
+import { useState } from "react";
 //import Table from "@/components/Table/Table"
 //import InfiniteScroll from "react-infinite-scroll-component";
 
 import CashAndAccountsModal from "./CashAndAccountsModal";
-import {cash_and_accounts} from '@/pages/Directory/CashAndAccount/CashAndAccount';
+import { cash_and_accounts } from '@/pages/Directory/CashAndAccount/CashAndAccount';
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import Popper from "@mui/material/Popper";
 
@@ -90,7 +90,7 @@ export default function EnhancedTable() {
   // };
 
   React.useEffect(() => {
-    if(!openCurrencyExchangeModal || !openMovingMoney) {
+    if (!openCurrencyExchangeModal || !openMovingMoney) {
       api.all('money').then(data => {
         if (data.status === "error") alert(data.message)
         else setItems(data.message.items)
@@ -166,20 +166,20 @@ export default function EnhancedTable() {
   const formattedDate = (milliseconds) => {
     //const { date }  = new Date(milliseconds);
     //const date = dateFromMS.toString().customFormat( "#DD#/#MM#/#YYYY# #hh#:#mm#:#ss#" )
-    return milliseconds ;
+    return milliseconds;
   };
 
   const getType = (item) => {
     let type = null;
-    if(item.type) {
-      if(item.type === 'payment') {
+    if (item.type) {
+      if (item.type === 'payment') {
         type = 'Оплата'
       }
     } else {
-      if(item.from_cash_account_id) {
+      if (item.from_cash_account_id) {
         type = 'Перемещение'
       }
-      if(item.amount_pay) {
+      if (item.amount_pay) {
         type = 'Обмен валют'
       }
     }
@@ -194,10 +194,10 @@ export default function EnhancedTable() {
 
   const getAmount = (item) => {
     let data = null;
-    if(item.amount) {
+    if (item.amount) {
       data = item.amount + ' UAH'
     }
-    if(item.amount_receive) {
+    if (item.amount_receive) {
       data = item.amount_receive + ' UAH'
     }
     return data;
@@ -250,7 +250,7 @@ export default function EnhancedTable() {
         <div className="wrapper" >
           <div className="wrapper__company">
             {cash_and_accounts.map((item, index) => {
-                return (
+              return (
                 <a href="#!" className="wrapper__box">
                   <h3>
                     {item.Name}
@@ -259,26 +259,25 @@ export default function EnhancedTable() {
                     {item.balance} {item.Represent}
                   </p>
                 </a>
-                );
-              })
+              );
+            })
             }
 
             <a href="#!" className="wrapper__box" onClick={handleOpenCashModal}>
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M19.2 0C16.9909 0 15.2 1.79086 15.2 4V15.2L4 15.2C1.79086 15.2 0 16.9909 0 19.2V20.8C0 23.0091 1.79086 24.8 4 24.8H15.2V36C15.2 38.2091 16.9909 40 19.2 40H20.8C23.0091 40 24.8 38.2091 24.8 36V24.8H36C38.2091 24.8 40 23.0091 40 20.8V19.2C40 16.9909 38.2091 15.2 36 15.2L24.8 15.2V4C24.8 1.79086 23.0091 0 20.8 0H19.2Z"
-                      fill="#AFC2FF"/>
+                  d="M19.2 0C16.9909 0 15.2 1.79086 15.2 4V15.2L4 15.2C1.79086 15.2 0 16.9909 0 19.2V20.8C0 23.0091 1.79086 24.8 4 24.8H15.2V36C15.2 38.2091 16.9909 40 19.2 40H20.8C23.0091 40 24.8 38.2091 24.8 36V24.8H36C38.2091 24.8 40 23.0091 40 20.8V19.2C40 16.9909 38.2091 15.2 36 15.2L24.8 15.2V4C24.8 1.79086 23.0091 0 20.8 0H19.2Z"
+                  fill="#AFC2FF" />
               </svg>
             </a>
           </div>
           <div className="wrapper__filters">
             <a href="#!" className="wrapper__create" onClick={handleOpen} ref={anchorRef}>
               Создать
-              <span></span>
               <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                      fill="#fff"/>
+                  d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                  fill="#fff" />
               </svg>
             </a>
             <Popper
@@ -286,7 +285,7 @@ export default function EnhancedTable() {
               anchorEl={anchorRef.current}
               role={undefined}
               transition
-              disablePortal
+              // disablePortal
               style={{ zIndex: "10" }}
             >
               {({ TransitionProps, placement }) => (
@@ -297,21 +296,21 @@ export default function EnhancedTable() {
                     marginLeft: "76px",
                   }}
                 >
-                  <Paper style={{ background: "#6b8b9c" }}>
-                      <MenuList id="split-button-menu">
-                        <Link to="#" onClick={handleOpenCurrencyExchangeModal}>
-                          <MenuItem style={{ height: "30px", color: "#fff" }}>
-                            Обмен валют
-                          </MenuItem>
-                        </Link>
-                      </MenuList>
-                      <MenuList id="split-button-menu">
-                        <Link to="#" onClick={handleOpenMovingMoney}>
-                          <MenuItem style={{ height: "30px", color: "#fff" }}>
-                            Перемещение денег
-                          </MenuItem>
-                        </Link>
-                      </MenuList>
+                  <Paper>
+                    <MenuList id="split-button-menu">
+                      <Link to="#" onClick={handleOpenCurrencyExchangeModal}>
+                        <MenuItem style={{ height: "30px" }}>
+                          Обмен валют
+                        </MenuItem>
+                      </Link>
+                    </MenuList>
+                    <MenuList id="split-button-menu">
+                      <Link to="#" onClick={handleOpenMovingMoney}>
+                        <MenuItem style={{ height: "30px" }}>
+                          Перемещение денег
+                        </MenuItem>
+                      </Link>
+                    </MenuList>
                   </Paper>
                 </Grow>
               )}
@@ -320,8 +319,8 @@ export default function EnhancedTable() {
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                        fill="#7096FF"/>
+                    d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                    fill="#7096FF" />
                 </svg>
               </a>
               <p>
@@ -330,25 +329,25 @@ export default function EnhancedTable() {
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                        fill="#7096FF"/>
+                    d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                    fill="#7096FF" />
                 </svg>
               </a>
             </div>
-            <a href="#!"className="wrapper__filter">
+            <a href="#!" className="wrapper__filter">
               <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect y="0.941177" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF"/>
+                <rect y="0.941177" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="16" y="6.58824" width="5.64706" height="0.941176" rx="0.470588"
-                      transform="rotate(-180 16 6.58824)" fill="#7096FF"/>
-                <rect y="10.353" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF"/>
-                <rect x="7.52942" y="0.941177" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF"/>
+                  transform="rotate(-180 16 6.58824)" fill="#7096FF" />
+                <rect y="10.353" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF" />
+                <rect x="7.52942" y="0.941177" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="8.47058" y="6.58824" width="8.47059" height="0.941176" rx="0.470588"
-                      transform="rotate(-180 8.47058 6.58824)" fill="#7096FF"/>
-                <rect x="7.52942" y="10.353" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF"/>
-                <circle cx="5.17645" cy="1.41176" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5"/>
+                  transform="rotate(-180 8.47058 6.58824)" fill="#7096FF" />
+                <rect x="7.52942" y="10.353" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF" />
+                <circle cx="5.17645" cy="1.41176" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5" />
                 <circle cx="10.8235" cy="6.11765" r="1.16176" transform="rotate(-180 10.8235 6.11765)" fill="white"
-                        stroke="#7096FF" stroke-width="0.5"/>
-                <circle cx="5.17645" cy="10.8235" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5"/>
+                  stroke="#7096FF" stroke-width="0.5" />
+                <circle cx="5.17645" cy="10.8235" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5" />
               </svg>
               Фильтр
             </a>
@@ -369,8 +368,8 @@ export default function EnhancedTable() {
                   <div className="table__figure">
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
-                            fill="#45D064"/>
+                        d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
+                        fill="#45D064" />
                     </svg>
                   </div>
                   <div className="table__mob">

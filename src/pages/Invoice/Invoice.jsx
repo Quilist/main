@@ -2,7 +2,7 @@ import * as React from "react";
 
 function Invoice() {
   React.useEffect(() => {
-    document.title = "B-Fin: Счёт"
+    document.title = "Счёт"
     // eslint-disable-next-line
   }, [])
 

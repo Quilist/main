@@ -299,7 +299,7 @@ export default function EnhancedTable() {
 
 
   React.useEffect(() => {
-    document.title = "B-Fin: Клиенты"
+    document.title = "Клиенты"
     // eslint-disable-next-line
   }, [])
 
