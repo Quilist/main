@@ -33,17 +33,21 @@ export default function Sidebar() {
     setIsDropDirectory(!isDropDirectory);
   };
   const handleClickAway = (e) => {
-    e.preventDefault();
-    if (typeof e.target.className === 'string') {
-      const component = (e.target.className).slice(0, 8)
-      if (component !== 'arrowImg') {
-        setActiveSidebar(!isActiveSidebar)
-        //setActiveSidebar(true);
+    if(e.target.className !== 'bottom' &&
+      e.target.className !== 'middle' &&
+      e.target.className !== 'top' &&
+      e.target.className!== 'menu-gumb') {
+      console.log('e.target.className', e.target.className)
+      if (typeof e.target.className === 'string') {
+        const component = (e.target.className).slice(0, 8)
+        if (component !== 'arrowImg') {
+          setActiveSidebar(true)
+        }
+      } else {
+        setActiveSidebar(true)
       }
-    } else {
-      setActiveSidebar(!isActiveSidebar)
-      //setActiveSidebar(true);
     }
+
   }
   const dropDown = () => {
     setDrop(!isDrop);
