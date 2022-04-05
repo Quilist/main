@@ -29,8 +29,8 @@ import { useState } from "react";
 const payOptions = [
   { name: 'Поставщику', link: '/pay_supplier' },
   { name: 'Клиенту(возврат)', link: '/pay_customer' },
-  { name: 'Прочий расход', link: '/expend' },
-  { name: 'Зарплата', link: '/salary' },
+  { name: 'Прочий расход', link: '/pay_expend' },
+  { name: 'Зарплата', link: '/pay_salary' },
   { name: 'Собственнику', link: '/pay_owner' }
 ];
 

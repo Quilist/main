@@ -33,14 +33,17 @@ export default function Sidebar() {
     setIsDropDirectory(!isDropDirectory);
   };
   const handleClickAway = (e) => {
-    // if (typeof e.target.className === 'string') {
-    //   const component = (e.target.className).slice(0, 8)
-    //   if (component !== 'arrowImg') {
-    //     setActiveSidebar(true);
-    //   }
-    // } else {
-    //   setActiveSidebar(true);
-    // }
+    e.preventDefault();
+    if (typeof e.target.className === 'string') {
+      const component = (e.target.className).slice(0, 8)
+      if (component !== 'arrowImg') {
+        setActiveSidebar(!isActiveSidebar)
+        //setActiveSidebar(true);
+      }
+    } else {
+      setActiveSidebar(!isActiveSidebar)
+      //setActiveSidebar(true);
+    }
   }
   const dropDown = () => {
     setDrop(!isDrop);

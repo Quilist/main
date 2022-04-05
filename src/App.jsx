@@ -186,8 +186,8 @@ function App() {
             {/* Оплата  */}
             <Route path="/pay_supplier" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/pay_customer" element={<> <AppLayout component={<Pay />} /> </>} />
-            <Route path="/expend" element={<> <AppLayout component={<Pay />} /> </>} />
-            <Route path="/salary" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_expend" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_salary" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/pay_owner" element={<> <AppLayout component={<Pay />} /> </>} />
 
             <Route path="/receive_customer" element={<> <AppLayout component={<Pay />} /> </>} />

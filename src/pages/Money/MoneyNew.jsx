@@ -7,7 +7,7 @@ import MovingMoneyModal from "./MovingMoneyModal";
 
 import { useState } from "react";
 //import Table from "@/components/Table/Table"
-//import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import CashAndAccountsModal from "./CashAndAccountsModal";
 import { cash_and_accounts } from '@/pages/Directory/CashAndAccount/CashAndAccount';
@@ -17,6 +17,7 @@ import MenuList from "@mui/material/MenuList";
 import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import Popper from "@mui/material/Popper";
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -127,19 +128,20 @@ export default function EnhancedTable() {
   //   hasMore: true
   // };
 
-  // const fetchMoreData = () => {
-  //   if (staticList.items.length >= 500) {
-  //     setStaticList({ hasMore: false });
-  //     return;
-  //   }
-  //
-  //   setTimeout(() => {
-  //     setStaticList({
-  //       items: staticList.items.concat(Array.from({ length: 20 }))
-  //     });
-  //   }, 1500);
-  //
-  // };
+  const fetchMoreData = () => {
+    console.log('ok')
+    // if (staticList.items.length >= 500) {
+    //   setStaticList({ hasMore: false });
+    //   return;
+    // }
+    //
+    // setTimeout(() => {
+    //   setStaticList({
+    //     items: staticList.items.concat(Array.from({ length: 20 }))
+    //   });
+    // }, 1500);
+
+  };
 
 
   const tableHeader = [
@@ -203,6 +205,14 @@ export default function EnhancedTable() {
     return data;
   };
 
+  const handleCloseCreateMenu = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    handleOpen();
+  };
+
   return (
     <>
       <CurrencyExchangeModal
@@ -223,30 +233,6 @@ export default function EnhancedTable() {
       />
 
       <section className="home-section">
-
-        {/*<div>*/}
-        {/*  <h1>Тест ГГ</h1>*/}
-        {/*  <hr />*/}
-        {/*  <InfiniteScroll*/}
-        {/*    dataLength={staticList.items.length}*/}
-        {/*    next={fetchMoreData}*/}
-        {/*    hasMore={staticList.hasMore}*/}
-        {/*    loader={<h4>Загрузка(тут спинер)...</h4>}*/}
-        {/*    height={400}*/}
-        {/*    endMessage={*/}
-        {/*      <p style={{ textAlign: "center" }}>*/}
-        {/*        <b>Конец :)</b>*/}
-        {/*      </p>*/}
-        {/*    }*/}
-        {/*  >*/}
-        {/*    {staticList.items.map((i, index) => (*/}
-        {/*      <div style={style} key={index}>*/}
-        {/*        div - #{index}*/}
-        {/*      </div>*/}
-        {/*    ))}*/}
-        {/*  </InfiniteScroll>*/}
-        {/*</div>*/}
-
         <div className="wrapper" >
           <div className="wrapper__company">
             {cash_and_accounts.map((item, index) => {
@@ -297,20 +283,24 @@ export default function EnhancedTable() {
                   }}
                 >
                   <Paper>
-                    <MenuList id="split-button-menu">
-                      <Link to="#" onClick={handleOpenCurrencyExchangeModal}>
-                        <MenuItem style={{ height: "30px" }}>
-                          Обмен валют
-                        </MenuItem>
-                      </Link>
-                    </MenuList>
-                    <MenuList id="split-button-menu">
-                      <Link to="#" onClick={handleOpenMovingMoney}>
-                        <MenuItem style={{ height: "30px" }}>
-                          Перемещение денег
-                        </MenuItem>
-                      </Link>
-                    </MenuList>
+                    <ClickAwayListener onClickAway={handleCloseCreateMenu}>
+                      <div>
+                        <MenuList id="split-button-menu">
+                          <Link to="#" onClick={handleOpenCurrencyExchangeModal}>
+                            <MenuItem style={{ height: "30px" }}>
+                              Обмен валют
+                            </MenuItem>
+                          </Link>
+                        </MenuList>
+                        <MenuList id="split-button-menu">
+                          <Link to="#" onClick={handleOpenMovingMoney}>
+                            <MenuItem style={{ height: "30px" }}>
+                              Перемещение денег
+                            </MenuItem>
+                          </Link>
+                        </MenuList>
+                      </div>
+                    </ClickAwayListener>
                   </Paper>
                 </Grow>
               )}
@@ -362,62 +352,75 @@ export default function EnhancedTable() {
               })}
             </div>
 
-            {items.map((item, index) => {
-              return (
-                <div className="table__item">
-                  <div className="table__figure">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
-                        fill="#45D064" />
-                    </svg>
-                  </div>
-                  <div className="table__mob">
-                    <p>
-                      {getAccount(item)}
-                    </p>
-                    <p>
-                      <a href="#!">
-                        Установить
-                      </a>
-                    </p>
-                  </div>
-                  <div className="table__data">
-                    <p>
-                      {formattedDate(item.date_create)}
-                    </p>
-                    <p>
+            <InfiniteScroll
+              dataLength={items.length}
+              next={fetchMoreData}
+              hasMore={false}
+              loader={<h4>Загрузка(тут спинер)...</h4>}
+              height={400}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  { items.paginations && <b>Всего записей: {items.paginations.total}</b> }
+                </p>
+              }
+            >
+              {items.map((item, index) => {
+                return (
+                  <div className="table__item">
+                    <div className="table__figure">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
+                              fill="#45D064" />
+                      </svg>
+                    </div>
+                    <div className="table__mob">
+                      <p>
+                        {getAccount(item)}
+                      </p>
+                      <p>
+                        <a href="#!">
+                          Установить
+                        </a>
+                      </p>
+                    </div>
+                    <div className="table__data">
+                      <p>
+                        {formattedDate(item.date_create)}
+                      </p>
+                      <p>
 
-                    </p>
+                      </p>
+                    </div>
+                    <div className="table__paysend">
+                      <p>
+                        {getType(item)}
+                      </p>
+                    </div>
+                    <div className="table__account">
+                      <p>
+                        {getAccount(item)}
+                      </p>
+                    </div>
+                    <div className="table__counterparty">
+                      <p>
+                        <a href="#!">
+                          Установить
+                        </a>
+                      </p>
+                    </div>
+                    <div className="table__summury">
+                      <p>
+                        {getAmount(item)}
+                      </p>
+                    </div>
+                    <div className="table__comment">
+                      {item.note}
+                    </div>
                   </div>
-                  <div className="table__paysend">
-                    <p>
-                      {getType(item)}
-                    </p>
-                  </div>
-                  <div className="table__account">
-                    <p>
-                      {getAccount(item)}
-                    </p>
-                  </div>
-                  <div className="table__counterparty">
-                    <p>
-                      <a href="#!">
-                        Установить
-                      </a>
-                    </p>
-                  </div>
-                  <div className="table__summury">
-                    <p>
-                      {getAmount(item)}
-                    </p>
-                  </div>
-                  <div className="table__comment">
-                    {item.note}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </InfiniteScroll>
 
           </div>
 

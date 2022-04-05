@@ -29,8 +29,8 @@ function Pay() {
   const pageTypes = {
     pay_supplier: 'Поставщик',
     pay_customer: 'Клиенту(возврат)',
-    expend: 'Прочий расход',
-    salary: 'Зарплата',
+    pay_expend: 'Прочий расход',
+    pay_salary: 'Зарплата',
     pay_owner: 'Собственнику',
     receive_customer: 'От клиента',
     receive_supplier: 'От поставщика',
@@ -194,7 +194,7 @@ function Pay() {
         </div>
       </div>
       <h3 className="wrapper__title">
-        Изменение клиента
+        Изменение {pageTypes[currentPathName]}
       </h3>
       <PayForm
         item={item}

@@ -254,7 +254,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName })
                 name="id_type"
                 onChange={handleChange}
               >
-                <option selected disabled>Поставщик</option>
+                <option selected disabled>{pageTypes[currentPathName]}</option>
                 <option value="1">Поставщик1</option>
                 <option value="2">Поставщик2</option>
                 <option value="3">Поставщик3</option>
