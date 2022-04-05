@@ -226,7 +226,7 @@ const EnhancedTableToolbar = (props) => {
               ref={anchorRef}
               aria-label="split button"
             >
-              <Button  onClick={() => handleCreateRedirect(true)}>Создать</Button>
+              <Button onClick={() => handleCreateRedirect(true)}>Создать</Button>
             </ButtonGroup>
           </div>
         </Typography>
@@ -272,7 +272,7 @@ export default function EnhancedTable() {
         "user_id": 1,
         "type": "buy",
         "created_at": "22.03.2022 17:16:45",
-        "user":  { "id": 1, "name": "Николай" },
+        "user": { "id": 1, "name": "Николай" },
         "supplier_id": 1,
         "supplier": { "id": 1, "name": "Андрей аванс" },
         "storehouse_id": 1,
@@ -366,13 +366,6 @@ export default function EnhancedTable() {
       <section className="home-section">
         <div className="home-content">
           <Box sx={{ width: "100%" }}>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="Поиск"
-              variant="outlined"
-              size="small"
-            />
             <Paper sx={{ width: "100%", mb: 2, mt: 2 }}>
               <EnhancedTableToolbar numSelected={selected.length} />
               <TableContainer>

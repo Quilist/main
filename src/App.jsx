@@ -32,8 +32,8 @@ import SaleAndOrder from '@/pages/pagesOfReports/PageSalesAndOrders';
 import History from '@/pages/History/History';
 import Settings from '@/pages/Settings/Settings';
 import Accept from '@/pages/pagesOfHeader/PageAccept';
-import Buy from '@/pages/pagesOfHeader/PageBuy';
-import BuyCreate from '@/pages/pagesOfHeader/PageBuyCreate';
+import Buy from '@/pages/pagesOfHeader/buy/Buy';
+import BuyCreate from '@/pages/pagesOfHeader/buy/BuyCreate';
 import Inventory from '@/pages/pagesOfHeader/PageInventory';
 import Retrieve from '@/pages/pagesOfHeader/PageRetrieve';
 import LegalEntityEditing from '@/pages/Directory/LegalEntity/Edit/LegalEntitesEditing'

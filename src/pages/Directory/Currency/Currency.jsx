@@ -46,7 +46,7 @@ export default function Currency() {
     if (!openEditModal && !open) {
       api.getCurrenciesList().then(data => {
         if (data.status === "error") alert(data.message)
-        else currenciesList = data.message
+        else currenciesList = data.message.items
       })
       api.all('currency').then(data => {
         if (data.status === "error") alert(data.message)

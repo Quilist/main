@@ -300,14 +300,27 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName })
           </div>
           <div className={"form__input " + ( item.date && !error.id_type ? 'active-cheked' : 'active-disable')}>
             <div className="data">
-              <input type="date" placeholder="Дата"
-                     value={item.date}
-                     name="date"
-                     onChange={handleChange}
-              />
+              <LocalizationProvider dateAdapter={DateAdapter}>
+                <DatePicker
+                  label="Дата"
+                  value={item.created_at}
+                  onChange={(newValue) => {
+                    handleDate(newValue);
+                  }}
+                  renderInput={(params) =>
+                    <input type="date" placeholder="Дата"
+                           value={item.date}
+                           name="date"
+                           onChange={handleChange}
+                           {...params}
+                    />
+                  }
+                />
+              </LocalizationProvider>
+
             </div>
           </div>
-          <div className={"form__input " + ( item.note && !error.id_type ? 'active-cheked' : 'active-disable')}>
+          <div className="form__input">
             <textarea placeholder="Комментарий:"
                       value={item.note}
                       name="note"

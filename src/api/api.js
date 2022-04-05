@@ -112,7 +112,7 @@ class API {
 
     async auxiliary(urlType, params) {
         const url = this.endpoints(urlType)
-        return await this.request("GET", `${url}/auxiliary/data`, null, params);
+        return await this.request("GET", `${url}/auxiliary`, null, params);
     }
 
 

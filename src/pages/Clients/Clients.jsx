@@ -309,7 +309,7 @@ export default function EnhancedTable() {
   React.useEffect(() => {
     api.all('client').then(data => {
       if (data.status === "error") alert(data.message)
-      else setRows(data.message)
+      else setRows(data.message.items)
     })
     // eslint-disable-next-line 
   }, [])
