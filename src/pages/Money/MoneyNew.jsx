@@ -150,7 +150,7 @@ export default function EnhancedTable() {
   };
 
   const editLink = (item) => {
-    return `/${item}/${item.id}`
+    return `/${item.type}/${item.id}`
   };
 
 

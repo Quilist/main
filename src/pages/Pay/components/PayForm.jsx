@@ -60,7 +60,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     setChangeCurrencyList(auxiliaryList.currencies);
     setLegalEntityList(auxiliaryList.legal_entites);
     setItemList(auxiliaryList.items);
-    setItem({"type_order": 'cash', "type": "payment"});
+    setItem({"type_order": 'cash', "type": currentPathName});
     // eslint-disable-next-line
   }, [auxiliaryList] )
 
@@ -157,12 +157,15 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       const indexChange = changeList.findIndex((itemChange) => item.currency_id === itemChange.currency_id)
       if (indexChange !== -1) {
         let itemChange = changeList[indexChange];
-        totalList.push({
-          "currency_id": item.currency_id,
-          "amount": item.amount - itemChange.amount,
-          "type_pay": "total",
-          "type_amount": "debit"
-        })
+        if(itemChange.amount && item.currency_id) {
+          totalList.push({
+            "currency_id": item.currency_id,
+            "amount": item.amount - itemChange.amount,
+            "type_pay": "total",
+            "type_amount": "debit"
+          })
+        }
+
       }
     });
     if(totalList.length > 0) {
