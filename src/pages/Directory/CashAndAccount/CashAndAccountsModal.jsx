@@ -257,8 +257,8 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     label={'Тип (касса или счёт)'}
-                    value={item.type_accounts}
-                    name="type_accounts"
+                    value={item.id_type_order}
+                    name="id_type_order"
                     onChange={(e) => handleAccountType(e)}
                   >
                     <MenuItem value={1}>Счёт(безналичные)</MenuItem>

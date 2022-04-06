@@ -296,7 +296,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
               <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
                   label="Дата"
-                  value={item.created_at}
+                  value={item.date_create}
                   onChange={(newValue) => {
                     handleDate(newValue);
                   }}
