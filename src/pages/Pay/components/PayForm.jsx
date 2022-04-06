@@ -28,9 +28,9 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null}]);
 
   const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null}]);
-  const [payCurrencyList, setPayCurrencyList] = React.useState(auxiliaryList.currencies);
-  const [changeCurrencyList, setChangeCurrencyList] = React.useState(auxiliaryList.currencies);
-  const [itemList] = React.useState(auxiliaryList.items);
+  const [payCurrencyList, setPayCurrencyList] = React.useState([]);
+  const [changeCurrencyList, setChangeCurrencyList] = React.useState([]);
+  const [itemList, setItemList] = React.useState([]);
   const [cashAccountList] = React.useState([
     {
       id: 1,
@@ -54,6 +54,10 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
 
   React.useEffect(() => {
+    console.log('auxiliaryList', auxiliaryList)
+    setPayCurrencyList(auxiliaryList.currencies);
+    setChangeCurrencyList(auxiliaryList.currencies);
+    setItemList(auxiliaryList.items);
     setItem({"type_order": 'cash', "type": "payment"});
     // eslint-disable-next-line
   }, [] )
@@ -227,9 +231,6 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                     {item.name ? item.name : item.username}
                   </option>)
                 })}
-                <option value="1">Поставщик1</option>
-                <option value="2">Поставщик2</option>
-                <option value="3">Поставщик3</option>
               </select>
             </div>
           </div>

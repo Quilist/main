@@ -21,7 +21,10 @@ import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 function Pay() {
   const [isSuccess, setIsSuccess] = React.useState(null);
   const [isRedirect, setIsRedirect] = React.useState(false);
-  const [auxiliaryList, setAuxiliaryList] = React.useState(false);
+  const [auxiliaryList, setAuxiliaryList] = React.useState({
+    currencies: [],
+    items: []
+  });
 
   const [openReceive, setOpenReceive] = React.useState(false);
   const anchorReceiveRef = React.useRef(null);
