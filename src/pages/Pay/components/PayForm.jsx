@@ -211,6 +211,21 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     }));
   };
 
+  const handleItemNameField = (item) => {
+    let name = null;
+    if(item.name) {
+      name = item.name;
+    }
+    if(item.username) {
+      name = item.username;
+    }
+    if(item.f_name) {
+      name = item.f_name + ' ' + item.s_name;
+    }
+
+    return name;
+  };
+
   return (
     <>
       <div className="form_edit">
@@ -228,7 +243,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                 <option selected disabled>{pageTypes[currentPathName]}</option>
                 {itemList.map((item, index) => {
                   return (<option key={item.id} value={item.id}>
-                    {item.name ? item.name : item.username}
+                    {handleItemNameField(item)}
                   </option>)
                 })}
               </select>
