@@ -30,6 +30,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null}]);
   const [payCurrencyList, setPayCurrencyList] = React.useState([]);
   const [changeCurrencyList, setChangeCurrencyList] = React.useState([]);
+  const [legalEntityList, setLegalEntityList] = React.useState([]);
   const [itemList, setItemList] = React.useState([]);
   const [cashAccountList] = React.useState([
     {
@@ -57,6 +58,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     console.log('auxiliaryList', auxiliaryList)
     setPayCurrencyList(auxiliaryList.currencies);
     setChangeCurrencyList(auxiliaryList.currencies);
+    setLegalEntityList(auxiliaryList.legal_entites);
     setItemList(auxiliaryList.items);
     setItem({"type_order": 'cash', "type": "payment"});
     // eslint-disable-next-line
@@ -435,9 +437,9 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                       onChange={handleChange}
               >
                 <option selected disabled>Организация</option>
-                <option value="1">Организация1</option>
-                <option value="2">Организация2</option>
-                <option value="3">Организация3</option>
+                {legalEntityList.map((item, currencyIndex) => {
+                  return (<option key={item.id} value={item.id}>{item.legal_name}</option>)
+                })}
               </select>
             </div>
           </div>

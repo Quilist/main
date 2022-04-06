@@ -23,6 +23,7 @@ function Pay() {
   const [isRedirect, setIsRedirect] = React.useState(false);
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     currencies: [],
+    legal_entites: [],
     items: []
   });
 
