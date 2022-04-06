@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useParams, useNavigate} from 'react-router-dom'
 import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 import PayForm from './components/PayForm';
@@ -19,6 +19,7 @@ import MenuItem from "@mui/material/MenuItem";
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Pay() {
+  const { id } = useParams()
   const [isSuccess, setIsSuccess] = React.useState(null);
   const [isRedirect, setIsRedirect] = React.useState(false);
   const [auxiliaryList, setAuxiliaryList] = React.useState({
@@ -53,6 +54,13 @@ function Pay() {
   useDocumentTitle("Оплата");
 
   React.useEffect(() => {
+    if(id) {
+      api.find(id, 'money').then(data => {
+        const res = data.message
+        setItem(res)
+      })
+    }
+
     const params = {
       type: currentPathName
     }
