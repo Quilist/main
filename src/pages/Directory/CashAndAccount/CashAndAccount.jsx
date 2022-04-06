@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import CashAndAccountsModal from './CashAndAccountsModal';
 import EditModal from './EditModal';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
-// import API from '@/api/api';
+import API from '@/api/api';
 
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
@@ -57,6 +57,16 @@ export default function CashAndAccount() {
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
    useDocumentTitle("Кассы и счета");
+
+   const [rows, setRows] = React.useState([])
+   const api = new API()
+   React.useEffect(() => {
+      api.all('cashAndAccount').then(data => {
+         if (data.status === "error") alert(data.message)
+         else setRows(data.message.items)
+      })
+      // eslint-disable-next-line
+   }, [])
 
    const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -116,7 +126,7 @@ export default function CashAndAccount() {
                            </TableRow>
                         </TableHead>
                         <TableBody>
-                           {cash_and_accounts && cash_and_accounts
+                           {rows && rows
                               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                               .map((row, idx) => {
                                  return (
@@ -125,7 +135,7 @@ export default function CashAndAccount() {
                                           {row.Name}
                                        </TableCell>
                                        <TableCell className={styles.table__body__wide} align={'center'}>
-                                          {row.type_accounts ? 'Касса' : 'Счёт'}
+                                          {row.id_type_order === 1 ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
                                           {row.balance || 0} {row.Represent}
@@ -139,7 +149,7 @@ export default function CashAndAccount() {
                   <TablePagination
                      rowsPerPageOptions={[5, 10, 20]}
                      component="div"
-                     count={cash_and_accounts.length}
+                     count={rows.length}
                      rowsPerPage={rowsPerPage}
                      page={page}
                      onPageChange={handleChangePage}
