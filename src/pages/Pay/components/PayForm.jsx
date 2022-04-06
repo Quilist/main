@@ -60,7 +60,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     setItemList(auxiliaryList.items);
     setItem({"type_order": 'cash', "type": "payment"});
     // eslint-disable-next-line
-  }, [auxiliaryList] )
+  }, [] )
 
   const togglePayType = (e) => {
 
