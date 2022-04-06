@@ -20,7 +20,7 @@ class API {
             typePrice: '/type_price',
             bankDetail: '/banks_details',
             cashAndAccount: '/cash_and_accounts',
-            payment: '/payments',
+            pay: '/pay',
             money: '/money',
             moneyExchange: '/money/currency_exchange',
             moneyMoving: '/money/moving_money',
