@@ -59,8 +59,9 @@ function Pay() {
       if (data.status === "error") alert(data.message)
       else setAuxiliaryList(data.message)
     })
+    console.log('auxiliaryList1', auxiliaryList)
     // eslint-disable-next-line
-  }, [currentPathName])
+  }, [currentPathName, auxiliaryList, setAuxiliaryList])
 
   // ========================================
   const [data] = React.useState(null)
