@@ -55,7 +55,7 @@ function Pay() {
 
   React.useEffect(() => {
     if(id) {
-      api.find(id, 'money').then(data => {
+      api.find(id, 'pay').then(data => {
         const res = data.message
         setItem(res)
       })
@@ -130,9 +130,17 @@ function Pay() {
     setItem({type: currentPathName})
     api.add(item, 'payment').then(data => {
       if (data.status === "error") return alert(data.message)
-      setIsSuccess(null)
-      setIsRedirect(true)
+      navigate('/money')
     })
+  }
+
+  const handleRemove = () => {
+    setTimeout(() => {
+      api.remove(id, 'pay').then(data => {
+        if (data.status === "error") return alert(data.message)
+        navigate('/money')
+      })
+    }, 1000)
   }
 
   const handleReturn = () => {
@@ -232,7 +240,7 @@ function Pay() {
         <a href="#!"  onClick={handleReturn} className="btn">
           Отмена
         </a>
-        <a href="/#" className="btn">
+        <a href="#!" className="btn" onClick={handleRemove} >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
