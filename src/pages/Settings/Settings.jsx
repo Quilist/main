@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Settings() {
-  React.useEffect(() => {
-    document.title = "B-Fin: Настройки"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Настройки");
 
   return <>
     <section className="home-section">

@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function History() {
-  React.useEffect(() => {
-    document.title = "История изменений"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("История изменений");
 
   return (
     <>

@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Dashboard() {
-  React.useEffect(() => {
-    document.title = "Показатели"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Показатели");
 
   return (
     <>

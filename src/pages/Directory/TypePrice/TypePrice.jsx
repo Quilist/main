@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import TypePriceModal from './TypePriceModal';
 import TypePriceEditModal from './TypePriceEditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/TypePrice.module.css';
@@ -30,6 +31,8 @@ export default function TypePrice() {
     setRowId(id);
     setOpenEditModal(true);
   };
+
+  useDocumentTitle("Типы цен");
 
   const api = new API()
   React.useEffect(() => {

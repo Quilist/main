@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Header from "@/components/layout/Header/Header";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Buffer } from "buffer";
 import burgerImg from './img/burger.png'
@@ -33,11 +33,8 @@ export default function Sidebar() {
     setIsDropDirectory(!isDropDirectory);
   };
   const handleClickAway = (e) => {
-    if(e.target.className !== 'bottom' &&
-      e.target.className !== 'middle' &&
-      e.target.className !== 'top' &&
-      e.target.className!== 'menu-gumb') {
-      console.log('e.target.className', e.target.className)
+    const mobileBurgerClassList = ['bottom', 'middle', 'top', 'menu-gumb'];
+    if(!mobileBurgerClassList.includes(e.target.className)) {
       if (typeof e.target.className === 'string') {
         const component = (e.target.className).slice(0, 8)
         if (component !== 'arrowImg') {
@@ -47,8 +44,15 @@ export default function Sidebar() {
         setActiveSidebar(true)
       }
     }
-
   }
+
+  const handleSidebarMenuClick = (e) => {
+    const subListData = ['link_name sub', 'bx bxs-chevron-down arrow'];
+    if(!subListData.includes(e.target.className)) {
+      setActiveSidebar(true)
+    }
+  };
+
   const dropDown = () => {
     setDrop(!isDrop);
   };
@@ -56,7 +60,6 @@ export default function Sidebar() {
   const toggleSidebar = (e) => {
     e.preventDefault();
     setActiveSidebar(!isActiveSidebar)
-    console.log('isActiveSidebar', isActiveSidebar)
   };
 
   const handleSearchState = () => {
@@ -133,7 +136,7 @@ export default function Sidebar() {
             <img src={burgerImg} onClick={toggleSidebar} className={isActiveSidebar ? 'burger-menu__img' : 'icon-hide'} alt="burgerMenu" />
             <img src={crossImg} onClick={toggleSidebar} className={!isActiveSidebar ? "cross-menu__img" : "icon-hide"} alt="cross" />
           </div>
-          <ul className="nav-links">
+          <ul className="nav-links" onClick={(e) => handleSidebarMenuClick(e)}>
             <div>
               <li>
                 <Link to="/dashboard">
@@ -230,7 +233,7 @@ export default function Sidebar() {
                 <div className="iocn-link">
                   <Link to="/directory">
                     <i className='bx bx-library'></i>
-                    <span className="link_name">Справочник</span>
+                    <span className="link_name sub">Справочник</span>
                   </Link>
                   <i className='bx bxs-chevron-down arrow' onClick={dropDownDirectory}></i>
                 </div>
@@ -253,7 +256,7 @@ export default function Sidebar() {
                 <div className="iocn-link">
                   <Link to="/reports">
                     <i className="bx bx-book-alt"></i>
-                    <span className="link_name">Отчеты</span>
+                    <span className="link_name sub">Отчеты</span>
                   </Link>
                   <i className="bx bxs-chevron-down arrow" onClick={dropDown}></i>
                 </div>

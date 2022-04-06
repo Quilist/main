@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import MeasureModal from './MeasureModal';
 import MeasureEditModal from './MeasureEditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Measure.module.css';
@@ -32,6 +33,7 @@ export default function Measure() {
   };
 
   const api = new API()
+  useDocumentTitle("Единицы измерений");
   React.useEffect(() => {
     if (!openEditModal && !open) {
       api.all('measure').then(data => {

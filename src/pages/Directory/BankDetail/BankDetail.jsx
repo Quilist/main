@@ -23,6 +23,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from "@/styles/modules/BankDetail.module.css";
@@ -236,11 +237,7 @@ export default function EnhancedTable() {
   const [id, setId] = React.useState(null);
   const [isRedirect, setIsRedirect] = React.useState(false);
 
-
-  React.useEffect(() => {
-    document.title = "Справочник"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Банки и реквизиты");
 
   // ==========Запрос на сервер=================
   const [rows, setRows] = React.useState([])

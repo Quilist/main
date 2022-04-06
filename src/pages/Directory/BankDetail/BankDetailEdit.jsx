@@ -7,6 +7,7 @@ import BankDetailForm from './BankDetailForm';
 import Button from '@mui/material/Button';
 
 import styles from '@/styles/modules/BankDetailForm.module.css'
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api'
 
 
@@ -24,6 +25,7 @@ function BankDetailEdit() {
   const navigate = useNavigate()
 
   const api = new API();
+  useDocumentTitle("Изменить банки и реквизиты");
   React.useEffect(() => {
     api.find(id, 'bankDetail').then(data => {
       const res = data.message

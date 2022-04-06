@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import StorehouseModal from './StorehouseModal';
 import StorehouseEditModal from './StorehouseEditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Storehouse.module.css';
@@ -32,6 +33,7 @@ export default function Storehouse() {
   };
 
   const api = new API()
+  useDocumentTitle("Склады");
   React.useEffect(() => {
     if (!openEditModal && !open) {
       api.all('storehouse').then(data => {

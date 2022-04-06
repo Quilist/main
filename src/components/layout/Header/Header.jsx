@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -51,7 +52,14 @@ const Header = () => {
   const anchorReceiveRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
-  const headerTitle = document.title;
+  const [headerTitle, setHeaderTitle] = React.useState( '');
+  const target = document.querySelector('head > title');
+
+  if(target.textContent) {
+    setTimeout(function(){
+      setHeaderTitle(target.textContent)
+    }, 10);
+  }
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);

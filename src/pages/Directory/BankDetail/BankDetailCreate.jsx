@@ -7,6 +7,7 @@ import BankDetailForm from './BankDetailForm';
 import Button from '@mui/material/Button';
 
 import styles from '@/styles/modules/BankDetailForm.module.css'
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api'
 
 function BankDetailCreate() {
@@ -23,6 +24,7 @@ function BankDetailCreate() {
   const [checkingAccount, setCheckingAccount] = React.useState('');
 
   const navigate = useNavigate()
+  useDocumentTitle("Добавить банки и реквизиты");
   React.useEffect(() => {
     if (isRedirect) {
       navigate('/banks_details')

@@ -22,48 +22,15 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import {currenciesList} from "../../Directory/Currency/Currency";
 
-function PayForm({ item, setItem, error, setError, pageTypes, currentPathName }) {
+function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
   const [payType, setPayType] = React.useState('cash');
   const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null}]);
 
   const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null}]);
-  const [payCurrencyList, setPayCurrencyList] = React.useState([
-    {
-      name: 'UAH',
-      id: 1
-    },
-    {
-      name: 'RUB',
-      id: 2
-    },
-    {
-      name: 'USD',
-      id: 3
-    },
-    {
-      name: 'EUR',
-      id: 4
-    }
-    ]);
-  const [changeCurrencyList, setChangeCurrencyList] = React.useState([
-    {
-      name: 'UAH',
-      id: 1
-    },
-    {
-      name: 'RUB',
-      id: 2
-    },
-    {
-      name: 'USD',
-      id: 3
-    },
-    {
-      name: 'EUR',
-      id: 4
-    }
-  ]);
+  const [payCurrencyList, setPayCurrencyList] = React.useState(auxiliaryList.currencies);
+  const [changeCurrencyList, setChangeCurrencyList] = React.useState(auxiliaryList.currencies);
+  const [itemList] = React.useState(auxiliaryList.items);
   const [cashAccountList] = React.useState([
     {
       id: 1,
@@ -255,6 +222,11 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName })
                 onChange={handleChange}
               >
                 <option selected disabled>{pageTypes[currentPathName]}</option>
+                {itemList.map((item, index) => {
+                  return (<option key={item.id} value={item.id}>
+                    {item.name ? item.name : item.username}
+                  </option>)
+                })}
                 <option value="1">Поставщик1</option>
                 <option value="2">Поставщик2</option>
                 <option value="3">Поставщик3</option>

@@ -9,6 +9,9 @@ import { useState } from "react";
 //import Table from "@/components/Table/Table"
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+
 import CashAndAccountsModal from "./CashAndAccountsModal";
 import { cash_and_accounts } from '@/pages/Directory/CashAndAccount/CashAndAccount';
 import Grow from "@mui/material/Grow";
@@ -18,6 +21,8 @@ import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import moment from 'moment';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -32,7 +37,8 @@ export default function EnhancedTable() {
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const anchorRef = React.useRef(null);
 
-  const api = new API()
+  const api = new API();
+  useDocumentTitle("Деньги");
   // const mockResponse = {
   //   "status":"OK",
   //   "message":{
@@ -213,6 +219,17 @@ export default function EnhancedTable() {
     handleOpen();
   };
 
+  const [dateState, setDateState] = useState({
+    startDate: moment().subtract(29, 'days'),
+    endDate: moment(),
+  });
+  const { startDate, endDate } = dateState;
+  const handleDateRangePickerCallback = (startDate, endDate) => {
+    setDateState({ startDate, endDate });
+  };
+  const dateRange =
+    startDate.format('MMMM D, YYYY') + ' - ' + endDate.format('MMMM D, YYYY');
+
   return (
     <>
       <CurrencyExchangeModal
@@ -305,7 +322,9 @@ export default function EnhancedTable() {
                 </Grow>
               )}
             </Popper>
+
             <div className="wrapper__mounth">
+
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
@@ -313,9 +332,40 @@ export default function EnhancedTable() {
                     fill="#7096FF" />
                 </svg>
               </a>
-              <p>
-                Март
-              </p>
+              <DateRangePicker
+                initialSettings={{
+                  startDate: startDate.toDate(),
+                  endDate: endDate.toDate(),
+                  ranges: {
+                    'Сегодня': [moment().toDate(), moment().toDate()],
+                    'Вчера': [
+                      moment().subtract(1, 'days').toDate(),
+                      moment().subtract(1, 'days').toDate(),
+                    ],
+                    'Последние 7 Дней': [
+                      moment().subtract(6, 'days').toDate(),
+                      moment().toDate(),
+                    ],
+                    'Последние 30 Дней': [
+                      moment().subtract(29, 'days').toDate(),
+                      moment().toDate(),
+                    ],
+                    'Текущий месяц': [
+                      moment().startOf('month').toDate(),
+                      moment().endOf('month').toDate(),
+                    ],
+                    'Прошлый месяц': [
+                      moment().subtract(1, 'month').startOf('month').toDate(),
+                      moment().subtract(1, 'month').endOf('month').toDate(),
+                    ],
+                  },
+                }}
+                onCallback={handleDateRangePickerCallback}
+              >
+                <p style={{ cursor: 'pointer'}}>
+                   {dateRange}
+                </p>
+              </DateRangePicker>
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"

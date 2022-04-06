@@ -37,6 +37,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import API from '@/api/api';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 import phoneImg from '@/static/img/phone.png';
 import mailImg from '@/static/img/mail.png';
@@ -297,11 +298,12 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [isRedirect, setIsRedirect] = React.useState(false);
 
+  useDocumentTitle("Клиенты")
+  // React.useEffect(() => {
+  //   document.title = "Клиенты"
+  //   // eslint-disable-next-line
+  // }, [])
 
-  React.useEffect(() => {
-    document.title = "Клиенты"
-    // eslint-disable-next-line
-  }, [])
 
   // ==========Запрос на сервер=================
   const [rows, setRows] = React.useState([])

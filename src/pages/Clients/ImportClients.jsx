@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function ImportClients() {
-  React.useEffect(() => {
-    document.title = "B-Fin: Импортировать клиентов"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Импортировать клиентов")
 
   return <>
     <section className="home-section">

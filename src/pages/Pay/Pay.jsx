@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Pay() {
   const [isSuccess, setIsSuccess] = React.useState(null);
@@ -45,9 +46,9 @@ function Pay() {
     { name: 'Отправить', link: '/sell' },
   ];
 
-  React.useEffect(() => {
-    document.title = "B-Fin: Оплата"
+  useDocumentTitle("Оплата");
 
+  React.useEffect(() => {
     const params = {
       type: currentPathName
     }
@@ -203,6 +204,7 @@ function Pay() {
         setError={setError}
         pageTypes={pageTypes}
         currentPathName={currentPathName}
+        auxiliaryList={auxiliaryList}
       />
       <div className="form__btns">
         <a href="#!" className="btn">

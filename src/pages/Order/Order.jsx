@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Order() {
-  React.useEffect(() => {
-    document.title = "Заказы"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Заказы");
 
   return <>
     <section className="home-section">

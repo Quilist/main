@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import IncomeItemModal from './IncomeItemModal';
 import IncomeItemEditModal from './IncomeItemEditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/IncomeItem.module.css';
@@ -32,6 +33,7 @@ export default function IncomeItem() {
   };
 
   const api = new API()
+  useDocumentTitle("Статьи расходов");
   React.useEffect(() => {
     if (!openEditModal && !open) {
       api.all('incomeItem').then(data => {

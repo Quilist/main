@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Invoice() {
-  React.useEffect(() => {
-    document.title = "Счёт"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Счёт");
 
   return <>
     <section className="home-section">

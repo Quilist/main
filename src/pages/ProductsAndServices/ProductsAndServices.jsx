@@ -31,11 +31,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Grow from "@mui/material/Grow";
 import useUserId from "@/hooks/useUserId";
-
-
-
-
-
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -413,12 +409,7 @@ function ProductsAndServices() {
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
    const [isRedirect, setIsRedirect] = React.useState(false);
 
-
-   React.useEffect(() => {
-      document.title = "Склад"
-      // eslint-disable-next-line
-   }, [])
-
+   useDocumentTitle("Товары и услуги");
 
    const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === "asc";

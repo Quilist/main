@@ -26,6 +26,7 @@ import { visuallyHidden } from "@mui/utils";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from "./Buy.module.css";
@@ -265,6 +266,7 @@ export default function EnhancedTable() {
   // ==========Запрос на сервер=================
   const [rows, setRows] = React.useState([])
   const api = new API()
+  useDocumentTitle("Купить");
   React.useEffect(() => {
     setRows([
       {

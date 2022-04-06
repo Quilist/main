@@ -10,6 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import useEmployeeId from '@/hooks/useEmployeeId';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import pencilImg from '@/static/img/pencil.png';
@@ -24,10 +25,7 @@ export default function Employee() {
    const [rows, setRows] = React.useState([]);
    const api = new API()
 
-   React.useEffect(() => {
-      document.title = "Сотрудники"
-      // eslint-disable-next-line
-   }, [])
+   useDocumentTitle("Сотрудники");
 
    React.useEffect(() => {
       api.all('employee').then(data => {

@@ -4,6 +4,7 @@ import useEmployeeId from '@/hooks/useEmployeeId';
 import Button from '@mui/material/Button';
 import EmployeeRights from './EmployeeRights';
 import InformationEmployee from './InformationEmployee';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api'
 
 import styles from '@/styles/modules/employeeEditing.module.css';
@@ -16,10 +17,7 @@ const EmployeesEditing = () => {
   // =====================================
   const api = new API();
 
-  React.useEffect(() => {
-    document.title = "B-Fin: Изменить сотрудника"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Изменить сотрудника");
 
   let isAdd = employeeId === 'Add';
 

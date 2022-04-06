@@ -11,6 +11,7 @@ import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import CurrencyModal from './CurrencyModal';
 import CurrencyEditModal from './CurrencyEditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Currency.module.css';
@@ -25,10 +26,7 @@ export default function Currency() {
   const [rows, setRows] = React.useState([])
   const api = new API()
 
-  React.useEffect(() => {
-    document.title = "Справочник"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Валюты");
 
   // Modal
   const [open, setOpen] = React.useState(false);

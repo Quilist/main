@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 import styles from '@/styles/modules/UserEditing.module.css'
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api'
 
 
@@ -23,10 +24,7 @@ function UserEditing() {
   const [currentUser, setCurrentUser] = React.useState(null)
   const api = new API();
 
-  React.useEffect(() => {
-    document.title = "B-Fin: Изменить клиента"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Изменить клиента");
 
   React.useEffect(() => {
     if (!isAdd) {

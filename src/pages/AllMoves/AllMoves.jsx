@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function AllMoves() {
-  React.useEffect(() => {
-    document.title = "Все движения"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Показатели")
 
   return (
     <>

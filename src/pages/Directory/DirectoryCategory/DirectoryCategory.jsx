@@ -1,10 +1,8 @@
 import * as React from "react";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function DirectoryCategory() {
-   React.useEffect(() => {
-      document.title = "Справочник"
-      // eslint-disable-next-line
-   }, [])
+   useDocumentTitle("Категории");
 
    return (
       <>

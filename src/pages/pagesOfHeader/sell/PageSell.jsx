@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 import './sell.css'
 import Share from './img/share1.svg'
@@ -24,9 +25,7 @@ const Sell = () => {
   const anchorReceiveRef = React.useRef(null);
   const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
 
-  React.useEffect(() => {
-    document.title = "Клиент"
-  }, [])
+  useDocumentTitle("Продать");
 
   const handleCloseReceive = (event) => {
     if (anchorReceiveRef.current && anchorReceiveRef.current.contains(event.target)) {

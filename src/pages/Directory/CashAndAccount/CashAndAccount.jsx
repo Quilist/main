@@ -12,6 +12,7 @@ import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import CashAndAccountsModal from './CashAndAccountsModal';
 import EditModal from './EditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 // import API from '@/api/api';
 
 import styles from '@/styles/modules/CashAndAccounts.module.css';
@@ -55,10 +56,7 @@ export default function CashAndAccount() {
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-   React.useEffect(() => {
-      document.title = "Кассы и счета"
-      // eslint-disable-next-line
-   }, [])
+   useDocumentTitle("Кассы и счета");
 
    const handleChangePage = (event, newPage) => {
       setPage(newPage);

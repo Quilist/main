@@ -31,6 +31,7 @@ import useUserId from "@/hooks/useUserId";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import phoneImg from '@/static/img/phone.png';
@@ -158,10 +159,7 @@ const EnhancedTableToolbar = (props) => {
    };
    const navigate = useNavigate();
 
-   React.useEffect(() => {
-      document.title = "Поставщики"
-      // eslint-disable-next-line
-   }, [])
+   useDocumentTitle("Поставщики");
 
    React.useEffect(() => {
       if (isRedirect) {

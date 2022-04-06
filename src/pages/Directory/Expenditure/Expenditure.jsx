@@ -11,6 +11,7 @@ import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import ExpenditureModal from './ExpenditureModal';
 import ExpenditureEditModal from './ExpenditureEditModal';
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Expenditure.module.css';
@@ -32,10 +33,7 @@ export default function Expenditure() {
     setOpenEditModal(true);
   };
 
-  React.useEffect(() => {
-    document.title = "Справочник"
-    // eslint-disable-next-line
-  }, [])
+  useDocumentTitle("Статьи расходов");
 
   const api = new API()
   React.useEffect(() => {

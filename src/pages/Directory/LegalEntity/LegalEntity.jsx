@@ -25,6 +25,7 @@ import Button from "@mui/material/Button";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import useUserId from "@/hooks/useUserId";
+import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 
@@ -131,10 +132,7 @@ const EnhancedTableToolbar = (props) => {
    };
    const navigate = useNavigate();
 
-   React.useEffect(() => {
-      document.title = "Мои фирмы"
-      // eslint-disable-next-line
-   }, [])
+   useDocumentTitle("Мои фирмы");
 
    React.useEffect(() => {
       if (isRedirect) {
