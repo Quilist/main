@@ -61,7 +61,7 @@ function Pay() {
     })
     console.log('auxiliaryList1', auxiliaryList)
     // eslint-disable-next-line
-  }, [currentPathName, auxiliaryList, setAuxiliaryList])
+  }, [currentPathName])
 
   // ========================================
   const [data] = React.useState(null)
