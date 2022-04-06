@@ -119,6 +119,7 @@ function Pay() {
       return;
     }
 
+    setItem({type: currentPathName})
     api.add(item, 'payment').then(data => {
       if (data.status === "error") return alert(data.message)
       setIsSuccess(null)

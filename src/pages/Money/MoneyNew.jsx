@@ -149,6 +149,10 @@ export default function EnhancedTable() {
 
   };
 
+  const editLink = (item) => {
+    return `/${item}/${item.id}`
+  };
+
 
   const tableHeader = [
     {
@@ -436,7 +440,10 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__data">
                       <p>
-                        {formattedDate(item.date_create)}
+                        {item.type ?
+                          <Link to={editLink(item)} style={{color: 'black'}}>{formattedDate(item.date_create)}</Link> :
+                          formattedDate(item.date_create)
+                        }
                       </p>
                       <p>
 

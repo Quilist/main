@@ -189,12 +189,22 @@ function App() {
             <Route path="/pay_expend" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/pay_salary" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/pay_owner" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_supplier/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_customer/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_expend/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_salary/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/pay_owner/:id" element={<> <AppLayout component={<Pay />} /> </>} />
 
             <Route path="/receive_customer" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/receive_supplier" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/receive_income" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/receive_owner" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/receive_balance" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_customer/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_supplier/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_income/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_owner/:id" element={<> <AppLayout component={<Pay />} /> </>} />
+            <Route path="/receive_balance/:id" element={<> <AppLayout component={<Pay />} /> </>} />
 
             {/* Справочник  */}
             <Route path="/cash_accounts" element={<> <AppLayout component={<CashAndAccount />} /> </>} />
