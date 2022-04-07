@@ -278,6 +278,29 @@ export default function EnhancedTable() {
     }
   };
 
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const payOptions = [
+    { name: 'Поставщику', link: '/pay_supplier' },
+    { name: 'Клиенту(возврат)', link: '/pay_customer' },
+    { name: 'Прочий расход', link: '/pay_expend' },
+    { name: 'Зарплата', link: '/pay_salary' },
+    { name: 'Собственнику', link: '/pay_owner' }
+  ];
+
+  const receiveOptions = [
+    { name: 'От клиента', link: '/receive_customer' },
+    { name: 'От поставщика', link: '/receive_supplier' },
+    { name: 'Прочее поступление', link: '/receive_income' },
+    { name: 'Взнос от собственника', link: '/receive_owner' },
+    { name: 'Ввод остатков', link: '/receive_balance' }
+  ];
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setOpen(false);
+  };
+
   React.useEffect(() => {
     if (!openCurrencyExchangeModal || !openMovingMoney) {
       api.all('money').then(data => {
@@ -292,6 +315,21 @@ export default function EnhancedTable() {
   React.useEffect(() => {
     // eslint-disable-next-line
   }, [cashAndAccountsList])
+
+  const listElement =  React.useRef(null);
+  const listElementTwo =  React.useRef(null);
+
+  const showDropDown = (item) => {
+    listElement.current.classList.toggle("hidden");
+
+    listElementTwo.current.classList.add("hidden");
+  };
+
+  const showDropDownTwo = (item) => {
+    listElementTwo.current.classList.toggle("hidden");
+
+    listElement.current.classList.add("hidden");
+  };
 
   const handleOpen = (e) => {
     if (isOpen === 'dropdown') {
@@ -473,8 +511,8 @@ export default function EnhancedTable() {
               Создать
               <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                  fill="#fff" />
+                      d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                      fill="#fff" />
               </svg>
             </a>
             <Popper
@@ -483,19 +521,59 @@ export default function EnhancedTable() {
               role={undefined}
               transition
               // disablePortal
-              style={{ zIndex: "10" }}
+              style={{ zIndex: "10"}}
+              placement="bottom-start"
             >
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
                   style={{
                     transformOrigin: placement === "center bottom",
-                    marginLeft: "76px",
+                    marginTop: "5px",
                   }}
                 >
                   <Paper>
                     <ClickAwayListener onClickAway={handleCloseCreateMenu}>
                       <div>
+                        <MenuList id="split-button-menu">
+
+                          <div className="dropDownWrap">
+                            <button onClick={showDropDown} className={'dropDownBtn'}>
+                              Оплатить
+                            </button>
+                            <div className="dropDownMenu hidden" ref={listElement}>
+                              {payOptions.map((option, index) => (
+                                <MenuItem
+                                  style={{ maxWidth: "100%" }}
+                                  key={option.name}
+                                  selected={index === selectedIndex}
+                                  onClick={(event) => handleMenuItemClick(event, index)}
+                                >
+                                  <Link to={option.link}>{option.name}</Link>
+                                </MenuItem>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="dropDownWrap">
+                            <button onClick={showDropDownTwo} className={'dropDownBtn'}>
+                              Принять
+                            </button>
+                            <div className="dropDownMenu hidden" ref={listElementTwo}>
+                              {receiveOptions.map((option, index) => (
+                                <MenuItem
+                                  style={{ maxWidth: "100%" }}
+                                  key={option.name}
+                                  selected={index === selectedIndex}
+                                  onClick={(event) => handleMenuItemClick(event, index)}
+                                >
+                                  <Link to={option.link}>{option.name}</Link>
+                                </MenuItem>
+                              ))}
+                            </div>
+                          </div>
+
+                        </MenuList>
                         <MenuList id="split-button-menu">
                           <Link to="#" onClick={handleOpenCurrencyExchangeModal}>
                             <MenuItem style={{ height: "30px" }}>
@@ -516,55 +594,22 @@ export default function EnhancedTable() {
                 </Grow>
               )}
             </Popper>
-
             <div className="wrapper__mounth">
-
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                    fill="#7096FF" />
+                        d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                        fill="#7096FF" />
                 </svg>
               </a>
-              <DateRangePicker
-                initialSettings={{
-                  startDate: startDate.toDate(),
-                  endDate: endDate.toDate(),
-                  ranges: {
-                    'Сегодня': [moment().toDate(), moment().toDate()],
-                    'Вчера': [
-                      moment().subtract(1, 'days').toDate(),
-                      moment().subtract(1, 'days').toDate(),
-                    ],
-                    'Последние 7 Дней': [
-                      moment().subtract(6, 'days').toDate(),
-                      moment().toDate(),
-                    ],
-                    'Последние 30 Дней': [
-                      moment().subtract(29, 'days').toDate(),
-                      moment().toDate(),
-                    ],
-                    'Текущий месяц': [
-                      moment().startOf('month').toDate(),
-                      moment().endOf('month').toDate(),
-                    ],
-                    'Прошлый месяц': [
-                      moment().subtract(1, 'month').startOf('month').toDate(),
-                      moment().subtract(1, 'month').endOf('month').toDate(),
-                    ],
-                  },
-                }}
-                onCallback={handleDateRangePickerCallback}
-              >
-                <p style={{ cursor: 'pointer'}}>
-                   {dateRange}
-                </p>
-              </DateRangePicker>
+              <p>
+                Март
+              </p>
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                    fill="#7096FF" />
+                        d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                        fill="#7096FF" />
                 </svg>
               </a>
             </div>
@@ -572,15 +617,15 @@ export default function EnhancedTable() {
               <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="0.941177" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="16" y="6.58824" width="5.64706" height="0.941176" rx="0.470588"
-                  transform="rotate(-180 16 6.58824)" fill="#7096FF" />
+                      transform="rotate(-180 16 6.58824)" fill="#7096FF" />
                 <rect y="10.353" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="7.52942" y="0.941177" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="8.47058" y="6.58824" width="8.47059" height="0.941176" rx="0.470588"
-                  transform="rotate(-180 8.47058 6.58824)" fill="#7096FF" />
+                      transform="rotate(-180 8.47058 6.58824)" fill="#7096FF" />
                 <rect x="7.52942" y="10.353" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <circle cx="5.17645" cy="1.41176" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5" />
                 <circle cx="10.8235" cy="6.11765" r="1.16176" transform="rotate(-180 10.8235 6.11765)" fill="white"
-                  stroke="#7096FF" stroke-width="0.5" />
+                        stroke="#7096FF" stroke-width="0.5" />
                 <circle cx="5.17645" cy="10.8235" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5" />
               </svg>
               Фильтр
