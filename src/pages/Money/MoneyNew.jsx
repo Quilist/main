@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from 'react-router-dom'
 
 import API from '@/api/api';
 
@@ -36,73 +37,254 @@ export default function EnhancedTable() {
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const anchorRef = React.useRef(null);
-
+  const navigate = useNavigate()
   const api = new API();
+
   useDocumentTitle("Деньги");
-  // const mockResponse = {
-  //   "status":"OK",
-  //   "message":{
-  //     "items":[
-  //       {
-  //         "id":2,
-  //         "id_user":4,
-  //         "date_create":"1648813079886",
-  //         "from_cash_account_id":1,
-  //         "to_cash_account_id":2,
-  //         "amount":222,
-  //         "note":"Тук"
-  //       },
-  //       {
-  //         "id":5,
-  //         "id_user":4,
-  //         "date_create":"1648812964279",
-  //         "from_currency_id":1,
-  //         "to_currency_id":1,
-  //         "exchange_rate":1,
-  //         "cash_account_id":1,
-  //         "amount_pay":"111",
-  //         "amount_receive":"111",
-  //         "note":"Тест тест"
-  //       },
-  //       {
-  //         "id":13,
-  //         "id_user":4,
-  //         "number":2,
-  //         "date_create":"1648812870290",
-  //         "id_type":1,
-  //         "type":"payment",
-  //         "type_order":"cash",
-  //         "id_cash_accounts":"1",
-  //         "note":"пп",
-  //         "id_legal_entites":1
-  //       },
-  //       {
-  //         "id":12,
-  //         "id_user":4,
-  //         "number":1,
-  //         "date_create":"1648812818342",
-  //         "id_type":1,
-  //         "type":"payment",
-  //         "type_order":"cash",
-  //         "id_cash_accounts":"1",
-  //         "note":"eqw",
-  //         "id_legal_entites":1
-  //       }
-  //     ],
-  //     "paginations":{
-  //       "total":4,
-  //       "last_page":1
-  //     }
-  //   }
-  // };
+  const mockResponse = {
+    "status":"OK",
+    "message":{
+      "items":[
+        {
+          "id":2,
+          "id_user":4,
+          "date_create":"1648813079886",
+          "from_cash_account_id":1,
+          "to_cash_account_id":2,
+          "amount":222,
+          "note":"Тук"
+        },
+        {
+          "id":5,
+          "id_user":4,
+          "date_create":"1648812964279",
+          "from_currency_id":1,
+          "to_currency_id":1,
+          "exchange_rate":1,
+          "cash_account_id":1,
+          "amount_pay":"111",
+          "amount_receive":"111",
+          "note":"Тест тест"
+        },
+        {
+          "id":13,
+          "id_user":4,
+          "number":2,
+          "date_create":"1648812870290",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"пп",
+          "id_legal_entites":1
+        },
+        {
+          "id":12,
+          "id_user":4,
+          "number":1,
+          "date_create":"1648812818342",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"eqw",
+          "id_legal_entites":1
+        },
+        {
+          "id":2,
+          "id_user":4,
+          "date_create":"1648813079886",
+          "from_cash_account_id":1,
+          "to_cash_account_id":2,
+          "amount":222,
+          "note":"Тук"
+        },
+        {
+          "id":5,
+          "id_user":4,
+          "date_create":"1648812964279",
+          "from_currency_id":1,
+          "to_currency_id":1,
+          "exchange_rate":1,
+          "cash_account_id":1,
+          "amount_pay":"111",
+          "amount_receive":"111",
+          "note":"Тест тест"
+        },
+        {
+          "id":13,
+          "id_user":4,
+          "number":2,
+          "date_create":"1648812870290",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"пп",
+          "id_legal_entites":1
+        },
+        {
+          "id":12,
+          "id_user":4,
+          "number":1,
+          "date_create":"1648812818342",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"eqw",
+          "id_legal_entites":1
+        },
+        {
+          "id":2,
+          "id_user":4,
+          "date_create":"1648813079886",
+          "from_cash_account_id":1,
+          "to_cash_account_id":2,
+          "amount":222,
+          "note":"Тук"
+        },
+        {
+          "id":5,
+          "id_user":4,
+          "date_create":"1648812964279",
+          "from_currency_id":1,
+          "to_currency_id":1,
+          "exchange_rate":1,
+          "cash_account_id":1,
+          "amount_pay":"111",
+          "amount_receive":"111",
+          "note":"Тест тест"
+        },
+        {
+          "id":13,
+          "id_user":4,
+          "number":2,
+          "date_create":"1648812870290",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"пп",
+          "id_legal_entites":1
+        },
+        {
+          "id":12,
+          "id_user":4,
+          "number":1,
+          "date_create":"1648812818342",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"eqw",
+          "id_legal_entites":1
+        },
+        {
+          "id":2,
+          "id_user":4,
+          "date_create":"1648813079886",
+          "from_cash_account_id":1,
+          "to_cash_account_id":2,
+          "amount":222,
+          "note":"Тук"
+        },
+        {
+          "id":5,
+          "id_user":4,
+          "date_create":"1648812964279",
+          "from_currency_id":1,
+          "to_currency_id":1,
+          "exchange_rate":1,
+          "cash_account_id":1,
+          "amount_pay":"111",
+          "amount_receive":"111",
+          "note":"Тест тест"
+        },
+        {
+          "id":13,
+          "id_user":4,
+          "number":2,
+          "date_create":"1648812870290",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"пп",
+          "id_legal_entites":1
+        },
+        {
+          "id":12,
+          "id_user":4,
+          "number":1,
+          "date_create":"1648812818342",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"eqw",
+          "id_legal_entites":1
+        },
+        {
+          "id":2,
+          "id_user":4,
+          "date_create":"1648813079886",
+          "from_cash_account_id":1,
+          "to_cash_account_id":2,
+          "amount":222,
+          "note":"Тук"
+        },
+        {
+          "id":5,
+          "id_user":4,
+          "date_create":"1648812964279",
+          "from_currency_id":1,
+          "to_currency_id":1,
+          "exchange_rate":1,
+          "cash_account_id":1,
+          "amount_pay":"111",
+          "amount_receive":"111",
+          "note":"Тест тест"
+        },
+        {
+          "id":13,
+          "id_user":4,
+          "number":2,
+          "date_create":"1648812870290",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"пп",
+          "id_legal_entites":1
+        },
+        {
+          "id":12,
+          "id_user":4,
+          "number":1,
+          "date_create":"1648812818342",
+          "id_type":1,
+          "type":"payment",
+          "type_order":"cash",
+          "id_cash_accounts":"1",
+          "note":"eqw",
+          "id_legal_entites":1
+        }
+      ],
+      "paginations":{
+        "total":4,
+        "last_page":1
+      }
+    }
+  };
 
   React.useEffect(() => {
     if (!openCurrencyExchangeModal || !openMovingMoney) {
-      api.all('money').then(data => {
-        if (data.status === "error") alert(data.message)
-        else setItems(data.message.items)
-      })
-      //setItems(mockResponse.message.items)
+      // api.all('money').then(data => {
+      //   if (data.status === "error") alert(data.message)
+      //   else setItems(data.message.items)
+      // })
+      setItems(mockResponse.message.items)
     }
     // eslint-disable-next-line
   }, [openCurrencyExchangeModal, openMovingMoney])
@@ -149,8 +331,16 @@ export default function EnhancedTable() {
 
   };
 
-  const editLink = (item) => {
-    return `/${item.type}/${item.id}`
+  const goToEdit = (item) => {
+    if(item.type) {
+      navigate(`${item.type}/${item.id}`)
+    }
+    if(item.amount_receive) {
+      handleOpenCurrencyExchangeModal();
+    }
+    if(item.to_cash_account_id) {
+      handleOpenMovingMoney();
+    }
   };
 
 
@@ -224,7 +414,7 @@ export default function EnhancedTable() {
   };
 
   const [dateState, setDateState] = useState({
-    startDate: moment().subtract(29, 'days'),
+    startDate: moment(),
     endDate: moment(),
   });
   const { startDate, endDate } = dateState;
@@ -409,9 +599,8 @@ export default function EnhancedTable() {
             <InfiniteScroll
               dataLength={items.length}
               next={fetchMoreData}
-              hasMore={false}
+              hasMore={true}
               loader={<h4>Загрузка(тут спинер)...</h4>}
-              height={400}
               endMessage={
                 <p style={{ textAlign: "center" }}>
                   { items.paginations && <b>Всего записей: {items.paginations.total}</b> }
@@ -420,7 +609,11 @@ export default function EnhancedTable() {
             >
               {items.map((item, index) => {
                 return (
-                  <div className="table__item">
+                  <div className="table__item"
+                       onClick={() => {
+                         goToEdit(item)
+                       }}
+                    >
                     <div className="table__figure">
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -440,10 +633,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__data">
                       <p>
-                        {item.type ?
-                          <Link to={editLink(item)} style={{color: 'black'}}>{formattedDate(item.date_create)}</Link> :
-                          formattedDate(item.date_create)
-                        }
+                        {formattedDate(item.date_create)}
                       </p>
                       <p>
 

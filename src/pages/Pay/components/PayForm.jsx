@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Select from 'react-select';
 
 import FormControl from '@mui/material/FormControl';
 
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 import Radio from '@mui/material/Radio';
@@ -231,6 +231,84 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     return name;
   };
 
+  const optionsIdType = [
+    { value: '0', label: pageTypes[currentPathName], isDisabled: true },
+    { value: '1', label: 'Поставщик1' },
+    { value: '2', label: 'Поставщик2' },
+    { value: '3', label: 'Поставщик3' },
+  ];
+
+  var optionsIdCashAccounts = cashAccountList.map((item, index) => {
+    return { value: String(item.id), label: item.name }
+  });
+  optionsIdCashAccounts.unshift({ value: '0', label: 'Выберите кассу/счёт', isDisabled: true });
+
+  var optionsIdCurrency = changeCurrencyList.map((item, index) => {
+    return { value: String(item.id), label: item.name }
+  });
+  optionsIdCurrency.unshift({ value: '0', label: 'Валюта', isDisabled: true });
+
+  const optionsIdCurrencySecond = [
+    { value: '0', label: 'Валюта', isDisabled: true },
+    { value: '1', label: 'UAH' },
+  ];
+
+  const optionsOrg = [
+    { value: '0', label: 'Организация', isDisabled: true },
+    { value: '1', label: 'Организация1' },
+    { value: '2', label: 'Организация2' },
+    { value: '3', label: 'Организация3' },
+  ];
+
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected || state.isFocused ? 'white' : 'black',
+      background: state.isSelected || state.isFocused ? '#7196ff' : 'white',
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+
+      return { ...provided, opacity, transition };
+    }
+  }
+
+  const CustomMenuType = ({ innerRef, innerProps, isDisabled, children }) =>
+    !isDisabled ? (
+      <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
+        {children}
+        <div className="customReactSelectFooter">
+          <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
+          <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
+        </div>
+      </div>
+    ) : null;
+
+  const CustomMenuCashAccounts = ({ innerRef, innerProps, isDisabled, children }) =>
+    !isDisabled ? (
+      <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
+        {children}
+        <div className="customReactSelectFooter">
+          <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
+          <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
+        </div>
+      </div>
+    ) : null;
+
+
+  const CustomLegalEntites = ({ innerRef, innerProps, isDisabled, children }) =>
+    !isDisabled ? (
+      <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
+        {children}
+        <div className="customReactSelectFooter">
+          <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
+          <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
+        </div>
+      </div>
+    ) : null;
+
+
   return (
     <>
       <div className="form_edit">
@@ -240,18 +318,37 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
           </h4>
           <div className={"form__input " + ( item.id_type && !error.id_type ? 'active-cheked' : 'active-disable')}>
             <div className="select">
-              <select
-                value={item.id_type}
+              <Select
                 name="id_type"
-                onChange={handleChange}
-              >
-                <option selected disabled>{pageTypes[currentPathName]}</option>
-                {itemList.map((item, index) => {
-                  return (<option key={item.id} value={item.id}>
-                    {handleItemNameField(item)}
-                  </option>)
+                /*menuIsOpen={true}*/
+                styles={customStyles}
+                onChange={handleChange.bind(this, 'id_type')}
+                options={optionsIdType}
+                defaultValue={optionsIdType[0]}
+                components={{ Menu: CustomMenuType }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
                 })}
-              </select>
+              >
+              </Select>
+              {/*<select*/}
+              {/*  value={item.id_type}*/}
+              {/*  name="id_type"*/}
+              {/*  onChange={handleChange}*/}
+              {/*>*/}
+              {/*  <option selected disabled>{pageTypes[currentPathName]}</option>*/}
+              {/*  {itemList.map((item, index) => {*/}
+              {/*    return (<option key={item.id} value={item.id}>*/}
+              {/*      {handleItemNameField(item)}*/}
+              {/*    </option>)*/}
+              {/*  })}*/}
+              {/*</select>*/}
             </div>
           </div>
           <div className="form__title">
@@ -279,16 +376,34 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
           <div className={"form__input " + ( item.id_cash_accounts && !error.id_type ? 'active-cheked' : 'active-disable')}>
             <div className="select">
-              <select
-                value={item.id_cash_accounts}
+              <Select
                 name="id_cash_accounts"
-                onChange={handleChange}
-              >
-                <option selected disabled>Выберите кассу/счёт</option>
-                {cashAccountList.map((item, index) => {
-                  return (<option key={item.id} value={item.id}>{item.name}</option>)
+                styles={customStyles}
+                onChange={handleChange.bind(this, 'id_cash_accounts')}
+                options={optionsIdCashAccounts}
+                defaultValue={optionsIdCashAccounts[0]}
+                components={{ Menu: CustomMenuCashAccounts }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
                 })}
-              </select>
+              >
+              </Select>
+              {/*<select*/}
+              {/*  value={item.id_cash_accounts}*/}
+              {/*  name="id_cash_accounts"*/}
+              {/*  onChange={handleChange}*/}
+              {/*>*/}
+              {/*  <option selected disabled>Выберите кассу/счёт</option>*/}
+              {/*  {cashAccountList.map((item, index) => {*/}
+              {/*    return (<option key={item.id} value={item.id}>{item.name}</option>)*/}
+              {/*  })}*/}
+              {/*</select>*/}
             </div>
           </div>
           <div className={"form__input " + ( item.date && !error.id_type ? 'active-cheked' : 'active-disable')}>
@@ -329,10 +444,21 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
             {payType === 'bank_account' &&
               <div className="form__input active-disable">
                 <div className="select select_short">
-                  <select>
-                    <option selected disabled>Валюта</option>
-                    <option value="1">UAH</option>
-                  </select>
+                  <Select
+                    styles={customStyles}
+                    options={optionsIdCurrencySecond}
+                    defaultValue={optionsIdCurrencySecond[0]}
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 12,
+                      colors: {
+                        ...theme.colors,
+                        primary25: '#4369cf',
+                        primary: '#7196ff',
+                      },
+                    })}
+                  >
+                  </Select>
                 </div>
                 <input type="text" placeholder="Сумма:" className="short-input"/>
               </div>
@@ -343,16 +469,33 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                 return (
                   <div className={"form__input " + ( item.payments && item.payments[i] && !error.id_type ? 'active-cheked' : 'active-disable')} key={i}>
                     <div className="select select_short">
-                      <select
-                        value={c.currency}
-                        name="currency_id"
-                        onChange={(e) => updatePayment(e, i, 'payment')}
-                      >
-                        <option selected disabled>Валюта</option>
-                        {payCurrencyList.map((currency, currencyIndex) => {
-                          return (<option key={currency.id} value={currency.id}>{currency.name}</option>)
+                      <Select
+                        name="id_cash_accounts"
+                        styles={customStyles}
+                        onChange={(e) => updatePayment(e, i, 'id_cash_accounts')}
+                        options={optionsIdCurrency}
+                        defaultValue={optionsIdCurrency[0]}
+                        theme={(theme) => ({
+                          ...theme,
+                          borderRadius: 12,
+                          colors: {
+                            ...theme.colors,
+                            primary25: '#4369cf',
+                            primary: '#7196ff',
+                          },
                         })}
-                      </select>
+                      >
+                      </Select>
+                      {/*<select*/}
+                      {/*  value={c.currency}*/}
+                      {/*  name="currency_id"*/}
+                      {/*  onChange={(e) => updatePayment(e, i, 'payment')}*/}
+                      {/*>*/}
+                      {/*  <option selected disabled>Валюта</option>*/}
+                      {/*  {payCurrencyList.map((currency, currencyIndex) => {*/}
+                      {/*    return (<option key={currency.id} value={currency.id}>{currency.name}</option>)*/}
+                      {/*  })}*/}
+                      {/*</select>*/}
                     </div>
                     <input type="text" placeholder="Оплата:" className="short-input"
                            value={c.value}
@@ -386,16 +529,45 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                 return (
                   <div className="form__input active-cheked">
                     <div className="select select_short">
-                      <select
-                        value={c.currency}
+                      <Select
                         name="currency_id"
+                        styles={customStyles}
                         onChange={(e) => updateChange(e, i, 'change')}
-                      >
-                        <option selected disabled>Валюта</option>
-                        {changeCurrencyList.map((currency, currencyIndex) => {
-                          return (<option key={currency.id} value={currency.id}>{currency.name}</option>)
+                        options={optionsIdCurrency}
+                        defaultValue={optionsIdCurrency[0]}
+                        theme={(theme) => ({
+                          ...theme,
+                          borderRadius: 12,
+                          colors: {
+                            ...theme.colors,
+                            primary25: '#4369cf',
+                            primary: '#7196ff',
+                          },
                         })}
-                      </select>
+                      >
+                      </Select>
+                      {/*<select*/}
+                      {/*  value={c.currency}*/}
+                      {/*  styles={customStyles}*/}
+                      {/*  name="currency_id"*/}
+                      {/*  onChange={(e) => updateChange(e, i, 'change')}*/}
+                      {/*  options={optionsIdCurrency}*/}
+                      {/*  defaultValue={optionsIdCurrency[0]}*/}
+                      {/*  theme={(theme) => ({*/}
+                      {/*    ...theme,*/}
+                      {/*    borderRadius: 12,*/}
+                      {/*    colors: {*/}
+                      {/*      ...theme.colors,*/}
+                      {/*      primary25: '#4369cf',*/}
+                      {/*      primary: '#7196ff',*/}
+                      {/*    },*/}
+                      {/*  })}*/}
+                      {/*>*/}
+                      {/*  <option selected disabled>Валюта</option>*/}
+                      {/*  {changeCurrencyList.map((currency, currencyIndex) => {*/}
+                      {/*    return (<option key={currency.id} value={currency.id}>{currency.name}</option>)*/}
+                      {/*  })}*/}
+                      {/*</select>*/}
                     </div>
                     <input type="text" placeholder="Сдача:" className="short-input"
                            value={c.value}
@@ -435,15 +607,33 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
           </div>
           <div className={"form__input " + ( item.id_legal_entites && !error.id_type ? 'active-cheked' : 'active-disable')}>
             <div className="select">
-              <select value={item.id_legal_entites}
-                      name="id_legal_entites"
-                      onChange={handleChange}
-              >
-                <option selected disabled>Организация</option>
-                {legalEntityList.map((item, currencyIndex) => {
-                  return (<option key={item.id} value={item.id}>{item.legal_name}</option>)
+              <Select
+                name="id_legal_entites"
+                styles={customStyles}
+                onChange={handleChange.bind(this, 'id_legal_entites')}
+                options={optionsOrg}
+                defaultValue={optionsOrg[0]}
+                components={{ Menu: CustomLegalEntites }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
                 })}
-              </select>
+              >
+              </Select>
+              {/*<select value={item.id_legal_entites}*/}
+              {/*        name="id_legal_entites"*/}
+              {/*        onChange={handleChange}*/}
+              {/*>*/}
+              {/*  <option selected disabled>Организация</option>*/}
+              {/*  {legalEntityList.map((item, currencyIndex) => {*/}
+              {/*    return (<option key={item.id} value={item.id}>{item.legal_name}</option>)*/}
+              {/*  })}*/}
+              {/*</select>*/}
             </div>
           </div>
 

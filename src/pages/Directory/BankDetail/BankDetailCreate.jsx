@@ -57,6 +57,7 @@ function BankDetailCreate() {
   }
 
   const handleReturn = () => {
+    navigate(-1)
     setIsRedirect(true)
   }
 

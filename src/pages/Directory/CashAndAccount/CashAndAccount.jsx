@@ -132,7 +132,7 @@ export default function CashAndAccount() {
                                  return (
                                     <TableRow onClick={() => handleOpenEditModal(row.id)} hover role="checkbox" tabIndex={-1} key={idx} className={styles.table_row}>
                                        <TableCell style={{ display: 'flex', alignItems: 'center', minHeight: '57px' }} className={styles.table__body} align={'left'}>
-                                          {row.Name}
+                                          {row.name}
                                        </TableCell>
                                        <TableCell className={styles.table__body__wide} align={'center'}>
                                           {row.id_type_order === 1 ? 'Касса' : 'Счёт'}

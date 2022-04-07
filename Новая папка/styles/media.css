@@ -1,0 +1,277 @@
+@media (max-width: 1300px) {
+    .wrapper__search {
+        margin-left: 15px;
+    }
+    .wrapper__search input {
+        width: 160px;
+    }
+    .wrapper__menu,
+    .wrapper__filters,
+    .table {
+        padding: 10px 10px 5px 10px;
+    }
+    .wrapper__company {
+        padding: 15px 10px;
+    }
+    .table__switch {
+        flex: none;
+    }
+    .table__fullscreen {
+        width: 245px;
+    }
+    .table__show,
+    .table__pages {
+        margin-left: 18px;
+    }
+    .table__pages {
+        flex-direction: column;
+    }
+    .table__btns {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .fin-page {
+        flex-direction: column;
+    }
+    /* search */
+    .navigation .wrapper__search {
+        display: block;
+        margin-left: auto;
+    }
+    .wrapper__search input {
+        width: 200px;
+    }
+    .active .navigation__logo,
+    .wrapper__search form {
+        display: none;
+    }
+    .btn-search {
+        position: absolute;
+        top: 53%;
+        transform: translateY(-50%);
+        right: 15px;
+        padding: 10px;
+    }
+    .btn-search svg:last-child {
+        display: none;
+    }
+    .active .btn-search svg:last-child,
+    .active .wrapper__search form {
+        display: block;
+    }
+    .active .btn-search svg:first-child {
+        display: none;
+    }
+    .navigation {
+        max-width: none;
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 59px;
+    }
+    .navigation__mobile {
+        display: none;
+    }
+    .navigation__logo {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+    .gumb {
+        display: block;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    /* mob-menu */
+    .navigation__list {
+        margin-left: -17px;
+    }
+    .button_container {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        height: 15px;
+        width: 24px;
+        cursor: pointer;
+        z-index: 100;
+        transition: opacity .25s ease;
+        transform: translateY(-50%);
+    }
+    .open .button_container {
+        top: 15px;
+        position: fixed;
+        transform: none;
+    }
+    .open .button_container:hover {
+        opacity: .7;
+    }
+    .button_container .top {
+        width: 29px;
+    }
+    .button_container .middle {
+        width: 21px;
+    }
+    .button_container .bottom {
+        width: 13px;
+    }
+    .open .button_container .top {
+        -webkit-transform: translateY(9px) translateX(0) rotate(45deg);
+        transform: translateY(9px) translateX(0) rotate(45deg);
+        background: #7096FF;
+        width: 30px;
+    }
+    .open .button_container .middle {
+        opacity: 0;
+        background: #7096FF;
+        width: 30px;
+    }
+    .open .button_container .bottom {
+        -webkit-transform: translateY(-9px) translateX(0) rotate(-45deg);
+        transform: translateY(-9px) translateX(0) rotate(-45deg);
+        background: #7096FF;
+        width: 30px;
+    }
+    .button_container span {
+        background: #7096FF;
+        border: none;
+        height: 4px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all .35s ease;
+        cursor: pointer;
+    }
+    .button_container span:nth-of-type(2) {
+        top: 9px;
+    }
+    .button_container span:nth-of-type(3) {
+        top: 18px;
+    }
+    .navigation__mobile {
+        position: fixed;
+        display: block;
+        background: #fff;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: all .35s;
+        overflow: hidden;
+    }
+    .open .navigation__mobile {
+        opacity: 1;
+        visibility: visible;
+        left: 0;
+        z-index: 10;
+        max-width: none;
+        overflow: scroll;
+        height: 100%;
+        padding: 35px 0 35px 16px;
+    }
+    .navigation__setting {
+        margin-top: 100px;
+    }
+    /* wrapper__scroll */
+    .wrapper__scroll {
+        overflow: scroll;
+    }
+    .wrapper__menu {
+        width: 800px;
+        background-color: #fff;
+    }
+    .table__setting {
+        display: none;
+    }
+    .wrapper__scroll::-webkit-scrollbar {
+        height: 0;
+        /* высота для горизонтального скролла */
+        width: 0;
+    }
+    .menu-fixed .navigation__logo {
+        display: none;
+    }
+    .navigation {
+        margin-top: 0;
+    }
+    .navigation .navigation__logo {
+        display: block;
+    }
+    .menu-fixed {
+        /* padding: 0px 0 0; */
+        position: static;
+        background-color: #fff;
+    }
+    .navigation {
+        /* position: fixed; */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 992px) {
+    .wrapper {
+        margin-top: 5px;
+    }
+    .wrapper__company {
+        display: none;
+    }
+    .wrapper__filters {
+        flex-wrap: wrap;
+    }
+    .wrapper__mounth {
+        order: -1;
+        max-width: none;
+        margin-left: 0;
+        padding: 11px 0;
+        position: relative;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .wrapper__mounth a {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .wrapper__mounth a:first-child {
+        left: 35%;
+    }
+    .wrapper__mounth a:last-child {
+        right: 35%;
+    }
+    .wrapper__mounth p {
+        font-size: 18px;
+        margin: auto;
+    }
+    .table__head,
+    .table__data,
+    .table__paysend,
+    .table__account,
+    .table__counterparty,
+    .table__comment {
+        display: none;
+    }
+    .table__mob {
+        display: block;
+    }
+    .table__summury {
+        margin-left: auto;
+        width: auto;
+    }
+    .table__mob p:first-child {
+        font-weight: 700;
+    }
+    .active.navigation .navigation__logo {
+        display: none;
+    }
+}

@@ -141,6 +141,7 @@ function UserEditing() {
   // ======================================================================
 
   const handleReturn = () => {
+    navigate(-1)
     setIsRedirect(true)
   }
 

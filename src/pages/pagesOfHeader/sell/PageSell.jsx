@@ -13,6 +13,7 @@ import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 import './sell.css'
 import Share from './img/share1.svg'
+import Select from "react-select";
 
 
 const receiveOptions = [
@@ -42,6 +43,71 @@ const Sell = () => {
   const handleToggleReceive = () => {
     setOpenReceive((prevOpen) => !prevOpen);
   };
+
+  const optionsSupplier = [
+    { value: '0', label: 'Поставщик', isDisabled: true},
+    { value: 'saab', label: 'Поставщик1' },
+    { value: 'opel', label: 'Поставщик2' },
+    { value: 'audi', label: 'Поставщик3' },
+  ];
+
+  const optionsCasch = [
+    { value: '0', label: 'Выберите кассу/счёт', isDisabled: true},
+    { value: 'cash1', label: 'кассу/счёт1' },
+    { value: 'cash2', label: 'кассу/счёт2' },
+    { value: 'cash3', label: 'кассу/счёт3' },
+  ];
+
+  const optionsCurrency = [
+    { value: '0', label: 'Валюта', isDisabled: true},
+    { value: 'currency1', label: 'Валюта1' },
+    { value: 'currency2', label: 'Валюта2' },
+    { value: 'currency3', label: 'Валюта3' },
+  ];
+
+  const optionsOrg = [
+    { value: '0', label: 'Организация', isDisabled: true},
+    { value: 'organization1', label: 'Организация1' },
+    { value: 'organization2', label: 'Организация2' },
+    { value: 'organization3', label: 'Организация3' },
+  ];
+
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected || state.isFocused ? 'white' : 'black',
+      background: state.isSelected || state.isFocused ? '#7196ff' : 'white',
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+
+      return { ...provided, opacity, transition };
+    }
+  }
+
+  const CustomMenuType = ({ innerRef, innerProps, isDisabled, children }) =>
+    !isDisabled ? (
+      <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
+        {children}
+        <div className="customReactSelectFooter">
+          <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
+          <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
+        </div>
+      </div>
+    ) : null;
+
+  const CustomMenuCashAccounts = ({ innerRef, innerProps, isDisabled, children }) =>
+    !isDisabled ? (
+      <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
+        {children}
+        <div className="customReactSelectFooter">
+          <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
+          <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
+        </div>
+      </div>
+    ) : null;
+
   return <>
     <div class="home-section">
       <div class="wrapper__setting">
@@ -105,12 +171,22 @@ const Sell = () => {
                         <!-- active-disable - нужно добавлять этот класс к form__input - если красным --> */}
 
             <div class="select">
-              <select>
-                <option selected disabled>Поставщик</option>
-                <option value="saab">Поставщик1</option>
-                <option value="opel">Поставщик2</option>
-                <option value="audi">Поставщик3</option>
-              </select>
+              <Select
+                styles={customStyles}
+                options={optionsSupplier}
+                defaultValue={optionsSupplier[0]}
+                components={{ Menu: CustomMenuType }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
+                })}
+              >
+              </Select>
             </div>
           </div>
           <div class="form__title">
@@ -142,12 +218,22 @@ const Sell = () => {
                         <!-- active-disable - нужно добавлять этот класс к form__input - если красным --> */}
 
             <div class="select">
-              <select>
-                <option selected disabled>Выберите кассу/счёт</option>
-                <option value="cash1">Выберите кассу/счёт1</option>
-                <option value="cash2">Выберите кассу/счёт2</option>
-                <option value="cash3">Выберите кассу/счёт3</option>
-              </select>
+              <Select
+                styles={customStyles}
+                options={optionsCasch}
+                defaultValue={optionsCasch[0]}
+                components={{ Menu: CustomMenuCashAccounts }}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
+                })}
+              >
+              </Select>
             </div>
           </div>
           <div class="form__input active-disable">
@@ -175,12 +261,21 @@ const Sell = () => {
                         <!-- active-disable - нужно добавлять этот класс к form__input - если красным --> */}
 
             <div class="select select_short">
-              <select>
-                <option selected disabled>Валюта</option>
-                <option value="currency1">Валюта1</option>
-                <option value="currency2">Валюта2</option>
-                <option value="currency3">Валюта3</option>
-              </select>
+              <Select
+                styles={customStyles}
+                options={optionsCurrency}
+                defaultValue={optionsCurrency[0]}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
+                })}
+              >
+              </Select>
             </div>
             <input type="text" placeholder="Оплата:" class="short-input" />
             <div class="form__setting">
@@ -201,12 +296,21 @@ const Sell = () => {
                         <!-- active-disable - нужно добавлять этот класс к form__input - если красным --> */}
 
             <div class="select select_short">
-              <select>
-                <option selected disabled>Валюта</option>
-                <option value="currency1">Валюта1</option>
-                <option value="currency2">Валюта2</option>
-                <option value="currency3">Валюта3</option>
-              </select>
+              <Select
+                styles={customStyles}
+                options={optionsCurrency}
+                defaultValue={optionsCurrency[0]}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
+                })}
+              >
+              </Select>
             </div>
             <input type="text" placeholder="Сдача:" class="short-input" />
             <div class="form__setting">
@@ -232,12 +336,21 @@ const Sell = () => {
                         <!-- active-disable - нужно добавлять этот класс к form__input - если красным --> */}
 
             <div class="select">
-              <select>
-                <option selected disabled>Организация</option>
-                <option value="organization1">Организация1</option>
-                <option value="organization2">Организация2</option>
-                <option value="organization3">Организация3</option>
-              </select>
+              <Select
+                styles={customStyles}
+                options={optionsOrg}
+                defaultValue={optionsOrg[0]}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 12,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#4369cf',
+                    primary: '#7196ff',
+                  },
+                })}
+              >
+              </Select>
             </div>
           </div>
 

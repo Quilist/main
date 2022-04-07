@@ -71,6 +71,7 @@ function BankDetailEdit() {
   // ======================================================================
 
   const handleReturn = () => {
+    navigate(-1)
     setIsRedirect(true)
   }
 
