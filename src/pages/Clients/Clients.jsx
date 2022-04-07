@@ -394,13 +394,6 @@ export default function EnhancedTable() {
       <section className="home-section">
         <div className="home-content">
           <Box sx={{ width: "100%" }}>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="Поиск"
-              variant="outlined"
-              size="small"
-            />
             <Paper sx={{ width: "100%", mb: 2, mt: 2 }}>
               <EnhancedTableToolbar numSelected={selected.length} />
               <TableContainer>
