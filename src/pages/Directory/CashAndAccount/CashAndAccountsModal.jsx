@@ -103,7 +103,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
     balanceList[index] = Object.assign({}, balanceList[index]);
     setItem(prevItem => ({
       ...prevItem,
-      balanceList: balanceList
+      balance: balanceList
     }));
   };
 

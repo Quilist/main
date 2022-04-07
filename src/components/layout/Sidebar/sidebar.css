@@ -11,25 +11,34 @@
 
 .burger-menu {
     display: flex;
-    margin-top: 20px;
+
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-left: -4px;
-    background-color: #11101d;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
     z-index: 100;
+    transition: all 0.3s;
+    margin: 5px auto;
 }
-
-.burger {
-    justify-content: start;
+.burger-menu.burger, .cross-menu__img{
+    width: 50px;
+    height: 50px;
 }
-
+.burger-menu.burger:hover, .cross-menu__img:hover{
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 12px;
+}
 .cross {
-    justify-content: end;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .burger-menu__img {
-    margin-left: 23px;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
 }
 
 .burger-menu__img:hover {
@@ -39,7 +48,6 @@
 .cross-menu__img {
     width: 36px;
     height: 36px;
-    margin-right: 10px;
     transition: .4s;
     will-change: transform;
 }
@@ -139,6 +147,9 @@
 .sidebar .nav-links li:hover {
     background: #4369cf;
 }
+.sidebar .nav-links .sub-menu li:hover {
+    background: transparent;
+}
 
 .sidebar .nav-links li .iocn-link {
     display: flex;
@@ -152,9 +163,10 @@
 
 .sidebar .nav-links li i {
     height: 40px;
-    min-width: 70px;
+    min-width: 40px;
     text-align: center;
     line-height: 40px;
+
     color: #fff;
     font-size: 20px;
     cursor: pointer;
@@ -172,26 +184,35 @@
 .sidebar .nav-links li a {
     display: flex;
     align-items: center;
+    justify-content: start;
     text-decoration: none;
     max-height: 40px;
 }
 
+.sidebar.close .nav-links li a{
+    justify-content: center;
+}
+.sidebar.close .nav-links .sub-menu li a{
+    justify-content: flex-start;
+}
+
 .sidebar .nav-links li a .link_name {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: #fff;
+    margin-left: 10px;
     transition: all 0.4s ease;
 }
 
 .sidebar.close .nav-links li a .link_name {
     opacity: 0;
     pointer-events: none;
+    display: none;
 }
 
 .sidebar .nav-links li .sub-menu {
-    padding: 6px 6px 14px 80px;
-    margin-top: -10px;
-    background: #1d1b31;
+    padding: 6px 6px 14px 60px;
+    background: #4369cf;
     display: none;
 }
 
@@ -204,7 +225,7 @@
     font-size: 15px;
     padding: 5px 0;
     white-space: nowrap;
-    opacity: 0.6;
+    opacity: 0.8;
     transition: all 0.3s ease;
 }
 
@@ -237,7 +258,7 @@
 }
 
 .sidebar.close .nav-links li .sub-menu .link_name {
-    font-size: 18px;
+    font-size: 14px;
     opacity: 1;
     display: block;
 }
@@ -349,15 +370,16 @@
     transition: all 0.5s ease;
 }
 
-.link_mail {
+.sidebar .nav-links li a .link_mail, .link_mail{
     color: #fff;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .default-links {
     cursor: default;
     pointer-events: none;
     opacity: 1;
+    padding: 0 10px 0 10px;
 }
 
 .normal-links {

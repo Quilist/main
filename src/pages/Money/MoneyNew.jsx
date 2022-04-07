@@ -280,11 +280,11 @@ export default function EnhancedTable() {
 
   React.useEffect(() => {
     if (!openCurrencyExchangeModal || !openMovingMoney) {
-      api.all('money').then(data => {
-        if (data.status === "error") alert(data.message)
-        else setItems(data.message.items)
-      })
-      //setItems(mockResponse.message.items)
+      // api.all('money').then(data => {
+      //   if (data.status === "error") alert(data.message)
+      //   else setItems(data.message.items)
+      // })
+      setItems(mockResponse.message.items)
     }
     // eslint-disable-next-line
   }, [openCurrencyExchangeModal, openMovingMoney])
@@ -601,6 +601,7 @@ export default function EnhancedTable() {
               next={fetchMoreData}
               hasMore={true}
               loader={<h4>Загрузка(тут спинер)...</h4>}
+              height={600}
               endMessage={
                 <p style={{ textAlign: "center" }}>
                   { items.paginations && <b>Всего записей: {items.paginations.total}</b> }
