@@ -14,7 +14,6 @@ import Dashboard from '@/pages/Dashboard/Dashboard';
 import Clients from '@/pages/Clients/Clients';
 
 import AllMoves from '@/pages/AllMoves/AllMoves';
-import ProductsAndServices from '@/pages/ProductsAndServices/ProductsAndServices';
 import OrdersAndSales from '@/pages/OrdersAndSales/OrdersAndSales';
 import Money from '@/pages/Money/MoneyNew';
 import PurchasesAndStorage from '@/pages/PurchasesAndStorage/PurchasesAndStorage';
@@ -24,7 +23,6 @@ import Debt from '@/pages/pagesOfReports/PageDebts';
 import FinancialResult from '@/pages/pagesOfReports/PageFinancialResult';
 import Income from '@/pages/pagesOfReports/PageIncome';
 import PriceList from '@/pages/pagesOfReports/PagePriceList';
-import Product from '@/pages/pagesOfReports/PageProducts';
 import PurchaseAndReceipt from '@/pages/pagesOfReports/PagePurchasesAndReceipts';
 import ReconciliationAct from '@/pages/pagesOfReports/PageReconciliationActs';
 import ReportMoney from '@/pages/pagesOfReports/PageReportMoney';
@@ -42,12 +40,12 @@ import Sell from '@/pages/pagesOfHeader/sell/PageSell';
 import PolitikaKonfidentsialnostiFacebook from '@/pages/Low/PagePolitikaKonfidentsialnostiFacebook'
 import InstructionsForDeletingUserData from '@/pages/Low/InstructionsForDeletingUserData';
 
+import Product from '@/pages/Product/Product';
+import ProductCreate from '@/pages/Product/ProductCreate';
 
-
-import AddProduct from '@/pages/ProductsEditing/PageAddProduct';
-import ImportOfGoods from '@/pages/ProductsEditing/PageImportOfGoods';
-import Revaluation from '@/pages/ProductsEditing/PageRevaluation';
-import SavePriceList from '@/pages/ProductsEditing/PageSavePriceList';
+import ImportOfGoods from '@/pages/Product/ImportOfGoods';
+import Revaluation from '@/pages/Product/Revaluation';
+import SavePriceList from '@/pages/Product/SavePriceList';
 
 // справочник
 import DirectoryCategory from '@/pages/Directory/DirectoryCategory/DirectoryCategory'
@@ -127,7 +125,7 @@ function App() {
             {/* Страницы категорий меню */}\
             <Route path="/dashboard" element={<> <AppLayout component={<Dashboard />} /> </>} />
             <Route path="/allMoves" element={<> <AppLayout component={<AllMoves />} /> </>} />
-            <Route path="/productsAndService" element={<> <AppLayout component={<ProductsAndServices />} /> </>} />
+
             <Route path="/clients" element={<> <AppLayout component={<Clients />} /> </>} />
             <Route path="/ordersAndSales" element={<> <AppLayout component={<OrdersAndSales />} /> </>} />
             <Route path="/reports" element={<> <AppLayout component={<Reports />} /> </>} />
@@ -138,7 +136,13 @@ function App() {
             <Route path="/settings" element={<> <AppLayout component={<Settings />} /> </>} />
             <Route path="/directory" element={<> <AppLayout component={<DirectoryCategory />} /> </>} />
 
-
+            {/*Обработка товаров и услуг*/}
+            <Route path="/products" element={<> <AppLayout component={<Product />} /> </>} />
+            <Route path="/products/create" element={<> <AppLayout component={<ProductCreate />} /> </>} />
+            <Route path="/products/:id" element={<> <AppLayout component={<ProductCreate />} /> </>} />
+            <Route path="/revaluation" element={<> <AppLayout component={<Revaluation />} /> </>} />
+            <Route path="/import_products" element={<> <AppLayout component={<ImportOfGoods />} /> </>} />
+            <Route path="/save_price_list" element={<> <AppLayout component={<SavePriceList />} /> </>} />
 
             {/* Отчеты  */}
             <Route path="/costs" element={<> <AppLayout component={<Cost />} /> </>} />
@@ -146,17 +150,12 @@ function App() {
             <Route path="/financial-result" element={<> <AppLayout component={<FinancialResult />} /> </>} />
             <Route path="/income" element={<> <AppLayout component={<Income />} /> </>} />
             <Route path="/price-list" element={<> <AppLayout component={<PriceList />} /> </>} />
-            <Route path="/products" element={<> <AppLayout component={<Product />} /> </>} />
             <Route path="/purchases-and-receipts" element={<> <AppLayout component={<PurchaseAndReceipt />} /> </>} />
             <Route path="/reconciliation-acts" element={<> <AppLayout component={<ReconciliationAct />} /> </>} />
             <Route path="/report-money" element={<> <AppLayout component={<ReportMoney />} /> </>} />
             <Route path="/sales-and-orders" element={<> <AppLayout component={<SaleAndOrder />} /> </>} />
 
-            {/*Обработка товаров и услуг*/}
-            <Route path="/add_product" element={<> <AppLayout component={<AddProduct />} /> </>} />
-            <Route path="/revaluation" element={<> <AppLayout component={<Revaluation />} /> </>} />
-            <Route path="/import_products" element={<> <AppLayout component={<ImportOfGoods />} /> </>} />
-            <Route path="/save_price_list" element={<> <AppLayout component={<SavePriceList />} /> </>} />
+
 
             {/* Обработка клиентов */}
             <Route path="/editing" element={<> <AppLayout component={<UserEditing />} /> </>} />

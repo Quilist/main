@@ -22,6 +22,7 @@ class API {
             cashAndAccount: '/cash_and_accounts',
             pay: '/pay',
             money: '/money',
+            product: '/products',
             moneyExchange: '/money/currency_exchange',
             moneyMoving: '/money/moving_money',
         }

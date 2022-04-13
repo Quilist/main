@@ -178,7 +178,7 @@ export default function Sidebar() {
                 </ul>
               </li>
               <li>
-                <Link to="/productsAndService">
+                <Link to="/products">
                   <i className="bx bx-package"></i>
                   <span className="link_name">Товары и услуги</span>
                 </Link>
