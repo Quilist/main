@@ -41,7 +41,7 @@ import PolitikaKonfidentsialnostiFacebook from '@/pages/Low/PagePolitikaKonfiden
 import InstructionsForDeletingUserData from '@/pages/Low/InstructionsForDeletingUserData';
 
 import Product from '@/pages/Product/Product';
-import ProductCreate from '@/pages/Product/ProductCreate';
+import ProductHandle from '@/pages/Product/ProductHandle';
 
 import ImportOfGoods from '@/pages/Product/ImportOfGoods';
 import Revaluation from '@/pages/Product/Revaluation';
@@ -138,8 +138,8 @@ function App() {
 
             {/*Обработка товаров и услуг*/}
             <Route path="/products" element={<> <AppLayout component={<Product />} /> </>} />
-            <Route path="/products/create" element={<> <AppLayout component={<ProductCreate />} /> </>} />
-            <Route path="/products/:id" element={<> <AppLayout component={<ProductCreate />} /> </>} />
+            <Route path="/products/create" element={<> <AppLayout component={<ProductHandle />} /> </>} />
+            <Route path="/products/:id" element={<> <AppLayout component={<ProductHandle />} /> </>} />
             <Route path="/revaluation" element={<> <AppLayout component={<Revaluation />} /> </>} />
             <Route path="/import_products" element={<> <AppLayout component={<ImportOfGoods />} /> </>} />
             <Route path="/save_price_list" element={<> <AppLayout component={<SavePriceList />} /> </>} />

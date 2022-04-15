@@ -19,7 +19,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 const filterAutocomplete = createFilterOptions();
 
-function ProductForm({ item, setItem }) {
+function ProductForm({ item, setItem, auxiliaryList }) {
   const [priceList, setPriceList] = React.useState([
     { name: 'Анкл ндс', price: null, currency: null },
     { name: 'Закупочная' },
@@ -28,6 +28,8 @@ function ProductForm({ item, setItem }) {
     { name: 'Цена обычная без НДС', price: null, currency: null },
     { name: 'Цена обычная с НДС', price: null, currency: null }
   ]);
+
+  const [typePriceList, setTypePriceList] = React.useState([]);
 
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
 
@@ -43,17 +45,20 @@ function ProductForm({ item, setItem }) {
 
   const handleChange = e => {
     const { name, value } = e.target;
+    let v = value
+    const intFields = ['min_stock'];
+    if(intFields.includes(name)) {
+      v = parseInt(value)
+    }
+
     setItem(prevItem => ({
       ...prevItem,
-      [name]: value
+      [name]: v
     }));
   };
 
 
   //единицы измерения
-  const units = [
-    { title: 'шт', id: 1 }
-  ];
   const [value, setValue] = React.useState(null);
   const [open, toggleOpen] = React.useState(false);
 
@@ -79,6 +84,17 @@ function ProductForm({ item, setItem }) {
     });
 
     handleClose();
+  };
+
+  const updateTypePrice = (e, index, type) => {
+    const { name, value } = e.target;
+
+    typePriceList[index][name] = value
+    typePriceList[index] = Object.assign({}, typePriceList[index], type);
+    setItem(prevItem => ({
+      ...prevItem,
+      amount_data: typePriceList
+    }));
   };
 
   return (
@@ -107,106 +123,121 @@ function ProductForm({ item, setItem }) {
               label="Вид"
               sx={{ marginBottom: '15px' }}
             >
-              <MenuItem value={'product'}>Товар</MenuItem>
-              <MenuItem value={'set'}>Комплект</MenuItem>
-              <MenuItem value={'service'}>Услуга</MenuItem>
+              {auxiliaryList.types.map((type, typeIndex) => {
+                return (<MenuItem key={type.value} value={type.value}>{type.name}</MenuItem>)
+              })}
             </Select>
           </FormControl>
 
-          <Autocomplete
-            value={value}
-            onChange={(event, newValue) => {
-              if (typeof newValue === 'string') {
-                // timeout to avoid instant validation of the dialog's form.
-                setTimeout(() => {
-                  toggleOpen(true);
-                  setDialogValue({
-                    title: newValue,
-                    id: '',
-                  });
-                });
-              } else if (newValue && newValue.inputValue) {
-                toggleOpen(true);
-                setDialogValue({
-                  title: newValue.inputValue,
-                  id: '',
-                });
-              } else {
-                setValue(newValue);
-              }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filterAutocomplete(options, params);
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Единица измерения</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={item.unit_id}
+              label="Единица измерения"
+              sx={{ marginBottom: '15px' }}
+            >
+              {auxiliaryList.units.map((type, typeIndex) => {
+                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+              })}
+            </Select>
+          </FormControl>
 
-              if (params.inputValue !== '') {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  title: `Добавить "${params.inputValue}"`,
-                });
-              }
+          {/*<Autocomplete*/}
+          {/*  value={value}*/}
+          {/*  onChange={(event, newValue) => {*/}
+          {/*    if (typeof newValue === 'string') {*/}
+          {/*      // timeout to avoid instant validation of the dialog's form.*/}
+          {/*      setTimeout(() => {*/}
+          {/*        toggleOpen(true);*/}
+          {/*        setDialogValue({*/}
+          {/*          title: newValue,*/}
+          {/*          id: '',*/}
+          {/*        });*/}
+          {/*      });*/}
+          {/*    } else if (newValue && newValue.inputValue) {*/}
+          {/*      toggleOpen(true);*/}
+          {/*      setDialogValue({*/}
+          {/*        title: newValue.inputValue,*/}
+          {/*        id: '',*/}
+          {/*      });*/}
+          {/*    } else {*/}
+          {/*      setValue(newValue);*/}
+          {/*    }*/}
+          {/*  }}*/}
+          {/*  filterOptions={(options, params) => {*/}
+          {/*    const filtered = filterAutocomplete(options, params);*/}
 
-              return filtered;
-            }}
-            id="free-solo-dialog-demo"
-            options={units}
-            getOptionLabel={(option) => {
-              // e.g value selected with enter, right from the input
-              if (typeof option === 'string') {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-              return option.title;
-            }}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
-            renderOption={(props, option) => <li {...props}>{option.title}</li>}
-            sx={{ width: 300 }}
-            freeSolo
-            renderInput={(params) => <TextField {...params} label="Единица измерения" />}
-          />
-          <Dialog open={open} onClose={handleClose}>
-            <form onSubmit={handleSubmit}>
-              <DialogTitle>Добавление единицы измерения</DialogTitle>
-              <DialogContent>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  value={dialogValue.title}
-                  onChange={(event) =>
-                    setDialogValue({
-                      ...dialogValue,
-                      title: event.target.value,
-                    })
-                  }
-                  label="title"
-                  type="text"
-                  variant="standard"
-                />
-                <TextField
-                  margin="dense"
-                  id="name"
-                  value={dialogValue.id}
-                  onChange={(event) =>
-                    setDialogValue({
-                      ...dialogValue,
-                      id: event.target.value,
-                    })
-                  }
-                  label="id"
-                  type="number"
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Отменить</Button>
-                <Button type="submit">Добавить</Button>
-              </DialogActions>
-            </form>
-          </Dialog>
+          {/*    if (params.inputValue !== '') {*/}
+          {/*      filtered.push({*/}
+          {/*        inputValue: params.inputValue,*/}
+          {/*        title: `Добавить "${params.inputValue}"`,*/}
+          {/*      });*/}
+          {/*    }*/}
+
+          {/*    return filtered;*/}
+          {/*  }}*/}
+          {/*  id="free-solo-dialog-demo"*/}
+          {/*  options={units}*/}
+          {/*  getOptionLabel={(option) => {*/}
+          {/*    // e.g value selected with enter, right from the input*/}
+          {/*    if (typeof option === 'string') {*/}
+          {/*      return option;*/}
+          {/*    }*/}
+          {/*    if (option.inputValue) {*/}
+          {/*      return option.inputValue;*/}
+          {/*    }*/}
+          {/*    return option.title;*/}
+          {/*  }}*/}
+          {/*  selectOnFocus*/}
+          {/*  clearOnBlur*/}
+          {/*  handleHomeEndKeys*/}
+          {/*  renderOption={(props, option) => <li {...props}>{option.title}</li>}*/}
+          {/*  sx={{ width: 300 }}*/}
+          {/*  freeSolo*/}
+          {/*  renderInput={(params) => <TextField {...params} label="Единица измерения" />}*/}
+          {/*/>*/}
+          {/*<Dialog open={open} onClose={handleClose}>*/}
+          {/*  <form onSubmit={handleSubmit}>*/}
+          {/*    <DialogTitle>Добавление единицы измерения</DialogTitle>*/}
+          {/*    <DialogContent>*/}
+          {/*      <TextField*/}
+          {/*        autoFocus*/}
+          {/*        margin="dense"*/}
+          {/*        id="name"*/}
+          {/*        value={dialogValue.title}*/}
+          {/*        onChange={(event) =>*/}
+          {/*          setDialogValue({*/}
+          {/*            ...dialogValue,*/}
+          {/*            title: event.target.value,*/}
+          {/*          })*/}
+          {/*        }*/}
+          {/*        label="title"*/}
+          {/*        type="text"*/}
+          {/*        variant="standard"*/}
+          {/*      />*/}
+          {/*      <TextField*/}
+          {/*        margin="dense"*/}
+          {/*        id="name"*/}
+          {/*        value={dialogValue.id}*/}
+          {/*        onChange={(event) =>*/}
+          {/*          setDialogValue({*/}
+          {/*            ...dialogValue,*/}
+          {/*            id: event.target.value,*/}
+          {/*          })*/}
+          {/*        }*/}
+          {/*        label="id"*/}
+          {/*        type="number"*/}
+          {/*        variant="standard"*/}
+          {/*      />*/}
+          {/*    </DialogContent>*/}
+          {/*    <DialogActions>*/}
+          {/*      <Button onClick={handleClose}>Отменить</Button>*/}
+          {/*      <Button type="submit">Добавить</Button>*/}
+          {/*    </DialogActions>*/}
+          {/*  </form>*/}
+          {/*</Dialog>*/}
 
           <FormControl fullWidth>
             <TextField
@@ -234,11 +265,13 @@ function ProductForm({ item, setItem }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={item.type}
+              value={item.group_id}
               label="Группа"
               sx={{ marginBottom: '15px' }}
             >
-              <MenuItem >Нет данных</MenuItem>
+              {auxiliaryList.groups.map((type, typeIndex) => {
+                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+              })}
             </Select>
           </FormControl>
 
@@ -251,7 +284,9 @@ function ProductForm({ item, setItem }) {
               label="Основной поставщик"
               sx={{ marginBottom: '15px' }}
             >
-              <MenuItem value={1}>Тестовый поставщик</MenuItem>
+              {auxiliaryList.suppliers.map((type, typeIndex) => {
+                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+              })}
             </Select>
             <TextField
               sx={{marginBottom: '15px'}}
@@ -285,41 +320,78 @@ function ProductForm({ item, setItem }) {
       <div className={styles.boxesWrapper__information} >
 
 
-          <div>
-            {priceList.map((priceItem, i) => {
-              return (<div key={i}>
-                <TextField
-                  sx={{marginBottom: '15px'}}
-                  label="Наименование:"
-                  type="text"
-                  variant="standard"
-                  value={priceItem.name}
-                />
-                <TextField
-                  sx={{marginBottom: '15px', marginLeft: '5px'}}
-                  label="0,00"
-                  type="number"
-                  variant="standard"
-                />
-                <FormControl sx={{m: 1, minWidth: 120}}>
-                  <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
-                  <Select
-                    autoWidth
-                    label="Тип цены:"
-                  >
-                    <MenuItem value={'UAH'}>UAH</MenuItem>
-                    <MenuItem value={'RUB'}>RUB</MenuItem>
-                    <MenuItem value={'USD'}>USD</MenuItem>
-                    <MenuItem value={'EUR'}>EUR</MenuItem>
-                  </Select>
-                </FormControl>
+        <div>
+          <h4>Цены</h4>
+          {auxiliaryList.type_prices.map((priceItem, i) => {
+            return (<div key={i}>
+              <TextField
+                sx={{marginBottom: '15px'}}
+                label="Наименование:"
+                type="text"
+                variant="standard"
+                value={priceItem.name}
+              />
+              <TextField
+                sx={{marginBottom: '15px', marginLeft: '5px'}}
+                label="0,00"
+                type="number"
+                variant="standard"
+                name="amount"
+                onChange={(e) => updateTypePrice(e, i, 'price')}
+              />
+              <FormControl sx={{m: 1, minWidth: 120}}>
+                <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
+                <Select
+                  autoWidth
+                  label="Тип цены:"
+                  name="currency_id"
+                  onChange={(e) => updateTypePrice(e, i, 'price')}
+                >
+                  {auxiliaryList.currencies.map((type, typeIndex) => {
+                    return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                  })}
+                </Select>
+              </FormControl>
 
-                <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
-              </div>)
-            })}
-            <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button>
+              <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
+            </div>)
+          })}
+          <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button>
 
-          </div>
+          <br/>
+
+          <h4>Остатки</h4>
+          {auxiliaryList.storehouses.map((storehouse, i) => {
+            return (<div key={i}>
+              <TextField
+                sx={{marginBottom: '15px'}}
+                label="Наименование:"
+                type="text"
+                variant="standard"
+                value={storehouse.name}
+              />
+              <TextField
+                sx={{marginBottom: '15px', marginLeft: '5px'}}
+                label="0,00"
+                type="number"
+                variant="standard"
+              />
+              <FormControl sx={{m: 1, minWidth: 120}}>
+                <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
+                <Select
+                  autoWidth
+                  label="Тип цены:"
+                >
+                  {auxiliaryList.currencies.map((type, typeIndex) => {
+                    return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                  })}
+                </Select>
+              </FormControl>
+
+              <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
+            </div>)
+          })}
+        </div>
 
 
       </div>
