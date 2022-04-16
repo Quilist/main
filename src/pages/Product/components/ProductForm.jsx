@@ -19,27 +19,23 @@ import DialogActions from '@mui/material/DialogActions';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 const filterAutocomplete = createFilterOptions();
 
-function ProductForm({ item, setItem, auxiliaryList }) {
-  const [priceList, setPriceList] = React.useState([
-    { name: 'Анкл ндс', price: null, currency: null },
-    { name: 'Закупочная' },
-    { name: 'Мини опт(от 5 до 10 ящ)', price: null, currency: null },
-    { name: 'Опт(от 10 до 22ящ)', price: null, currency: null },
-    { name: 'Цена обычная без НДС', price: null, currency: null },
-    { name: 'Цена обычная с НДС', price: null, currency: null }
-  ]);
+function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePriceList, storehouseList, setStorehouseList }) {
 
-  const [typePriceList, setTypePriceList] = React.useState([]);
+  React.useEffect(() => {
+    setTypePriceList(auxiliaryList.type_prices);
+    setStorehouseList(auxiliaryList.storehouses);
+    // eslint-disable-next-line
+  }, [auxiliaryList] )
 
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
 
   const addPrice = (e) => {
-    setPriceList([...priceList, { name: null, currency: null, value: null}]);
+    setTypePriceList([...typePriceList, { name: null, currency_id: null, amount: null}]);
   }
   
 
   const removePrice = (index) => {
-    setPriceList(priceList.filter((o, i) => index !== i));
+    setTypePriceList(typePriceList.filter((o, i) => index !== i));
   };
   
 
@@ -86,15 +82,26 @@ function ProductForm({ item, setItem, auxiliaryList }) {
     handleClose();
   };
 
-  const updateTypePrice = (e, index, type) => {
+  const updateTypePrice = (e, index) => {
     const { name, value } = e.target;
+    let v = value
+    const intFields = ['amount', 'currency_id'];
+    if(intFields.includes(name)) {
+      v = parseInt(value)
+    }
+    typePriceList[index][name] = v
+    typePriceList[index] = Object.assign({}, typePriceList[index], {"type": "price"});
+  };
 
-    typePriceList[index][name] = value
-    typePriceList[index] = Object.assign({}, typePriceList[index], type);
-    setItem(prevItem => ({
-      ...prevItem,
-      amount_data: typePriceList
-    }));
+  const updateStorehouse = (e, index) => {
+    const { name, value } = e.target;
+    let v = value
+    const intFields = ['amount', 'currency_id'];
+    if(intFields.includes(name)) {
+      v = parseInt(value)
+    }
+    storehouseList[index][name] = v
+    storehouseList[index] = Object.assign({}, storehouseList[index], {"type": "leftover"});
   };
 
   return (
@@ -322,7 +329,7 @@ function ProductForm({ item, setItem, auxiliaryList }) {
 
         <div>
           <h4>Цены</h4>
-          {auxiliaryList.type_prices.map((priceItem, i) => {
+          {typePriceList.map((priceItem, i) => {
             return (<div key={i}>
               <TextField
                 sx={{marginBottom: '15px'}}
@@ -330,6 +337,8 @@ function ProductForm({ item, setItem, auxiliaryList }) {
                 type="text"
                 variant="standard"
                 value={priceItem.name}
+                name="name"
+                onChange={(e) => updateTypePrice(e, i)}
               />
               <TextField
                 sx={{marginBottom: '15px', marginLeft: '5px'}}
@@ -337,7 +346,7 @@ function ProductForm({ item, setItem, auxiliaryList }) {
                 type="number"
                 variant="standard"
                 name="amount"
-                onChange={(e) => updateTypePrice(e, i, 'price')}
+                onChange={(e) => updateTypePrice(e, i)}
               />
               <FormControl sx={{m: 1, minWidth: 120}}>
                 <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
@@ -345,7 +354,7 @@ function ProductForm({ item, setItem, auxiliaryList }) {
                   autoWidth
                   label="Тип цены:"
                   name="currency_id"
-                  onChange={(e) => updateTypePrice(e, i, 'price')}
+                  onChange={(e) => updateTypePrice(e, i)}
                 >
                   {auxiliaryList.currencies.map((type, typeIndex) => {
                     return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
@@ -361,7 +370,7 @@ function ProductForm({ item, setItem, auxiliaryList }) {
           <br/>
 
           <h4>Остатки</h4>
-          {auxiliaryList.storehouses.map((storehouse, i) => {
+          {storehouseList.map((storehouse, i) => {
             return (<div key={i}>
               <TextField
                 sx={{marginBottom: '15px'}}
@@ -375,12 +384,16 @@ function ProductForm({ item, setItem, auxiliaryList }) {
                 label="0,00"
                 type="number"
                 variant="standard"
+                name="amount"
+                onChange={(e) => updateStorehouse(e, i)}
               />
               <FormControl sx={{m: 1, minWidth: 120}}>
                 <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
                 <Select
                   autoWidth
                   label="Тип цены:"
+                  name="currency_id"
+                  onChange={(e) => updateStorehouse(e, i)}
                 >
                   {auxiliaryList.currencies.map((type, typeIndex) => {
                     return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)

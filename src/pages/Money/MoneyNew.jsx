@@ -371,7 +371,7 @@ export default function EnhancedTable() {
 
   const goToEdit = (item) => {
     if(item.type) {
-      navigate(`${item.type}/${item.id}`)
+      navigate(`/${item.type}/${item.id}`)
     }
     if(item.amount_receive) {
       handleOpenCurrencyExchangeModal();

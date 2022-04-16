@@ -23,6 +23,7 @@ function Pay() {
   const [isSuccess, setIsSuccess] = React.useState(null);
   const [isRedirect, setIsRedirect] = React.useState(false);
   const [auxiliaryList, setAuxiliaryList] = React.useState({
+    cash_accounts: [],
     currencies: [],
     legal_entites: [],
     items: []
@@ -55,7 +56,7 @@ function Pay() {
 
   React.useEffect(() => {
     if(id) {
-      api.find(id, 'pay').then(data => {
+      api.find(id, 'money').then(data => {
         const res = data.message
         setItem(res)
       })
@@ -78,8 +79,8 @@ function Pay() {
 
   const [item, setItem] = React.useState({});
   const [error, setError] = React.useState({
-    id_cash_accounts: "",
-    id_type: "",
+    cash_account_id: "",
+    type_id: "",
     type: "",
     type_order: ""
   });
@@ -101,7 +102,7 @@ function Pay() {
   }, [data])
 
   const validate = (name, value) => {
-    if (!value || value.trim() === "") {
+    if (!value || (typeof value === 'string' ? value.trim() === "" : '')) {
       return "Field is Required";
     } else {
       return "";
@@ -116,7 +117,7 @@ function Pay() {
     Object.keys(error).forEach(name => {
       console.log('name)', name)
       const error = validate(name, item[name]);
-    console.log('errorerror', error)
+      console.log('errorerror', error)
       if (error && error.length > 0) {
         validationErrorList[name] = error;
       }
@@ -127,8 +128,13 @@ function Pay() {
       return;
     }
 
-    setItem({type: currentPathName})
-    api.add(item, 'pay').then(data => {
+    // const date = new Date(item.created_at);
+    // const milliseconds = date.getTime();
+    // setItem(prevItem => ({
+    //   ...prevItem,
+    //   created_at: milliseconds
+    // }));
+    api.add(item, 'money').then(data => {
       if (data.status === "error") return alert(data.message)
       navigate('/money')
     })
@@ -136,7 +142,7 @@ function Pay() {
 
   const handleRemove = () => {
     setTimeout(() => {
-      api.remove(id, 'pay').then(data => {
+      api.remove(id, 'money').then(data => {
         if (data.status === "error") return alert(data.message)
         navigate('/money')
       })

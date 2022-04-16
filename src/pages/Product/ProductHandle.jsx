@@ -30,6 +30,8 @@ function ProductHandle() {
     types: [],
     currencies: []
   });
+  const [typePriceList, setTypePriceList] = React.useState([]);
+  const [storehouseList, setStorehouseList] = React.useState([]);
 
   const navigate = useNavigate()
   React.useEffect(() => {
@@ -42,7 +44,6 @@ function ProductHandle() {
   useDocumentTitle("Изменить товары и услуги");
   React.useEffect(() => {
     api.auxiliary('product').then(data => {
-      console.log('data', data.message)
       if (data.status === "error") alert(data.message)
       else setAuxiliaryList(data.message)
     })
@@ -77,22 +78,43 @@ function ProductHandle() {
     // eslint-disable-next-line
   }, [data])
 
-  const handleAdd = () => {
-    console.log('item', item)
 
+  const handleAdd = () =>  {
+
+    let amountData = [], data = {}
+    data = item
+    if(typePriceList.length > 0) {
+      typePriceList.forEach(function (typePrice) {
+        if(typePrice.name && typePrice.currency_id && typePrice.amount) {
+          amountData.push({ name: typePrice.name, currency_id: typePrice.currency_id, amount: typePrice.amount, type: typePrice.type });
+        }
+      });
+      data.amount_data = amountData
+    }
+    if(storehouseList.length > 0) {
+      storehouseList.forEach(function (storehouse) {
+        if(storehouse.name && storehouse.currency_id && storehouse.amount) {
+          amountData.push({ name: storehouse.name, currency_id: storehouse.currency_id, amount: storehouse.amount, type: storehouse.type });
+        }
+      });
+      data.amount_data = amountData
+    }
+
+    console.log('item', data)
     if(!id) {
-      api.add(item, 'product').then(data => {
+      api.add(data, 'product').then(data => {
         if (data.status === "error") return console.log(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
       })
     } else {
-      api.edit(id, item, 'product').then(data => {
+      api.edit(id, data, 'product').then(data => {
         if (data.status === "error") return console.log(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
       })
     }
+
   }
 
   const handleRemove = () => {
@@ -128,6 +150,10 @@ function ProductHandle() {
             item={item}
             setItem={setItem}
             auxiliaryList={auxiliaryList}
+            typePriceList={typePriceList}
+            setTypePriceList={setTypePriceList}
+            storehouseList={storehouseList}
+            setStorehouseList={setStorehouseList}
           />
         </div>
 
