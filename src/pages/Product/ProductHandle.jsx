@@ -20,11 +20,11 @@ function ProductHandle() {
   const api = new API();
   const { id } = useParams()
 
-  const [item, setItem] = React.useState({price: 100, supplier_id: 1, group_id: 1, unit_id: 1});
+  const [item, setItem] = React.useState({price: 100, supplier_id: 1, group_id: 1, measure_id: 1});
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     storehouses: [],
     type_prices: [],
-    units: [],
+    measures: [],
     suppliers: [],
     groups: [],
     types: [],

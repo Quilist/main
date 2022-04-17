@@ -141,11 +141,11 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={item.unit_id}
+              value={item.measure_id}
               label="Единица измерения"
               sx={{ marginBottom: '15px' }}
             >
-              {auxiliaryList.units.map((type, typeIndex) => {
+              {auxiliaryList.measures.map((type, typeIndex) => {
                 return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
               })}
             </Select>
@@ -186,7 +186,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           {/*    return filtered;*/}
           {/*  }}*/}
           {/*  id="free-solo-dialog-demo"*/}
-          {/*  options={units}*/}
+          {/*  options={measures}*/}
           {/*  getOptionLabel={(option) => {*/}
           {/*    // e.g value selected with enter, right from the input*/}
           {/*    if (typeof option === 'string') {*/}

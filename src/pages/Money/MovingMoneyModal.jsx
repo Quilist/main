@@ -31,7 +31,24 @@ const style = {
 export default function CurrencyExchangeModal({ open, setOpen }) {
   const handleClose = () => setOpen(false);
   const [item, setItem] = React.useState({});
+  const [auxiliaryList, setAuxiliaryList] = React.useState({
+    cash_accounts: [],
+    currencies: [],
+    legal_entites: [],
+    items: []
+  });
   const api = new API();
+
+  React.useEffect(() => {
+    const params = {
+      type: 'pay_supplier'
+    }
+    api.auxiliary('money', params).then(data => {
+      if (data.status === "error") alert(data.message)
+      else setAuxiliaryList(data.message)
+    })
+    // eslint-disable-next-line
+  }, [])
 
   React.useEffect(() => {
     if (open) {
@@ -103,7 +120,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="to_cash_account_id"
               onChange={handleChange}
             >
-              <MenuItem value={2}>Тестовый Получатель</MenuItem>
+              {auxiliaryList.items.map((item, index) => (
+                <MenuItem
+                  key={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -116,10 +139,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="currency_id"
               onChange={handleChange}
             >
-              <MenuItem value={'UAH'}>UAH</MenuItem>
-              <MenuItem value={'RUB'}>RUB</MenuItem>
-              <MenuItem value={'USD'}>USD</MenuItem>
-              <MenuItem value={'EUR'}>EUR</MenuItem>
+              {auxiliaryList.currencies.map((item, index) => (
+                <MenuItem
+                  key={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 

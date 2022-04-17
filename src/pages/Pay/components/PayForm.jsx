@@ -23,27 +23,25 @@ import DatePicker from '@mui/lab/DatePicker';
 import {currenciesList} from "../../Directory/Currency/Currency";
 import moment from "moment";
 
-function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList }) {
+function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList, id }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
   const [payType, setPayType] = React.useState('cash');
-  const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null, type: 'payment'}]);
+  const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null, type_pay: 'payment'}]);
 
-  const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null, type: 'change'}]);
-  const [payCurrencyList, setPayCurrencyList] = React.useState([{ value: '0', label: 'Валюта', isDisabled: true }]);
-  const [changeCurrencyList, setChangeCurrencyList] = React.useState([{ value: '0', label: 'Валюта', isDisabled: true }]);
-  const [legalEntityList, setLegalEntityList] = React.useState([{ value: '0', label: 'Организация', isDisabled: true }]);
-  const [cashAccountList, setCashAccountList] = React.useState([{ value: '0', label: 'Выберите кассу/счёт', isDisabled: true }]);
-  const [itemList, setItemList] = React.useState([{ value: '0', label: pageTypes[currentPathName], isDisabled: true }]);
+  const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null, type_pay: 'change'}]);
+  const [payCurrencyList, setPayCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
+  const [changeCurrencyList, setChangeCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
+  const [legalEntityList, setLegalEntityList] = React.useState([{ value: 0, label: 'Организация', isDisabled: true }]);
+  const [cashAccountList, setCashAccountList] = React.useState([{ value: 0, label: 'Выберите кассу/счёт', isDisabled: true }]);
+  const [itemList, setItemList] = React.useState([{ value: 0, label: pageTypes[currentPathName], isDisabled: true }]);
 
 
   React.useEffect(() => {
-    console.log('auxiliaryList', auxiliaryList)
-
     if(auxiliaryList.items.length > 0) {
       const itemArr = auxiliaryList.items.map((item, index) => {
         return { value: item.id, label: item.name }
       });
-      itemArr.unshift({ value: '0', label: pageTypes[currentPathName], isDisabled: true });
+      itemArr.unshift({ value: 0, label: pageTypes[currentPathName], isDisabled: true });
 
       setItemList(itemArr)
     }
@@ -52,7 +50,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       const cArr = auxiliaryList.currencies.map((item, index) => {
         return { value: item.id, label: item.name }
       });
-      cArr.unshift({ value: '0', label: 'Валюта', isDisabled: true });
+      cArr.unshift({ value: 0, label: 'Валюта', isDisabled: true });
 
       setPayCurrencyList(cArr)
       setChangeCurrencyList(cArr)
@@ -62,7 +60,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       const caArr = auxiliaryList.cash_accounts.map((item, index) => {
         return { value: item.id, label: item.name }
       });
-      caArr.unshift({ value: '0', label: 'Выберите кассу/счёт', isDisabled: true });
+      caArr.unshift({ value: 0, label: 'Выберите кассу/счёт', isDisabled: true });
 
       setCashAccountList(caArr)
     }
@@ -76,14 +74,26 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       setLegalEntityList(leArr)
     }
 
-    console.log('item', item)
     const currentDate = moment().format("YYYY-MM-DD");
     if(!item.type) {
       setItem({type_order: 'cash', type: currentPathName, created_at: currentDate});
     }
-    console.log('item', item)
+
     // eslint-disable-next-line
   }, [auxiliaryList] )
+
+  React.useEffect(() => {
+    if(id) {
+      if (item.payments && item.payments.length > 0) {
+        setPaymentList(item.payments);
+      }
+
+      if (item.changes && item.changes.length > 0) {
+        setChangeList(item.changes);
+      }
+    }
+
+  }, [item] )
 
   const togglePayType = (e) => {
 
@@ -112,12 +122,12 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   }
 
   const addPayment = (e) => {
-    setPaymentList([...paymentList, { currency_id: null, amount: null, type: 'payment'}]);
+    setPaymentList([...paymentList, { currency_id: null, amount: null, type_pay: 'payment'}]);
     handleAddValues()
   }
 
   const addChange = (e) => {
-    setChangeList([...changeList, { currency_id: null, amount: null, type: 'change'}]);
+    setChangeList([...changeList, { currency_id: null, amount: null, type_pay: 'change'}]);
   }
 
   const removePayment = (index) => {
@@ -136,7 +146,8 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   }
 
   const updatePayment = (e) => {
-    const {name, value, type, index} = e
+    const {name, type, index} = e
+    const value = parseInt(e.value) !== 'NaN' ? parseInt(e.value) : e.value
 
     if(name === 'currency_id') {
       //makeChangeCurrencyList(value);
@@ -161,7 +172,8 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   };
 
   const updateChange = (e) => {
-    const {name, value, type, index} = e
+    const {name, type, index} = e
+    const value = parseInt(e.value) !== 'NaN' ? parseInt(e.value) : e.value
     changeList[index][name] = value
     changeList[index] = Object.assign({}, changeList[index], paymentTypes[type]);
     setItem(prevItem => ({
@@ -226,7 +238,6 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
   const handleChange = e => {
     let name = null, value = null;
-
     if(e.target) {
        name = e.target.name
        value = parseInt(e.target.value) !== 'NaN' ? e.target.value : parseInt(e.target.value)
@@ -309,11 +320,70 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       </div>
     ) : null;
 
-  const selectedValue = (type) => {
-    let d = { id: 1, label: 'kk' }
-    return d;
+  const selectedValue = (type, indexType) => {
+    const defaultType = {
+      type_id: { value: 0, label: pageTypes[currentPathName], isDisabled: true },
+      legal_entity_id: { value: 0, label: 'Организация', isDisabled: true },
+      cash_account_id: { value: 0, label: 'Выберите кассу/счёт', isDisabled: true },
+      pay_currency: { value: 0, label: 'Валюта', isDisabled: true },
+      change_currency: { value: 0, label: 'Валюта', isDisabled: true }
+    }
+    let array = []
+    let itemTypeValue = item[type]
+    if(type == 'type_id') {
+      array = itemList
+    }
+    if(type == 'legal_entity_id') {
+      array = legalEntityList
+    }
+    if(type == 'cash_account_id') {
+      array = cashAccountList
+    }
+    if(type == 'pay_currency') {
+      array = payCurrencyList
+      if(item.payments && item.payments.length > 0) {
+        itemTypeValue = item.payments[indexType].currency_id
+      }
+
+    }
+    if(type == 'change_currency') {
+      array = changeCurrencyList
+      if(item.changes && item.payments.length > 0) {
+        itemTypeValue = item.changes[indexType].currency_id
+      }
+    }
+
+    const index = array.findIndex((t) => t.value === itemTypeValue)
+    let res = null;
+    if (index !== -1) {
+      const obj = array[index]
+      res = { id: obj.id, label: obj.label }
+    } else {
+      res = defaultType[type]
+    }
+
+    return res;
   };
 
+  const selectedTypeId = (type) => {
+    return selectedValue(type);
+  }
+
+  const selectedLegalEntityId = (type) => {
+    return selectedValue(type);
+  }
+
+  const selectedCashAccountId = (type) => {
+    return selectedValue(type);
+  }
+
+  const selectedPayCurrency = (type, index) => {
+    return selectedValue(type, index);
+  }
+
+  const selectedChangeCurrency = (type, index) => {
+    return selectedValue(type, index);
+  }
 
   return (
     <>
@@ -327,7 +397,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
               <Select
                 name="type_id"
                 /*menuIsOpen={true}*/
-                value={selectedValue('type_id')}
+                value={selectedTypeId('type_id')}
                 styles={customStyles}
                 onChange={event => handleChange(Object.assign(event, { name: 'type_id'}))}
                 options={itemList}
@@ -374,6 +444,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
               <Select
                 name="cash_account_id"
                 styles={customStyles}
+                value={selectedCashAccountId('cash_account_id')}
                 onChange={event => handleChange(Object.assign(event, { name: 'cash_account_id'}))}
                 options={cashAccountList}
                 defaultValue={cashAccountList[0]}
@@ -431,6 +502,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                 <div className="select select_short">
                   <Select
                     styles={customStyles}
+                    value={selectedChangeCurrency('change_currency')}
                     options={changeCurrencyList}
                     defaultValue={changeCurrencyList[0]}
                     theme={(theme) => ({
@@ -455,9 +527,9 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                   <div className={"form__input " + ( item.payments && item.payments[i] && !error.type_id ? 'active-cheked' : 'active-disable')} key={i}>
                     <div className="select select_short">
                       <Select
-                        value={c.currency}
                         name="currency_id"
                         styles={customStyles}
+                        value={selectedPayCurrency('pay_currency', i)}
                         onChange={event => updatePayment(Object.assign(event, { name: 'currency_id', type: 'payment', index: i}))}
                         options={payCurrencyList}
                         defaultValue={payCurrencyList[0]}
@@ -472,19 +544,9 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                         })}
                       >
                       </Select>
-                      {/*<select*/}
-                      {/*  value={c.currency}*/}
-                      {/*  name="currency_id"*/}
-                      {/*  onChange={(e) => updatePayment(e, i, 'payment')}*/}
-                      {/*>*/}
-                      {/*  <option selected disabled>Валюта</option>*/}
-                      {/*  {payCurrencyList.map((currency, currencyIndex) => {*/}
-                      {/*    return (<option key={currency.id} value={currency.id}>{currency.name}</option>)*/}
-                      {/*  })}*/}
-                      {/*</select>*/}
                     </div>
                     <input type="text" placeholder="Оплата:" className="short-input"
-                           value={c.value}
+                           value={c.amount}
                            name="amount"
                            onChange={event => updatePayment({ name: event.target.name, value: event.target.value, type: 'payment', index: i})}
                     />
@@ -518,6 +580,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                       <Select
                         name="currency_id"
                         styles={customStyles}
+                        value={selectedPayCurrency('pay_currency', i)}
                         onChange={event => updateChange(Object.assign(event, { name: 'currency_id', type: 'change', index: i}))}
                         options={payCurrencyList}
                         defaultValue={payCurrencyList[0]}
@@ -534,7 +597,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                       </Select>
                     </div>
                     <input type="text" placeholder="Сдача:" className="short-input"
-                           value={c.value}
+                           value={c.amount}
                            name="amount"
                            onChange={event => updateChange({ name: event.target.name, value: event.target.value, type: 'change', index: i})}
                     />
@@ -574,6 +637,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
               <Select
                 name="legal_entity_id"
                 styles={customStyles}
+                value={selectedLegalEntityId('legal_entity_id')}
                 onChange={event => handleChange(Object.assign(event, { name: 'legal_entity_id'}))}
                 options={legalEntityList}
                 defaultValue={legalEntityList[0]}
@@ -589,15 +653,6 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                 })}
               >
               </Select>
-              {/*<select value={item.legal_entity_id}*/}
-              {/*        name="legal_entity_id"*/}
-              {/*        onChange={handleChange}*/}
-              {/*>*/}
-              {/*  <option selected disabled>Организация</option>*/}
-              {/*  {legalEntityList.map((item, currencyIndex) => {*/}
-              {/*    return (<option key={item.id} value={item.id}>{item.legal_name}</option>)*/}
-              {/*  })}*/}
-              {/*</select>*/}
             </div>
           </div>
 

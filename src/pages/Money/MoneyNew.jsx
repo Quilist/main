@@ -24,6 +24,7 @@ import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import moment from 'moment';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import {currenciesList} from "../Directory/Currency/Currency";
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -41,242 +42,6 @@ export default function EnhancedTable() {
   const api = new API();
 
   useDocumentTitle("Деньги");
-  const mockResponse = {
-    "status":"OK",
-    "message":{
-      "items":[
-        {
-          "id":2,
-          "id_user":4,
-          "date_create":"1648813079886",
-          "from_cash_account_id":1,
-          "to_cash_account_id":2,
-          "amount":222,
-          "note":"Тук"
-        },
-        {
-          "id":5,
-          "id_user":4,
-          "date_create":"1648812964279",
-          "from_currency_id":1,
-          "to_currency_id":1,
-          "exchange_rate":1,
-          "cash_account_id":1,
-          "amount_pay":"111",
-          "amount_receive":"111",
-          "note":"Тест тест"
-        },
-        {
-          "id":13,
-          "id_user":4,
-          "number":2,
-          "date_create":"1648812870290",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"пп",
-          "id_legal_entites":1
-        },
-        {
-          "id":12,
-          "id_user":4,
-          "number":1,
-          "date_create":"1648812818342",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"eqw",
-          "id_legal_entites":1
-        },
-        {
-          "id":2,
-          "id_user":4,
-          "date_create":"1648813079886",
-          "from_cash_account_id":1,
-          "to_cash_account_id":2,
-          "amount":222,
-          "note":"Тук"
-        },
-        {
-          "id":5,
-          "id_user":4,
-          "date_create":"1648812964279",
-          "from_currency_id":1,
-          "to_currency_id":1,
-          "exchange_rate":1,
-          "cash_account_id":1,
-          "amount_pay":"111",
-          "amount_receive":"111",
-          "note":"Тест тест"
-        },
-        {
-          "id":13,
-          "id_user":4,
-          "number":2,
-          "date_create":"1648812870290",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"пп",
-          "id_legal_entites":1
-        },
-        {
-          "id":12,
-          "id_user":4,
-          "number":1,
-          "date_create":"1648812818342",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"eqw",
-          "id_legal_entites":1
-        },
-        {
-          "id":2,
-          "id_user":4,
-          "date_create":"1648813079886",
-          "from_cash_account_id":1,
-          "to_cash_account_id":2,
-          "amount":222,
-          "note":"Тук"
-        },
-        {
-          "id":5,
-          "id_user":4,
-          "date_create":"1648812964279",
-          "from_currency_id":1,
-          "to_currency_id":1,
-          "exchange_rate":1,
-          "cash_account_id":1,
-          "amount_pay":"111",
-          "amount_receive":"111",
-          "note":"Тест тест"
-        },
-        {
-          "id":13,
-          "id_user":4,
-          "number":2,
-          "date_create":"1648812870290",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"пп",
-          "id_legal_entites":1
-        },
-        {
-          "id":12,
-          "id_user":4,
-          "number":1,
-          "date_create":"1648812818342",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"eqw",
-          "id_legal_entites":1
-        },
-        {
-          "id":2,
-          "id_user":4,
-          "date_create":"1648813079886",
-          "from_cash_account_id":1,
-          "to_cash_account_id":2,
-          "amount":222,
-          "note":"Тук"
-        },
-        {
-          "id":5,
-          "id_user":4,
-          "date_create":"1648812964279",
-          "from_currency_id":1,
-          "to_currency_id":1,
-          "exchange_rate":1,
-          "cash_account_id":1,
-          "amount_pay":"111",
-          "amount_receive":"111",
-          "note":"Тест тест"
-        },
-        {
-          "id":13,
-          "id_user":4,
-          "number":2,
-          "date_create":"1648812870290",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"пп",
-          "id_legal_entites":1
-        },
-        {
-          "id":12,
-          "id_user":4,
-          "number":1,
-          "date_create":"1648812818342",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"eqw",
-          "id_legal_entites":1
-        },
-        {
-          "id":2,
-          "id_user":4,
-          "date_create":"1648813079886",
-          "from_cash_account_id":1,
-          "to_cash_account_id":2,
-          "amount":222,
-          "note":"Тук"
-        },
-        {
-          "id":5,
-          "id_user":4,
-          "date_create":"1648812964279",
-          "from_currency_id":1,
-          "to_currency_id":1,
-          "exchange_rate":1,
-          "cash_account_id":1,
-          "amount_pay":"111",
-          "amount_receive":"111",
-          "note":"Тест тест"
-        },
-        {
-          "id":13,
-          "id_user":4,
-          "number":2,
-          "date_create":"1648812870290",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"пп",
-          "id_legal_entites":1
-        },
-        {
-          "id":12,
-          "id_user":4,
-          "number":1,
-          "date_create":"1648812818342",
-          "id_type":1,
-          "type":"payment",
-          "type_order":"cash",
-          "id_cash_accounts":"1",
-          "note":"eqw",
-          "id_legal_entites":1
-        }
-      ],
-      "paginations":{
-        "total":4,
-        "last_page":1
-      }
-    }
-  };
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -404,16 +169,19 @@ export default function EnhancedTable() {
   ];
 
   const formattedDate = (milliseconds) => {
-    //const { date }  = new Date(milliseconds);
-    //const date = dateFromMS.toString().customFormat( "#DD#/#MM#/#YYYY# #hh#:#mm#:#ss#" )
-    return milliseconds;
+    const date = new Date(+milliseconds);
+    const formatDate = date.toISOString().split('T')[0]
+    return formatDate;
   };
 
   const getType = (item) => {
     let type = null;
     if (item.type) {
-      if (item.type === 'payment') {
+      if (item.type.indexOf('pay') !== -1) {
         type = 'Оплата'
+      }
+      if (item.type.indexOf('receive') !== -1) {
+        type = 'Прием'
       }
     } else {
       if (item.from_cash_account_id) {
@@ -432,15 +200,25 @@ export default function EnhancedTable() {
     return data;
   };
 
-  const getAmount = (item) => {
-    let data = null;
-    if (item.amount) {
-      data = item.amount + ' UAH'
+  const getAmountList = (item) => {
+    let amountList = [];
+    if(item.payments && item.payments.length > 0) {
+      const totalList = item.payments.filter(v => v.type_pay === "total");
+      if (totalList.length > 0) {
+        amountList = totalList.map((item, index) => {
+          return item
+        });
+      } else {
+        const payList = item.payments.filter(v => v.type_pay === "payment");
+        if (payList.length > 0) {
+          amountList = payList.map((item, index) => {
+            return item
+          });
+        }
+      }
     }
-    if (item.amount_receive) {
-      data = item.amount_receive + ' UAH'
-    }
-    return data;
+
+    return amountList;
   };
 
   const handleCloseCreateMenu = (event) => {
@@ -460,7 +238,7 @@ export default function EnhancedTable() {
     setDateState({ startDate, endDate });
   };
   const dateRange =
-    startDate.format('MMMM D, YYYY') + ' - ' + endDate.format('MMMM D, YYYY');
+    startDate.format('MMMM D, YYYY');
 
   return (
     <>
@@ -602,9 +380,40 @@ export default function EnhancedTable() {
                         fill="#7096FF" />
                 </svg>
               </a>
-              <p>
-                Март
-              </p>
+              <DateRangePicker
+                initialSettings={{
+                  startDate: startDate.toDate(),
+                  endDate: endDate.toDate(),
+                  ranges: {
+                    'Сегодня': [moment().toDate(), moment().toDate()],
+                    'Вчера': [
+                      moment().subtract(1, 'days').toDate(),
+                      moment().subtract(1, 'days').toDate(),
+                    ],
+                    'Последние 7 Дней': [
+                      moment().subtract(6, 'days').toDate(),
+                      moment().toDate(),
+                    ],
+                    'Последние 30 Дней': [
+                      moment().subtract(29, 'days').toDate(),
+                      moment().toDate(),
+                    ],
+                    'Текущий месяц': [
+                      moment().startOf('month').toDate(),
+                      moment().endOf('month').toDate(),
+                    ],
+                    'Прошлый месяц': [
+                      moment().subtract(1, 'month').startOf('month').toDate(),
+                      moment().subtract(1, 'month').endOf('month').toDate(),
+                    ],
+                  },
+                }}
+                onCallback={handleDateRangePickerCallback}
+              >
+                <p style={{ cursor: 'pointer'}}>
+                  {dateRange}
+                </p>
+              </DateRangePicker>
               <a href="#!">
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
@@ -661,15 +470,18 @@ export default function EnhancedTable() {
                        }}
                     >
                     <div className="table__figure">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      { getType(item) == 'Оплата' && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                               d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
                               fill="#45D064" />
-                      </svg>
+                      </svg> }
+                      { getType(item) == 'Прием' && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727"/>
+                      </svg> }
                     </div>
                     <div className="table__mob">
                       <p>
-                        {getAccount(item)}
+                        {item.cash_account.name}
                       </p>
                       <p>
                         <a href="#!">
@@ -679,7 +491,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__data">
                       <p>
-                        {formattedDate(item.date_create)}
+                        {formattedDate(item.created_at)}
                       </p>
                       <p>
 
@@ -692,7 +504,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__account">
                       <p>
-                        {getAccount(item)}
+                        {item.cash_account.name}
                       </p>
                     </div>
                     <div className="table__counterparty">
@@ -704,7 +516,11 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__summury">
                       <p>
-                        {getAmount(item)}
+                        {getAmountList(item).map((amountItem) => {
+                          return (
+                            <p>{amountItem.amount} {amountItem.currency.name}</p>
+                          );
+                        })}
                       </p>
                     </div>
                     <div className="table__comment">

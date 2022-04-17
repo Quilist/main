@@ -57,7 +57,25 @@ function Pay() {
   React.useEffect(() => {
     if(id) {
       api.find(id, 'money').then(data => {
-        const res = data.message
+        let res = data.message
+        const date = new Date(+res.created_at);
+        const formatDate = date.toISOString().split('T')[0]
+        res.created_at = formatDate
+        if(res.payments && res.payments.length > 0) {
+          const payListFiltered = res.payments.filter(v => v.type_pay === "payment");
+          const changeListFiltered = res.payments.filter(v => v.type_pay === "change");
+          const totalListFiltered = res.payments.filter(v => v.type_pay === "total");
+
+          if (payListFiltered.length > 0) {
+            res.payments = payListFiltered
+          }
+          if (changeListFiltered.length > 0) {
+            res.changes = changeListFiltered
+          }
+          if (totalListFiltered.length > 0) {
+            res.totals = totalListFiltered
+          }
+        }
         setItem(res)
       })
     }
@@ -69,7 +87,6 @@ function Pay() {
       if (data.status === "error") alert(data.message)
       else setAuxiliaryList(data.message)
     })
-    console.log('auxiliaryList1', auxiliaryList)
     // eslint-disable-next-line
   }, [currentPathName])
 
@@ -128,16 +145,26 @@ function Pay() {
       return;
     }
 
-    // const date = new Date(item.created_at);
-    // const milliseconds = date.getTime();
-    // setItem(prevItem => ({
-    //   ...prevItem,
-    //   created_at: milliseconds
-    // }));
-    api.add(item, 'money').then(data => {
-      if (data.status === "error") return alert(data.message)
-      navigate('/money')
-    })
+    const date = new Date(item.created_at);
+    const milliseconds = date.getTime();
+
+    let data = item
+    data.created_at = String(milliseconds)
+
+
+    if(!id) {
+      api.add(data, 'money').then(data => {
+        if (data.status === "error") return console.log(data.message)
+        navigate('/money')
+      })
+    } else {
+      delete data.cash_account
+      delete data.legal_entity
+      api.edit(id, data, 'money').then(data => {
+        if (data.status === "error") return console.log(data.message)
+        navigate('/money')
+      })
+    }
   }
 
   const handleRemove = () => {
@@ -233,6 +260,7 @@ function Pay() {
         pageTypes={pageTypes}
         currentPathName={currentPathName}
         auxiliaryList={auxiliaryList}
+        id={id}
       />
       <div className="form__btns">
         <a href="#!" className="btn">

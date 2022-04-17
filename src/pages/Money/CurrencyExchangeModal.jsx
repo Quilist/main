@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import DatePicker from "@mui/lab/DatePicker";
+import {Link} from "react-router-dom";
 
 const style = {
   position: 'absolute',
@@ -31,7 +32,24 @@ const style = {
 export default function CurrencyExchangeModal({ open, setOpen }) {
   const handleClose = () => setOpen(false);
   const [item, setItem] = React.useState({});
+  const [auxiliaryList, setAuxiliaryList] = React.useState({
+    cash_accounts: [],
+    currencies: [],
+    legal_entites: [],
+    items: []
+  });
   const api = new API();
+
+  React.useEffect(() => {
+    const params = {
+      type: 'pay_supplier'
+    }
+    api.auxiliary('money', params).then(data => {
+      if (data.status === "error") alert(data.message)
+      else setAuxiliaryList(data.message)
+    })
+    // eslint-disable-next-line
+  }, [])
 
   React.useEffect(() => {
     if (open) {
@@ -104,7 +122,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="cash_account_id"
               onChange={handleChange}
             >
-              <MenuItem value={1}>Тестовая Касса</MenuItem>
+              {auxiliaryList.cash_accounts.map((item, index) => (
+                <MenuItem
+                  key={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -118,10 +142,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="from_currency_id"
               onChange={handleChange}
             >
-              <MenuItem value={1}>UAH</MenuItem>
-              <MenuItem value={2}>RUB</MenuItem>
-              <MenuItem value={3}>USD</MenuItem>
-              <MenuItem value={4}>EUR</MenuItem>
+              {auxiliaryList.currencies.map((item, index) => (
+                <MenuItem
+                  key={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <FormControl fullWidth>
@@ -134,10 +161,13 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="to_currency_id"
               onChange={handleChange}
             >
-              <MenuItem value={1}>UAH</MenuItem>
-              <MenuItem value={2}>RUB</MenuItem>
-              <MenuItem value={3}>USD</MenuItem>
-              <MenuItem value={4}>EUR</MenuItem>
+              {auxiliaryList.currencies.map((item, index) => (
+                <MenuItem
+                  key={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <FormControl fullWidth style={{ marginBottom: '15px' }}>
