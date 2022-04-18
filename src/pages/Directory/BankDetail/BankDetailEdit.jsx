@@ -76,7 +76,6 @@ function BankDetailEdit() {
   }
 
   return <>
-    <Sidebar />
     <section className="home-section">
       <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
         <div className={styles.buttonsWrapper}>
