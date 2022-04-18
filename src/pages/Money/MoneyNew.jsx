@@ -24,6 +24,7 @@ import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import moment from 'moment';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import {currenciesList} from "../Directory/CurrencyExchange/CurrencyExchange";
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -183,9 +184,17 @@ export default function EnhancedTable() {
     if (item.type) {
       if (item.type.indexOf('pay') !== -1) {
         type = 'Оплата'
+        const payIndex = payOptions.findIndex((payItem) => payItem.link === '/'+item.type)
+        if (payIndex !== -1) {
+          type = type + ' ' + payOptions[payIndex].name;
+        }
       }
       if (item.type.indexOf('receive') !== -1) {
         type = 'Прием'
+        const payIndex = receiveOptions.findIndex((payItem) => payItem.link === '/'+item.type)
+        if (receiveOptions !== -1) {
+          type = type + ' ' + receiveOptions[payIndex].name;
+        }
       }
     } else {
       if (item.from_cash_account_id) {
@@ -508,11 +517,15 @@ export default function EnhancedTable() {
                       <p>
                         {item.cash_account.name}
                       </p>
-                      <p>
-                        <a href="#!">
-                          Установить
-                        </a>
-                      </p>
+                      {item.type ?
+                        <p>{item.type_item.name}</p>
+                         :
+                        <p>
+                          <a href="#!">
+                            Установить
+                          </a>
+                        </p>
+                      }
                     </div>
                     <div className="table__data">
                       <p>
@@ -533,11 +546,15 @@ export default function EnhancedTable() {
                       </p>
                     </div>
                     <div className="table__counterparty">
-                      <p>
-                        <a href="#!">
-                          Установить
-                        </a>
-                      </p>
+                      {item.type ?
+                        <p>{item.type_item.name}</p>
+                        :
+                        <p>
+                          <a href="#!">
+                            Установить
+                          </a>
+                        </p>
+                      }
                     </div>
                     <div className="table__summury">
                       <p>

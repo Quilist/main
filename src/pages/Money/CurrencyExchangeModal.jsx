@@ -61,6 +61,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   }, [open])
 
   const handleChange = e => {
+    console.log('e.target', e.target)
     const { name, value } = e.target;
     if ((name === 'exchange_rate' && item.amount_pay) || name === 'amount_pay') {
       let amountReceive;
