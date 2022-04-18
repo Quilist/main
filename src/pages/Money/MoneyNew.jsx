@@ -518,7 +518,7 @@ export default function EnhancedTable() {
                         {item.cash_account.name}
                       </p>
                       {item.type ?
-                        <p>{item.type_item.name}</p>
+                        <p>{item.type_item ? item.type_item.name : ''}</p>
                          :
                         <p>
                           <a href="#!">
@@ -547,7 +547,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__counterparty">
                       {item.type ?
-                        <p>{item.type_item.name}</p>
+                        <p>{item.type_item ? item.type_item.name : ''}</p>
                         :
                         <p>
                           <a href="#!">
