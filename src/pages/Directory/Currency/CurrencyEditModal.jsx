@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import crossImg from '@/static/img/cross.png';
-import { currenciesList } from './Currency';
 import styles from '@/styles/modules/Currency.module.css';
 import API from '@/api/api';
 
@@ -21,9 +20,9 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }) {
-  const [currentCurrency, setCurrentCurrency] = React.useState([]);
-  const [exchangeRate, setExchangeRate] = React.useState('');
+export default function CurrencyEditModal({ open, setOpenEditModal, id }) {
+  const [item, setItem] = React.useState([]);
+  const [name, setName] = React.useState('');
 
   const handleCloseModal = () => {
     setOpenEditModal(false);
@@ -31,18 +30,18 @@ export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }
   const api = new API()
 
   React.useEffect(() => {
-    api.find(currencyId, 'currency').then(data => {
+    api.find(id, 'currency').then(data => {
       if (data.status === "error") alert(data.message)
-      else setCurrentCurrency(data.message); setExchangeRate(data.message.exchange_rate);
+      else setItem(data.message); setName(data.message.name);
     })
       // eslint-disable-next-line
   }, [])
 
   const handleSave = () => {
-    const body = currentCurrency;
-    body.exchange_rate = exchangeRate;
+    const body = item;
+    body.name = name;
 
-    api.edit(currencyId, body, 'currency').then(data => {
+    api.edit(id, body, 'currency').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -50,21 +49,11 @@ export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }
   }
   
   const handleDelete = () => {
-    api.remove(currencyId, 'currency').then(data => {
+    api.remove(id, 'currency').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
 
-  }
-
-  const findCurrencyName = (event) => {
-    let name = '';
-    const index = currenciesList.findIndex((item) => item.id === event)
-
-    if (index !== -1) {
-      name = currenciesList[index].represent
-    }
-    return name
   }
 
   return (
@@ -79,20 +68,10 @@ export default function CurrencyEditModal({ open, setOpenEditModal, currencyId }
           <img className={styles.modal_img} onClick={handleCloseModal} src={crossImg} alt="cross" />
           <div className={styles.modal_title}>Редактирование валюты</div>
           <TextField
-            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.id_from_currencies)}
-            disabled
-            variant="standard"
-          />
-          <TextField
-            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.id_to_currencies)}
-            disabled
-            variant="standard"
-          />
-          <TextField
             sx={{marginBottom: '20px', width: '70%'}}
             id="standard-multiline-flexible"
-            label="Обменный курс:" multiline maxRows={2} value={exchangeRate || ''}
-            onChange={(e) => setExchangeRate(e.target.value)}
+            label="Название:" multiline maxRows={2} value={name || ''}
+            onChange={(e) => setName(e.target.value)}
             variant="standard"
           />
 

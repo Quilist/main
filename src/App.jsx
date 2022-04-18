@@ -61,11 +61,12 @@ import BankDetailCreate from '@/pages/Directory/BankDetail/BankDetailCreate'
 import BankDetailEdit from '@/pages/Directory/BankDetail/BankDetailEdit'
 import IncomeItem from '@/pages/Directory/IncomeItem/IncomeItem'
 import Expenditure from '@/pages/Directory/Expenditure/Expenditure'
-
+import ProductGroup from "@/pages/Directory/ProductGroup/ProductGroup";
 
 import EmployeesEditing from '@/pages/Directory/Employee/Edit/EmployeeEditing';
 
-import Сurrency from '@/pages/Directory/Currency/Currency'
+import Currency from '@/pages/Directory/Currency/Currency'
+import CurrencyExchange from '@/pages/Directory/CurrencyExchange/CurrencyExchange'
 
 import Pay from "@/pages/Pay/Pay";
 
@@ -217,8 +218,10 @@ function App() {
             <Route path="/measure" element={<> <AppLayout component={<Measure />} /> </>} />
             <Route path="/income_items" element={<> <AppLayout component={<IncomeItem />} /> </>} />
             <Route path="/expenditure" element={<> <AppLayout component={<Expenditure />} /> </>} />
-            <Route path="/currencies" element={<> <AppLayout component={<Сurrency />} /> </>} />
+            <Route path="/currency" element={<> <AppLayout component={<Currency />} /> </>} />
+            <Route path="/currency_exchange" element={<> <AppLayout component={<CurrencyExchange />} /> </>} />
             <Route path="/type_price" element={<> <AppLayout component={<TypePrice />} /> </>} />
+            <Route path="/products_groups" element={<> <AppLayout component={<ProductGroup />} /> </>} />
 
             {/* Политика безопасности */}
             <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<> <AppLayout component={<PolitikaKonfidentsialnostiFacebook />} /> </>} />

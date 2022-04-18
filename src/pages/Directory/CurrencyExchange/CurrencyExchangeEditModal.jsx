@@ -4,7 +4,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import crossImg from '@/static/img/cross.png';
-import styles from '@/styles/modules/TypePrice.module.css';
+import { currenciesList } from './CurrencyExchange';
+import styles from '@/styles/modules/Currency.module.css';
 import API from '@/api/api';
 
 const style = {
@@ -20,9 +21,9 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
-  const [item, setItem] = React.useState([]);
-  const [name, setName] = React.useState('');
+export default function CurrencyExchangeEditModal({ open, setOpenEditModal, currencyId }) {
+  const [currentCurrency, setCurrentCurrency] = React.useState([]);
+  const [exchangeRate, setExchangeRate] = React.useState('');
 
   const handleCloseModal = () => {
     setOpenEditModal(false);
@@ -30,18 +31,18 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
   const api = new API()
 
   React.useEffect(() => {
-    api.find(id, 'typePrice').then(data => {
+    api.find(currencyId, 'currencyExchange').then(data => {
       if (data.status === "error") alert(data.message)
-      else setItem(data.message); setName(data.message.name);
+      else setCurrentCurrency(data.message); setExchangeRate(data.message.exchange_rate);
     })
       // eslint-disable-next-line
   }, [])
 
   const handleSave = () => {
-    const body = item;
-    body.name = name;
+    const body = currentCurrency;
+    body.exchange_rate = exchangeRate;
 
-    api.edit(id, body, 'typePrice').then(data => {
+    api.edit(currencyId, body, 'currencyExchange').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -49,11 +50,21 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
   }
   
   const handleDelete = () => {
-    api.remove(id, 'typePrice').then(data => {
+    api.remove(currencyId, 'currencyExchange').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
 
+  }
+
+  const findCurrencyName = (event) => {
+    let name = '';
+    const index = currenciesList.findIndex((item) => item.id === event)
+
+    if (index !== -1) {
+      name = currenciesList[index].represent
+    }
+    return name
   }
 
   return (
@@ -66,12 +77,22 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
       >
         <Box sx={style} className={styles.childModal}>
           <img className={styles.modal_img} onClick={handleCloseModal} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Редактирование типа цены</div>
+          <div className={styles.modal_title}>Редактирование валюты</div>
+          <TextField
+            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.id_from_currencies)}
+            disabled
+            variant="standard"
+          />
+          <TextField
+            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.id_to_currencies)}
+            disabled
+            variant="standard"
+          />
           <TextField
             sx={{marginBottom: '20px', width: '70%'}}
             id="standard-multiline-flexible"
-            label="Название:" multiline maxRows={2} value={name || ''}
-            onChange={(e) => setName(e.target.value)}
+            label="Обменный курс:" multiline maxRows={2} value={exchangeRate || ''}
+            onChange={(e) => setExchangeRate(e.target.value)}
             variant="standard"
           />
 

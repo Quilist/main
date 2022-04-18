@@ -3,11 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { currenciesList } from './Currency';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/Currency.module.css';
 import API from '@/api/api';
@@ -27,28 +22,18 @@ const style = {
 };
 
 export default function CurrencyModal({ open, setOpen }) {
-
   const handleClose = () => setOpen(false);
-
-  const [representFrom, setFromRepresent] = React.useState(null);
-  const [representTo, setToRepresent] = React.useState(null);
-
-  const [exchangeRate, setExchangeRate] = React.useState(null);
-
+  const [name, setName] = React.useState('');
   const api = new API();
 
   const handleAdd = () => {
     const body = {
-      id_from_currencies: representFrom,
-      id_to_currencies: representTo,
-      exchange_rate: exchangeRate
+      name: name
     }
 
     api.add(body, 'currency').then(data => {
       if (data.status === "error") return alert(data.message)
-      setFromRepresent(null);
-      setToRepresent(null);
-      setExchangeRate(null);
+      setName('');
       setOpen(false);
     })
 
@@ -66,39 +51,9 @@ export default function CurrencyModal({ open, setOpen }) {
           <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
           <div className={styles.modal_title}>Добавление валюты</div>
 
-          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-            <InputLabel id="demo-simple-select-standard-label">Конвертировать из:</InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={representFrom}
-              onChange={(e) => setFromRepresent(e.target.value)}
-              label={'Валюта'}
-            >
-              {currenciesList.map((c, i) => {
-                return (<MenuItem value={c.id} key={i}>{c.represent}</MenuItem>)
-              })}
-            </Select>
-          </FormControl>
-
-          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-            <InputLabel id="demo-simple-select-standard-label">Конвертировать в:</InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={representTo}
-              onChange={(e) => setToRepresent(e.target.value)}
-              label={'Валюта'}
-            >
-              {currenciesList.map((c, i) => {
-                return (<MenuItem value={c.id} key={i}>{c.represent}</MenuItem>)
-              })}
-            </Select>
-          </FormControl>
-
-          <TextField sx={{ marginBottom: '30px', width: '70%' }} value={exchangeRate} onChange={(e) => setExchangeRate(e.target.value)}
-                     label="Обменный курс:"
-                     type="number"
+          <TextField sx={{ marginBottom: '30px', width: '70%' }} value={name} onChange={(e) => setName(e.target.value)}
+                     label="Наименование:"
+                     type="text"
                      variant="standard"
           />
           <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>

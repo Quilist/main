@@ -248,8 +248,10 @@ export default function Sidebar() {
                   <li><Link to="/measure">Единицы измерений</Link></li>
                   <li><Link to="/expenditure">Статьи расходов</Link></li>
                   <li><Link to="/income_items">Статьи доходов</Link></li>
-                  <li><Link to="/currencies">Валюты</Link></li>
+                  <li><Link to="/currency">Валюты</Link></li>
+                  <li><Link to="/currency_exchange">Валютные пары</Link></li>
                   <li><Link to="/type_price">Типы цен</Link></li>
+                  <li><Link to="/products_groups">Группы товаров</Link></li>
                 </ul>
               </li>
               <li className={isDrop ? "showMenu" : ""}>

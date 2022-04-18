@@ -7,18 +7,26 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
-import CurrencyModal from './CurrencyModal';
-import CurrencyEditModal from './CurrencyEditModal';
+import CurrencyExchangeModal from './CurrencyExchangeModal';
+import CurrencyExchangeEditModal from './CurrencyExchangeEditModal';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Currency.module.css';
 
-export default function Currency() {
+export const currencies = []
+export let currenciesList = []
+
+export default function CurrencyExchangeExchange() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
   const [rows, setRows] = React.useState([])
+  const api = new API()
+
+  useDocumentTitle("Валютные пары");
 
   // Modal
   const [open, setOpen] = React.useState(false);
@@ -26,17 +34,19 @@ export default function Currency() {
 
   // Edit Modal
   const [openEditModal, setOpenEditModal] = React.useState(false);
-  const [rowId, setRowId] = React.useState(0);
+  const [currencyId, setCurrencyId] = React.useState(0);
   const handleOpenEditModal = (id) => {
-    setRowId(id);
+    setCurrencyId(id);
     setOpenEditModal(true);
   };
 
-  const api = new API()
-  useDocumentTitle("Валюты");
   React.useEffect(() => {
     if (!openEditModal && !open) {
-      api.all('currency').then(data => {
+      api.getCurrenciesList().then(data => {
+        if (data.status === "error") alert(data.message)
+        else currenciesList = data.message.items
+      })
+      api.all('currencyExchange').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
       })
@@ -53,25 +63,33 @@ export default function Currency() {
     setPage(0);
   };
 
+  const findCurrencyName = (event) => {
+    let name = '';
+    const index = currenciesList.findIndex((item) => item.id === event)
+
+    if (index !== -1) {
+      name = currenciesList[index].represent
+    }
+    return name
+  }
 
   return (
     <>
       <section className="home-section">
         <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
-          <CurrencyModal
+          <CurrencyExchangeModal
             open={open}
             setOpen={setOpen}
           />
           {
             openEditModal &&
-            <CurrencyEditModal
+            <CurrencyExchangeEditModal
               open={openEditModal}
               setOpenEditModal={setOpenEditModal}
-              id={rowId}
-              items={rows}
+              currencyId={currencyId}
+              currencies={rows}
             />
           }
-
           <div style={{ marginBottom: '30px', width: '97%' }}>
             <Button onClick={handleOpen} variant="contained">Создать</Button>
           </div>
@@ -82,7 +100,15 @@ export default function Currency() {
                   <TableRow>
                     <TableCell className={styles.table__head} align={'left'}
                       style={{ minWidth: '100px' }}>
-                      Наименование
+                      Валюта из
+                    </TableCell>
+                    <TableCell className={styles.table__head} align={'center'}
+                      style={{ minWidth: '100px' }}>
+                      Валюта в
+                    </TableCell>
+                    <TableCell className={styles.table__head} align={'right'}
+                      style={{ minWidth: '100px' }}>
+                      Обменный курс
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -99,7 +125,13 @@ export default function Currency() {
                             alignItems: 'center',
                             minHeight: '57px'
                           }} className={styles.table__body} align={'left'}>
-                            {row.name}
+                            {findCurrencyName(row.id_from_currencies)}
+                          </TableCell>
+                          <TableCell className={styles.table__body__wide} align={'center'}>
+                            {findCurrencyName(row.id_to_currencies)}
+                          </TableCell>
+                          <TableCell className={styles.table__body} align={'right'}>
+                            {row.exchange_rate}
                           </TableCell>
                         </TableRow>
                       );

@@ -60,13 +60,6 @@ export default function CashAndAccount() {
 
    const [rows, setRows] = React.useState([])
    const api = new API()
-   React.useEffect(() => {
-      api.all('cashAndAccount').then(data => {
-         if (data.status === "error") alert(data.message)
-         else setRows(data.message.items)
-      })
-      // eslint-disable-next-line
-   }, [])
 
    const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -88,6 +81,15 @@ export default function CashAndAccount() {
       setCashId(id);
       setOpenEditModal(true);
    };
+
+   React.useEffect(() => {
+      api.all('cashAndAccount').then(data => {
+         if (data.status === "error") alert(data.message)
+         else setRows(data.message.items)
+      })
+      // eslint-disable-next-line
+   }, [openEditModal, open])
+
 
    return (
       <>

@@ -7,7 +7,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { cash_and_accounts } from './CashAndAccount';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
@@ -58,6 +57,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   const [openChildModal, setOpenChildModal] = React.useState(false);
 
   const handleOpenChildModal = () => {
+    setType('custom')
     setOpenChildModal(true);
   };
   const [name, setName] = React.useState('');
@@ -68,26 +68,17 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   const [currency, setCurrency] = React.useState('UAH');
   const [balance, setBalance] = React.useState('');
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null}]);
-  const [currencyList] = React.useState([
-    {
-      name: 'UAH',
-      id: 1
-    },
-    {
-      name: 'RUB',
-      id: 2
-    },
-    {
-      name: 'USD',
-      id: 3
-    },
-    {
-      name: 'EUR',
-      id: 4
-    }
-  ]);
+  const [auxiliaryList, setAuxiliaryList] = React.useState({currencies: [], types: []});
 
   const api = new API();
+
+  React.useEffect(() => {
+    api.auxiliary('cashAndAccount').then(data => {
+      if (data.status === "error") alert(data.message)
+      else setAuxiliaryList(data.message)
+    })
+    // eslint-disable-next-line
+  }, [])
 
   const addBalance = (e) => {
     setBalanceList([...balanceList, { currency_id: null, balance: null}]);
@@ -122,6 +113,13 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   const handleCloseChildModal = () => {
     setOpenChildModal(false);
     clearForm();
+  }
+
+  const setType = (type) => {
+    setItem(prevItem => ({
+      ...prevItem,
+      type: type
+    }));
   }
 
   const handleAdd = () => {
@@ -162,15 +160,19 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   }
   const handleModelBank = () => {
     if(bankFunction === 'OpenChildModalPrivat') {
+      setType('privatbank_individual');
       setOpenChildModalPrivat(true);
     }
     if(bankFunction === 'OpenChildModalPrivatL') {
+      setType('privatbank_legal_entity');
       setOpenChildModalPrivatL(true);
     }
     if(bankFunction === 'OpenChildModalPumb') {
+      setType('pumb');
       setOpenChildModalPumb(true);
     }
     if(bankFunction === 'OpenChildModalMono') {
+      setType('monobank');
       setOpenChildModalMono(true);
     }
   };
@@ -257,16 +259,17 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     label={'Тип (касса или счёт)'}
-                    value={item.id_type_order}
-                    name="id_type_order"
+                    value={item.type_order}
+                    name="type_order"
                     onChange={(e) => handleAccountType(e)}
                   >
-                    <MenuItem value={1}>Счёт(безналичные)</MenuItem>
-                    <MenuItem value={2}>Касса(наличные)</MenuItem>
+                    {auxiliaryList.types.map((type, typeIndex) => {
+                      return (<MenuItem key={type.value} value={type.value}>{type.name}</MenuItem>)
+                    })}
                   </Select>
                 </FormControl>
 
-                {type_accounts === 1 &&
+                {type_accounts === 'account' &&
                   <div>
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
                       {balanceList.map((c, i) => {
@@ -280,7 +283,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                               name="currency_id"
                               onChange={(e) => updateBalance(e, i)}
                             >
-                              {currencyList.map((currency, currencyIndex) => {
+                              {auxiliaryList.currencies.map((currency, currencyIndex) => {
                                 return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
                               })}
                             </Select>
@@ -302,7 +305,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                 }
 
 
-                {type_accounts === 2 &&
+                {type_accounts === 'cash' &&
                   <div>
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
                       {balanceList.map((c, i) => {
@@ -316,7 +319,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                               name="currency_id"
                               onChange={(e) => updateBalance(e, i)}
                             >
-                              {currencyList.map((currency, currencyIndex) => {
+                              {auxiliaryList.currencies.map((currency, currencyIndex) => {
                                 return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
                               })}
                             </Select>

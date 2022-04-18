@@ -60,12 +60,6 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "id_user",
-    numeric: false,
-    disablePadding: true,
-    label: "ID Пользователя",
-  },
-  {
     id: "bank_name",
     numeric: true,
     disablePadding: false,
@@ -344,10 +338,10 @@ export default function EnhancedTable() {
                                 onClick={() => handleRedirect(row.id)}
                               ></i>
                             </TableCell>
-                            <TableCell className={styles.table_wide} align="left" style={{ fontSize: '17px' }}>{row.id_user}</TableCell>
-                            <TableCell className={styles.table_wide} align="center" style={{ fontSize: '17px' }}>{row.bank_name}</TableCell>
-                            <TableCell className={styles.table_wide} align="center" style={{ fontSize: '17px' }}>{row.MFO}</TableCell>
-                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.checking_account}</TableCell>
+
+                            <TableCell className={styles.table__body} align="left" style={{ fontSize: '17px' }}>{row.bank_name}</TableCell>
+                            <TableCell className={styles.table__body} align="center" style={{ fontSize: '17px' }}>{row.MFO}</TableCell>
+                            <TableCell className={styles.table__body} align="right" style={{ fontSize: '17px' }}>{row.checking_account}</TableCell>
                           </TableRow>
                         );
                       })}

@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import crossImg from '@/static/img/cross.png';
-import styles from '@/styles/modules/TypePrice.module.css';
+import styles from '@/styles/modules/Measure.module.css';
 import API from '@/api/api';
 
 const style = {
@@ -21,7 +21,7 @@ const style = {
   pb: 3,
 };
 
-export default function TypePriceModal({ open, setOpen }) {
+export default function ProductGroupModal({ open, setOpen }) {
   const handleClose = () => setOpen(false);
   const [name, setName] = React.useState('');
   const api = new API();
@@ -31,8 +31,8 @@ export default function TypePriceModal({ open, setOpen }) {
       name: name
     }
 
-    api.add(body, 'typePrice').then(data => {
-      if (data.status === "error") return alert(data.message)
+    api.add(body, 'productGroup').then(data => {
+      if (data.status === "error") return console.log (data.message)
       setName('');
       setOpen(false);
     })
@@ -49,7 +49,7 @@ export default function TypePriceModal({ open, setOpen }) {
       >
         <Box className={styles.modal} sx={style}>
           <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Добавление типа цены</div>
+          <div className={styles.modal_title}>Добавление группы</div>
 
           <TextField sx={{ marginBottom: '30px', width: '70%' }} value={name} onChange={(e) => setName(e.target.value)}
                      label="Наименование:"

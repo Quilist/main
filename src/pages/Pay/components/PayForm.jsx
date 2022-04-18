@@ -20,7 +20,6 @@ import styles from '@/styles/modules/PayForm.module.css'
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import {currenciesList} from "../../Directory/Currency/Currency";
 import moment from "moment";
 
 function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList, id }) {
@@ -31,6 +30,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null, type_pay: 'change'}]);
   const [payCurrencyList, setPayCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
   const [changeCurrencyList, setChangeCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
+  const [cashAccountCurrencyList, setCashAccountCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
   const [legalEntityList, setLegalEntityList] = React.useState([{ value: 0, label: 'Организация', isDisabled: true }]);
   const [cashAccountList, setCashAccountList] = React.useState([{ value: 0, label: 'Выберите кассу/счёт', isDisabled: true }]);
   const [itemList, setItemList] = React.useState([{ value: 0, label: pageTypes[currentPathName], isDisabled: true }]);
@@ -84,6 +84,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
   React.useEffect(() => {
     if(id) {
+      setPayType(item.type_order)
       if (item.payments && item.payments.length > 0) {
         setPaymentList(item.payments);
       }
@@ -97,7 +98,11 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
   const togglePayType = (e) => {
 
-    setPayType(e.target.value)
+    setPayType(e.target.value);
+    setItem(prevItem => ({
+      ...prevItem,
+      type_order: e.target.value
+    }));
     //e.target.name = 'type_order'
     // if(e.target.value === 'cash') {
     //
@@ -238,12 +243,33 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
   const handleChange = e => {
     let name = null, value = null;
+
     if(e.target) {
        name = e.target.name
        value = parseInt(e.target.value) !== 'NaN' ? e.target.value : parseInt(e.target.value)
     } else {
        name = e.name
        value = parseInt(e.value) !== 'NaN' ? e.value : parseInt(e.value)
+    }
+
+    if(name == 'cash_account_id') {
+      const index = auxiliaryList.cash_accounts.findIndex((item) => item.id === value)
+
+      if (index !== -1) {
+        const cashAccount = auxiliaryList.cash_accounts[index]
+        if(cashAccount.cash_accounts_balance && cashAccount.cash_accounts_balance.length > 0) {
+          const cArr = cashAccount.cash_accounts_balance.map((item, index) => {
+            if(item.currency) {
+              return { value: item.currency.id, label: item.currency.name }
+            }
+          });
+          cArr.unshift({ value: 0, label: 'Валюта', isDisabled: true });
+          setCashAccountCurrencyList(cArr)
+        } else {
+          setCashAccountCurrencyList([{ value: 0, label: 'Валюта', isDisabled: true }])
+        }
+      }
+
     }
 
     setItem(prevItem => ({
@@ -342,14 +368,18 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     if(type == 'pay_currency') {
       array = payCurrencyList
       if(item.payments && item.payments.length > 0) {
-        itemTypeValue = item.payments[indexType].currency_id
+        if(item.payments[indexType]) {
+          itemTypeValue = item.payments[indexType].currency_id
+        }
       }
 
     }
     if(type == 'change_currency') {
       array = changeCurrencyList
       if(item.changes && item.payments.length > 0) {
-        itemTypeValue = item.changes[indexType].currency_id
+        if(item.changes[indexType]) {
+          itemTypeValue = item.changes[indexType].currency_id
+        }
       }
     }
 
@@ -433,7 +463,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
             </div>
 
             <div className="form__radio">
-              <input id="radio-2" name="type_order" type="radio" value="bank_account" checked={item.type_order === 'bank_account '} onChange={togglePayType}/>
+              <input id="radio-2" name="type_order" type="radio" value="bank_account" checked={item.type_order === 'bank_account'} onChange={togglePayType}/>
               <label htmlFor="radio-2" className="radio-label">Со счета</label>
             </div>
           </div>
@@ -498,26 +528,47 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
             Детали оплаты:
           </h4>
             {payType === 'bank_account' &&
-              <div className="form__input active-disable">
-                <div className="select select_short">
-                  <Select
-                    styles={customStyles}
-                    value={selectedChangeCurrency('change_currency')}
-                    options={changeCurrencyList}
-                    defaultValue={changeCurrencyList[0]}
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 12,
-                      colors: {
-                        ...theme.colors,
-                        primary25: '#4369cf',
-                        primary: '#7196ff',
-                      },
-                    })}
-                  >
-                  </Select>
-                </div>
-                <input type="text" placeholder="Сумма:" className="short-input"/>
+              <div>
+                {paymentList.map((c, i) => {
+                  return (
+                    <div className={"form__input " + ( item.payments && item.payments[i] && !error.type_id ? 'active-cheked' : 'active-disable')} key={i}>
+                      <div className="select select_short">
+                        <Select
+                          name="currency_id"
+                          styles={customStyles}
+                          value={selectedPayCurrency('pay_currency', i)}
+                          onChange={event => updatePayment(Object.assign(event, { name: 'currency_id', type: 'payment', index: i}))}
+                          options={cashAccountCurrencyList}
+                          defaultValue={cashAccountCurrencyList[0]}
+                          theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 12,
+                            colors: {
+                              ...theme.colors,
+                              primary25: '#4369cf',
+                              primary: '#7196ff',
+                            },
+                          })}
+                        >
+                        </Select>
+                      </div>
+                      <input type="text" placeholder="Оплата:" className="short-input"
+                             value={c.amount}
+                             name="amount"
+                             onChange={event => updatePayment({ name: event.target.name, value: event.target.value, type: 'payment', index: i})}
+                      />
+                      <div className="form__setting">
+                        <a href="#!" onClick={() => removePayment(i)}>
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M4.7298 3.67792L1.05188 0L0 1.05188L3.67792 4.7298L0.0518825 8.35583L1.10377 9.40772L4.7298 5.78168L8.35582 9.4077L9.4077 8.35582L5.78168 4.7298L9.45958 1.0519L8.4077 1.80587e-05L4.7298 3.67792Z"
+                                  fill="#F6222E"/>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             }
           {payType === 'cash' &&

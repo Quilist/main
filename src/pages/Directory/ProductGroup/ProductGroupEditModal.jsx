@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import crossImg from '@/static/img/cross.png';
-import styles from '@/styles/modules/TypePrice.module.css';
+import styles from '@/styles/modules/Measure.module.css';
 import API from '@/api/api';
 
 const style = {
@@ -20,7 +20,7 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
+export default function ProductGroupEditModal({ open, setOpenEditModal, id }) {
   const [item, setItem] = React.useState([]);
   const [name, setName] = React.useState('');
 
@@ -30,7 +30,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
   const api = new API()
 
   React.useEffect(() => {
-    api.find(id, 'typePrice').then(data => {
+    api.find(id, 'productGroup').then(data => {
       if (data.status === "error") alert(data.message)
       else setItem(data.message); setName(data.message.name);
     })
@@ -41,7 +41,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
     const body = item;
     body.name = name;
 
-    api.edit(id, body, 'typePrice').then(data => {
+    api.edit(id, body, 'productGroup').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -49,7 +49,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
   }
   
   const handleDelete = () => {
-    api.remove(id, 'typePrice').then(data => {
+    api.remove(id, 'productGroup').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
@@ -66,7 +66,7 @@ export default function TypePriceEditModal({ open, setOpenEditModal, id }) {
       >
         <Box sx={style} className={styles.childModal}>
           <img className={styles.modal_img} onClick={handleCloseModal} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Редактирование типа цены</div>
+          <div className={styles.modal_title}>Редактирование группы</div>
           <TextField
             sx={{marginBottom: '20px', width: '70%'}}
             id="standard-multiline-flexible"

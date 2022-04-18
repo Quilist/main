@@ -12,17 +12,19 @@ class API {
             employee: '/employees',
             supplier: '/suppliers',
             legalEntity: '/legal_entites',
-            currency: '/currencies',
+            currency: '/currency',
+            currencyExchange: '/currency_exchange',
             storehouse: '/storehouse',
             measure: '/measure',
             expenditure: '/expenditure',
             incomeItem: '/income_items',
             typePrice: '/type_price',
             bankDetail: '/banks_details',
-            cashAndAccount: '/cash_and_accounts',
+            cashAndAccount: '/cash_accounts',
             pay: '/pay',
             money: '/money',
             product: '/products',
+            productGroup: '/products_groups',
             moneyExchange: '/money/currency_exchange',
             moneyMoving: '/money/moving_money',
         }
@@ -82,9 +84,9 @@ class API {
     }
 
     //Get all items
-    async all(urlType) {
+    async all(urlType, params) {
         const url = this.endpoints(urlType)
-        return await this.request("GET", url);
+        return await this.request("GET", url, null, params);
     }
 
     //Find item by ID

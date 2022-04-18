@@ -24,7 +24,6 @@ import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import moment from 'moment';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
-import {currenciesList} from "../Directory/Currency/Currency";
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -37,6 +36,7 @@ export default function EnhancedTable() {
   const [openMovingMoney, setOpenMovingMoney] = React.useState(false);
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
+  const [queryParams, setQueryParams] = useState({});
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
@@ -68,14 +68,18 @@ export default function EnhancedTable() {
 
   React.useEffect(() => {
     if (!openCurrencyExchangeModal || !openMovingMoney) {
-      api.all('money').then(data => {
-        if (data.status === "error") alert(data.message)
-        else setItems(data.message.items)
-      })
+      getAll();
       //setItems(mockResponse.message.items)
     }
     // eslint-disable-next-line
   }, [openCurrencyExchangeModal, openMovingMoney])
+
+  const getAll = () => {
+    api.all('money', queryParams).then(data => {
+      if (data.status === "error") console.log(data.message)
+      else setItems(data.message.items)
+    })
+  };
 
   React.useEffect(() => {
     // eslint-disable-next-line
@@ -221,6 +225,15 @@ export default function EnhancedTable() {
     return amountList;
   };
 
+  const searchData = (e) => {
+    const { value } = e.target;
+    setQueryParams(prevItem => ({
+      ...prevItem,
+      search: value,
+    }));
+    getAll();
+  };
+
   const handleCloseCreateMenu = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -235,7 +248,13 @@ export default function EnhancedTable() {
   });
   const { startDate, endDate } = dateState;
   const handleDateRangePickerCallback = (startDate, endDate) => {
+    setQueryParams(prevItem => ({
+      ...prevItem,
+      date_from: startDate.valueOf(),
+      date_to: endDate.valueOf()
+    }));
     setDateState({ startDate, endDate });
+    getAll();
   };
   const dateRange =
     startDate.format('MMMM D, YYYY');
@@ -283,6 +302,12 @@ export default function EnhancedTable() {
                   fill="#AFC2FF" />
               </svg>
             </a>
+          </div>
+          <div className="wrapper__search" style={{ marginLeft: '11px' }}>
+            <form>
+              <input type="text" placeholder="Поиск" onInput={searchData} />
+              <button type="submit"></button>
+            </form>
           </div>
           <div className="wrapper__filters">
             <a href="#!" className="wrapper__create" onClick={handleOpen} ref={anchorRef}>

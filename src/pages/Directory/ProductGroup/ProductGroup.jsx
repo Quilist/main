@@ -8,14 +8,14 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
-import CurrencyModal from './CurrencyModal';
-import CurrencyEditModal from './CurrencyEditModal';
+import ProductGroupModal from './ProductGroupModal';
+import ProductGroupEditModal from './ProductGroupEditModal';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
-import styles from '@/styles/modules/Currency.module.css';
+import styles from '@/styles/modules/Measure.module.css';
 
-export default function Currency() {
+export default function ProductGroup() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([])
@@ -33,10 +33,10 @@ export default function Currency() {
   };
 
   const api = new API()
-  useDocumentTitle("Валюты");
+  useDocumentTitle("Группы товаров и услуг");
   React.useEffect(() => {
     if (!openEditModal && !open) {
-      api.all('currency').then(data => {
+      api.all('productGroup').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
       })
@@ -58,13 +58,13 @@ export default function Currency() {
     <>
       <section className="home-section">
         <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
-          <CurrencyModal
+          <ProductGroupModal
             open={open}
             setOpen={setOpen}
           />
           {
             openEditModal &&
-            <CurrencyEditModal
+            <ProductGroupEditModal
               open={openEditModal}
               setOpenEditModal={setOpenEditModal}
               id={rowId}
