@@ -14,7 +14,6 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 import CashAndAccountsModal from "./CashAndAccountsModal";
-import { cash_and_accounts } from '@/pages/Directory/CashAndAccount/CashAndAccount';
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
@@ -24,7 +23,6 @@ import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import moment from 'moment';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
-import {currenciesList} from "../Directory/CurrencyExchange/CurrencyExchange";
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -37,6 +35,7 @@ export default function EnhancedTable() {
   const [openMovingMoney, setOpenMovingMoney] = React.useState(false);
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
+  const [cashAccountUserList, setCashAccountUserList] = useState([]);
   const [queryParams, setQueryParams] = useState({});
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
@@ -45,6 +44,10 @@ export default function EnhancedTable() {
   useDocumentTitle("Деньги");
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [dateState, setDateState] = useState({
+    startDate: moment(),
+    endDate: moment(),
+  });
 
   const payOptions = [
     { name: 'Поставщику', link: '/pay_supplier' },
@@ -67,6 +70,32 @@ export default function EnhancedTable() {
     setOpen(false);
   };
 
+  const getAll = () => {
+    console.log('queryParams', queryParams)
+    api.all('money', queryParams).then(data => {
+      if (data.status === "error") console.log(data.message)
+      else setItems(data.message.items)
+    })
+  };
+
+  const getAllCashAccountUser = () => {
+    api.all('cashAccountUser').then(data => {
+      if (data.status === "error") console.log(data.message)
+      else setCashAccountUserList(data.message.items)
+    })
+  };
+  React.useEffect(() => {
+    getAll();
+    // eslint-disable-next-line
+  }, [queryParams])
+
+  React.useEffect(() => {
+    if(!openCashModal) {
+      getAllCashAccountUser();
+    }
+    // eslint-disable-next-line
+  }, [openCashModal])
+
   React.useEffect(() => {
     if (!openCurrencyExchangeModal || !openMovingMoney) {
       getAll();
@@ -75,12 +104,6 @@ export default function EnhancedTable() {
     // eslint-disable-next-line
   }, [openCurrencyExchangeModal, openMovingMoney])
 
-  const getAll = () => {
-    api.all('money', queryParams).then(data => {
-      if (data.status === "error") console.log(data.message)
-      else setItems(data.message.items)
-    })
-  };
 
   React.useEffect(() => {
     // eslint-disable-next-line
@@ -240,7 +263,6 @@ export default function EnhancedTable() {
       ...prevItem,
       search: value,
     }));
-    getAll();
   };
 
   const handleCloseCreateMenu = (event) => {
@@ -251,10 +273,13 @@ export default function EnhancedTable() {
     handleOpen();
   };
 
-  const [dateState, setDateState] = useState({
-    startDate: moment(),
-    endDate: moment(),
-  });
+  const removeCashAccountUser = (item) => {
+    api.remove(item.id, 'cashAccountUser').then(data => {
+      if (data.status === "error") return alert(data.message)
+      getAllCashAccountUser();
+    })
+  };
+
   const { startDate, endDate } = dateState;
   const handleDateRangePickerCallback = (startDate, endDate) => {
     setQueryParams(prevItem => ({
@@ -263,7 +288,6 @@ export default function EnhancedTable() {
       date_to: endDate.valueOf()
     }));
     setDateState({ startDate, endDate });
-    getAll();
   };
   const dateRange =
     startDate.format('MMMM D, YYYY');
@@ -290,14 +314,15 @@ export default function EnhancedTable() {
       <section className="home-section">
         <div className="wrapper" >
           <div className="wrapper__company">
-            {cash_and_accounts.map((item, index) => {
+            {cashAccountUserList.map((item, index) => {
               return (
                 <a href="#!" className="wrapper__box">
+                  <span style={{ color: 'red' }} onClick={() => removeCashAccountUser(item)}>X</span>
                   <h3>
-                    {item.Name}
+                    {item.cash_account_id}
                   </h3>
                   <p>
-                    {item.balance} {item.Represent}
+                    {item.cash_account_id}
                   </p>
                 </a>
               );
@@ -408,11 +433,7 @@ export default function EnhancedTable() {
             </Popper>
             <div className="wrapper__mounth">
               <a href="#!">
-                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                        fill="#7096FF" />
-                </svg>
+
               </a>
               <DateRangePicker
                 initialSettings={{
@@ -445,15 +466,11 @@ export default function EnhancedTable() {
                 onCallback={handleDateRangePickerCallback}
               >
                 <p style={{ cursor: 'pointer'}}>
-                  {dateRange}
+                  {dateState.startDate.format('MMMM D, YYYY')} - {dateState.endDate.format('MMMM D, YYYY')}
                 </p>
               </DateRangePicker>
               <a href="#!">
-                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                        fill="#7096FF" />
-                </svg>
+
               </a>
             </div>
             <a href="#!" className="wrapper__filter">
@@ -504,12 +521,12 @@ export default function EnhancedTable() {
                        }}
                     >
                     <div className="table__figure">
-                      { item.type.indexOf('pay') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      { item.type.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                               d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
                               fill="#45D064" />
                       </svg> }
-                      { item.type.indexOf('receive') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      { item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727"/>
                       </svg> }
                     </div>

@@ -21,6 +21,7 @@ class API {
             typePrice: '/type_price',
             bankDetail: '/banks_details',
             cashAndAccount: '/cash_accounts',
+            cashAccountUser: '/cash_accounts_users',
             pay: '/pay',
             money: '/money',
             product: '/products',

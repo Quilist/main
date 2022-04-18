@@ -45,7 +45,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
     }
     api.auxiliary('money', params).then(data => {
       if (data.status === "error") alert(data.message)
-      else setAuxiliaryList(data.message)
+      else setAuxiliaryList(data.message[0])
     })
     // eslint-disable-next-line
   }, [])

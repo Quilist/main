@@ -34,6 +34,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   const [legalEntityList, setLegalEntityList] = React.useState([{ value: 0, label: 'Организация', isDisabled: true }]);
   const [cashAccountList, setCashAccountList] = React.useState([{ value: 0, label: 'Выберите кассу/счёт', isDisabled: true }]);
   const [itemList, setItemList] = React.useState([{ value: 0, label: pageTypes[currentPathName], isDisabled: true }]);
+  const [loaded, setLoaded] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -83,7 +84,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   }, [auxiliaryList] )
 
   React.useEffect(() => {
-    if(id) {
+    if(id && !loaded) {
       setPayType(item.type_order)
       if (item.payments && item.payments.length > 0) {
         setPaymentList(item.payments);
@@ -92,6 +93,10 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       if (item.changes && item.changes.length > 0) {
         setChangeList(item.changes);
       }
+      if(item.id) {
+        setLoaded(true)
+      }
+
     }
 
   }, [item] )
@@ -128,6 +133,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
   const addPayment = (e) => {
     setPaymentList([...paymentList, { currency_id: null, amount: null, type_pay: 'payment'}]);
+    console.log('paymentList', paymentList)
     handleAddValues()
   }
 

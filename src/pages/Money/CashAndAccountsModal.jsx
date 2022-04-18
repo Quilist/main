@@ -2,12 +2,16 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import Select from '@mui/material/Select';
 
-import {cash_and_accounts} from '@/pages/Directory/CashAndAccount/CashAndAccount';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
 import { Dropdown } from 'semantic-ui-react';
+import API from '@/api/api'
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 //import {useState} from "react";
 
 const style = {
@@ -24,74 +28,45 @@ const style = {
   pb: 3,
 };
 
-let totalList = []
 export default function CashAndAccountsModal({ open, setOpen }) {
+  const api = new API();
+  const [item, setItem] = React.useState({});
+  const [openChildModal, setOpenChildModal] = React.useState(false);
+  const [auxiliaryList, setAuxiliaryList] = React.useState({
+    cash_accounts: []
+  });
+
   React.useEffect(() => {
+    const params = {
+      type: 'pay_supplier'
+    }
+    api.auxiliary('money', params).then(data => {
+      if (data.status === "error") alert(data.message)
+      else setAuxiliaryList(data.message[0])
+    })
     // eslint-disable-next-line
-    cash_and_accounts.map((item, i) => {
-      totalList.push({
-        "key": item.id,
-        "text": item.Name,
-        "value": item.balance,
-        "Represent":  item.Represent,
-      })
-    });
-    // eslint-disable-next-line
-  }, [cash_and_accounts])
+  }, [])
 
   const handleClose = () => {
     setOpen(false);
   };
-  // Child modal Add
-  const [openChildModal, setOpenChildModal] = React.useState(false);
-  // const handleCloseChildModal = () => {
-  //   setOpenChildModal(false);
-  // }
-  // const handleOpenChildModal = () => {
-  //   setOpenChildModal(true);
-  // };
-  const [name, setName] = React.useState('');
-  const [type_accounts, setType_accounts] = React.useState('');
-  // type_accounts - 1 (Счёт) - false
-  // type_accounts - 2 (Касса) - true
-  const [currency] = React.useState('UAH');
-  const [balance, setBalance] = React.useState('');
-
-  //const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
 
   const handleAdd = () => {
-    const newId = (cash_and_accounts[cash_and_accounts.length - 1]).id + 1;
-    let type;
-    type_accounts === 1 ? type = false : type = true;
-    const body = {
-      id: newId,
-      id_user: 2,
-      type_accounts: type,
-      Name: name,
-      Represent: currency.toUpperCase(),
-      bank_name: null,
-      checking_account: null,
-      balance: balance
-    }
-    cash_and_accounts.push(body);
-
-    //setCashAndAccountsList(cash_and_accounts);
-    console.log(cash_and_accounts);
-    // console.log(cashAndAccountsList);
-    setName('');
-    setType_accounts('');
-    setBalance('');
-    setOpen(false);
-    setOpenChildModal(false);
+    api.add(item, 'cashAccountUser').then(data => {
+      if (data.status === "error") return alert(data.message)
+      setItem({})
+      setOpen(false)
+      setOpenChildModal(false);
+    })
   }
 
-  // eslint-disable-next-line
-  const [bankFunction, setBankFunction] = React.useState('');
-  const handleChange = (event, { value } ) => {
-    console.log('value', bankFunction)
-    //handleAdd(value)
-  }
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setItem(prevItem => ({
+      ...prevItem,
+      [name]: Number(value)
+    }));
+  };
 
   return (
     <div>
@@ -105,15 +80,20 @@ export default function CashAndAccountsModal({ open, setOpen }) {
           <div className={openChildModal ? styles.modal_wrapper : ''}>
             <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
             <div className={styles.modal_title}>Выберите счет</div>
-            <Dropdown
-              placeholder='Выберите счет'
-              fluid
-              search
-              selection
-              options={totalList}
-              onChange={handleChange}
-              value={bankFunction}
-            />
+            <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                label={'Выберите счет'}
+                value={item.cash_account_id}
+                name="cash_account_id"
+                onChange={(e) => handleChange(e)}
+              >
+                {auxiliaryList.cash_accounts.map((c, cIndex) => {
+                  return (<MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>)
+                })}
+              </Select>
+            </FormControl>
             <div style={{ margin: '20px' }}>
               <Button variant="contained" color="success" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
             </div>
