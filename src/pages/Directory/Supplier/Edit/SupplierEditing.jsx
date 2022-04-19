@@ -52,7 +52,7 @@ function UserEditing() {
   const [address, setAddress] = React.useState('')
   const [arrears, setArrears] = React.useState(0)
   const [discount, setDiscount] = React.useState('')
-  const [notes, setNotes] = React.useState('')
+  const [note, setNote] = React.useState('')
   const [codeNdc, setCodeNds] = React.useState('')
   // ============================================
 
@@ -67,7 +67,7 @@ function UserEditing() {
   React.useEffect(() => {
     if (!isAdd && currentUser) {
       // ==============================================================
-      const { address, company, discount, duty, group, mail, mobile, name, notes, edrpou, code_nds } = currentUser;
+      const { address, company, discount, duty, group, mail, mobile, name, note, edrpou, code_nds } = currentUser;
       setName(name)
       setPhone(mobile)
       setMail(mail)
@@ -76,7 +76,7 @@ function UserEditing() {
       setAddress(address)
       setArrears(duty)
       setDiscount(discount)
-      setNotes(notes)
+      setNote(note)
       setEdrpou(edrpou)
       setCodeNds(code_nds)
       // =============================================================== 
@@ -99,7 +99,7 @@ function UserEditing() {
         address,
         duty: mainArreas,
         discount,
-        notes,
+        note,
         edrpou
       }
 
@@ -135,7 +135,7 @@ function UserEditing() {
         address,
         duty: mainArreas,
         discount,
-        notes,
+        note,
         edrpou
       }
 
@@ -205,8 +205,8 @@ function UserEditing() {
               setArrears={setArrears}
               discount={discount}
               setDiscount={setDiscount}
-              notes={notes}
-              setNotes={setNotes}
+              note={note}
+              setNote={setNote}
               setMainArreas={setMainArreas}
               codeNdc={codeNdc}
             />
