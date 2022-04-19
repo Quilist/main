@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputAdornment from '@mui/material/InputAdornment';
 
-function InformationForm({ address, setAddress, arrears, setArrears, discount, setDiscount, notes, setNotes, setMainArreas, codeNdc }) {
+function InformationForm({ address, setAddress, arrears, setArrears, discount, setDiscount, note, setNote, setMainArreas, codeNdc }) {
 
   const [currency, setCurrency] = React.useState('1-UAH');
   const currentCurrency = currency.split('-')
@@ -76,8 +76,8 @@ function InformationForm({ address, setAddress, arrears, setArrears, discount, s
       />
 
       <TextField
-        id="standard-multiline-flexible" variant="outlined" label="Заметки:" multiline maxRows={4} value={notes || ''}
-        onChange={(e) => setNotes(e.target.value)}
+        id="standard-multiline-flexible" variant="outlined" label="Заметки:" multiline maxRows={4} value={note || ''}
+        onChange={(e) => setNote(e.target.value)}
       />
     </>
   )
