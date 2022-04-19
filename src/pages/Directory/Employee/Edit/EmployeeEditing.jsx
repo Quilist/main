@@ -19,7 +19,7 @@ const EmployeesEditing = () => {
 
   useDocumentTitle("Изменить сотрудника");
 
-  let isAdd = employeeId === 'Add';
+  let isAdd = new Boolean(employeeId !== 'Add');
 
   // ========================================
   const [employee, setEmployee] = React.useState({});
@@ -68,10 +68,8 @@ const EmployeesEditing = () => {
     })
   }, [])
 
-  console.log(isAdd)
-
   React.useEffect(() => {
-    if (isAdd !== true) {
+    if (!isAdd) {
       //=====================================================
       api.find(employeeId, 'employee').then(data => {
         const { f_name, s_name, mobile, mail, password, id_role, order_supplier } = data.message;
