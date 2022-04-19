@@ -71,7 +71,7 @@ const EmployeesEditing = () => {
   console.log(isAdd)
 
   React.useEffect(() => {
-    if (isAdd !== "Add") {
+    if (isAdd !== true) {
       //=====================================================
       api.find(employeeId, 'employee').then(data => {
         const { f_name, s_name, mobile, mail, password, id_role, order_supplier } = data.message;
