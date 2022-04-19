@@ -61,14 +61,14 @@ const EmployeesEditing = () => {
   ];
   const [add_order_supplier, setAdd_order_supplier] = React.useState(employeeId === 0 || isAdd ? defaultOrderSupplier : null);
 
-  React.useEffect(() => {
-    api.find(employeeId, 'employee').then(data => {
-      setEmployee(data.message);
-    })
-  }, [])
+//   React.useEffect(() => {
+//     api.find(employeeId, 'employee').then(data => {
+//       setEmployee(data.message);
+//     })
+//   }, [])
 
   React.useEffect(() => {
-    if (employeeId !== 0 || employeeId !== "Add") {
+    if (!isAdd) {
       //=====================================================
       api.find(employeeId, 'employee').then(data => {
         const { f_name, s_name, mobile, mail, password, id_role, order_supplier } = data.message;
