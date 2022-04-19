@@ -61,12 +61,14 @@ const EmployeesEditing = () => {
   ];
   const [add_order_supplier, setAdd_order_supplier] = React.useState(employeeId === 0 || isAdd ? defaultOrderSupplier : null);
 
-
   React.useEffect(() => {
     api.find(employeeId, 'employee').then(data => {
       setEmployee(data.message);
     })
   }, [])
+  
+  if (!isAdd) console.log("OK")
+  if (isAdd) console.log("ne ok")
 
   React.useEffect(() => {
     if (!isAdd) {
