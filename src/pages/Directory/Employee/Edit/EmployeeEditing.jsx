@@ -70,7 +70,7 @@ const EmployeesEditing = () => {
 
 
   React.useEffect(() => {
-    if (!isAdd) {
+    if (isAdd !== "Add" || isAdd !== 0) {
       //=====================================================
       api.find(employeeId, 'employee').then(data => {
         const { f_name, s_name, mobile, mail, password, id_role, order_supplier } = data.message;
