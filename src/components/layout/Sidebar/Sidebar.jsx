@@ -87,7 +87,7 @@ export default function Sidebar() {
     window.location.href = '/registration'
   }
 
-  let decodeToken = Buffer.from(document.cookie.split("token=")[1], 'base64').toString('ascii');
+  let decodeToken = Buffer.from(document.cookie.split("token=")[1], 'base64').toString('utf-8');
 
 //   try { decodeToken = JSON.parse(decodeToken.substring(0, decodeToken.length - decodeToken.slice(decodeToken.indexOf("}") + 1).length))}
 //   catch (e) { logout() }
