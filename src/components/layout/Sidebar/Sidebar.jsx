@@ -93,7 +93,7 @@ export default function Sidebar() {
 //   catch (e) { logout() }
   
     try { decodeToken = JSON.parse(decodeToken)}
-    catch (e) { logout() }
+    catch (e) { console.log(e.message) }
 
 
   return (
