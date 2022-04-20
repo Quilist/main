@@ -89,12 +89,8 @@ export default function Sidebar() {
 
   let decodeToken = Buffer.from(document.cookie.split("token=")[1], 'base64').toString('utf-8');
   
-  console.log(decodeToken)
-  console.log(document.cookie.split("token=")[1])
-  
-  try { decodeToken = JSON.parse(decodeToken)}
+  try { decodeToken = JSON.parse(decodeToken.substring(0, decodeToken.length - decodeToken.slice(decodeToken.indexOf("}") + 1).length)); }
   catch (e) { console.log(e.message) }
-
 
   return (
     <>
