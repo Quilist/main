@@ -94,9 +94,9 @@ const EmployeesEditing = () => {
       const body = Object.assign({}, employee);
       body.f_name = f_name;
       body.s_name = s_name;
-      body.mail = mail;
+      body.e_mail = mail;
       body.mobile = phone;
-      body.password = password;
+      body.pass = password;
       body.id_role = role;
       body.add_order_supplier = add_order_supplier;
 
