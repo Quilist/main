@@ -53,17 +53,14 @@ export default function CurrencyExchangeEditModal({ open, setOpenEditModal, curr
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
-
   }
 
   const findCurrencyName = (event) => {
-    let name = '';
     const index = currenciesList.findIndex((item) => item.id === event)
 
     if (index !== -1) {
-      name = currenciesList[index].represent
+      return currenciesList[index].name
     }
-    return name
   }
 
   return (
@@ -78,12 +75,12 @@ export default function CurrencyExchangeEditModal({ open, setOpenEditModal, curr
           <img className={styles.modal_img} onClick={handleCloseModal} src={crossImg} alt="cross" />
           <div className={styles.modal_title}>Редактирование валюты</div>
           <TextField
-            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.id_from_currencies)}
+            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.from_currency_id)}
             disabled
             variant="standard"
           />
           <TextField
-            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.id_to_currencies)}
+            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={findCurrencyName(currentCurrency.to_currency_id)}
             disabled
             variant="standard"
           />
