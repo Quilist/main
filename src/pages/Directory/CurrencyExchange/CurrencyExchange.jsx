@@ -125,10 +125,10 @@ export default function CurrencyExchangeExchange() {
                             alignItems: 'center',
                             minHeight: '57px'
                           }} className={styles.table__body} align={'left'}>
-                            {findCurrencyName(row.id_from_currencies)}
+                            {findCurrencyName(row.from_currency_id)}
                           </TableCell>
                           <TableCell className={styles.table__body__wide} align={'center'}>
-                            {findCurrencyName(row.id_to_currencies)}
+                            {findCurrencyName(row.to_currency_id)}
                           </TableCell>
                           <TableCell className={styles.table__body} align={'right'}>
                             {row.exchange_rate}
