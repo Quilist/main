@@ -47,8 +47,8 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
 
   const handleAdd = () => {
     const body = {
-      id_from_currencies: representFrom,
-      id_to_currencies: representTo,
+      from_currencies_id: representFrom,
+      to_currencies_id: representTo,
       exchange_rate: exchangeRate
     }
 
