@@ -79,6 +79,7 @@ export default function CurrencyExchangeExchange() {
           <CurrencyExchangeModal
             open={open}
             setOpen={setOpen}
+            auxiliaryList={currenciesList}
           />
           {
             openEditModal &&
