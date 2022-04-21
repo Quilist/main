@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import crossImg from '@/static/img/cross.png';
-import { currenciesList } from './CurrencyExchange';
 import styles from '@/styles/modules/Currency.module.css';
 import API from '@/api/api';
 
@@ -21,7 +20,7 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function CurrencyExchangeEditModal({ open, setOpenEditModal, currencyId }) {
+export default function CurrencyExchangeEditModal({ open, setOpenEditModal, currencyId, currenciesList }) {
   const [currentCurrency, setCurrentCurrency] = React.useState([]);
   const [exchangeRate, setExchangeRate] = React.useState('');
 
