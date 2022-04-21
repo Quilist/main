@@ -40,7 +40,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   React.useEffect(() => {
     api.auxiliary('currencyExchange').then(data => {
       if (data.status === "error") alert(data.message)
-      else setAuxiliaryList(data.message)
+      else setAuxiliaryList({ currencies: data.message })
     })
     // eslint-disable-next-line
   }, [])
@@ -61,8 +61,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
     })
 
   }
-  console.log("AAAAAAAAAAAAAAAAAAAA")
-  console.log(auxiliaryList)
+
   return (
     <div>
       <Modal
