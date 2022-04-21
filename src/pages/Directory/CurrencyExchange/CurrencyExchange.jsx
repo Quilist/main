@@ -49,7 +49,7 @@ export default function CurrencyExchangeExchange() {
       
       api.auxiliary('currencyExchange').then(data => {
         if (data.status === "error") alert(data.message)
-        else setCurrenciesList(data.message.items)
+        else setCurrenciesList(data.message)
       })
     }
     // eslint-disable-next-line
@@ -65,7 +65,6 @@ export default function CurrencyExchangeExchange() {
   };
 
   const findCurrencyName = (event) => {
-    console.log(currenciesList)
     const index = currenciesList.findIndex((item) => item.id === event)
 
     if (index !== -1) {
