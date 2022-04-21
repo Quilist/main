@@ -61,7 +61,8 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
     })
 
   }
-
+  console.log("AAAAAAAAAAAAAAAAAAAA")
+  console.log(auxiliaryList)
   return (
     <div>
       <Modal
