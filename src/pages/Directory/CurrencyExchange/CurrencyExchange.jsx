@@ -46,6 +46,10 @@ export default function CurrencyExchangeExchange() {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
       })
+      api.auxiliary('currencyExchange').then(data => {
+        if (data.status === "error") alert(data.message)
+        else currenciesList = data.message.items
+      })
     }
     // eslint-disable-next-line
   }, [openEditModal, open])
