@@ -64,15 +64,13 @@ export default function CurrencyExchangeExchange() {
     setPage(0);
   };
 
-  const findCurrencyName = (event) => {
-    const index = currenciesList.findIndex((item) => item.id === event)
+  const findCurrencyName = async (event) => {
+    const index = await currenciesList.findIndex((item) => item.id === event)
 
     if (index !== -1) {
       return currenciesList[index].represent
     }
   }
-  
-  console.log(currenciesList)
 
   return (
     <>
