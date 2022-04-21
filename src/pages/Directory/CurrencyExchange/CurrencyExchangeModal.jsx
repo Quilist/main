@@ -25,25 +25,16 @@ const style = {
   pb: 3,
 };
 
-export default function CurrencyExchangeModal({ open, setOpen }) {
+export default function CurrencyExchangeModal({ open, setOpen, auxiliaryList }) {
 
   const handleClose = () => setOpen(false);
 
-  const [auxiliaryList, setAuxiliaryList] = React.useState({currencies: []});
   const [representFrom, setFromRepresent] = React.useState(null);
   const [representTo, setToRepresent] = React.useState(null);
 
   const [exchangeRate, setExchangeRate] = React.useState(null);
 
   const api = new API();
-
-  React.useEffect(() => {
-    api.auxiliary('currencyExchange').then(data => {
-      if (data.status === "error") alert(data.message)
-      else setAuxiliaryList({ currencies: data.message })
-    })
-    // eslint-disable-next-line
-  }, [])
 
   const handleAdd = () => {
     const body = {
