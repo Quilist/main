@@ -17,13 +17,13 @@ import API from '@/api/api';
 import styles from '@/styles/modules/Currency.module.css';
 
 export const currencies = [];
-export let currenciesList = [];
 
 export default function CurrencyExchangeExchange() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const [rows, setRows] = React.useState([])
+  const [rows, setRows] = React.useState([]);
+  const [currenciesList, setCurrenciesList] = React.useState([]);
   const api = new API()
   
   useDocumentTitle("Валютные пары");
@@ -49,7 +49,7 @@ export default function CurrencyExchangeExchange() {
       
       api.auxiliary('currencyExchange').then(data => {
         if (data.status === "error") alert(data.message)
-        else currenciesList = data.message.items
+        else setCurrenciesList(data.message.items)
       })
     }
     // eslint-disable-next-line
@@ -64,8 +64,8 @@ export default function CurrencyExchangeExchange() {
     setPage(0);
   };
 
-  const findCurrencyName = async (event) => {
-    const index = await currenciesList.findIndex((item) => item.id === event)
+  const findCurrencyName = (event) => {
+    const index = currenciesList.findIndex((item) => item.id === event)
 
     if (index !== -1) {
       return currenciesList[index].represent
