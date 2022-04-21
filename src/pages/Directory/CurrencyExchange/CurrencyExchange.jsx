@@ -88,6 +88,7 @@ export default function CurrencyExchangeExchange() {
               setOpenEditModal={setOpenEditModal}
               currencyId={currencyId}
               currencies={rows}
+              currenciesList={currenciesList}
             />
           }
           <div style={{ marginBottom: '30px', width: '97%' }}>
