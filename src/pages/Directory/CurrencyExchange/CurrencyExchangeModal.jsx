@@ -37,6 +37,7 @@ export default function CurrencyExchangeModal({ open, setOpen, auxiliaryList }) 
   const api = new API();
 
   const handleAdd = () => {
+    console.log(auxiliaryList)
     const body = {
       from_currency_id: representFrom,
       to_currency_id: representTo,
