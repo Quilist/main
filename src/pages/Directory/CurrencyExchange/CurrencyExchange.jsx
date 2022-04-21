@@ -64,13 +64,12 @@ export default function CurrencyExchangeExchange() {
   };
 
   const findCurrencyName = (event) => {
-    let name = '';
     const index = currenciesList.findIndex((item) => item.id === event)
 
     if (index !== -1) {
-      name = currenciesList[index].represent
+      console.log(currenciesList[index].represent)
+      return currenciesList[index].represent
     }
-    return name
   }
 
   return (
