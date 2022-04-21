@@ -41,8 +41,6 @@ export default function CurrencyExchangeModal({ open, setOpen, auxiliaryList }) 
     const body = {
       from_currency_id: representFrom,
       to_currency_id: representTo,
-      from_currency: auxiliaryList[representFrom - 1].represent,
-      to_currency: auxiliaryList[representTo - 1].represent,
       exchange_rate: exchangeRate
     }
 
