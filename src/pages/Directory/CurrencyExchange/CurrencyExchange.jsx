@@ -42,10 +42,6 @@ export default function CurrencyExchangeExchange() {
 
   React.useEffect(() => {
     if (!openEditModal && !open) {
-      api.getCurrenciesList().then(data => {
-        if (data.status === "error") alert(data.message)
-        else currenciesList = data.message.items
-      })
       api.all('currencyExchange').then(data => {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
