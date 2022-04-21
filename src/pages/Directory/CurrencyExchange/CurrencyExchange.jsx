@@ -46,6 +46,7 @@ export default function CurrencyExchangeExchange() {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
       })
+      
       api.auxiliary('currencyExchange').then(data => {
         if (data.status === "error") alert(data.message)
         else currenciesList = data.message.items
@@ -65,7 +66,7 @@ export default function CurrencyExchangeExchange() {
 
   const findCurrencyName = (event) => {
     const index = currenciesList.findIndex((item) => item.id === event)
-      console.log(currenciesList)
+
     if (index !== -1) {
       return currenciesList[index].represent
     }
