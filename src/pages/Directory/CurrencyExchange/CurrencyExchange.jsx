@@ -16,7 +16,8 @@ import API from '@/api/api';
 
 import styles from '@/styles/modules/Currency.module.css';
 
-export const currencies = []
+export const currencies = [];
+export let currenciesList = [];
 
 export default function CurrencyExchangeExchange() {
   const [page, setPage] = React.useState(0);
@@ -24,8 +25,6 @@ export default function CurrencyExchangeExchange() {
 
   const [rows, setRows] = React.useState([])
   const api = new API()
-
-  let currenciesList = [];
   
   useDocumentTitle("Валютные пары");
 
@@ -72,6 +71,8 @@ export default function CurrencyExchangeExchange() {
       return currenciesList[index].represent
     }
   }
+  
+  console.log(currenciesList)
 
   return (
     <>
