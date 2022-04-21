@@ -84,7 +84,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               onChange={(e) => setFromRepresent(e.target.value)}
               label={'Валюта'}
             >
-              {auxiliaryList.map((c, i) => {
+              {auxiliaryList.currencies.map((c, i) => {
                 return (<MenuItem value={c.id} key={i}>{c.represent}</MenuItem>)
               })}
             </Select>
@@ -99,7 +99,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               onChange={(e) => setToRepresent(e.target.value)}
               label={'Валюта'}
             >
-              {auxiliaryList.map((c, i) => {
+              {auxiliaryList.currencies.map((c, i) => {
                 return (<MenuItem value={c.id} key={i}>{c.represent}</MenuItem>)
               })}
             </Select>
