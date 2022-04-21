@@ -37,7 +37,7 @@ export default function CurrencyExchangeModal({ open, setOpen, auxiliaryList }) 
   const api = new API();
 
   const handleAdd = () => {
-    console.log(auxiliaryList)
+
     const body = {
       from_currency_id: representFrom,
       to_currency_id: representTo,
@@ -76,7 +76,7 @@ export default function CurrencyExchangeModal({ open, setOpen, auxiliaryList }) 
               label={'Валюта'}
             >
               {auxiliaryList.map((c, i) => {
-                return (<MenuItem value={c.id} key={i}>{c.represent}</MenuItem>)
+                return (<MenuItem value={c.id} key={i}>{c.name}</MenuItem>)
               })}
             </Select>
           </FormControl>
@@ -91,7 +91,7 @@ export default function CurrencyExchangeModal({ open, setOpen, auxiliaryList }) 
               label={'Валюта'}
             >
               {auxiliaryList.map((c, i) => {
-                return (<MenuItem value={c.id} key={i}>{c.represent}</MenuItem>)
+                return (<MenuItem value={c.id} key={i}>{c.name}</MenuItem>)
               })}
             </Select>
           </FormControl>
