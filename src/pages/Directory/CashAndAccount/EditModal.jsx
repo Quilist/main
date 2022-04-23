@@ -32,6 +32,8 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [currency, setCurrency] = React.useState('');
   const [currencyInUah, setCurrencyInUah] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
+  
+  console.log(cash_and_accounts)
 
   // const resultBalance = (currencyInUah * Number(currency.split('-')[0])).toFixed(2);
   // console.log(currencyInUah, resultBalance);
