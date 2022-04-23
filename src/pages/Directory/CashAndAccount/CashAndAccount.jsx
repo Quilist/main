@@ -56,8 +56,6 @@ export default function CashAndAccount() {
       })
       // eslint-disable-next-line
    }, [openEditModal, open])
-
-   console.log(rowsPerPage)
    
    return (
       <>
@@ -73,7 +71,7 @@ export default function CashAndAccount() {
                      open={openEditModal}
                      setOpenEditModal={setOpenEditModal}
                      cashId={cashId}
-                     cash_and_accounts={rowsPerPage}
+                     cash_and_accounts={rows}
                   />
                }
                <div style={{ marginBottom: '30px', width: '97%' }}>
