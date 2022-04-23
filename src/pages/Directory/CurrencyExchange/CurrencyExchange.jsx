@@ -67,7 +67,7 @@ export default function CurrencyExchangeExchange() {
   const findCurrencyName = (event) => {
     const index = currenciesList.findIndex((item) => item.id === event)
 
-    index !== -1 ? currenciesList[index].name : ''
+    return index !== -1 ? currenciesList[index].name : ''
   }
 
   return (
