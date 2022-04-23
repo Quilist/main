@@ -63,7 +63,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
       if (elem.id === cashId) {
         const { Name, type_accounts, Represent, balance } = elem;
 
-        const type_acc = type_accounts ? type_acc = 2 : type_acc = 1;
+        const type_acc = type_accounts ? 2 : 1;
 
         const currency = formatRepresent(Represent);
         const curInNumber = currency.split('-');
