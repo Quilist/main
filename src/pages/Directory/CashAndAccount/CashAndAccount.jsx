@@ -17,41 +17,6 @@ import API from '@/api/api';
 
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
-// ===========Закоментировать/Удалить===========
-export const cash_and_accounts = [
-   {
-      id: 1,
-      id_user: 2,
-      type_accounts: false,
-      Name: 'Приватбанк',
-      Represent: 'UAH',
-      bank_name: 'privatbank',
-      checking_account: null,
-      balance: 200
-   },
-   {
-      id: 2,
-      id_user: 2,
-      type_accounts: true,
-      Name: 'Монобанк',
-      Represent: 'UAH',
-      bank_name: 'monobank',
-      checking_account: 'ua26001230986763718',
-      balance: 500
-   },
-   {
-      id: 3,
-      id_user: 2,
-      type_accounts: true,
-      Name: 'Счет в банке',
-      Represent: 'USD',
-      bank_name: 'ооо банк',
-      checking_account: 'ua26001230986763718',
-      balance: 100
-   }
-]
-// =====================================
-
 export default function CashAndAccount() {
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -59,7 +24,8 @@ export default function CashAndAccount() {
    useDocumentTitle("Кассы и счета");
 
    const [rows, setRows] = React.useState([])
-   const api = new API()
+   
+   const api = new API();
 
    const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -77,6 +43,7 @@ export default function CashAndAccount() {
    // Edit Modal
    const [openEditModal, setOpenEditModal] = React.useState(false);
    const [cashId, setCashId] = React.useState(0);
+
    const handleOpenEditModal = (id) => {
       setCashId(id);
       setOpenEditModal(true);
@@ -105,7 +72,7 @@ export default function CashAndAccount() {
                      open={openEditModal}
                      setOpenEditModal={setOpenEditModal}
                      cashId={cashId}
-                     cash_and_accounts={cash_and_accounts}
+                     cash_and_accounts={rowsPerPage}
                   />
                }
                <div style={{ marginBottom: '30px', width: '97%' }}>

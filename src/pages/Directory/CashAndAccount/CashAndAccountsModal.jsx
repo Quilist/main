@@ -26,6 +26,7 @@ const style = {
   px: 4,
   pb: 3,
 };
+
 const friendOptions = [
   {
     key: 'Privat Bank (Privat24)',
@@ -48,6 +49,7 @@ const friendOptions = [
     value: 'OpenChildModalPumb',
   },
 ]
+
 export default function CashAndAccountsModal({ open, setOpen }) {
   const handleClose = () => {
     setOpen(false);
@@ -67,8 +69,8 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   // type_accounts - 2 (Касса) - true
   const [currency, setCurrency] = React.useState('UAH');
   const [balance, setBalance] = React.useState('');
-  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null}]);
-  const [auxiliaryList, setAuxiliaryList] = React.useState({currencies: [], types: []});
+  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
+  const [auxiliaryList, setAuxiliaryList] = React.useState({ currencies: [], types: [] });
 
   const api = new API();
 
@@ -81,7 +83,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   }, [])
 
   const addBalance = (e) => {
-    setBalanceList([...balanceList, { currency_id: null, balance: null}]);
+    setBalanceList([...balanceList, { currency_id: null, balance: null }]);
   }
 
   const removeBalance = (index) => {
@@ -130,11 +132,9 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   }
 
   const [bankFunction, setBankFunction] = React.useState('');
-  const handleChange = (event, { value } ) => {
+  const handleChange = (event, { value }) => {
     setBankFunction(value)
   }
-
-
 
   // Child modal Privat24 for people
   const [openChildModalPrivat, setOpenChildModalPrivat] = React.useState(false);
@@ -159,19 +159,19 @@ export default function CashAndAccountsModal({ open, setOpen }) {
     clearForm();
   }
   const handleModelBank = () => {
-    if(bankFunction === 'OpenChildModalPrivat') {
+    if (bankFunction === 'OpenChildModalPrivat') {
       setType('privatbank_individual');
       setOpenChildModalPrivat(true);
     }
-    if(bankFunction === 'OpenChildModalPrivatL') {
+    if (bankFunction === 'OpenChildModalPrivatL') {
       setType('privatbank_legal_entity');
       setOpenChildModalPrivatL(true);
     }
-    if(bankFunction === 'OpenChildModalPumb') {
+    if (bankFunction === 'OpenChildModalPumb') {
       setType('pumb');
       setOpenChildModalPumb(true);
     }
-    if(bankFunction === 'OpenChildModalMono') {
+    if (bankFunction === 'OpenChildModalMono') {
       setType('monobank');
       setOpenChildModalMono(true);
     }
@@ -290,12 +290,12 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                           </FormControl>
 
                           <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                                     label="Стартовый баланс:"
-                                     type="number"
-                                     variant="standard"
-                                     value={c.value}
-                                     name="balance"
-                                     onChange={(e) => updateBalance(e, i)}
+                            label="Стартовый баланс:"
+                            type="number"
+                            variant="standard"
+                            value={c.value}
+                            name="balance"
+                            onChange={(e) => updateBalance(e, i)}
                           />
                         </div>)
                       })}
@@ -310,7 +310,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
                       {balanceList.map((c, i) => {
                         return (<div key={i}>
-                          <FormControl sx={{m: 1, minWidth: 120}}>
+                          <FormControl sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
                             <Select
                               autoWidth
@@ -325,7 +325,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                             </Select>
                           </FormControl>
                           <TextField
-                            sx={{marginBottom: '15px'}}
+                            sx={{ marginBottom: '15px' }}
                             label="Баланс:"
                             type="number"
                             variant="standard"
@@ -334,9 +334,9 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                             onChange={(e) => updateBalance(e, i)}
                           />
                           <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'}
-                                  variant="outlined"
-                                  style={{ marginTop: "10px"}}
-                                  onClick={() => removeBalance(i)}>
+                            variant="outlined"
+                            style={{ marginTop: "10px" }}
+                            onClick={() => removeBalance(i)}>
                             X
                           </button>
                         </div>)
@@ -344,7 +344,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
 
                     </FormControl>
                     <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-                      <Button onClick={addBalance}  className={styles.button}  variant="outlined">+ Добавить баланс</Button>
+                      <Button onClick={addBalance} className={styles.button} variant="outlined">+ Добавить баланс</Button>
                     </FormControl>
                   </div>
                 }
@@ -389,12 +389,12 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                   onChange={handleChangeStreamField}
                 />
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                           label="Номер карты:"
-                           type="number"
-                           variant="standard"
-                           value={item.stream.card_number}
-                           name="card_number"
-                           onChange={handleChangeStreamField}
+                  label="Номер карты:"
+                  type="number"
+                  variant="standard"
+                  value={item.stream.card_number}
+                  name="card_number"
+                  onChange={handleChangeStreamField}
                 />
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Пароль:" multiline maxRows={2}
@@ -517,8 +517,8 @@ export default function CashAndAccountsModal({ open, setOpen }) {
                 <img className={styles.modal_img} onClick={handleCloseChildModalMono} src={crossImg} alt="cross" />
                 <div className={styles.modal_title}>Добавление нового счёта приват банк для юр лиц</div>
 
-               <p>Для добавления просканируйте qr-код</p>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/250px-QR_code_for_mobile_English_Wikipedia.svg.png" alt=""/>
+                <p>Для добавления просканируйте qr-код</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/250px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="" />
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
               </Box>
             </Modal>

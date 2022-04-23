@@ -35,11 +35,11 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
 
   // const resultBalance = (currencyInUah * Number(currency.split('-')[0])).toFixed(2);
   // console.log(currencyInUah, resultBalance);
-  
+
   const handleChangeCurrency = (e) => {
     const newCurrency = (e.target.value).split('-')[0];
     const result = (currencyInUah / Number(newCurrency)).toFixed(2);
-    setResultBalance(result);  
+    setResultBalance(result);
     setCurrency(e.target.value);
   }
 
@@ -48,26 +48,27 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   }
   const formatRepresent = (Represent) => {
     Represent = Represent.toUpperCase();
-    if(Represent === 'UAH'){
-      return '1-UAH'
-    }else if(Represent === 'USD'){
-      return '28.29-USD'
-    }else if(Represent === 'RUB'){
-      return '0.37-RUB'
-    }else{
-      return '31.95-EUR'
+
+    switch (Represent) {
+      case "UAH": return '1-UAH';
+      case "USD": return '28.29-USD';
+      case "RUB": return '0.37-RUB';
+      default: return '31.95-EUR';
     }
   }
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
-      if(elem.id === cashId){
+
+      if (elem.id === cashId) {
         const { Name, type_accounts, Represent, balance } = elem;
-        let type_acc;
-        type_accounts ? type_acc = 2 : type_acc = 1; 
-        const currency = formatRepresent(Represent) 
+
+        const type_acc = type_accounts ? type_acc = 2 : type_acc = 1;
+
+        const currency = formatRepresent(Represent);
         const curInNumber = currency.split('-');
-        const currencyInUah = (balance * Number(curInNumber[0])).toFixed(2)
+        const currencyInUah = (balance * Number(curInNumber[0])).toFixed(2);
+
         setName(Name);
         setType_accounts(type_acc);
         setCurrency(currency);
@@ -75,28 +76,37 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         setCurrencyInUah(currencyInUah);
         setResultBalance(balance);
       }
-    }) 
-      // eslint-disable-next-line
-  }, [])
+
+    });
+    // eslint-disable-next-line
+  }, []);
 
   const handleSave = () => {
     const body = currentCashAndAccount;
-    let type;
-    type_accounts === 1 ? type = false : type = true; 
+
+    const type = type_accounts === 1 ? type = false : type = true;
+
     body.type_accounts = type;
     body.Name = name;
     body.Represent = (currency.split('-')[1]).toUpperCase();
-    body.balance = resultBalance; 
+    body.balance = resultBalance;
+
     cash_and_accounts.forEach((elem) => {
-      if(elem.id === cashId){
+      if (elem.id === cashId) {
         return elem = body;
       }
-    }) 
+    });
+
     handleCloseChildModal();
   }
-  
+
   const handleDelete = () => {
-    handleCloseChildModal();  
+    api.remove(cashId, 'cashAndAccount').then(data => {
+      if (data.status === "error") return alert(data.message)
+      handleCloseModal();
+    });
+
+    handleCloseChildModal();
   }
 
   return (
@@ -110,15 +120,15 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         <Box sx={style} className={styles.childModal}>
           <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
           <div className={styles.modal_title}>Редактирование счёта</div>
-          <TextField 
-            sx={{marginBottom: '20px', width: '70%'}} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''} 
+          <TextField
+            sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
             onChange={(e) => setName(e.target.value)} variant="standard"
           />
-          <FormControl variant="standard" style={{width: '70%', marginBottom: '20px'}}>
+          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
             <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"   
+              id="demo-simple-select-standard"
               value={currency || 'UAH'}
               onChange={(e) => handleChangeCurrency(e)}
               label={'Валюта'}
@@ -129,11 +139,11 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               <MenuItem value='31.95-EUR'>EUR</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="standard" style={{width: '70%', marginBottom: '20px'}}>
+          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
             <InputLabel id="demo-simple-select-standard-label">Тип (касса или счёт)</InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"   
+              id="demo-simple-select-standard"
               value={type_accounts || ''}
               onChange={(e) => setType_accounts(e.target.value)}
               label={'Тип (касса или счёт)'}
@@ -142,8 +152,8 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               <MenuItem value={2}>Касса(наличные)</MenuItem>
             </Select>
           </FormControl>
-          <TextField 
-            sx={{marginBottom: '30px', width: '70%'}} 
+          <TextField
+            sx={{ marginBottom: '30px', width: '70%' }}
             value={resultBalance || ''}
             disabled
             label="Стартовый баланс:"
@@ -154,7 +164,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
             <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
             <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
           </div>
-        </Box> 
+        </Box>
       </Modal>
     </div>
   );
