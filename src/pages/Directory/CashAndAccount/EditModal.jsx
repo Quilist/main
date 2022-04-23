@@ -8,7 +8,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import crossImg from '@/static/img/cross.png';
-import {cash_and_accounts} from './CashAndAccount';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
 const style = {
@@ -24,7 +23,7 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function EditModal({ open, setOpenEditModal, cashId }) {
+export default function EditModal({ open, setOpenEditModal, cashId, cash_and_accounts }) {
   const [currentCashAndAccount, setCurrentCashAndAccount] = React.useState([]);
   const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
