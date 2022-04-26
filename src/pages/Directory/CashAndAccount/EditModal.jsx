@@ -110,7 +110,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const handleDelete = () => {
     api.remove(cashId, 'cashAndAccount').then(data => {
       if (data.status === "error") return alert(data.message)
-      handleCloseModal();
+      handleCloseChildModal();
     });
   }
 
