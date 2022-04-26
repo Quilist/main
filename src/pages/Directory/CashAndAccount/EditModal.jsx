@@ -133,10 +133,11 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                       variant="standard"
                     />
                     <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                      label="Баланас:"
+                      label="Баланс:"
                       type="number"
                       variant="standard"
-                      value={resultBalance || ''}
+                      value={resultBalance || ""}
+                      multiline maxRows={2}
                       name="balance"
                       onChange={(e) => updateBalance(e, i)}
                     />
