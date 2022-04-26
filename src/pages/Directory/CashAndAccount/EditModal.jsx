@@ -34,10 +34,21 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   // type_accounts - 2 (Касса) - true
   const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
+  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
+
+  const updateBalance = (e, index) => {
+    const { name, value } = e.target;
+    balanceList[index][name] = value
+    balanceList[index] = Object.assign({}, balanceList[index]);
+    setItem(prevItem => ({
+      ...prevItem,
+      balance: balanceList
+    }));
+  };
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
@@ -115,9 +126,11 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               <TextField
                 sx={{ marginBottom: '30px', width: '70%' }}
                 value={resultBalance || ''}
-                label="Стартовый баланс: "
                 type="number"
+                label="Баланс: "
+                name="balance"
                 variant="standard"
+                onChange={(e) => updateBalance(e, i)}
               />
               <div className={styles.btn_wrapper}>
                 <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
