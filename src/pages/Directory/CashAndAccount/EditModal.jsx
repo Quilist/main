@@ -40,8 +40,12 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   // console.log(currencyInUah, resultBalance);
 
   const handleChangeCurrency = (e) => {
+
+    console.log(e.target.value)
+    
     const newCurrency = (e.target.value).split('-')[0];
     const result = (currencyInUah / Number(newCurrency)).toFixed(2);
+
     setResultBalance(result);
     setCurrency(e.target.value);
   }
@@ -148,7 +152,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
           }
         </Box>
 
-        
+
       </Modal>
     </div>
   );
