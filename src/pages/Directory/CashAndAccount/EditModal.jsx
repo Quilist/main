@@ -136,7 +136,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               sx={{ marginBottom: '30px', width: '70%' }}
               value={resultBalance || ''}
               disabled
-              // label={cash_and_accounts}
+              label="Стартовый баланс:"
               type="number"
               variant="standard"
             />
