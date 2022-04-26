@@ -50,7 +50,7 @@ const friendOptions = [
   },
 ]
 
-export default function CashAndAccountsModal({ open, setOpen }) {
+export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const handleClose = () => {
     setOpen(false);
   };
@@ -70,17 +70,8 @@ export default function CashAndAccountsModal({ open, setOpen }) {
   const [currency, setCurrency] = React.useState('UAH');
   const [balance, setBalance] = React.useState('');
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
-  const [auxiliaryList, setAuxiliaryList] = React.useState({ currencies: [], types: [] });
 
   const api = new API();
-
-  React.useEffect(() => {
-    api.auxiliary('cashAndAccount').then(data => {
-      if (data.status === "error") alert(data.message)
-      else setAuxiliaryList(data.message)
-    })
-    // eslint-disable-next-line
-  }, [])
 
   const addBalance = (e) => {
     setBalanceList([...balanceList, { currency_id: null, balance: null }]);
@@ -199,7 +190,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
 
   const handleChangeStreamField = e => {
     const { name, value } = e.target;
-    
+
     let streamData = item.stream
     streamData[name] = value
   };

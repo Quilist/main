@@ -20,6 +20,8 @@ export default function CashAndAccount() {
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+   const [auxiliaryList, setAuxiliaryList] = React.useState({ currencies: [], types: [] });
+
    useDocumentTitle("Кассы и счета");
 
    const [rows, setRows] = React.useState([])
@@ -54,7 +56,15 @@ export default function CashAndAccount() {
          else setRows(data.message.items)
       })
       // eslint-disable-next-line
-   }, [openEditModal, open])
+   }, [openEditModal, open]);
+
+   React.useEffect(() => {
+      api.auxiliary('cashAndAccount').then(data => {
+         if (data.status === "error") alert(data.message)
+         else setAuxiliaryList(data.message)
+      })
+      // eslint-disable-next-line
+   }, []);
 
    return (
       <>
@@ -63,6 +73,7 @@ export default function CashAndAccount() {
                <CashAndAccountsModal
                   open={open}
                   setOpen={setOpen}
+                  auxiliaryList={auxiliaryList}
                />
                {
                   openEditModal &&
@@ -71,6 +82,7 @@ export default function CashAndAccount() {
                      setOpenEditModal={setOpenEditModal}
                      cashId={cashId}
                      cash_and_accounts={rows}
+                     auxiliaryList={auxiliaryList}
                   />
                }
                <div style={{ marginBottom: '30px', width: '97%' }}>
@@ -105,7 +117,9 @@ export default function CashAndAccount() {
                                           {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {row.cash_accounts_balance.length > 1 ? row.cash_accounts_balance[0]?.balance + "..." : row.cash_accounts_balance[0]?.balance} 
+                                          {row.cash_accounts_balance.length > 1 ?
+                                             row.cash_accounts_balance[0]?.balance + "..." :
+                                             row.cash_accounts_balance[0]?.balance}
                                        </TableCell>
                                     </TableRow>
                                  );

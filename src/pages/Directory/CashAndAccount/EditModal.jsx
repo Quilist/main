@@ -26,7 +26,7 @@ const style = {
   pb: 3,
 };
 
-export default function EditModal({ open, setOpenEditModal, cashId, cash_and_accounts }) {
+export default function EditModal({ open, setOpenEditModal, cashId, cash_and_accounts, auxiliaryList }) {
   const [currentCashAndAccount, setCurrentCashAndAccount] = React.useState([]);
   const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
@@ -49,26 +49,28 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
-  const formatRepresent = (Represent) => {
-    Represent = Represent.toUpperCase();
+  // const formatRepresent = (Represent) => {
+  //   Represent = Represent.toUpperCase();
 
-    switch (Represent) {
-      case "UAH": return '1-UAH';
-      case "USD": return '28.29-USD';
-      case "RUB": return '0.37-RUB';
-      default: return '31.95-EUR';
-    }
-  }
+  //   // switch (Represent) {
+  //   //   case "UAH": return '1-UAH';
+  //   //   case "USD": return '28.29-USD';
+  //   //   case "RUB": return '0.37-RUB';
+  //   //   default: return '31.95-EUR';
+  //   // }
+
+  //   return `${Represent}-${a}`
+  // }
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
 
       if (elem.id === cashId) {
-        const { name, type_accounts, Represent, balance } = elem;
+        const { name, type_accounts, balance } = elem;
 
         const type_acc = type_accounts ? 2 : 1;
 
-        const currency = formatRepresent(Represent);
+        // const currency = formatRepresent(elem.cash_accounts_balance);
         const curInNumber = currency.split('-');
         const currencyInUah = (balance * Number(curInNumber[0])).toFixed(2);
 
