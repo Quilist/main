@@ -105,7 +105,7 @@ export default function CashAndAccount() {
                                           {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {`${row.cash_accounts_balance[0].balance}...` || row.balanceIn} 
+                                          {`${row.cash_accounts_balance[0]?.balance}...` || row.balanceIn} 
                                           {/* {row.Represent} ??? */}
                                        </TableCell>
                                     </TableRow>
