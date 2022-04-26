@@ -105,25 +105,10 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                 sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
                 onChange={(e) => setName(e.target.value)} variant="standard"
               />
-              {/* <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-                <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
-                  value={currency}
-                  onChange={(e) => handleChangeCurrency(e)}
-                  label={'Валюта'}
-                >
-                  {auxiliaryList.currencies.map((currency, currencyIndex) => {
-                    return (<MenuItem key={currency.id} value={currency.name}>{currency.name}</MenuItem>)
-                  })}
-                </Select>
-              </FormControl> */}
               <TextField
                 sx={{ marginBottom: '30px', width: '70%' }}
-                value={currency}
                 disabled
-                label="Валюта: "
+                label={currency}
                 type="number"
                 variant="standard"
               />
