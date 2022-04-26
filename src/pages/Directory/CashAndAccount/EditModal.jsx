@@ -35,21 +35,11 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
-  const [item, setItem] = React.useState({ stream: {} });
+  const [balance, updateBalance] = React.useState('');
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
-
-  const updateBalance = (e, index) => {
-    const { name, value } = e.target;
-    balanceList[index][name] = value
-    balanceList[index] = Object.assign({}, balanceList[index]);
-    setItem(prevItem => ({
-      ...prevItem,
-      balance: balanceList
-    }));
-  };
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
@@ -113,40 +103,37 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
           {type_accounts === 2 &&
             <div>
               <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
-                {balanceList.map((c, i) => {
-                  return (<div key={i}>
-                    <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
-                    <div className={styles.modal_title}>Редактирование счёта</div>
-                    <TextField
-                      sx={{ marginBottom: '20px', width: '70%' }}
-                      id="standard-multiline-flexible"
-                      label="Название:"
-                      multiline maxRows={2}
-                      value={name || ''}
-                      onChange={(e) => setName(e.target.value)} variant="standard"
-                    />
-                    <TextField
-                      sx={{ marginBottom: '30px', width: '70%' }}
-                      disabled
-                      label="Валюта"
-                      value={currency}
-                      variant="standard"
-                    />
-                    <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                      label="Баланс:"
-                      type="number"
-                      value={resultBalance || ""}
-                      multiline maxRows={2}
-                      name="balance"
-                      onChange={(e) => updateBalance(e, i)}
-                    />
-                    <div className={styles.btn_wrapper}>
-                      <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
-                      <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
-                    </div>
-                  </div>)
-                })}
-
+                <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
+                <div className={styles.modal_title}>Редактирование счёта</div>
+                <TextField
+                  sx={{ marginBottom: '20px', width: '70%' }}
+                  id="standard-multiline-flexible"
+                  label="Название:"
+                  multiline maxRows={2}
+                  value={name || ''}
+                  onChange={(e) => setName(e.target.value)}
+                  variant="standard"
+                />
+                <TextField
+                  sx={{ marginBottom: '30px', width: '70%' }}
+                  disabled
+                  label="Валюта"
+                  value={currency}
+                  variant="standard"
+                />
+                <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                  label="Баланс:"
+                  type="number"
+                  variant="standard"
+                  value={resultBalance || ""}
+                  multiline maxRows={2}
+                  name="balance"
+                  onChange={(e) => updateBalance(e.target.value)}
+                />
+                <div className={styles.btn_wrapper}>
+                  <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+                  <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+                </div>
               </FormControl>
             </div>
           }
