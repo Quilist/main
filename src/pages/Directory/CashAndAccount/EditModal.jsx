@@ -35,6 +35,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
+  const [item, setItem] = React.useState({ stream: {} });
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
