@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -12,7 +11,7 @@ import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import CashAndAccountsModal from './CashAndAccountsModal';
 import EditModal from './EditModal';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/CashAndAccounts.module.css';
@@ -24,7 +23,7 @@ export default function CashAndAccount() {
    useDocumentTitle("Кассы и счета");
 
    const [rows, setRows] = React.useState([])
-   
+
    const api = new API();
 
    const handleChangePage = (event, newPage) => {
@@ -103,10 +102,11 @@ export default function CashAndAccount() {
                                           {row.name}
                                        </TableCell>
                                        <TableCell className={styles.table__body__wide} align={'center'}>
-                                          {row.id_type_order === 1 ? 'Касса' : 'Счёт'}
+                                          {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {row.balance || 0} {row.Represent}
+                                          {`${row.cash_accounts_balance[0].balance}...` || row.balanceIn} 
+                                          {/* {row.Represent} ??? */}
                                        </TableCell>
                                     </TableRow>
                                  );
