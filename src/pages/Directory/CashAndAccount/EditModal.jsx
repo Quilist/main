@@ -34,8 +34,6 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   // type_accounts - 2 (Касса) - true
   const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
-  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
-  const [balance, updateBalance] = React.useState('');
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
@@ -128,7 +126,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                   value={resultBalance || ""}
                   multiline maxRows={2}
                   name="balance"
-                  onChange={(e) => updateBalance(e.target.value)}
+                  onChange={(e) => setResultBalance(e.target.value)}
                 />
                 <div className={styles.btn_wrapper}>
                   <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
