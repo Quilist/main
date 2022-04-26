@@ -33,22 +33,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   // type_accounts - 1 (Счёт) - false
   // type_accounts - 2 (Касса) - true
   const [currency, setCurrency] = React.useState('');
-  const [currencyInUah, setCurrencyInUah] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
-
-  // const resultBalance = (currencyInUah * Number(currency.split('-')[0])).toFixed(2);
-  // console.log(currencyInUah, resultBalance);
-
-  const handleChangeCurrency = (e) => {
-
-    console.log(e.target.value)
-    
-    const newCurrency = (e.target.value).split('-')[0];
-    const result = (currencyInUah / Number(newCurrency)).toFixed(2);
-
-    setResultBalance(result);
-    setCurrency(e.target.value);
-  }
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
@@ -58,18 +43,16 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
     cash_and_accounts.forEach((elem) => {
 
       if (elem.id === cashId) {
-        const { name, type_order, balance } = elem;
+        const { name, type_order } = elem;
 
         const type_acc = type_order === "account" ? 2 : 1;
 
-        const curInNumber = currency.split('-');
-        const currencyInUah = (balance * Number(curInNumber[0])).toFixed(2);
+        const index = auxiliaryList.findIndex(data => data.id === elem.cash_accounts_balance[0].id)
 
         setName(name);
         setType_accounts(type_acc);
-        setCurrency(currency);
+        setCurrency(auxiliaryList[index].name);
         setCurrentCashAndAccount(elem);
-        setCurrencyInUah(currencyInUah);
         setResultBalance(elem.cash_accounts_balance[0].balance);
       }
 
@@ -84,7 +67,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
 
     body.type_accounts = type;
     body.Name = name;
-    body.Represent = (currency.split('-')[1]).toUpperCase();
+    body.Represent = currency.toUpperCase();
     body.balance = resultBalance;
 
     cash_and_accounts.forEach((elem) => {
@@ -122,24 +105,31 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                 sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
                 onChange={(e) => setName(e.target.value)} variant="standard"
               />
-              <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+              {/* <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
                 <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
                   id="demo-simple-select-standard"
-                  value={currency || 'UAH'}
+                  value={currency}
                   onChange={(e) => handleChangeCurrency(e)}
                   label={'Валюта'}
                 >
                   {auxiliaryList.currencies.map((currency, currencyIndex) => {
-                    return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                    return (<MenuItem key={currency.id} value={currency.name}>{currency.name}</MenuItem>)
                   })}
                 </Select>
-              </FormControl>
+              </FormControl> */}
+              <TextField
+                sx={{ marginBottom: '30px', width: '70%' }}
+                value={currency}
+                disabled
+                label="Валюта: "
+                type="number"
+                variant="standard"
+              />
               <TextField
                 sx={{ marginBottom: '30px', width: '70%' }}
                 value={resultBalance || ''}
-                disabled
                 label="Стартовый баланс: "
                 type="number"
                 variant="standard"
