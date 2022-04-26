@@ -135,7 +135,6 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                     <TextField sx={{ marginBottom: '30px', width: '70%' }}
                       label="Баланс:"
                       type="number"
-                      variant="standard"
                       value={resultBalance || ""}
                       multiline maxRows={2}
                       name="balance"
