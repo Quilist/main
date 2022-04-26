@@ -111,41 +111,74 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         <Box sx={style} className={styles.childModal}>
 
           {type_accounts === 2 &&
+            // <div>
+            //   {balanceList.map((c, i) => {
+            //     return (<div key={i}>
+            //       <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
+            //       <div className={styles.modal_title}>Редактирование счёта</div>
+            //       <TextField
+            //         sx={{ marginBottom: '20px', width: '70%' }}
+            //         id="standard-multiline-flexible"
+            //         label="Название:"
+            //         multiline maxRows={2}
+            //         value={name || ''}
+            //         onChange={(e) => setName(e.target.value)} variant="standard"
+            //       />
+            //       <TextField
+            //         sx={{ marginBottom: '30px', width: '70%' }}
+            //         disabled
+            //         label={currency}
+            //         variant="standard"
+            //       />
+            //       <TextField 
+            //         sx={{ marginBottom: '30px', width: '70%' }}
+            //         value={resultBalance || ''}
+            //         label="Баланс: "
+            //         name="balance"
+            //         variant="standard"
+            //         onChange={(e) => updateBalance(e, i)}
+            //       />
+            //       <div className={styles.btn_wrapper}>
+            //         <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+            //         <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+            //       </div>
+            //     </div>
+            //     )
+            //   })
+            //   }
+            // </div>
             <div>
-              {balanceList.map((c, i) => {
-                return (<div key={i}>
-                  <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
-                  <div className={styles.modal_title}>Редактирование счёта</div>
-                  <TextField
-                    sx={{ marginBottom: '20px', width: '70%' }}
-                    id="standard-multiline-flexible"
-                    label="Название:"
-                    multiline maxRows={2}
-                    value={name || ''}
-                    onChange={(e) => setName(e.target.value)} variant="standard"
-                  />
-                  <TextField
-                    sx={{ marginBottom: '30px', width: '70%' }}
-                    disabled
-                    label={currency}
-                    variant="standard"
-                  />
-                  <TextField 
-                    sx={{ marginBottom: '30px', width: '70%' }}
-                    value={resultBalance || ''}
-                    label="Баланс: "
-                    name="balance"
-                    variant="standard"
-                    onChange={(e) => updateBalance(e, i)}
-                  />
-                  <div className={styles.btn_wrapper}>
-                    <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
-                    <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
-                  </div>
-                </div>
-                )
-              })
-              }
+              <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
+                {balanceList.map((c, i) => {
+                  return (<div key={i}>
+                    <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
+                    <div className={styles.modal_title}>Редактирование счёта</div>
+                    <TextField
+                      sx={{ marginBottom: '30px', width: '70%' }}
+                      disabled
+                      label={currency}
+                      variant="standard"
+                    />
+                    <TextField
+                      sx={{ marginBottom: '20px', width: '70%' }}
+                      id="standard-multiline-flexible"
+                      label="Название:"
+                      multiline maxRows={2}
+                      value={name || ''}
+                      onChange={(e) => setName(e.target.value)} variant="standard"
+                    />
+                    <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                      label="Стартовый баланс:"
+                      type="number"
+                      variant="standard"
+                      value={c.value}
+                      name="balance"
+                      onChange={(e) => updateBalance(e, i)}
+                    />
+                  </div>)
+                })}
+
+              </FormControl>
             </div>
           }
         </Box>
