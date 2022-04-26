@@ -133,13 +133,17 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                       variant="standard"
                     />
                     <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                      label={resultBalance || ''}
+                      label="Баланас:"
                       type="number"
                       variant="standard"
-                      value={c.value}
+                      value={resultBalance || ''}
                       name="balance"
                       onChange={(e) => updateBalance(e, i)}
                     />
+                    <div className={styles.btn_wrapper}>
+                      <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+                      <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+                    </div>
                   </div>)
                 })}
 
