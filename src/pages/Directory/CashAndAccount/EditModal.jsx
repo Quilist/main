@@ -111,40 +111,42 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
       >
 
         {type_accounts === 2 &&
-          <Box sx={style} className={styles.childModal}>
-            <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
-            <div className={styles.modal_title}>Редактирование счёта</div>
-            <TextField
-              sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
-              onChange={(e) => setName(e.target.value)} variant="standard"
-            />
-            <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-              <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={currency || 'UAH'}
-                onChange={(e) => handleChangeCurrency(e)}
-                label={'Валюта'}
-              >
-                {auxiliaryList.currencies.map((currency, currencyIndex) => {
-                  return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
-                })}
-              </Select>
-            </FormControl>
-            <TextField
-              sx={{ marginBottom: '30px', width: '70%' }}
-              value={resultBalance || ''}
-              disabled
-              label="Стартовый баланс:"
-              type="number"
-              variant="standard"
-            />
-            <div className={styles.btn_wrapper}>
-              <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
-              <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
-            </div>
-          </Box>
+          <div>
+            <Box sx={style} className={styles.childModal}>
+              <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
+              <div className={styles.modal_title}>Редактирование счёта</div>
+              <TextField
+                sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
+                onChange={(e) => setName(e.target.value)} variant="standard"
+              />
+              <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+                <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={currency || 'UAH'}
+                  onChange={(e) => handleChangeCurrency(e)}
+                  label={'Валюта'}
+                >
+                  {auxiliaryList.currencies.map((currency, currencyIndex) => {
+                    return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                  })}
+                </Select>
+              </FormControl>
+              <TextField
+                sx={{ marginBottom: '30px', width: '70%' }}
+                value={resultBalance || ''}
+                disabled
+                label="Стартовый баланс:"
+                type="number"
+                variant="standard"
+              />
+              <div className={styles.btn_wrapper}>
+                <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+                <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+              </div>
+            </Box>
+          </div>
         }
 
 
