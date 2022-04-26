@@ -10,6 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
+import API from '@/api/api'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -23,6 +25,7 @@ const style = {
   px: 4,
   pb: 3,
 };
+
 export default function EditModal({ open, setOpenEditModal, cashId, cash_and_accounts }) {
   const [currentCashAndAccount, setCurrentCashAndAccount] = React.useState([]);
   const [name, setName] = React.useState('');
@@ -61,7 +64,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
     cash_and_accounts.forEach((elem) => {
 
       if (elem.id === cashId) {
-        const { Name, type_accounts, Represent, balance } = elem;
+        const { name, type_accounts, Represent, balance } = elem;
 
         const type_acc = type_accounts ? 2 : 1;
 
@@ -69,7 +72,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         const curInNumber = currency.split('-');
         const currencyInUah = (balance * Number(curInNumber[0])).toFixed(2);
 
-        setName(Name);
+        setName(name);
         setType_accounts(type_acc);
         setCurrency(currency);
         setCurrentCashAndAccount(elem);
@@ -84,7 +87,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const handleSave = () => {
     const body = currentCashAndAccount;
 
-    const type = type_accounts === 1 ? type = false : type = true;
+    const type = type_accounts === 1 ? false : true;
 
     body.type_accounts = type;
     body.Name = name;
@@ -100,13 +103,13 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
     handleCloseChildModal();
   }
 
+  const api = new API();
+
   const handleDelete = () => {
     api.remove(cashId, 'cashAndAccount').then(data => {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     });
-
-    handleCloseChildModal();
   }
 
   return (

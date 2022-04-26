@@ -146,34 +146,40 @@ export default function CashAndAccountsModal({ open, setOpen }) {
     setOpenChildModalPrivat(false);
     clearForm();
   }
+
   const handleCloseChildModalPrivatL = () => {
     setOpenChildModalPrivatL(false);
     clearForm();
   }
+
   const handleCloseChildModalPumb = () => {
     setOpenChildModalPumb(false);
     clearForm();
   }
+
   const handleCloseChildModalMono = () => {
     setOpenChildModalMono(false);
     clearForm();
   }
+
   const handleModelBank = () => {
-    if (bankFunction === 'OpenChildModalPrivat') {
-      setType('privatbank_individual');
-      setOpenChildModalPrivat(true);
-    }
-    if (bankFunction === 'OpenChildModalPrivatL') {
-      setType('privatbank_legal_entity');
-      setOpenChildModalPrivatL(true);
-    }
-    if (bankFunction === 'OpenChildModalPumb') {
-      setType('pumb');
-      setOpenChildModalPumb(true);
-    }
-    if (bankFunction === 'OpenChildModalMono') {
-      setType('monobank');
-      setOpenChildModalMono(true);
+    switch (bankFunction) {
+      case "OpenChildModalPrivat":
+        setType('privatbank_individual');
+        setOpenChildModalPrivat(true);
+        break;
+      case "OpenChildModalPrivatL":
+        setType('privatbank_legal_entity');
+        setOpenChildModalPrivatL(true);
+        break;
+      case "OpenChildModalPumb":
+        setType('pumb');
+        setOpenChildModalPumb(true);
+        break;
+      case "OpenChildModalMono":
+        setType('monobank');
+        setOpenChildModalMono(true);
+        break;
     }
   };
 
@@ -193,6 +199,7 @@ export default function CashAndAccountsModal({ open, setOpen }) {
 
   const handleChangeStreamField = e => {
     const { name, value } = e.target;
+    
     let streamData = item.stream
     streamData[name] = value
   };

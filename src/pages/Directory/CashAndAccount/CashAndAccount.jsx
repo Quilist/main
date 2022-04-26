@@ -56,7 +56,7 @@ export default function CashAndAccount() {
       })
       // eslint-disable-next-line
    }, [openEditModal, open])
-   
+
    return (
       <>
          <section className="home-section">
