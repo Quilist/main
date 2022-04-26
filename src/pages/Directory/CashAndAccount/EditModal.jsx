@@ -66,7 +66,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         setCurrency(currency);
         setCurrentCashAndAccount(elem);
         setCurrencyInUah(currencyInUah);
-        setResultBalance(balance);
+        setResultBalance(elem.cash_accounts_balance[0].balance);
       }
 
     });
@@ -136,7 +136,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               sx={{ marginBottom: '30px', width: '70%' }}
               value={resultBalance || ''}
               disabled
-              label={cash_and_accounts}
+              // label={cash_and_accounts}
               type="number"
               variant="standard"
             />
