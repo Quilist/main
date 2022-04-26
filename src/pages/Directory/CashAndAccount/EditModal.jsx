@@ -51,7 +51,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
 
         setName(name);
         setType_accounts(type_acc);
-        setCurrency(auxiliaryList[index].name);
+        setCurrency(auxiliaryList.currencies[index].name);
         setCurrentCashAndAccount(elem);
         setResultBalance(elem.cash_accounts_balance[0].balance);
       }
