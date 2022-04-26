@@ -47,7 +47,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
 
         const type_acc = type_order === "account" ? 2 : 1;
 
-        const index = auxiliaryList.findIndex(data => data.id === elem.cash_accounts_balance[0].id)
+        const index = auxiliaryList.currencies.findIndex(data => data.id === elem.cash_accounts_balance[0].id)
 
         setName(name);
         setType_accounts(type_acc);
