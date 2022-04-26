@@ -117,20 +117,22 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                   <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
                   <div className={styles.modal_title}>Редактирование счёта</div>
                   <TextField
-                    sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
+                    sx={{ marginBottom: '20px', width: '70%' }}
+                    id="standard-multiline-flexible"
+                    label="Название:"
+                    multiline maxRows={2}
+                    value={name || ''}
                     onChange={(e) => setName(e.target.value)} variant="standard"
                   />
                   <TextField
                     sx={{ marginBottom: '30px', width: '70%' }}
                     disabled
                     label={currency}
-                    type="number"
                     variant="standard"
                   />
-                  <TextField
+                  <TextField 
                     sx={{ marginBottom: '30px', width: '70%' }}
                     value={resultBalance || ''}
-                    type="number"
                     label="Баланс: "
                     name="balance"
                     variant="standard"
