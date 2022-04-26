@@ -49,28 +49,15 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
-  // const formatRepresent = (Represent) => {
-  //   Represent = Represent.toUpperCase();
-
-  //   // switch (Represent) {
-  //   //   case "UAH": return '1-UAH';
-  //   //   case "USD": return '28.29-USD';
-  //   //   case "RUB": return '0.37-RUB';
-  //   //   default: return '31.95-EUR';
-  //   // }
-
-  //   return `${Represent}-${a}`
-  // }
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
 
       if (elem.id === cashId) {
-        const { name, type_accounts, balance } = elem;
+        const { name, type_order, balance } = elem;
 
-        const type_acc = type_accounts ? 2 : 1;
+        const type_acc = type_order === "account" ? 2 : 1;
 
-        // const currency = formatRepresent(elem.cash_accounts_balance);
         const curInNumber = currency.split('-');
         const currencyInUah = (balance * Number(curInNumber[0])).toFixed(2);
 
@@ -122,54 +109,48 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={style} className={styles.childModal}>
-          <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Редактирование счёта</div>
-          <TextField
-            sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
-            onChange={(e) => setName(e.target.value)} variant="standard"
-          />
-          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-            <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={currency || 'UAH'}
-              onChange={(e) => handleChangeCurrency(e)}
-              label={'Валюта'}
-            >
-              <MenuItem value='1-UAH'>UAH</MenuItem>
-              <MenuItem value='0.37-RUB'>RUB</MenuItem>
-              <MenuItem value='28.29-USD'>USD</MenuItem>
-              <MenuItem value='31.95-EUR'>EUR</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-            <InputLabel id="demo-simple-select-standard-label">Тип (касса или счёт)</InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={type_accounts || ''}
-              onChange={(e) => setType_accounts(e.target.value)}
-              label={'Тип (касса или счёт)'}
-            >
-              <MenuItem value={1}>Счёт(безналичные)</MenuItem>
-              <MenuItem value={2}>Касса(наличные)</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
-            sx={{ marginBottom: '30px', width: '70%' }}
-            value={resultBalance || ''}
-            disabled
-            label="Стартовый баланс:"
-            type="number"
-            variant="standard"
-          />
-          <div className={styles.btn_wrapper}>
-            <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
-            <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
-          </div>
-        </Box>
+
+        {type_accounts === 2 &&
+          <Box sx={style} className={styles.childModal}>
+            <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
+            <div className={styles.modal_title}>Редактирование счёта</div>
+            <TextField
+              sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2} value={name || ''}
+              onChange={(e) => setName(e.target.value)} variant="standard"
+            />
+            <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+              <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={currency || 'UAH'}
+                onChange={(e) => handleChangeCurrency(e)}
+                label={'Валюта'}
+              >
+                {auxiliaryList.currencies.map((currency, currencyIndex) => {
+                  return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                })}
+              </Select>
+            </FormControl>
+            <TextField
+              sx={{ marginBottom: '30px', width: '70%' }}
+              value={resultBalance || ''}
+              disabled
+              label={cash_and_accounts}
+              type="number"
+              variant="standard"
+            />
+            <div className={styles.btn_wrapper}>
+              <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+              <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+            </div>
+          </Box>
+        }
+
+
+
+
+
       </Modal>
     </div>
   );
