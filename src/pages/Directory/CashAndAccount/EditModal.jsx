@@ -33,7 +33,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [item, setItem] = React.useState({ stream: {} });
 
   const [currency, setCurrency] = React.useState('');
-  const [resultBalance, setResultBalance] = React.useState('');
+  const [resultBalance, setResultBalance] = React.useState([]);
 
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
 
@@ -73,7 +73,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         setType_accounts(type_acc);
         setCurrency(auxiliaryList.currencies[index].name);
         setCurrentCashAndAccount(elem);
-        setResultBalance(elem.cash_accounts_balance[0].balance);
+        setResultBalance(elem.cash_accounts_balance);
       }
 
     });
@@ -141,7 +141,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                 label="Баланс:"
                 type="number"
                 variant="standard"
-                value={resultBalance || ""}
+                value={resultBalance[0].balance || ""}
                 multiline maxRows={2}
                 name="balance"
               />
@@ -173,15 +173,21 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                     value={currency}
                     variant="standard"
                   />
-                  <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                    disabled
-                    label="Баланс:"
-                    type="number"
-                    variant="standard"
-                    value={resultBalance || ""}
-                    multiline maxRows={2}
-                    name="balance"
-                  />
+                  {
+                    resultBalance.map((elem, i) => {
+                      return (
+                        <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                          disabled
+                          label={i === 0 ? "Баланс:" : ""}
+                          type="number"
+                          variant="standard"
+                          value={elem.balance || ""}
+                          multiline maxRows={2}
+                          name="balance"
+                        />
+                      )
+                    })
+                  }
                   <div className={styles.btn_wrapper}>
                     <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
                     <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
