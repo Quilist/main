@@ -30,34 +30,13 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [currentCashAndAccount, setCurrentCashAndAccount] = React.useState([]);
   const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
-  const [item, setItem] = React.useState({ stream: {} });
 
   const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState([]);
 
-  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
-
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
-
-  const addBalance = (e) => {
-    setBalanceList([...balanceList, { currency_id: null, balance: null }]);
-  }
-
-  const removeBalance = (index) => {
-    setBalanceList(balanceList.filter((o, i) => index !== i));
-  };
-
-  const updateBalance = (e, index) => {
-    const { name, value } = e.target;
-    balanceList[index][name] = value
-    balanceList[index] = Object.assign({}, balanceList[index]);
-    setItem(prevItem => ({
-      ...prevItem,
-      balance: balanceList
-    }));
-  };
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
@@ -65,13 +44,8 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
       if (elem.id === cashId) {
         const { name, type_order } = elem;
 
-        const type_acc = type_order === "account" ? 2 : 1;
-
-        const index = auxiliaryList.currencies.findIndex(data => data.id === elem.cash_accounts_balance[0].currency_id)
-
         setName(name);
-        setType_accounts(type_acc);
-        setCurrency(auxiliaryList.currencies[index].name);
+        setType_accounts(type_order);
         setCurrentCashAndAccount(elem);
         setResultBalance(elem.cash_accounts_balance);
       }
@@ -117,8 +91,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
         aria-describedby="child-modal-description"
       >
         <Box sx={style} className={styles.childModal}>
-
-          {type_accounts === 2 &&
+          {type_accounts === "account" &&
             <div>
               <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
               <div className={styles.modal_title}>Редактирование счёта</div>
@@ -133,7 +106,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               <TextField sx={{ marginBottom: '30px', width: '70%' }}
                 disabled
                 label="Валюта"
-                value={currency}
+                value={resultBalance[0].name || ""}
                 variant="standard"
               />
               <TextField sx={{ marginBottom: '30px', width: '70%' }}
@@ -152,51 +125,43 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
             </div>
           }
 
-
-          {type_accounts === 1 &&
+          {type_accounts === "cash" &&
             <div>
-              {balanceList.map((c, i) => {
-                return (<div key={i}>
-                  <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
-                  <div className={styles.modal_title}>Редактирование кассы</div>
-                  <TextField sx={{ marginBottom: '20px', width: '70%' }}
-                    id="standard-multiline-flexible"
-                    label="Название:"
-                    multiline maxRows={2}
-                    value={name || ''}
-                    onChange={(e) => setName(e.target.value)}
+              <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
+              <div className={styles.modal_title}>Редактирование кассы</div>
+              <TextField sx={{ marginBottom: '20px', width: '70%' }}
+                id="standard-multiline-flexible"
+                label="Название:"
+                multiline maxRows={2}
+                value={name || ''}
+                onChange={(e) => setName(e.target.value)}
+                variant="standard"
+              />
+              {resultBalance.map((elem, i) => {
+
+                const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
+
+                return (
+                  <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                    disabled
+                    label={i === 0 ? "Баланс:" : undefined}
+                    type="number"
                     variant="standard"
+                    value={`${elem.balance} ${auxiliaryList.currencies[index].name}`}
+                    multiline maxRows={2}
+                    name="balance"
                   />
-                  {resultBalance.map((elem, i) => {
-
-                    const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
-
-                    return (
-                      <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                        disabled
-                        label={i === 0 ? "Баланс:" : ""}
-                        type="number"
-                        variant="standard"
-                        value={`${elem.balance} ${auxiliaryList.currencies[index].name}`}
-                        multiline maxRows={2}
-                        name="balance"
-                      />
-                    )
-                  })
-                  }
-                  <div className={styles.btn_wrapper}>
-                    <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
-                    <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
-                  </div>
-                </div>)
-              })}
+                )
+              })
+              }
+              <div className={styles.btn_wrapper}>
+                <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+                <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+              </div>
             </div>
           }
-
         </Box>
-
-
       </Modal>
-    </div>
+    </div >
   );
 }

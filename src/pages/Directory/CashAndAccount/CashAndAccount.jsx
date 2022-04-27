@@ -56,7 +56,7 @@ export default function CashAndAccount() {
          else setRows(data.message.items)
       })
       // eslint-disable-next-line
-   }, [openEditModal, open]);
+   }, [openEditModal === false ? openEditModal : null, open]);
 
    React.useEffect(() => {
       api.auxiliary('cashAndAccount').then(data => {
