@@ -167,26 +167,22 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                     onChange={(e) => setName(e.target.value)}
                     variant="standard"
                   />
-                  <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                    disabled
-                    label="Валюта"
-                    value={currency}
-                    variant="standard"
-                  />
-                  {
-                    resultBalance.map((elem, i) => {
-                      return (
-                        <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                          disabled
-                          label={i === 0 ? "Баланс:" : ""}
-                          type="number"
-                          variant="standard"
-                          value={elem.balance || ""}
-                          multiline maxRows={2}
-                          name="balance"
-                        />
-                      )
-                    })
+                  {resultBalance.map((elem, i) => {
+
+                    const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
+
+                    return (
+                      <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                        disabled
+                        label={i === 0 ? "Баланс:" : ""}
+                        type="number"
+                        variant="standard"
+                        value={`${elem.balance} ${auxiliaryList[index]}`}
+                        multiline maxRows={2}
+                        name="balance"
+                      />
+                    )
+                  })
                   }
                   <div className={styles.btn_wrapper}>
                     <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
