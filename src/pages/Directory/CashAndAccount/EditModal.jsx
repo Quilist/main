@@ -177,7 +177,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                         label={i === 0 ? "Баланс:" : ""}
                         type="number"
                         variant="standard"
-                        value={`${elem.balance} ${auxiliaryList[index].name}`}
+                        value={`${elem.balance} ${auxiliaryList.currencies[index].name}`}
                         multiline maxRows={2}
                         name="balance"
                       />
