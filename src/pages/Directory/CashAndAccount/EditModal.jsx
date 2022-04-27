@@ -30,14 +30,34 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [currentCashAndAccount, setCurrentCashAndAccount] = React.useState([]);
   const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
-  // type_accounts - 1 (Счёт) - false
-  // type_accounts - 2 (Касса) - true
+  const [item, setItem] = React.useState({ stream: {} });
+  
   const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState('');
+
+  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
+
+  const addBalance = (e) => {
+    setBalanceList([...balanceList, { currency_id: null, balance: null }]);
+  }
+
+  const removeBalance = (index) => {
+    setBalanceList(balanceList.filter((o, i) => index !== i));
+  };
+
+  const updateBalance = (e, index) => {
+    const { name, value } = e.target;
+    balanceList[index][name] = value
+    balanceList[index] = Object.assign({}, balanceList[index]);
+    setItem(prevItem => ({
+      ...prevItem,
+      balance: balanceList
+    }));
+  };
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
@@ -102,8 +122,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
             <div>
               <img className={styles.modal_img} onClick={handleCloseChildModal} src={crossImg} alt="cross" />
               <div className={styles.modal_title}>Редактирование счёта</div>
-              <TextField
-                sx={{ marginBottom: '20px', width: '70%' }}
+              <TextField sx={{ marginBottom: '20px', width: '70%' }}
                 id="standard-multiline-flexible"
                 label="Название:"
                 multiline maxRows={2}
@@ -111,21 +130,20 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
                 onChange={(e) => setName(e.target.value)}
                 variant="standard"
               />
-              <TextField
-                sx={{ marginBottom: '30px', width: '70%' }}
+              <TextField sx={{ marginBottom: '30px', width: '70%' }}
                 disabled
                 label="Валюта"
                 value={currency}
                 variant="standard"
               />
               <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                disabled
                 label="Баланс:"
                 type="number"
                 variant="standard"
                 value={resultBalance || ""}
                 multiline maxRows={2}
                 name="balance"
-                onChange={(e) => setResultBalance(e.target.value)}
               />
               <div className={styles.btn_wrapper}>
                 <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
@@ -133,6 +151,45 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               </div>
             </div>
           }
+
+
+          {type_accounts === 1 &&
+            <div>
+              {balanceList.map((c, i) => {
+                return (<div key={i}>
+                  <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                    disabled
+                    label="Валюта"
+                    value={currency}
+                    variant="standard"
+                  />
+                  <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                    disabled
+                    label="Баланс:"
+                    type="number"
+                    variant="standard"
+                    value={resultBalance || ""}
+                    multiline maxRows={2}
+                    name="balance"
+                  />
+                  <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'}
+                    variant="outlined"
+                    style={{ marginTop: "10px" }}
+                    onClick={() => removeBalance(i)}>
+                    X
+                  </button>
+                  <div className={styles.btn_wrapper}>
+                    <Button variant="contained" onClick={handleSave} className={styles.modal_bankbtn}>Ок</Button>
+                    <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>
+                  </div>
+                </div>)
+              })}
+              <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+                <Button onClick={addBalance} className={styles.button} variant="outlined">+ Добавить баланс</Button>
+              </FormControl>
+            </div>
+          }
+
         </Box>
 
 
