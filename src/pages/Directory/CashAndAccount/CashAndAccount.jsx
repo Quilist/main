@@ -51,12 +51,14 @@ export default function CashAndAccount() {
    };
 
    React.useEffect(() => {
-      api.all('cashAndAccount').then(data => {
-         if (data.status === "error") alert(data.message)
-         else setRows(data.message.items)
-      })
+      if (open === false || openEditModal === false) {
+         api.all('cashAndAccount').then(data => {
+            if (data.status === "error") alert(data.message)
+            else setRows(data.message.items)
+         })
+      }
       // eslint-disable-next-line
-   }, openEditModal === false ? [openEditModal, open] : [open]);
+   }, [openEditModal, open]);
 
    React.useEffect(() => {
       api.auxiliary('cashAndAccount').then(data => {

@@ -27,16 +27,16 @@ const style = {
 };
 
 export default function EditModal({ open, setOpenEditModal, cashId, cash_and_accounts, auxiliaryList }) {
-  const [currentCashAndAccount, setCurrentCashAndAccount] = React.useState([]);
   const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
 
-  const [currency, setCurrency] = React.useState('');
   const [resultBalance, setResultBalance] = React.useState([]);
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
   }
+
+  const api = new API();
 
   React.useEffect(() => {
     cash_and_accounts.forEach((elem) => {
@@ -46,7 +46,6 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
 
         setName(name);
         setType_accounts(type_order);
-        setCurrentCashAndAccount(elem);
         setResultBalance(elem.cash_accounts_balance);
       }
 
@@ -55,25 +54,13 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   }, []);
 
   const handleSave = () => {
-    const body = currentCashAndAccount;
+    const options = { name: name }
 
-    const type = type_accounts === 1 ? false : true;
-
-    body.type_accounts = type;
-    body.Name = name;
-    body.Represent = currency.toUpperCase();
-    body.balance = resultBalance;
-
-    cash_and_accounts.forEach((elem) => {
-      if (elem.id === cashId) {
-        return elem = body;
-      }
+    api.edit(cashId, options, "cashAndAccount").then(data => {
+      if (data.status === "error") return alert(data.message)
+      handleCloseChildModal();
     });
-
-    handleCloseChildModal();
   }
-
-  const api = new API();
 
   const handleDelete = () => {
     api.remove(cashId, 'cashAndAccount').then(data => {
