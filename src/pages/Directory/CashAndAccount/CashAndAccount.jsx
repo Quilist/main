@@ -110,10 +110,10 @@ export default function CashAndAccount() {
                            {rows && rows
                               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                               .map((row, idx) => {
-                                 const arr = row.cash_accounts_balance.slice(0, 4)
+                                 const arr = row.cash_accounts_balance.slice(0, 4);
                                  const balance = arr.map(elem => {
                                     const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
-
+                                    console.log(index)
                                     return `${elem.balance} ${auxiliaryList.currencies[index].name}`
                                  });
 
