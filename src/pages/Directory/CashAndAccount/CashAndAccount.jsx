@@ -113,7 +113,7 @@ export default function CashAndAccount() {
                                  const arr = row.cash_accounts_balance.slice(0, 4);
                                  const balance = arr.map(elem => {
                                     const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
-                                    console.log(index)
+                                    console.log(auxiliaryList)
                                     return `${elem.balance} ${auxiliaryList.currencies[index].name}`
                                  });
 
