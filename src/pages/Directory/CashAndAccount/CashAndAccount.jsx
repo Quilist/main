@@ -126,7 +126,7 @@ export default function CashAndAccount() {
                                           {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {balance.length < 5 ? balance.join(", ") : `${balance.join(", ")}...`}
+                                          {balance.length < 4 ? balance.join(", ") : `${balance.join(", ")}...`}
                                        </TableCell>
                                     </TableRow>
                                  );
