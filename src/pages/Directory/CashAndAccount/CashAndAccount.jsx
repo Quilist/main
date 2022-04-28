@@ -57,7 +57,7 @@ export default function CashAndAccount() {
       })
       // eslint-disable-next-line
    }, []);
-   
+
    React.useEffect(() => {
       if (open === false && openEditModal === false) {
          api.all('cashAndAccount').then(data => {
@@ -113,7 +113,7 @@ export default function CashAndAccount() {
                                  const arr = row.cash_accounts_balance.slice(0, 4);
                                  const balance = arr.map(elem => {
                                     const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
-                                    console.log(auxiliaryList)
+
                                     return `${elem.balance} ${auxiliaryList.currencies[index].name}`
                                  });
 
@@ -126,7 +126,7 @@ export default function CashAndAccount() {
                                           {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {balance.length < 4 ? balance.length : balance.length + "..."}
+                                          {balance.length < 4 ? balance.join(", ") : balance.join(", ") + "..."}
                                        </TableCell>
                                     </TableRow>
                                  );
