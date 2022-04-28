@@ -51,6 +51,14 @@ export default function CashAndAccount() {
    };
 
    React.useEffect(() => {
+      api.auxiliary('cashAndAccount').then(data => {
+         if (data.status === "error") alert(data.message)
+         else setAuxiliaryList(data.message)
+      })
+      // eslint-disable-next-line
+   }, []);
+   
+   React.useEffect(() => {
       if (open === false && openEditModal === false) {
          api.all('cashAndAccount').then(data => {
             if (data.status === "error") alert(data.message)
@@ -59,14 +67,6 @@ export default function CashAndAccount() {
       }
       // eslint-disable-next-line
    }, [openEditModal, open]);
-
-   React.useEffect(() => {
-      api.auxiliary('cashAndAccount').then(data => {
-         if (data.status === "error") alert(data.message)
-         else setAuxiliaryList(data.message)
-      })
-      // eslint-disable-next-line
-   }, []);
 
    return (
       <>
