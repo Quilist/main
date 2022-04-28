@@ -51,7 +51,7 @@ export default function CashAndAccount() {
    };
 
    React.useEffect(() => {
-      if (open === false || openEditModal === false) {
+      if (open === false && openEditModal === false) {
          api.all('cashAndAccount').then(data => {
             if (data.status === "error") alert(data.message)
             else setRows(data.message.items)
