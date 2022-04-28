@@ -110,6 +110,13 @@ export default function CashAndAccount() {
                            {rows && rows
                               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                               .map((row, idx) => {
+                                 const arr = row.cash_accounts_balance.slice(0, 4)
+                                 const balance = arr.map(elem => {
+                                    const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
+
+                                    return `${elem.balance} ${auxiliaryList.currencies[index].name}`
+                                 });
+
                                  return (
                                     <TableRow onClick={() => handleOpenEditModal(row.id)} hover role="checkbox" tabIndex={-1} key={idx} className={styles.table_row}>
                                        <TableCell style={{ display: 'flex', alignItems: 'center', minHeight: '57px' }} className={styles.table__body} align={'left'}>
@@ -119,9 +126,7 @@ export default function CashAndAccount() {
                                           {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {row.cash_accounts_balance.length > 1 ?
-                                             row.cash_accounts_balance[0]?.balance + "..." :
-                                             row.cash_accounts_balance[0]?.balance}
+                                          {balance.length < 4 ? balance.length : balance.length + "..."}
                                        </TableCell>
                                     </TableRow>
                                  );
