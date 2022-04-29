@@ -117,11 +117,14 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     }));
   }
 
-  const handleAdd = () => {
-    api.add(item, 'cashAndAccount');
-
-    setOpen(false);
-    clearForm();
+  const handleAdd = async () => {
+    api.add(item, 'cashAndAccount').then(res => {
+      if (res.status === "error") alert("error");
+      else {
+        setOpen(false);
+        clearForm();
+      }
+    })
   }
 
   const [bankFunction, setBankFunction] = React.useState('');
