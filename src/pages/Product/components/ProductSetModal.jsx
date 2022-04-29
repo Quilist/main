@@ -23,7 +23,7 @@ const style = {
   top: '50% !important',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90% !important',
+  width: '50% !important',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -31,15 +31,19 @@ const style = {
   px: 4,
   pb: 3,
   overflowY: 'auto',
-  height: '90%'
+  height: '40%'
 };
 
-export default function ProductComplectModal({ open, setOpen, subItem, setSubItem, item, setItem, auxiliaryList, typePriceList, setTypePriceList, storehouseList, setStorehouseList }) {
+export default function ProductSetModal({ open, setOpen, item, setItem, auxiliaryList }) {
   const handleClose = () => setOpen(false);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
 
-  const handleSelect = () = {
-
+  const handleSelect = (e) => {
+    const { value } = e.target;
+    const index = auxiliaryList.products.findIndex((item) => item.id === value)
+    if (index !== -1) {
+      setSelectedProduct(auxiliaryList.products[index])
+    }
   };
 
   //add
@@ -49,6 +53,7 @@ export default function ProductComplectModal({ open, setOpen, subItem, setSubIte
       ...prevItem,
       childs: array
     }));
+    setSelectedProduct(null)
 
     handleClose();
   };
@@ -63,31 +68,23 @@ export default function ProductComplectModal({ open, setOpen, subItem, setSubIte
       >
         <Box className={styles.modal} sx={style}>
           <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Добавление цвета и размера</div>
+          <div className={styles.modal_title}>Добавление Товара/Услуги</div>
 
-          <div className={stylesForm.boxesWrapper__user}>
-            <div className={stylesForm.boxesWrapper__user}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-autowidth-label">Товар/Услуга:</InputLabel>
+            <Select
+              autoWidth
+              label="Товар/Услуга"
+              name="product_id"
+              onChange={(e) => handleSelect(e)}
+            >
+              {auxiliaryList.products.map((type, typeIndex) => {
+                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+              })}
+            </Select>
+          </FormControl>
 
-              <div>
-                <FormControl sx={{m: 1, minWidth: 120}}>
-                  <InputLabel id="demo-simple-select-autowidth-label">Товар/Услуга:</InputLabel>
-                  <Select
-                    autoWidth
-                    label="Товар/Услуга"
-                    name="currency_id"
-                    onChange={(e) => handleSelect(e, i)}
-                  >
-                    {auxiliaryList.products.map((type, typeIndex) => {
-                      return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-                    })}
-                  </Select>
-                </FormControl>
-              </div>
-
-            </div>
-          </div>
-
-          <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
+          <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn} style={{ marginTop: '15px' }}>Ок</Button>
         </Box>
       </Modal>
     </div>

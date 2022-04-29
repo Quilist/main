@@ -308,11 +308,18 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__account">
                       <p>
-                        0
+
                       </p>
                     </div>
-                    <div className="table__comment">
-                      {item.vendor_code}
+                    <div className="table__paysend">
+                      <p>
+                        {item.measure.name}
+                      </p>
+                    </div>
+                    <div className="table__paysend">
+                      <p>
+                        {item.vendor_code}
+                      </p>
                     </div>
                   </div>
                 );

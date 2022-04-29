@@ -106,7 +106,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="from_cash_account_id"
               onChange={handleChange}
             >
-              <MenuItem value={1}>Тестовый Отправитель</MenuItem>
+              <MenuItem value={1} >Тестовый Отправитель</MenuItem>
             </Select>
           </FormControl>
 
@@ -123,6 +123,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               {auxiliaryList.items.map((item, index) => (
                 <MenuItem
                   key={item.id}
+                  value={item.id}
                 >
                   {item.name}
                 </MenuItem>
@@ -142,6 +143,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               {auxiliaryList.currencies.map((item, index) => (
                 <MenuItem
                   key={item.id}
+                  value={item.id}
                 >
                   {item.name}
                 </MenuItem>

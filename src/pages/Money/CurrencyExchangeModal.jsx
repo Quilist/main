@@ -126,6 +126,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               {auxiliaryList.cash_accounts.map((item, index) => (
                 <MenuItem
                   key={item.id}
+                  value={item.id}
                 >
                   {item.name}
                 </MenuItem>
@@ -146,6 +147,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               {auxiliaryList.currencies.map((item, index) => (
                 <MenuItem
                   key={item.id}
+                  value={item.id}
                 >
                   {item.name}
                 </MenuItem>
@@ -165,6 +167,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               {auxiliaryList.currencies.map((item, index) => (
                 <MenuItem
                   key={item.id}
+                  value={item.id}
                 >
                   {item.name}
                 </MenuItem>

@@ -20,7 +20,7 @@ function ProductHandle() {
   const api = new API();
   const { id } = useParams()
 
-  const [item, setItem] = React.useState({price: 100, supplier_id: 1, group_id: 1, measure_id: 1});
+  const [item, setItem] = React.useState({price: 100, supplier_id: 1, group_id: 1, measure_id: 1, childs: []});
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     storehouses: [],
     type_prices: [],
@@ -28,7 +28,10 @@ function ProductHandle() {
     suppliers: [],
     groups: [],
     types: [],
-    currencies: []
+    currencies: [],
+    colors: [],
+    sizes: [],
+    products: []
   });
   const [typePriceList, setTypePriceList] = React.useState([]);
   const [storehouseList, setStorehouseList] = React.useState([]);
@@ -47,7 +50,6 @@ function ProductHandle() {
       if (data.status === "error") alert(data.message)
       else setAuxiliaryList(data.message)
     })
-    console.log('auxiliaryList', auxiliaryList)
 
     // eslint-disable-next-line
   }, [])
@@ -57,6 +59,12 @@ function ProductHandle() {
       api.find(id, 'product').then(data => {
         const res = data.message
         setItem(res)
+        if(res.leftovers) {
+          setStorehouseList(res.leftovers);
+        }
+        if(res.prices) {
+          setTypePriceList(res.prices);
+        }
       })
     }
 
@@ -80,24 +88,28 @@ function ProductHandle() {
 
 
   const handleAdd = () =>  {
-
-    let amountData = [], data = {}
-    data = item
-    if(typePriceList.length > 0) {
+    let priceData = [], storehouseData = [], data = item;
+    if(typePriceList?.length > 0) {
       typePriceList.forEach(function (typePrice) {
-        if(typePrice.name && typePrice.currency_id && typePrice.amount) {
-          amountData.push({ name: typePrice.name, currency_id: typePrice.currency_id, amount: typePrice.amount, type: typePrice.type });
+        if(typePrice.name && typePrice.currency_id && typePrice.price) {
+          priceData.push({ name: typePrice.name, currency_id: Number(typePrice.currency_id), price: Number(typePrice.price) });
         }
       });
-      data.amount_data = amountData
+      data.prices = priceData
     }
-    if(storehouseList.length > 0) {
+
+    if(storehouseList?.length > 0) {
       storehouseList.forEach(function (storehouse) {
-        if(storehouse.name && storehouse.currency_id && storehouse.amount) {
-          amountData.push({ name: storehouse.name, currency_id: storehouse.currency_id, amount: storehouse.amount, type: storehouse.type });
+        if(storehouse.id && storehouse.currency_id && storehouse.number && storehouse.price) {
+          storehouseData.push({ storehouse_id: Number(storehouse.id), number: Number(storehouse.number), currency_id: Number(storehouse.currency_id), price: Number(storehouse.price) });
         }
       });
-      data.amount_data = amountData
+      data.leftovers = storehouseData
+    }
+
+    if(item.childs?.length > 0) {
+      delete item.prices;
+      delete item.leftovers;
     }
 
     console.log('item', data)
@@ -154,6 +166,7 @@ function ProductHandle() {
             setTypePriceList={setTypePriceList}
             storehouseList={storehouseList}
             setStorehouseList={setStorehouseList}
+            id={id}
           />
         </div>
 

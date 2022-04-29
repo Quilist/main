@@ -6,45 +6,73 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 
 import Select from '@mui/material/Select';
+import SelectComponent from "@/components/Select/SelectComponent";
 import MenuItem from '@mui/material/MenuItem';
 
 import Button from "@mui/material/Button";
+import ProductColorSizeModal from './ProductColorSizeModal';
 
 import styles from '@/styles/modules/ProductForm.module.css'
 
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-const filterAutocomplete = createFilterOptions();
+import ProductColorSizeTable from "./ProductColorSizeTable";
+import ProductSetModal from "./ProductSetModal";
+import ProductSetTable from "./ProductSetTable";
 
-function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePriceList, storehouseList, setStorehouseList }) {
+function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePriceList, storehouseList, setStorehouseList, id }) {
+
+  // Modal
+  const [openColorSizeModal, setColorSizeModal] = React.useState(false);
+  const [openSetModal, setSetModal] = React.useState(false);
+  const [subItem, setSubItem] = React.useState({});
+
+  const handleColorSizeModal = () => {
+    setSubItem({})
+    setColorSizeModal(true);
+  };
+
+  const handleSetModal = () => {
+    setSubItem({})
+    setSetModal(true);
+  };
 
   React.useEffect(() => {
-    setTypePriceList(auxiliaryList.type_prices);
-    setStorehouseList(auxiliaryList.storehouses);
+    if(!id){
+      setTypePriceList(auxiliaryList.type_prices);
+      setStorehouseList(auxiliaryList.storehouses);
+    }
     // eslint-disable-next-line
   }, [auxiliaryList] )
 
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
 
   const addPrice = (e) => {
-    setTypePriceList([...typePriceList, { name: null, currency_id: null, amount: null}]);
+    setTypePriceList([...typePriceList, { name: null, currency_id: null, price: null}]);
   }
   
 
   const removePrice = (index) => {
     setTypePriceList(typePriceList.filter((o, i) => index !== i));
   };
-  
+
+  const formatField = (value) => {
+    let n;
+    let h = parseInt(value);
+    if(!isNaN(h)) {
+      n = h;
+    } else {
+      n = value;
+    }
+    return n;
+  };
 
   const handleChange = e => {
     const { name, value } = e.target;
-    let v = value
-    const intFields = ['min_stock'];
-    if(intFields.includes(name)) {
-      v = parseInt(value)
+    let v = formatField(value);
+    if(name === 'type') {
+      setItem(prevItem => ({
+        ...prevItem,
+        childs: []
+      }));
     }
 
     setItem(prevItem => ({
@@ -83,30 +111,43 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
   };
 
   const updateTypePrice = (e, index) => {
+    console.log('typePriceList', typePriceList)
     const { name, value } = e.target;
-    let v = value
-    const intFields = ['amount', 'currency_id'];
-    if(intFields.includes(name)) {
-      v = parseInt(value)
-    }
+    let v = formatField(value);
     typePriceList[index][name] = v
-    typePriceList[index] = Object.assign({}, typePriceList[index], {"type": "price"});
   };
 
   const updateStorehouse = (e, index) => {
     const { name, value } = e.target;
-    let v = value
-    const intFields = ['amount', 'currency_id'];
-    if(intFields.includes(name)) {
-      v = parseInt(value)
-    }
+    let v = formatField(value);
     storehouseList[index][name] = v
-    storehouseList[index] = Object.assign({}, storehouseList[index], {"type": "leftover"});
   };
 
   return (
     <>
       <div className={styles.boxesWrapper__user}>
+        {openColorSizeModal && <ProductColorSizeModal
+          open={openColorSizeModal}
+          setOpen={setColorSizeModal}
+          auxiliaryList={auxiliaryList}
+          typePriceList={typePriceList}
+          setTypePriceList={setTypePriceList}
+          storehouseList={storehouseList}
+          setStorehouseList={setStorehouseList}
+          item={item}
+          setItem={setItem}
+          subItem={subItem}
+          setSubItem={setSubItem}
+        />}
+
+        {openSetModal && <ProductSetModal
+          open={openSetModal}
+          setOpen={setSetModal}
+          auxiliaryList={auxiliaryList}
+          item={item}
+          setItem={setItem}
+        />}
+
         {currentPathName !== 'receive_balance' && <div>
           <FormControl fullWidth>
             <TextField
@@ -120,7 +161,6 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
             />
           </FormControl>
 
-
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Вид</InputLabel>
             <Select
@@ -129,6 +169,8 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
               value={item.type}
               label="Вид"
               sx={{ marginBottom: '15px' }}
+              name="type"
+              onChange={handleChange}
             >
               {auxiliaryList.types.map((type, typeIndex) => {
                 return (<MenuItem key={type.value} value={type.value}>{type.name}</MenuItem>)
@@ -137,114 +179,15 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           </FormControl>
 
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Единица измерения</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+            <SelectComponent
+              list={auxiliaryList.measures}
               value={item.measure_id}
               label="Единица измерения"
-              sx={{ marginBottom: '15px' }}
-            >
-              {auxiliaryList.measures.map((type, typeIndex) => {
-                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-              })}
-            </Select>
+              field="measure_id"
+              setItem={setItem}
+              apiEntity="measure"
+            />
           </FormControl>
-
-          {/*<Autocomplete*/}
-          {/*  value={value}*/}
-          {/*  onChange={(event, newValue) => {*/}
-          {/*    if (typeof newValue === 'string') {*/}
-          {/*      // timeout to avoid instant validation of the dialog's form.*/}
-          {/*      setTimeout(() => {*/}
-          {/*        toggleOpen(true);*/}
-          {/*        setDialogValue({*/}
-          {/*          title: newValue,*/}
-          {/*          id: '',*/}
-          {/*        });*/}
-          {/*      });*/}
-          {/*    } else if (newValue && newValue.inputValue) {*/}
-          {/*      toggleOpen(true);*/}
-          {/*      setDialogValue({*/}
-          {/*        title: newValue.inputValue,*/}
-          {/*        id: '',*/}
-          {/*      });*/}
-          {/*    } else {*/}
-          {/*      setValue(newValue);*/}
-          {/*    }*/}
-          {/*  }}*/}
-          {/*  filterOptions={(options, params) => {*/}
-          {/*    const filtered = filterAutocomplete(options, params);*/}
-
-          {/*    if (params.inputValue !== '') {*/}
-          {/*      filtered.push({*/}
-          {/*        inputValue: params.inputValue,*/}
-          {/*        title: `Добавить "${params.inputValue}"`,*/}
-          {/*      });*/}
-          {/*    }*/}
-
-          {/*    return filtered;*/}
-          {/*  }}*/}
-          {/*  id="free-solo-dialog-demo"*/}
-          {/*  options={measures}*/}
-          {/*  getOptionLabel={(option) => {*/}
-          {/*    // e.g value selected with enter, right from the input*/}
-          {/*    if (typeof option === 'string') {*/}
-          {/*      return option;*/}
-          {/*    }*/}
-          {/*    if (option.inputValue) {*/}
-          {/*      return option.inputValue;*/}
-          {/*    }*/}
-          {/*    return option.title;*/}
-          {/*  }}*/}
-          {/*  selectOnFocus*/}
-          {/*  clearOnBlur*/}
-          {/*  handleHomeEndKeys*/}
-          {/*  renderOption={(props, option) => <li {...props}>{option.title}</li>}*/}
-          {/*  sx={{ width: 300 }}*/}
-          {/*  freeSolo*/}
-          {/*  renderInput={(params) => <TextField {...params} label="Единица измерения" />}*/}
-          {/*/>*/}
-          {/*<Dialog open={open} onClose={handleClose}>*/}
-          {/*  <form onSubmit={handleSubmit}>*/}
-          {/*    <DialogTitle>Добавление единицы измерения</DialogTitle>*/}
-          {/*    <DialogContent>*/}
-          {/*      <TextField*/}
-          {/*        autoFocus*/}
-          {/*        margin="dense"*/}
-          {/*        id="name"*/}
-          {/*        value={dialogValue.title}*/}
-          {/*        onChange={(event) =>*/}
-          {/*          setDialogValue({*/}
-          {/*            ...dialogValue,*/}
-          {/*            title: event.target.value,*/}
-          {/*          })*/}
-          {/*        }*/}
-          {/*        label="title"*/}
-          {/*        type="text"*/}
-          {/*        variant="standard"*/}
-          {/*      />*/}
-          {/*      <TextField*/}
-          {/*        margin="dense"*/}
-          {/*        id="name"*/}
-          {/*        value={dialogValue.id}*/}
-          {/*        onChange={(event) =>*/}
-          {/*          setDialogValue({*/}
-          {/*            ...dialogValue,*/}
-          {/*            id: event.target.value,*/}
-          {/*          })*/}
-          {/*        }*/}
-          {/*        label="id"*/}
-          {/*        type="number"*/}
-          {/*        variant="standard"*/}
-          {/*      />*/}
-          {/*    </DialogContent>*/}
-          {/*    <DialogActions>*/}
-          {/*      <Button onClick={handleClose}>Отменить</Button>*/}
-          {/*      <Button type="submit">Добавить</Button>*/}
-          {/*    </DialogActions>*/}
-          {/*  </form>*/}
-          {/*</Dialog>*/}
 
           <FormControl fullWidth>
             <TextField
@@ -268,33 +211,35 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           </FormControl>
 
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Группа</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+            <SelectComponent
+              list={auxiliaryList.groups}
               value={item.group_id}
               label="Группа"
-              sx={{ marginBottom: '15px' }}
-            >
-              {auxiliaryList.groups.map((type, typeIndex) => {
-                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-              })}
-            </Select>
+              field="group_id"
+              setItem={setItem}
+              apiEntity="productGroup"
+            />
           </FormControl>
 
+            {item.type !== 'set' &&
+              <FormControl fullWidth style={{ marginTop: '15px' }}>
+              <InputLabel id="demo-simple-select-label">Основной поставщик</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={item.supplier_id}
+                label="Основной поставщик"
+                sx={{ marginBottom: '15px' }}
+                name="supplier_id"
+                onChange={handleChange}
+              >
+                {auxiliaryList.suppliers.map((type, typeIndex) => {
+                  return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                })}
+              </Select>
+              </FormControl>
+            }
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Основной поставщик</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={item.supplier_id}
-              label="Основной поставщик"
-              sx={{ marginBottom: '15px' }}
-            >
-              {auxiliaryList.suppliers.map((type, typeIndex) => {
-                return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-              })}
-            </Select>
             <TextField
               sx={{marginBottom: '15px'}}
               label="Мин запас:"
@@ -318,94 +263,139 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
             />
           </FormControl>
 
-          <h3>Цвета и размеры</h3>
-          <Button className={styles.button}  variant="outlined">+ Добавить</Button>
+          {item.type === 'product' &&
+            <div>
+            <h3>Цвета и размеры</h3>
+            <Button onClick={handleColorSizeModal} className={styles.button}  variant="outlined">+ Добавить</Button>
+          </div>
+          }
+
+          {item.type === 'set' &&
+            <div>
+              <h3>Состав комплекта</h3>
+              <Button onClick={handleSetModal} className={styles.button}  variant="outlined">+ Добавить</Button>
+            </div>
+          }
+
+          {item.type === 'product' &&
+            <ProductColorSizeTable
+              item={item}
+              setItem={setItem}
+              subItem={subItem}
+              setSubItem={setSubItem}
+              openColorSizeModal={openColorSizeModal}
+              setColorSizeModal={setColorSizeModal}
+            />
+          }
+
+          {item.type === 'set' &&
+            <ProductSetTable
+              item={item}
+              setItem={setItem}
+              subItem={subItem}
+              setSubItem={setSubItem}
+              openColorSizeModal={openColorSizeModal}
+              setColorSizeModal={setColorSizeModal}
+            />
+          }
         </div>}
 
       </div>
 
       <div className={styles.boxesWrapper__information} >
 
-
-        <div>
-          <h4>Цены</h4>
-          {typePriceList.map((priceItem, i) => {
-            return (<div key={i}>
-              <TextField
-                sx={{marginBottom: '15px'}}
-                label="Наименование:"
-                type="text"
-                variant="standard"
-                value={priceItem.name}
-                name="name"
-                onChange={(e) => updateTypePrice(e, i)}
-              />
-              <TextField
-                sx={{marginBottom: '15px', marginLeft: '5px'}}
-                label="0,00"
-                type="number"
-                variant="standard"
-                name="amount"
-                onChange={(e) => updateTypePrice(e, i)}
-              />
-              <FormControl sx={{m: 1, minWidth: 120}}>
-                <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
-                <Select
-                  autoWidth
-                  label="Тип цены:"
-                  name="currency_id"
+        {(( (item.type === 'product' && item.childs?.length === 0) ) ||
+          ( ['set', 'service'].includes(item.type) ))
+          &&
+          <div>
+            <h4>Цены</h4>
+            {typePriceList.map((priceItem, i) => {
+              return (<div key={i}>
+                <TextField
+                  sx={{marginBottom: '15px'}}
+                  label="Наименование:"
+                  type="text"
+                  variant="standard"
+                  value={priceItem.name}
+                  name="name"
                   onChange={(e) => updateTypePrice(e, i)}
-                >
-                  {auxiliaryList.currencies.map((type, typeIndex) => {
-                    return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-                  })}
-                </Select>
-              </FormControl>
+                />
+                <TextField
+                  sx={{marginBottom: '15px', marginLeft: '5px'}}
+                  label="Цена"
+                  type="number"
+                  variant="standard"
+                  value={priceItem.price}
+                  name="price"
+                  onChange={(e) => updateTypePrice(e, i)}
+                />
+                <FormControl sx={{m: 1, minWidth: 120}}>
+                  <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
+                  <Select
+                    autoWidth
+                    label="Тип цены:"
+                    value={priceItem.currency_id}
+                    name="currency_id"
+                    onChange={(e) => updateTypePrice(e, i)}
+                  >
+                    {auxiliaryList.currencies.map((type, typeIndex) => {
+                      return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                    })}
+                  </Select>
+                </FormControl>
 
-              <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
-            </div>)
-          })}
-          <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button>
+                <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
+              </div>)
+            })}
+            <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button>
 
-          <br/>
+            {item.type === 'product' &&
+              <div>
+                <h4 style={{marginTop: '15px'}}>Остатки</h4>
+                {storehouseList.map((storehouse, i) => {
+                  return (<div key={i}>
+                    <TextField
+                      sx={{marginBottom: '15px'}}
+                      label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
+                      type="text"
+                      variant="standard"
+                      value={storehouse.number}
+                      name="number"
+                      onChange={(e) => updateStorehouse(e, i)}
+                    />
+                    <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
+                    <TextField
+                      sx={{marginBottom: '15px', marginLeft: '5px'}}
+                      label="Цена"
+                      type="number"
+                      variant="standard"
+                      value={storehouse.price}
+                      name="price"
+                      onChange={(e) => updateStorehouse(e, i)}
+                    />
+                    <FormControl sx={{m: 1, minWidth: 120}}>
+                      <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
+                      <Select
+                        autoWidth
+                        label="Тип цены:"
+                        value={storehouse.currency_id}
+                        name="currency_id"
+                        onChange={(e) => updateStorehouse(e, i)}
+                      >
+                        {auxiliaryList.currencies.map((type, typeIndex) => {
+                          return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                        })}
+                      </Select>
+                    </FormControl>
 
-          <h4>Остатки</h4>
-          {storehouseList.map((storehouse, i) => {
-            return (<div key={i}>
-              <TextField
-                sx={{marginBottom: '15px'}}
-                label="Наименование:"
-                type="text"
-                variant="standard"
-                value={storehouse.name}
-              />
-              <TextField
-                sx={{marginBottom: '15px', marginLeft: '5px'}}
-                label="0,00"
-                type="number"
-                variant="standard"
-                name="amount"
-                onChange={(e) => updateStorehouse(e, i)}
-              />
-              <FormControl sx={{m: 1, minWidth: 120}}>
-                <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
-                <Select
-                  autoWidth
-                  label="Тип цены:"
-                  name="currency_id"
-                  onChange={(e) => updateStorehouse(e, i)}
-                >
-                  {auxiliaryList.currencies.map((type, typeIndex) => {
-                    return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-                  })}
-                </Select>
-              </FormControl>
+                    <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
+                  </div>)
+                })}
+              </div>
+            }
 
-              <button className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
-            </div>)
-          })}
-        </div>
-
+          </div>
+        }
 
       </div>
     </>
