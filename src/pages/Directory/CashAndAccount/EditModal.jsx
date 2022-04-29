@@ -40,14 +40,17 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const api = new API();
 
   React.useEffect(() => {
+
+    if (cash_and_accounts.cash_accounts_balance.length === 1) {
+      const index = auxiliaryList.currencies.findIndex(data => data.id === cash_and_accounts.cash_accounts_balance[0].currency_id);
+      setAuxiliaryName(auxiliaryList.currencies[index].name);
+    }
+
     cash_and_accounts.forEach((elem) => {
 
       if (elem.id === cashId) {
         const { name, type_order } = elem;
 
-        const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
-
-        setAuxiliaryName(auxiliaryList.currencies[index].name);
         setName(name);
         setType_accounts(type_order);
         setResultBalance(elem.cash_accounts_balance);
