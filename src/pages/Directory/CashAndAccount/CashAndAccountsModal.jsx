@@ -51,9 +51,7 @@ const friendOptions = [
 ]
 
 export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
 
   // Child modal Add
   const [openChildModal, setOpenChildModal] = React.useState(false);
@@ -62,6 +60,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     setType('custom')
     setOpenChildModal(true);
   };
+
   const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
   const [item, setItem] = React.useState({ stream: {} });
@@ -83,8 +82,10 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const updateBalance = (e, index) => {
     const { name, value } = e.target;
+
     balanceList[index][name] = value
     balanceList[index] = Object.assign({}, balanceList[index]);
+    
     setItem(prevItem => ({
       ...prevItem,
       balance: balanceList
@@ -103,6 +104,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     setOpenChildModalPumb(false);
     setOpenChildModalMono(false);
   };
+
   const handleCloseChildModal = () => {
     setOpenChildModal(false);
     clearForm();
@@ -211,12 +213,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
             <div className={styles.modal_subtitle}>Создать счёт и вносить платежи вручную.</div>
             <Button variant="outlined" onClick={handleOpenChildModal} className={styles.modal_addbtn}>Создать счёт</Button>
             <div className={styles.modal_subtitle} style={{ marginBottom: '20px' }}>или подтягивать автоматически</div>
-            {/* <div className={styles.modal_buttons}>
-              <Button variant="contained" className={styles.modal_bankbtn}>MonoBank</Button>
-              <Button variant="contained" className={styles.modal_bankbtn}>Privat 24</Button>
-              <Button variant="contained" className={styles.modal_bankbtn}>Privat 24bank</Button>
-              <Button variant="contained" color="success" className={styles.modal_bankbtn}>ПУМБ</Button>
-            </div> */}
             <Dropdown
               placeholder='Выберите банк'
               fluid
@@ -352,6 +348,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
             </Modal>
           </React.Fragment>
           {/* добавление нового счета приват банка для физ лиц*/}
+          
           <React.Fragment>
             <Modal
               hideBackdrop
@@ -371,34 +368,12 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   name="name"
                   onChange={handleChangeField}
                 />
-                <TextField
-                  sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="IP адрес:"
-                  multiline maxRows={2}
-                  variant="standard"
-                  value={item.stream.ip}
-                  name="ip"
-                  onChange={handleChangeStreamField}
-                />
-                <TextField
-                  sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Merchant id:" multiline maxRows={2}
-                  variant="standard"
-                  value={item.stream.merchant_id}
-                  name="merchant_id"
-                  onChange={handleChangeStreamField}
-                />
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Номер карты:"
                   type="number"
                   variant="standard"
                   value={item.stream.card_number}
                   name="card_number"
-                  onChange={handleChangeStreamField}
-                />
-                <TextField
-                  sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Пароль:" multiline maxRows={2}
-                  variant="standard"
-                  value={item.stream.password}
-                  name="password"
                   onChange={handleChangeStreamField}
                 />
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
