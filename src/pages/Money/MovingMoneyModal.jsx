@@ -59,11 +59,23 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
     // eslint-disable-next-line
   }, [open])
 
+  const formatField = (value) => {
+    let n;
+    let h = parseInt(value);
+    if(!isNaN(h)) {
+      n = h;
+    } else {
+      n = value;
+    }
+    return n;
+  };
+
   const handleChange = e => {
     const { name, value } = e.target;
+    let v = formatField(value);
     setItem(prevItem => ({
       ...prevItem,
-      [name]: value
+      [name]: v
     }));
   };
 
@@ -78,7 +90,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
 
   const handleAdd = () => {
     api.add(item, 'moneyMoving').then(data => {
-      if (data.status === "error") return alert(data.message)
+      if (data.status === "error") return console.log(data.message)
       setOpen(false);
     })
 
@@ -106,7 +118,14 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="from_cash_account_id"
               onChange={handleChange}
             >
-              <MenuItem value={1} >Тестовый Отправитель</MenuItem>
+              {auxiliaryList.cash_accounts.map((item, index) => (
+                <MenuItem
+                  key={item.id}
+                  value={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -120,7 +139,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               name="to_cash_account_id"
               onChange={handleChange}
             >
-              {auxiliaryList.items.map((item, index) => (
+              {auxiliaryList.cash_accounts.map((item, index) => (
                 <MenuItem
                   key={item.id}
                   value={item.id}

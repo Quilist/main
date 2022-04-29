@@ -18,6 +18,16 @@ export default function SelectComponent({list, value, label, setItem, field, api
     // eslint-disable-next-line
   }, [list])
 
+  React.useEffect(() => {
+    if(value) {
+      const listIndex = list.findIndex((listItem) => listItem.id === value)
+      if (listIndex !== -1) {
+        setState({name: list[listIndex].name, id: value })
+      }
+    }
+    // eslint-disable-next-line
+  }, [value])
+
   const handleChange = (value) => {
     setItem(prevItem => ({
       ...prevItem,
