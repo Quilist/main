@@ -85,7 +85,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     balanceList[index][name] = value
     balanceList[index] = Object.assign({}, balanceList[index]);
-    
+
     setItem(prevItem => ({
       ...prevItem,
       balance: balanceList
@@ -119,11 +119,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleAdd = async () => {
     api.add(item, 'cashAndAccount').then(res => {
-      if (res.status === "error") alert("error");
-      else {
-        setOpen(false);
-        clearForm();
-      }
+      if (res.status === "error") return alert(res.message);
+      setOpen(false);
+      clearForm();
     })
   }
 
@@ -351,7 +349,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
             </Modal>
           </React.Fragment>
           {/* добавление нового счета приват банка для физ лиц*/}
-          
+
           <React.Fragment>
             <Modal
               hideBackdrop

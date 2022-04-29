@@ -51,12 +51,14 @@ export default function CashAndAccount() {
    };
 
    React.useEffect(() => {
-      api.auxiliary('cashAndAccount').then(data => {
-         if (data.status === "error") alert(data.message)
-         else setAuxiliaryList(data.message)
-      })
+      if (open === false && openEditModal === false) {
+         api.auxiliary('cashAndAccount').then(data => {
+            if (data.status === "error") alert(data.message)
+            else setAuxiliaryList(data.message)
+         })
+      }
       // eslint-disable-next-line
-   }, []);
+   }, [openEditModal]);
 
    React.useEffect(() => {
       if (open === false && openEditModal === false) {
@@ -126,7 +128,7 @@ export default function CashAndAccount() {
                                           {row.type_order === "cash" ? 'Касса' : 'Счёт'}
                                        </TableCell>
                                        <TableCell className={styles.table__body} align={'right'}>
-                                          {balance.length < 4 ? balance.join(", ") : `${balance.join(", ")}...`}
+                                          {row.cash_accounts_balance < 5 ? balance.join(", ") : `${balance.join(", ")}...`}
                                        </TableCell>
                                     </TableRow>
                                  );
