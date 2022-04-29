@@ -56,14 +56,19 @@ export default function CashAndAccount() {
             if (data.status === "error") alert(data.message)
             else setRows(data.message.items)
          })
-         
-         api.auxiliary('cashAndAccount').then(data => {
-            if (data.status === "error") alert(data.message)
-            else setAuxiliaryList(data.message)
-         })
       }
       // eslint-disable-next-line
    }, [openEditModal, open]);
+   
+   React.useEffect(() => {
+      if (open === false && openEditModal === false) {
+         api.all('cashAndAccount').then(data => {
+            if (data.status === "error") alert(data.message)
+            else setRows(data.message.items)
+         })
+      }
+      // eslint-disable-next-line
+   }, [open]);
 
    return (
       <>
