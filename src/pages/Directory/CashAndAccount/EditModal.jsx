@@ -31,6 +31,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
   const [type_accounts, setType_accounts] = React.useState('');
 
   const [resultBalance, setResultBalance] = React.useState([]);
+  const [auxiliaryName, setAuxiliaryName] = React.useState('');
 
   const handleCloseChildModal = () => {
     setOpenEditModal(false);
@@ -44,6 +45,9 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
       if (elem.id === cashId) {
         const { name, type_order } = elem;
 
+        const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
+
+        setAuxiliaryName(auxiliaryList.currencies[index].name);
         setName(name);
         setType_accounts(type_order);
         setResultBalance(elem.cash_accounts_balance);
@@ -93,7 +97,7 @@ export default function EditModal({ open, setOpenEditModal, cashId, cash_and_acc
               <TextField sx={{ marginBottom: '30px', width: '70%' }}
                 disabled
                 label="Валюта"
-                value={resultBalance[0].name || ""}
+                value={auxiliaryName || ""}
                 variant="standard"
               />
               <TextField sx={{ marginBottom: '30px', width: '70%' }}

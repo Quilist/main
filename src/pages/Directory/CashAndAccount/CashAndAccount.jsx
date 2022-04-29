@@ -114,7 +114,7 @@ export default function CashAndAccount() {
                                  const balance = arr.map(elem => {
                                     const index = auxiliaryList.currencies.findIndex(data => data.id === elem.currency_id);
 
-                                    return `${elem.balance} ${auxiliaryList.currencies[index].name}`
+                                    return `${Number(elem.balance).toFixed(2)} ${auxiliaryList.currencies[index].name}`
                                  });
 
                                  return (
