@@ -51,15 +51,13 @@ export default function CashAndAccount() {
    };
 
    React.useEffect(() => {
-      if (open === false && openEditModal === false) {
-         api.all('cashAndAccount').then(data => {
-            if (data.status === "error") alert(data.message)
-            else setRows(data.message.items)
-         })
-      }
+      api.auxiliary('cashAndAccount').then(data => {
+         if (data.status === "error") alert(data.message)
+         else setAuxiliaryList(data.message)
+      })
       // eslint-disable-next-line
-   }, [openEditModal, open]);
-   
+   }, [open]);
+
    React.useEffect(() => {
       if (open === false && openEditModal === false) {
          api.all('cashAndAccount').then(data => {
@@ -68,7 +66,7 @@ export default function CashAndAccount() {
          })
       }
       // eslint-disable-next-line
-   }, [open]);
+   }, [openEditModal, open]);
 
    return (
       <>
