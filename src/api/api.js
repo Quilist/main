@@ -28,8 +28,8 @@ class API {
             productGroup: '/products_groups',
             productColor: '/products_colors',
             productSize: '/products_sizes',
-            moneyExchange: '/money/currency_exchange',
-            moneyMoving: '/money/moving_money',
+            moneyExchange: '/currency_exchange',
+            moneyMoving: '/moving_money',
         }
 
         return types[type];

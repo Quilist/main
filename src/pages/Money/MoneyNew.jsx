@@ -521,12 +521,12 @@ export default function EnhancedTable() {
                        }}
                     >
                     <div className="table__figure">
-                      { item.type.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      { item.type && item.type.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                               d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
                               fill="#45D064" />
                       </svg> }
-                      { item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      { item.type && item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727"/>
                       </svg> }
                     </div>
@@ -535,13 +535,13 @@ export default function EnhancedTable() {
                         <p>{item.type_item ? item.type_item.name : ''}</p>
                         :
                         <p>
-                          <a href="#!">
+                          {item.type && <a href="#!">
                             Установить
-                          </a>
+                          </a> }
                         </p>
                       }
                       <p>
-                        {item.cash_account.name}
+                        {item.cash_account?.name}
                       </p>
                     </div>
                     <div className="table__data">
@@ -559,7 +559,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__account">
                       <p>
-                        {item.cash_account.name}
+                        {item.cash_account?.name}
                       </p>
                     </div>
                     <div className="table__counterparty">
@@ -567,9 +567,9 @@ export default function EnhancedTable() {
                         <p>{item.type_item ? item.type_item.name : ''}</p>
                         :
                         <p>
-                          <a href="#!">
+                          {item.type && <a href="#!">
                             Установить
-                          </a>
+                          </a> }
                         </p>
                       }
                     </div>

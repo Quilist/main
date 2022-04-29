@@ -94,7 +94,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   const handleAdd = () => {
 
     api.add(item, 'moneyExchange').then(data => {
-      if (data.status === "error") return alert(data.message)
+      if (data.status === "error") return console.log(data.message)
       setOpen(false);
     })
 

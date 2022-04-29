@@ -20,7 +20,7 @@ function ProductHandle() {
   const api = new API();
   const { id } = useParams()
 
-  const [item, setItem] = React.useState({price: 100, supplier_id: 1, group_id: 1, measure_id: 1, childs: []});
+  const [item, setItem] = React.useState({type: 'product', childs: []});
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     storehouses: [],
     type_prices: [],
@@ -49,6 +49,12 @@ function ProductHandle() {
     api.auxiliary('product').then(data => {
       if (data.status === "error") alert(data.message)
       else setAuxiliaryList(data.message)
+      if(!id && data.message?.measures.length > 0) {
+        setItem(prevItem => ({
+          ...prevItem,
+          measure_id: data.message.measures[0].id
+        }));
+      }
     })
 
     // eslint-disable-next-line
