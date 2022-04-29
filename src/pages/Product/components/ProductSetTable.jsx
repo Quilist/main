@@ -1,8 +1,9 @@
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import TextField from "@mui/material/TextField";
 
 
-export default function ProductColorSizeTable({item, setItem, subItem, setSubItem, openColorSizeModal, setColorSizeModal}) {
+export default function ProductSetTable({item, setItem, subItem, setSubItem, openColorSizeModal, setColorSizeModal}) {
 
 
   React.useEffect(() => {
@@ -18,9 +19,23 @@ export default function ProductColorSizeTable({item, setItem, subItem, setSubIte
       name: "Количество"
     },
     {
+      name: "Ед. Изм."
+    },
+    {
       name: ""
     }
   ];
+
+  const formatField = (value) => {
+    let n;
+    let h = parseInt(value);
+    if(!isNaN(h)) {
+      n = h;
+    } else {
+      n = value;
+    }
+    return n;
+  };
 
   const fetchMoreData = () => {
     console.log('ok')
@@ -41,6 +56,18 @@ export default function ProductColorSizeTable({item, setItem, subItem, setSubIte
     setItem(prevItem => ({
       ...prevItem,
       childs: item.childs.filter((o, i) => index !== i)
+    }));
+  };
+
+  const updateSetData = (e, index) => {
+    const { name, value } = e.target;
+    let v = formatField(value);
+
+    const list = [...item.childs];
+    list[index][name] = v;
+    setItem(prevItem => ({
+      ...prevItem,
+      childs: list
     }));
   };
 
@@ -73,26 +100,30 @@ export default function ProductColorSizeTable({item, setItem, subItem, setSubIte
                 <div className="table__figure">
 
                 </div>
-                <div className="table__mob" onClick={() => {
-                  goToEdit(item)
-                }}>
+                <div className="table__mob" >
                   <p>
                     {item.name}
                   </p>
                 </div>
-                <div className="table__data" onClick={() => {
-                  goToEdit(item)
-                }}>
+                <div className="table__data" >
                   <p>
                     {item.name}
                   </p>
                 </div>
-                <div className="table__data" onClick={() => {
-                  goToEdit(item)
-                }}>
-                  <p>
-                    {item.min_stock}
-                  </p>
+                <div className="table__data" >
+                  <input type="text"
+                         value={item.min_stock}
+                         className="short-input"
+                         name="min_stock"
+                         onChange={(e) => updateSetData(e, index)}
+                  />
+                  {/*<TextField*/}
+                  {/*  type="text"*/}
+                  {/*  variant="standard"*/}
+                  {/*  value={item.min_stock}*/}
+                  {/*  name="min_stock"*/}
+                  {/*  onChange={(e) => updateSetData(e, index)}*/}
+                  {/*/>*/}
                 </div>
                 <div className="table__data">
                   <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'}

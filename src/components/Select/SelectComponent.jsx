@@ -1,8 +1,30 @@
 import * as React from 'react';
 
 import Select from "react-select";
+import AddItemModal from "./AddItemModal";
 
-export default function SelectComponent() {
+export default function SelectComponent({list, value, label, setItem, field, apiEntity}) {
+  const [options, setOptions] = React.useState([]);
+
+  // Select value
+  const [state, setState] = React.useState({ name: label, id: 0 });
+
+  // Modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+
+  React.useEffect(() => {
+    setOptions(list)
+    // eslint-disable-next-line
+  }, [list])
+
+  const handleChange = (value) => {
+    setItem(prevItem => ({
+      ...prevItem,
+      [field]: value.id
+    }));
+    setState(value)
+  }
 
   const customStyles = {
     option: (provided, state) => ({
@@ -18,32 +40,44 @@ export default function SelectComponent() {
     }
   }
 
-  const options = [
-    { value: '0', label: 'Поставщик', isDisabled: true},
-    { value: 'saab', label: 'Поставщик1' },
-    { value: 'opel', label: 'Поставщик2' },
-    { value: 'audi', label: 'Поставщик3' },
-  ];
-
   const CustomMenuType = ({ innerRef, innerProps, isDisabled, children }) =>
     !isDisabled ? (
       <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
         {children}
         <div className="customReactSelectFooter">
-          <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
-          <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
+          {/*<button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>*/}
+          <button className="btn-link"></button>
+          <button className="btn-add-icon" onClick={handleOpen}></button>
         </div>
       </div>
     ) : null;
 
+  const Modal = () => {
+    return (
+      <>
+        <AddItemModal
+          open={open}
+          setOpen={setOpen}
+          label={label}
+          apiEntity={apiEntity}
+          setOptions={setOptions}
+        />
+      </>
+    )
+  };
+
   return (
     <>
       <div className="select">
+        <Modal />
         <Select
           styles={customStyles}
           options={options}
-          defaultValue={options[0]}
+          getOptionLabel={(option)=>option.name}
+          getOptionValue={(option)=>option.id}
+          value={state}
           components={{Menu: CustomMenuType}}
+          onChange={value => handleChange(value)}
           theme={(theme) => ({
             ...theme,
             borderRadius: 12,

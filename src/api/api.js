@@ -26,6 +26,8 @@ class API {
             money: '/money',
             product: '/products',
             productGroup: '/products_groups',
+            productColor: '/products_colors',
+            productSize: '/products_sizes',
             moneyExchange: '/money/currency_exchange',
             moneyMoving: '/money/moving_money',
         }

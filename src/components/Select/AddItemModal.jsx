@@ -21,22 +21,37 @@ const style = {
   pb: 3,
 };
 
-export default function MeasureModal({ open, setOpen }) {
+export default function AddItemModal({ open, setOpen, label, apiEntity, setOptions }) {
   const handleClose = () => setOpen(false);
   const [name, setName] = React.useState('');
   const api = new API();
 
-  const handleAdd = () => {
+  const formatField = (value) => {
+    let n;
+    let h = parseInt(value);
+    if(!isNaN(h)) {
+      n = h;
+    } else {
+      n = value;
+    }
+    return n;
+  };
+
+  const handleAdd = async () => {
     const body = {
-      name: name
+      name: formatField(name)
     }
 
-    api.add(body, 'measure').then(data => {
+    await api.add(body, apiEntity).then(data => {
       if (data.status === "error") return alert(data.message)
       setName('');
       setOpen(false);
     })
 
+    await api.all(apiEntity).then(data => {
+      if (data.status === "error") alert(data.message)
+      else setOptions(data.message.items)
+    })
   }
 
   return (
@@ -49,7 +64,7 @@ export default function MeasureModal({ open, setOpen }) {
       >
         <Box className={styles.modal} sx={style}>
           <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Добавление единицы измерения</div>
+          <div className={styles.modal_title}>{label}</div>
 
           <TextField sx={{ marginBottom: '30px', width: '70%' }} value={name} onChange={(e) => setName(e.target.value)}
                      label="Наименование:"
