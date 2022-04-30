@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom'
-import useEmployeeId from '@/hooks/useEmployeeId';
+import { useNavigate, useParams } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import EmployeeRights from './EmployeeRights';
 import InformationEmployee from './InformationEmployee';
@@ -10,16 +9,14 @@ import API from '@/api/api'
 import styles from '@/styles/modules/employeeEditing.module.css';
 
 const EmployeesEditing = () => {
-  const { employeeId } = useEmployeeId();
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = React.useState(null)
   const [isRedirect, setIsRedirect] = React.useState(false)
   // =====================================
   const api = new API();
+  const { id } = useParams()
 
   useDocumentTitle("Изменить сотрудника");
-
-  let isAdd = employeeId === 'Add';
 
   // ========================================
   const [employee, setEmployee] = React.useState({});
@@ -59,12 +56,12 @@ const EmployeesEditing = () => {
     ['изменить оплату на расходы', 0],
     ['удалить оплату на расходы', 0]
   ];
-  const [add_order_supplier, setAdd_order_supplier] = React.useState(employeeId === 0 || isAdd ? defaultOrderSupplier : null);
+  const [add_order_supplier, setAdd_order_supplier] = React.useState(id === 0 || !id ? defaultOrderSupplier : null);
 
   React.useEffect(() => {
-    if (!isAdd) {
+    if (id) {
       //=====================================================
-      api.find(employeeId, 'employee').then(data => {
+      api.find(id, 'employee').then(data => {
         const { f_name, s_name, mobile, mail, password, id_role, order_supplier } = data.message;
         setF_Name(f_name)
         setS_Name(s_name)
@@ -88,7 +85,7 @@ const EmployeesEditing = () => {
 
   // ======================================================================
   const handleAdd = () => {
-    employeeId !== 0 ? setIsSuccess('добавили пользователя') : setIsSuccess('')
+    id !== 0 ? setIsSuccess('добавили пользователя') : setIsSuccess('')
 
     setTimeout(() => {
       const body = Object.assign({}, employee);
@@ -102,7 +99,7 @@ const EmployeesEditing = () => {
 
       // =======================================
       api.add(body, 'employee').then(data => {
-        if (data.status === "error") return alert(data.message)
+        if (data.status === "error") return console.log(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
       })
@@ -111,10 +108,10 @@ const EmployeesEditing = () => {
   }
 
   const handleRemove = () => {
-    employeeId !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
+    id !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
     setTimeout(() => {
       // =================================
-      api.remove(employeeId, 'employee').then(data => {
+      api.remove(id, 'employee').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -124,7 +121,7 @@ const EmployeesEditing = () => {
   }
 
   const handleChoose = () => {
-    employeeId !== 0 ? setIsSuccess('изменили пользователя') : setIsSuccess('')
+    id !== 0 ? setIsSuccess('изменили пользователя') : setIsSuccess('')
     setTimeout(() => {
       const body = Object.assign({}, employee);
       body.f_name = f_name;
@@ -136,7 +133,7 @@ const EmployeesEditing = () => {
       body.add_order_supplier = add_order_supplier;
 
       // ====================================
-      api.edit(employeeId, body, 'employee').then(data => {
+      api.edit(id, body, 'employee').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -155,7 +152,7 @@ const EmployeesEditing = () => {
       <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
         <div className={styles.buttonsWrapper}>
           <div className={styles.main_btns}>
-            <Button onClick={isAdd ? handleAdd : handleChoose} className={styles.button} variant="contained">Сохранить</Button>
+            <Button onClick={!id ? handleAdd : handleChoose} className={styles.button} variant="contained">Сохранить</Button>
           </div>
         </div>
         {isSuccess &&
@@ -192,7 +189,7 @@ const EmployeesEditing = () => {
         </div>
         <div className={styles.buttonsWrapper} style={{ marginTop: '20px' }}>
           <div className={styles.main_btns}>
-            {!isAdd && <Button onClick={handleRemove} className={styles.button} variant="contained">Удалить</Button>}
+            {id && <Button onClick={handleRemove} className={styles.button} variant="contained">Удалить</Button>}
           </div>
           <div>
             <Button onClick={handleReturn} className={styles.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Отмена</Button>

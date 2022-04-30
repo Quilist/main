@@ -159,14 +159,16 @@ function App() {
 
 
             {/* Обработка клиентов */}
-            <Route path="/editing" element={<> <AppLayout component={<UserEditing />} /> </>} />
+            <Route path="/clients/create" element={<> <AppLayout component={<UserEditing />} /> </>} />
+            <Route path="/clients/:id" element={<> <AppLayout component={<UserEditing />} /> </>} />
             <Route path="/import_clients" element={<> <AppLayout component={<ImportClient />} /> </>} />
 
             {/* Обработка поставщиков */}
             <Route path="/editing_supplier" element={<> <AppLayout component={<SupplierEditing />} /> </>} />
 
             {/* Обработка сотрудников  */}
-            <Route path="/employees_editing" element={<> <AppLayout component={<EmployeesEditing />} /> </>} />
+            <Route path="/employees/create" element={<> <AppLayout component={<EmployeesEditing />} /> </>} />
+            <Route path="/employees/:id" element={<> <AppLayout component={<EmployeesEditing />} /> </>} />
 
             {/* Обработка моих юрлиц */}
             <Route path="/editing_legal_entities" element={<> <AppLayout component={<LegalEntityEditing />} /> </>} />

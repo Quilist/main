@@ -179,7 +179,7 @@ const EnhancedTableToolbar = (props) => {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (isRedirect) {
-      navigate("/editing");
+      navigate("/clients/create");
     }
     // eslint-disable-next-line
   }, [isRedirect]);
@@ -358,13 +358,14 @@ export default function EnhancedTable() {
   const handleRedirect = (id) => {
     setUserId(id)
     setIsRedirect(true);
+    navigate("/clients/"+id);
   };
-  React.useEffect(() => {
-    if (isRedirect) {
-      navigate("/editing");
-    }
-    // eslint-disable-next-line
-  }, [isRedirect]);
+  // React.useEffect(() => {
+  //   if (isRedirect) {
+  //     navigate("/clients");
+  //   }
+  //   // eslint-disable-next-line
+  // }, [isRedirect]);
 
   // ACTIONS 
   const [anchorEl, setAnchorEl] = React.useState(null);

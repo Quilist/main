@@ -29,8 +29,11 @@ const style = {
   pb: 3,
 };
 
-export default function CurrencyExchangeModal({ open, setOpen }) {
-  const handleClose = () => setOpen(false);
+export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
+  const handleClose = () => {
+    setId(null);
+    setOpen(false);
+  };
   const [item, setItem] = React.useState({});
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     cash_accounts: [],
@@ -39,6 +42,15 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
     items: []
   });
   const api = new API();
+
+  React.useEffect(() => {
+    if(id) {
+      api.find(id, 'moneyExchange').then(data => {
+        if (data.status === "error") alert(data.message)
+        else setItem(data.message);
+      })
+    }
+  }, [id])
 
   React.useEffect(() => {
     const params = {
@@ -61,7 +73,6 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   }, [open])
 
   const handleChange = e => {
-    console.log('e.target', e.target)
     const { name, value } = e.target;
     if ((name === 'exchange_rate' && item.amount_pay) || name === 'amount_pay') {
       let amountReceive;
@@ -92,12 +103,19 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   }
 
   const handleAdd = () => {
-
-    api.add(item, 'moneyExchange').then(data => {
-      if (data.status === "error") return console.log(data.message)
-      setOpen(false);
-    })
-
+    if(!id) {
+      api.add(item, 'moneyExchange').then(data => {
+        if (data.status === "error") return console.log(data.message)
+        setId(null);
+        setOpen(false);
+      })
+    } else {
+      api.edit(id, item, 'moneyExchange').then(data => {
+        if (data.status === "error") return console.log(data.message)
+        setId(null);
+        setOpen(false);
+      })
+    }
   }
 
   return (
@@ -119,7 +137,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               id="demo-simple-select"
               label="Касса"
               sx={{ marginBottom: '15px' }}
-              value={item.cash_account_id}
+              value={item.cash_account_id || null}
               name="cash_account_id"
               onChange={handleChange}
             >
@@ -140,7 +158,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               autoWidth
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
-              value={item.from_currency_id}
+              value={item.from_currency_id || null}
               name="from_currency_id"
               onChange={handleChange}
             >
@@ -160,7 +178,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               autoWidth
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
-              value={item.to_currency_id}
+              value={item.to_currency_id || null}
               name="to_currency_id"
               onChange={handleChange}
             >

@@ -28,8 +28,11 @@ const style = {
   pb: 3,
 };
 
-export default function CurrencyExchangeModal({ open, setOpen }) {
-  const handleClose = () => setOpen(false);
+export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
+  const handleClose = () => {
+    setId(null);
+    setOpen(false);
+  }
   const [item, setItem] = React.useState({});
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     cash_accounts: [],
@@ -38,6 +41,15 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
     items: []
   });
   const api = new API();
+
+  React.useEffect(() => {
+    if(id) {
+      api.find(id, 'moneyMoving').then(data => {
+        if (data.status === "error") alert(data.message)
+        else setItem(data.message);
+      })
+    }
+  }, [id])
 
   React.useEffect(() => {
     const params = {
@@ -89,11 +101,19 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
   }
 
   const handleAdd = () => {
-    api.add(item, 'moneyMoving').then(data => {
-      if (data.status === "error") return console.log(data.message)
-      setOpen(false);
-    })
-
+    if(!id) {
+      api.add(item, 'moneyMoving').then(data => {
+        if (data.status === "error") return console.log(data.message)
+        setId(null);
+        setOpen(false);
+      })
+    } else {
+      api.edit(id, item, 'moneyMoving').then(data => {
+        if (data.status === "error") return console.log(data.message)
+        setId(null);
+        setOpen(false);
+      })
+    }
   }
 
   return (
@@ -116,6 +136,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               label="Отправитель"
               sx={{ marginBottom: '15px' }}
               name="from_cash_account_id"
+              value={item.from_cash_account_id || null}
               onChange={handleChange}
             >
               {auxiliaryList.cash_accounts.map((item, index) => (
@@ -137,6 +158,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               label="Отправитель"
               sx={{ marginBottom: '15px' }}
               name="to_cash_account_id"
+              value={item.to_cash_account_id || null}
               onChange={handleChange}
             >
               {auxiliaryList.cash_accounts.map((item, index) => (
@@ -157,6 +179,7 @@ export default function CurrencyExchangeModal({ open, setOpen }) {
               label="Валюта:"
               sx={{ marginBottom: '15px' }}
               name="currency_id"
+              value={item.currency_id || null}
               onChange={handleChange}
             >
               {auxiliaryList.currencies.map((item, index) => (

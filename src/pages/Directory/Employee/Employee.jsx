@@ -39,19 +39,21 @@ export default function Employee() {
    const { setEmployeeId } = useEmployeeId();
    const navigate = useNavigate();
 
-   React.useEffect(() => {
-      if (isRedirect) {
-         navigate('/employees_editing')
-      }
-      // eslint-disable-next-line
-   }, [isRedirect])
+   // React.useEffect(() => {
+   //    if (isRedirect) {
+   //       navigate('/employees/create')
+   //    }
+   //    // eslint-disable-next-line
+   // }, [isRedirect])
    const handleNavigate = (id) => {
       setEmployeeId(id);
       setIsRedirect(true);
+      navigate('/employees/'+id)
    }
    const handleAdd = () => {
       setEmployeeId('Add');
       setIsRedirect(true);
+      navigate('/employees/create')
    }
 
    const handleChangePage = (event, newPage) => {

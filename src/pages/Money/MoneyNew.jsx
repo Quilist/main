@@ -29,10 +29,11 @@ export default function EnhancedTable() {
   const [open, setIsOpen] = React.useState(false);
   // eslint-disable-next-line
   const [items, setItems] = React.useState([])
-  const handleOpenCurrencyExchangeModal = () => setOpenCurrencyExchangeModal(true);
-  const handleOpenMovingMoney = () => setOpenMovingMoney(true);
+
   const [openCurrencyExchangeModal, setOpenCurrencyExchangeModal] = React.useState(false);
   const [openMovingMoney, setOpenMovingMoney] = React.useState(false);
+  const [currencyExchangeId, setCurrencyExchangeId] = React.useState(null);
+  const [movingMoneyId, setMovingMoneyId] = React.useState(null);
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const [cashAccountUserList, setCashAccountUserList] = useState([]);
@@ -40,6 +41,22 @@ export default function EnhancedTable() {
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
+
+  const handleOpenCurrencyExchangeModal = (id) => {
+    setOpenCurrencyExchangeModal(true);
+    let h = parseInt(id);
+    if(!isNaN(h)) {
+      setCurrencyExchangeId(id);
+    }
+  };
+
+  const handleOpenMovingMoney = (id) => {
+    setOpenMovingMoney(true);
+    let h = parseInt(id);
+    if(!isNaN(h)) {
+      setMovingMoneyId(id);
+    }
+  };
 
   useDocumentTitle("Деньги");
 
@@ -167,10 +184,10 @@ export default function EnhancedTable() {
       navigate(`/${item.type}/${item.id}`)
     }
     if(item.amount_receive) {
-      handleOpenCurrencyExchangeModal();
+      handleOpenCurrencyExchangeModal(item.id);
     }
     if(item.to_cash_account_id) {
-      handleOpenMovingMoney();
+      handleOpenMovingMoney(item.id);
     }
   };
 
@@ -297,11 +314,15 @@ export default function EnhancedTable() {
       <CurrencyExchangeModal
         open={openCurrencyExchangeModal}
         setOpen={setOpenCurrencyExchangeModal}
+        id={currencyExchangeId}
+        setId={setCurrencyExchangeId}
       />
 
       <MovingMoneyModal
         open={openMovingMoney}
         setOpen={setOpenMovingMoney}
+        id={movingMoneyId}
+        setId={setMovingMoneyId}
       />
 
       <CashAndAccountsModal
