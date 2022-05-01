@@ -11,7 +11,6 @@
 
 .burger-menu {
     display: flex;
-
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -74,6 +73,7 @@
     background: #7196ff;
     z-index: 100;
     transition: all 0.5s ease;
+    padding-bottom: 80px;
 }
 
 .sidebar.close {
@@ -119,10 +119,9 @@
 .sidebar .nav-links {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    padding: 5px 0 230px 0;
     overflow: auto;
+    height: 100%;
+    padding-bottom: 40px;
 }
 
 .sidebar.close .nav-links {
@@ -135,6 +134,10 @@
 }
 
 .sidebar .nav-links::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar::-webkit-scrollbar {
     display: none;
 }
 
@@ -166,7 +169,6 @@
     min-width: 40px;
     text-align: center;
     line-height: 40px;
-
     color: #fff;
     font-size: 20px;
     cursor: pointer;
@@ -204,6 +206,15 @@
     transition: all 0.4s ease;
 }
 
+.sidebar .default-links {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sidebar .default-links .link_name {
+    font-size: 14px!important;
+}
+
 .sidebar.close .nav-links li a .link_name {
     opacity: 0;
     pointer-events: none;
@@ -214,6 +225,8 @@
     padding: 6px 6px 14px 60px;
     background: #4369cf;
     display: none;
+    overflow-y: auto;
+    max-height: 200px;
 }
 
 .sidebar .nav-links li.showMenu .sub-menu {
@@ -433,9 +446,8 @@
         left: -78px;
     }
     .sidebar {
-        transform: scaleX(78px);
         width: 75vw;
-        top: 106px;
+        top: 60px;
     }
     .sidebar .nav-links {
         padding-top: 0px;
