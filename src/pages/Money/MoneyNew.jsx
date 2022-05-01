@@ -38,7 +38,7 @@ export default function EnhancedTable() {
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const [cashAccountUserList, setCashAccountUserList] = useState([]);
-  const [queryParams, setQueryParams] = useState({ date_from: moment().startOf('day').valueOf(), date_to: moment().endOf('day').valueOf(), search: null });
+  const [queryParams, setQueryParams] = useState({ date_from: moment().startOf('day').valueOf(), date_to: moment().endOf('day').valueOf() });
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
