@@ -142,6 +142,7 @@ export default function Sidebar() {
       <ClickAwayListener onClickAway={(e) => handleClickAway(e)}>
         <div className={isActiveSidebar ? "sidebar close" : "sidebar"}>
           <div className={isActiveSidebar ? "burger-menu burger" : "burger-menu cross"}>
+             <p className={isActiveSidebar ? 'sidebar-title hidden' : 'sidebar-title '}>Меню</p>
             <img src={burgerImg} onClick={toggleSidebar} className={isActiveSidebar ? 'burger-menu__img' : 'icon-hide'} alt="burgerMenu" />
             <img src={crossImg} onClick={toggleSidebar} className={!isActiveSidebar ? "cross-menu__img" : "icon-hide"} alt="cross" />
           </div>
