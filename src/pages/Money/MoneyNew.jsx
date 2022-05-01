@@ -23,6 +23,7 @@ import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import moment from 'moment';
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useSelector } from "react-redux";
 
 export default function EnhancedTable() {
   const [isOpen, setOpen] = useState('dropdown');
@@ -37,7 +38,7 @@ export default function EnhancedTable() {
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const [cashAccountUserList, setCashAccountUserList] = useState([]);
-  const [queryParams, setQueryParams] = useState({});
+  const [queryParams, setQueryParams] = useState({ date_from: moment().startOf('day').valueOf(), date_to: moment().endOf('day').valueOf(), search: null });
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
@@ -101,6 +102,14 @@ export default function EnhancedTable() {
       else setCashAccountUserList(data.message.items)
     })
   };
+
+  const search = useSelector((state) => state);
+
+  React.useEffect(() => {
+    searchData(search.searchReducer);
+    // eslint-disable-next-line
+  }, [search])
+
   React.useEffect(() => {
     getAll();
     // eslint-disable-next-line
@@ -274,11 +283,10 @@ export default function EnhancedTable() {
     return amountList;
   };
 
-  const searchData = (e) => {
-    const { value } = e.target;
+  const searchData = (search) => {
     setQueryParams(prevItem => ({
       ...prevItem,
-      search: value,
+      search: search,
     }));
   };
 
@@ -357,12 +365,6 @@ export default function EnhancedTable() {
                   fill="#AFC2FF" />
               </svg>
             </a>
-          </div>
-          <div className="wrapper__search" style={{ marginLeft: '11px' }}>
-            <form>
-              <input type="text" placeholder="Поиск" onInput={searchData} />
-              <button type="submit"></button>
-            </form>
           </div>
           <div className="wrapper__filters">
             <a href="#!" className="wrapper__create" onClick={handleOpen} ref={anchorRef}>
@@ -526,7 +528,7 @@ export default function EnhancedTable() {
               dataLength={items.length}
               next={fetchMoreData}
               hasMore={true}
-              loader={<h4>Загрузка(тут спинер)...</h4>}
+              loader={<b><i>Нету данных</i></b>}
               height={470}
               endMessage={
                 <p style={{ textAlign: "center" }}>

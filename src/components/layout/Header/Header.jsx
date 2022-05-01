@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
-
+import { createStore, combineReducers } from 'redux'
 import AcceptImg from './img/Accept.png';
 import BuyImg from './img/Buy.png';
 import IntervezationImg from './img/Intervezation.png';
@@ -26,6 +26,9 @@ import MenuList from '@mui/material/MenuList';
 import styles from './Header.module.css'
 import Sidebar from "@/components/layout/Sidebar/Sidebar";
 import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import {addSearch} from "@/store/actions";
+import searchReducer from "@/store/reducers/searchReducer";
 
 const payOptions = [
   { name: 'Поставщику', link: '/pay_supplier' },
@@ -62,6 +65,13 @@ const Header = () => {
   const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
   const [headerTitle, setHeaderTitle] = React.useState( '');
   const target = document.querySelector('head > title');
+  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+
+  const handleSearch = (text) => {
+    setSearchValue(text);
+    dispatch(addSearch(text))
+  };
 
   if(target.textContent) {
     setTimeout(function(){
@@ -339,7 +349,11 @@ const Header = () => {
             </ul>
             <div className="wrapper__search">
               <form>
-                <input type="text" placeholder="Поиск" />
+                <input type="text"
+                       placeholder="Поиск"
+                       value={searchValue}
+                       onChange={(e) => handleSearch(e.target.value)}
+                />
                 <button type="submit"></button>
               </form>
             </div>
