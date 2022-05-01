@@ -47,6 +47,9 @@ import ImportOfGoods from '@/pages/Product/ImportOfGoods';
 import Revaluation from '@/pages/Product/Revaluation';
 import SavePriceList from '@/pages/Product/SavePriceList';
 
+import ReturnSell from '@/pages/pagesOfHeader/sell/PageSellReturn';
+import ReturnBuy from '@/pages/pagesOfHeader/buy/BuyCreateReturn';
+
 // справочник
 import DirectoryCategory from '@/pages/Directory/DirectoryCategory/DirectoryCategory'
 import LegalEntity from '@/pages/Directory/LegalEntity/LegalEntity'
@@ -228,6 +231,10 @@ function App() {
             {/* Политика безопасности */}
             <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<> <AppLayout component={<PolitikaKonfidentsialnostiFacebook />} /> </>} />
             <Route path="/instructions-for-deleting-user-data" element={<> <AppLayout component={<InstructionsForDeletingUserData />} /> </>} />
+           
+            {/* Возврат */}
+            <Route path="/return/sell" element={<> <AppLayout component={<ReturnSell />} /> </>} />
+            <Route path="/return/buy" element={<> <AppLayout component={<ReturnBuy />} /> </>} />
 
           </Routes>
         </Router>
