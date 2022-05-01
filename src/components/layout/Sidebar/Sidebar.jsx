@@ -1,4 +1,3 @@
-
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
@@ -44,12 +43,23 @@ export default function Sidebar() {
         setActiveSidebar(true)
       }
     }
+    if(window.screen.width < 992 && isActiveSidebar){
+      document.body.classList.remove('fixed');
+    } else if (window.screen.width < 992) {
+      document.body.classList.add('fixed');
+    }
   }
 
   const handleSidebarMenuClick = (e) => {
-    const subListData = ['link_name sub', 'bx bxs-chevron-down arrow'];
-    if(!subListData.includes(e.target.className)) {
+    const subListData = ['link_name sub', 'bx bxs-chevron-down arrow', 'default-links'];
+    if (!subListData.includes(e.target.className) && e.target.className.split(" ")[0] !== 'MuiAvatar-img') {
       setActiveSidebar(true)
+
+      if (window.screen.width < 992 && isActiveSidebar) {
+        document.body.classList.add('fixed');
+      } else if (window.screen.width < 992) {
+        document.body.classList.remove('fixed');
+      }
     }
   };
 
@@ -60,6 +70,11 @@ export default function Sidebar() {
   const toggleSidebar = (e) => {
     e.preventDefault();
     setActiveSidebar(!isActiveSidebar)
+    if (window.screen.width < 992 && isActiveSidebar) {
+      document.body.classList.add('fixed');
+    } else if (window.screen.width < 992) {
+      document.body.classList.remove('fixed');
+    }
   };
 
   const handleSearchState = () => {
@@ -98,14 +113,9 @@ export default function Sidebar() {
       {/*  <img onClick={signUp} className={isActive ? "arrowImg" : "arrowImg active"} src={arrowImg} alt="arrow" />*/}
       {/*  <span className="page__title">{title}</span>*/}
       {/*</div>*/}
+      <div onClickAway={(e) => handleClickAway(e)} className={isActiveSidebar ? 'overflow-block hidden' : 'overflow-block'}></div>
       <div className={searchState}>
-        <Link to="#" className="menu-gumb" onClick={toggleSidebar}>
-          <div className="button_container" >
-            <span className="top"></span>
-            <span className="middle"></span>
-            <span className="bottom"></span>
-          </div>
-        </Link>
+      <button type="button" className="menu-gumb" onClick={toggleSidebar}></button>
         <Link to="#" className="navigation__logo">
           {headerTitle}
         </Link>
@@ -183,7 +193,7 @@ export default function Sidebar() {
                 </Link>
                 <ul className="sub-menu blank">
                   <li>
-                    <Link className="link_name" to="/productsAndService">
+                    <Link className="link_name" to="/products">
                       Товары и услуги
                     </Link>
                   </li>
