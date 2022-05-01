@@ -53,7 +53,6 @@ export default function MeasureEditModal({ open, setOpenEditModal, id }) {
       if (data.status === "error") return alert(data.message)
       handleCloseModal();
     })
-
   }
 
   return (
