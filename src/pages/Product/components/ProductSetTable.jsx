@@ -101,14 +101,18 @@ export default function ProductSetTable({item, setItem, subItem, setSubItem, ope
 
                 </div>
                 <div className="table__mob" >
-                  <p>
-                    {item.name}
-                  </p>
+                  {
+                    (item.name)
+                      ? <p> {item.name} </p>
+                      : <p> {item.product_child?.name} </p>
+                  }
                 </div>
                 <div className="table__data" >
-                  <p>
-                    {item.name}
-                  </p>
+                  {
+                    (item.name)
+                      ? <p> {item.name} </p>
+                      : <p> {item.product_child?.name} </p>
+                  }
                 </div>
                 <div className="table__data" >
                   <input type="text"
@@ -117,13 +121,6 @@ export default function ProductSetTable({item, setItem, subItem, setSubItem, ope
                          name="min_stock"
                          onChange={(e) => updateSetData(e, index)}
                   />
-                  {/*<TextField*/}
-                  {/*  type="text"*/}
-                  {/*  variant="standard"*/}
-                  {/*  value={item.min_stock}*/}
-                  {/*  name="min_stock"*/}
-                  {/*  onChange={(e) => updateSetData(e, index)}*/}
-                  {/*/>*/}
                 </div>
                 <div className="table__data">
                   <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'}

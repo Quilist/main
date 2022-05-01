@@ -34,9 +34,41 @@ const style = {
   height: '40%'
 };
 
-export default function ProductSetModal({ open, setOpen, item, setItem, auxiliaryList }) {
+export default function ProductSetModal({ open, setOpen, item, setItem, auxiliaryList, id }) {
   const handleClose = () => setOpen(false);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
+
+  const findArrayDiff = (arr1, arr2, field1, field2) => {
+    const filteredArray = arr1.filter(e=>arr2.findIndex(i=>i[field2] == e[field1]) === -1);
+
+    return filteredArray;
+  };
+
+  const checkIfCanAddProduct = () => {
+    let state = true;
+    let f1 = 'name', f2 = 'name';
+    if(id) {
+      f1 = 'id';
+      f2 = 'product_child_id';
+    }
+
+    const filteredArray = findArrayDiff(auxiliaryList.products, item.childs, f1, f2);
+    if(filteredArray.length === 0) {
+      state = false
+    }
+    return state;
+  };
+
+  const filteredTypeProductList = () => {
+    let f1 = 'name', f2 = 'name';
+    if(id) {
+      f1 = 'id';
+      f2 = 'product_child_id';
+    }
+    const filteredArray = findArrayDiff(auxiliaryList.products, item.childs, f1, f2)
+
+    return filteredArray;
+  };
 
   const handleSelect = (e) => {
     const { value } = e.target;
@@ -78,7 +110,7 @@ export default function ProductSetModal({ open, setOpen, item, setItem, auxiliar
               name="product_id"
               onChange={(e) => handleSelect(e)}
             >
-              {auxiliaryList.products.map((type, typeIndex) => {
+              {filteredTypeProductList().map((type, typeIndex) => {
                 return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
               })}
             </Select>

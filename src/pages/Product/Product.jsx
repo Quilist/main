@@ -146,12 +146,6 @@ export default function EnhancedTable() {
     return type;
   };
 
-  const getAccount = (item) => {
-    let data = 'n';
-
-    return data;
-  };
-
   const getAmount = (item) => {
     let data = null;
     if (item.amount) {
@@ -290,7 +284,15 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__mob">
                       <p>
-                        {getAccount(item)}
+                        {item.name}
+                      </p>
+                      <p>
+                        {item.price}
+                      </p>
+                    </div>
+                    <div className="table__mob table__summury">
+                      <p>
+                        {item.min_stock} {item.measure.name}
                       </p>
                     </div>
                     <div className="table__data">

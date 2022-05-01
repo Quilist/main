@@ -564,6 +564,12 @@ export default function EnhancedTable() {
                       <p>
                         {item.cash_account?.name}
                       </p>
+                      {item.from_cash_account &&
+                        <p>{item.from_cash_account.name}</p>
+                      }
+                      {item.to_cash_account &&
+                        <p>{item.to_cash_account.name}</p>
+                      }
                     </div>
                     <div className="table__data">
                       <p>

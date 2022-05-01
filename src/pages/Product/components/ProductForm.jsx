@@ -54,6 +54,28 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
     setTypePriceList(typePriceList.filter((o, i) => index !== i));
   };
 
+  const findArrayDiff = (arr1, arr2, field) => {
+    const filteredArray = arr1.filter(e=>arr2.findIndex(i=>i[field] == e[field]) === -1);
+
+    return filteredArray;
+  };
+
+  const checkIfCanAddPrice = () => {
+    let state = true;
+
+    const filteredArray = findArrayDiff(auxiliaryList.type_prices, typePriceList, 'name');
+    if(filteredArray.length === 0) {
+      state = false
+    }
+    return state;
+  };
+
+  const filteredTypePriceList = () => {
+    const filteredArray = findArrayDiff(auxiliaryList.type_prices, typePriceList, 'name')
+
+    return filteredArray;
+  };
+
   const formatField = (value) => {
     let n;
     let h = parseInt(value);
@@ -68,6 +90,9 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
   const handleChange = e => {
     const { name, value } = e.target;
     let v = formatField(value);
+    if(name === 'note') {
+      v = String(v);
+    }
     if(name === 'type') {
       setItem(prevItem => ({
         ...prevItem,
@@ -111,10 +136,26 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
   };
 
   const updateTypePrice = (e, index) => {
-    console.log('typePriceList', typePriceList)
     const { name, value } = e.target;
     let v = formatField(value);
-    typePriceList[index][name] = v
+
+    setTypePriceList(prevState => {
+      const updatedPriceList = prevState.map((price, i) => {
+        if (i === index){
+          price[name] = v
+        }
+        return {
+          ...price
+        };
+      });
+
+      return updatedPriceList
+    })
+
+    if(name === 'name') {
+      checkIfCanAddPrice();
+      filteredTypePriceList();
+    }
   };
 
   const updateStorehouse = (e, index) => {
@@ -146,6 +187,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           auxiliaryList={auxiliaryList}
           item={item}
           setItem={setItem}
+          id={id}
         />}
 
         {currentPathName !== 'receive_balance' && <div>
@@ -227,7 +269,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={item.supplier_id}
+                value={item.supplier_id || null}
                 label="Основной поставщик"
                 sx={{ marginBottom: '15px' }}
                 name="supplier_id"
@@ -311,15 +353,29 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
             <h4>Цены</h4>
             {typePriceList.map((priceItem, i) => {
               return (<div key={i}>
-                <TextField
-                  sx={{marginBottom: '15px'}}
-                  label="Наименование:"
-                  type="text"
-                  variant="standard"
-                  value={priceItem.name}
-                  name="name"
-                  onChange={(e) => updateTypePrice(e, i)}
-                />
+                {!priceItem.name &&
+                  <Select
+                    autoWidth
+                    label="Наименование:"
+                    value={priceItem.name}
+                    name="name"
+                    onChange={(e) => updateTypePrice(e, i)}
+                  >
+                    {filteredTypePriceList().map((type, typeIndex) => {
+                      return (<MenuItem key={type.name} value={type.name}>{type.name}</MenuItem>)
+                    })}
+                  </Select>
+                }
+                {priceItem.name &&
+                  <TextField
+                    sx={{marginBottom: '15px'}}
+                    label="Наименование:"
+                    type="text"
+                    variant="standard"
+                    value={priceItem.name}
+                    name="name"
+                  />
+                }
                 <TextField
                   sx={{marginBottom: '15px', marginLeft: '5px'}}
                   label="Цена"
@@ -347,51 +403,85 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
                 <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
               </div>)
             })}
-            <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button>
+            {checkIfCanAddPrice() && <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button> }
 
             {item.type === 'product' &&
-              <div>
-                <h4 style={{marginTop: '15px'}}>Остатки</h4>
-                {storehouseList.map((storehouse, i) => {
-                  return (<div key={i}>
-                    <TextField
-                      sx={{marginBottom: '15px'}}
-                      label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
-                      type="text"
-                      variant="standard"
-                      value={storehouse.number}
-                      name="number"
-                      onChange={(e) => updateStorehouse(e, i)}
-                    />
-                    <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
-                    <TextField
-                      sx={{marginBottom: '15px', marginLeft: '5px'}}
-                      label="Цена"
-                      type="number"
-                      variant="standard"
-                      value={storehouse.price}
-                      name="price"
-                      onChange={(e) => updateStorehouse(e, i)}
-                    />
-                    <FormControl sx={{m: 1, minWidth: 120}}>
-                      <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
-                      <Select
-                        autoWidth
-                        label="Тип цены:"
-                        value={storehouse.currency_id}
-                        name="currency_id"
-                        onChange={(e) => updateStorehouse(e, i)}
-                      >
-                        {auxiliaryList.currencies.map((type, typeIndex) => {
-                          return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-                        })}
-                      </Select>
-                    </FormControl>
+              <>
+                {!id &&
+                  <div>
+                    <h4 style={{marginTop: '15px'}}>Остатки</h4>
+                    {storehouseList.map((storehouse, i) => {
+                      return (<div key={i}>
+                        <TextField
+                          sx={{marginBottom: '15px'}}
+                          label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
+                          type="text"
+                          variant="standard"
+                          value={storehouse.number}
+                          name="number"
+                          onChange={(e) => updateStorehouse(e, i)}
+                        />
+                        <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
+                        <TextField
+                          sx={{marginBottom: '15px', marginLeft: '5px'}}
+                          label="Цена"
+                          type="number"
+                          variant="standard"
+                          value={storehouse.price}
+                          name="price"
+                          onChange={(e) => updateStorehouse(e, i)}
+                        />
+                        <FormControl sx={{m: 1, minWidth: 120}}>
+                          <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
+                          <Select
+                            autoWidth
+                            label="Тип цены:"
+                            value={storehouse.currency_id}
+                            name="currency_id"
+                            onChange={(e) => updateStorehouse(e, i)}
+                          >
+                            {auxiliaryList.currencies.map((type, typeIndex) => {
+                              return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                            })}
+                          </Select>
+                        </FormControl>
 
-                    <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
-                  </div>)
-                })}
-              </div>
+                        <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
+                      </div>)
+                    })}
+                  </div>
+                }
+                {id &&
+                  <div>
+                    <h4 style={{marginTop: '15px'}}>Остатки</h4>
+                    {storehouseList.map((storehouse, i) => {
+                      return (<div key={i}>
+                        <span style={{
+                          marginTop: "10px",
+                          display: "block",
+                          overflow: "hidden",
+                          border: "1px solid rgba(0, 0, 0, 0.12)",
+                          padding: "12px 0px 12px 0px",
+                          borderRadius: "10px"
+                        }}>
+                          <span style={{
+                            fontSize: "1rem",
+                            lineHeight: "1.5",
+                            letterSpacing: "0px",
+                            fontWeight: "400",
+                            display: "block",
+                            marginLeft: "12px"
+                          }}>
+                            <b> {storehouse.storehouse ? storehouse.storehouse.name : storehouse.name} </b> {storehouse.number}
+                            <b> шт </b> на {storehouse.price} <b>{storehouse.currency.name}</b>
+                          </span>
+                        </span>
+
+                      </div>)
+                    })}
+                  </div>
+                }
+              </>
             }
 
           </div>
