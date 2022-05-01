@@ -5,13 +5,14 @@
     left: 280px;
     width: calc(100% - 280px);
     transition: all 0.5s ease;
-    top: 100px;
+    top: 85px;
+    padding: 0 30px 30px 10px;
 }
 
 .sidebar.close~.home-section {
     left: 100px;
     width: calc(100% - 100px);
-    top: 100px;
+    top: 85px;
 }
 
 .home-section .home-content {
@@ -65,7 +66,6 @@
 .css-ahj2mt-MuiTypography-root {
     line-height: 1 !important;
 }
-
 @media(max-width: 992px) {
     .home-section {
         min-height: 80vh;
