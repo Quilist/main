@@ -1,6 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'
-import useUserId from '@/hooks/useUserId';
+import { useNavigate, useParams } from 'react-router-dom'
 
 import UserForm from './UserFrom';
 import InformationForm from './InformationForm';
@@ -13,15 +12,14 @@ import API from '@/api/api'
 
 
 function UserEditing() {
-  const { userId } = useUserId();
   const [isSuccess, setIsSuccess] = React.useState(null)
 
   const [isRedirect, setIsRedirect] = React.useState(false)
-  let isAdd = userId === 'Add'
 
   // ========================================
   const [currentUser, setCurrentUser] = React.useState(null)
   const api = new API();
+  const { id } = useParams()
 
   React.useEffect(() => {
     document.title = "B-Fin: Изменить поставщика"
@@ -29,8 +27,8 @@ function UserEditing() {
   }, [])
 
   React.useEffect(() => {
-    if (!isAdd) {
-      api.find(userId, 'supplier').then(data => {
+    if (id) {
+      api.find(id, 'supplier').then(data => {
         setCurrentUser(data.message)
       })
     }
@@ -65,7 +63,7 @@ function UserEditing() {
   }, [isRedirect])
 
   React.useEffect(() => {
-    if (!isAdd && currentUser) {
+    if (id && currentUser) {
       // ==============================================================
       const { address, company, discount, duty, group, mail, mobile, name, note, edrpou, code_nds } = currentUser;
       setName(name)
@@ -87,7 +85,7 @@ function UserEditing() {
 
   // ======================================================================
   const handleAdd = () => {
-    userId !== 0 ? setIsSuccess('добавили пользователя') : setIsSuccess('')
+    id !== 0 ? setIsSuccess('добавили пользователя') : setIsSuccess('')
 
     setTimeout(() => {
       let body = {
@@ -112,9 +110,9 @@ function UserEditing() {
   }
 
   const handleRemove = () => {
-    userId !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
+    id !== 0 ? setIsSuccess('удалили пользователя') : setIsSuccess('')
     setTimeout(() => {
-      api.remove(userId, 'supplier').then(data => {
+      api.remove(id, 'supplier').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -123,7 +121,7 @@ function UserEditing() {
   }
 
   const handleChoose = () => {
-    userId !== 0 ? setIsSuccess('изменили пользователя') : setIsSuccess('')
+    id !== 0 ? setIsSuccess('изменили пользователя') : setIsSuccess('')
 
     setTimeout(() => {
       let body = {
@@ -139,7 +137,7 @@ function UserEditing() {
         edrpou
       }
 
-      api.edit(userId, body, 'supplier').then(data => {
+      api.edit(id, body, 'supplier').then(data => {
         if (data.status === "error") return alert(data.message)
         setIsSuccess(null)
         setIsRedirect(true)
@@ -167,7 +165,7 @@ function UserEditing() {
       <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
         <div className={styles.buttonsWrapper}>
           <div className={styles.main_btns}>
-            <Button onClick={isAdd ? handleAdd : handleChoose} className={styles.button} variant="contained">Сохранить</Button>
+            <Button onClick={!id ? handleAdd : handleChoose} className={styles.button} variant="contained">Сохранить</Button>
           </div>
           <div>
           </div>
@@ -214,7 +212,7 @@ function UserEditing() {
         </div>
         <div className={styles.buttonsWrapper}>
           <div className={styles.main_btns}>
-            {!isAdd && <Button onClick={handleRemove} className={styles.button} variant="contained">Удалить</Button>}
+            {id && <Button onClick={handleRemove} className={styles.button} variant="contained">Удалить</Button>}
           </div>
           <div>
             <Button onClick={handleReturn} className={styles.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Отмена</Button>

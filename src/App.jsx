@@ -167,7 +167,8 @@ function App() {
             <Route path="/import_clients" element={<> <AppLayout component={<ImportClient />} /> </>} />
 
             {/* Обработка поставщиков */}
-            <Route path="/editing_supplier" element={<> <AppLayout component={<SupplierEditing />} /> </>} />
+            <Route path="/suppliers/create" element={<> <AppLayout component={<SupplierEditing />} /> </>} />
+            <Route path="/suppliers/:id" element={<> <AppLayout component={<SupplierEditing />} /> </>} />
 
             {/* Обработка сотрудников  */}
             <Route path="/employees/create" element={<> <AppLayout component={<EmployeesEditing />} /> </>} />

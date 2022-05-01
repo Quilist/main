@@ -155,7 +155,7 @@ const EnhancedTableToolbar = (props) => {
    const handleAdd = () => {
 
       setUserId("Add");
-      setIsRedirect(true);
+      navigate("/suppliers/create");
    };
    const navigate = useNavigate();
 
@@ -163,7 +163,7 @@ const EnhancedTableToolbar = (props) => {
 
    React.useEffect(() => {
       if (isRedirect) {
-         navigate("/editing_supplier");
+         navigate("/suppliers");
       }
       // eslint-disable-next-line
    }, [isRedirect]);
@@ -291,14 +291,8 @@ export default function Supplier() {
 
    const handleRedirect = (id) => {
       setUserId(id)
-      setIsRedirect(true);
+      navigate("/suppliers/"+id);
    };
-   React.useEffect(() => {
-      if (isRedirect) {
-         navigate("/editing_supplier");
-      }
-      // eslint-disable-next-line
-   }, [isRedirect]);
 
    // ACTIONS 
    const [anchorEl, setAnchorEl] = React.useState(null);
