@@ -35,6 +35,11 @@ const payOptions = [
   { name: 'Собственнику', link: '/pay_owner' }
 ];
 
+const returnOptions = [
+  { name: 'Возврат клиенту', link: '/return/sell' },
+  { name: 'Возврат поставщику', link: '/return/buy' },
+];
+
 const receiveOptions = [
   { name: 'От клиента', link: '/receive_customer' },
   { name: 'От поставщика', link: '/receive_supplier' },
@@ -48,9 +53,12 @@ const Header = () => {
   const [searchState, setSearchState] = React.useState('navigation');
   const [isActiveSidebar, setActiveSidebar] = useState(true);
   const [openReceive, setOpenReceive] = React.useState(false);
+  const [openReturn, setOpenReturn] = React.useState(false);
+  const anchorRefReturn = React.useRef(null);
   const anchorRef = React.useRef(null);
   const anchorReceiveRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedReturnIndex, setSelectedReturnIndex] = React.useState(1);
   const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
   const [headerTitle, setHeaderTitle] = React.useState( '');
   const target = document.querySelector('head > title');
@@ -78,6 +86,22 @@ const Header = () => {
     setOpen(false);
   };
 
+  
+  const handleMenuItemClickReturn = (event, index) => {
+    setSelectedReturnIndex(index);
+    setOpenReturn(false);
+  };
+  const handleToggleReturn = () => {
+    setOpenReturn((prevOpen) => !prevOpen);
+  };
+  const handleCloseReturn = (event) => {
+    if (anchorRefReturn.current && anchorRefReturn.current.contains(event.target)) {
+      return;
+    }
+    setOpenReturn(false);
+  };
+  
+  
   const toggleSidebar = (e) => {
     e.preventDefault();
     setActiveSidebar(!isActiveSidebar);
@@ -252,7 +276,7 @@ const Header = () => {
                 </Popper>
               </li>
               <li>
-                <Link to="#">
+                <Link to="#" onClick={handleToggleReturn} ref={anchorRefReturn}>
                   <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M6.02795 14.9756C4.81716 14.9742 3.65643 14.4923 2.80065 13.6357C1.94488 12.7792 1.46401 11.6181 1.46365 10.4073V5.80114H0.89025C0.721145 5.80135 0.555485 5.75334 0.412705 5.66273C0.269924 5.57212 0.155945 5.44267 0.0841388 5.28957C0.0123322 5.13646 -0.0143236 4.96606 0.00729827 4.79834C0.0289202 4.63062 0.0979231 4.47255 0.206212 4.34267L3.34037 0.546055C3.48152 0.375253 3.65866 0.237739 3.85912 0.143343C4.05958 0.0489472 4.27842 0 4.5 0C4.72158 0 4.94042 0.0489472 5.14088 0.143343C5.34134 0.237739 5.51848 0.375253 5.65962 0.546055L8.79378 4.34267C8.90215 4.47264 8.97117 4.63084 8.99274 4.79868C9.01432 4.96652 8.98755 5.13703 8.91557 5.29018C8.8436 5.44333 8.72942 5.57276 8.58644 5.66327C8.44346 5.75378 8.27762 5.80161 8.1084 5.80114H7.53499V13.4632C7.53535 13.6614 7.49665 13.8578 7.4211 14.0411C7.34556 14.2244 7.23465 14.3911 7.09471 14.5315C6.95477 14.6719 6.78853 14.7835 6.6055 14.8597C6.42246 14.9359 6.22621 14.9753 6.02795 14.9756ZM1.29635 4.72179H2.543V10.4073C2.543 11.3319 2.91004 12.2187 3.56348 12.8729C4.21691 13.5271 5.10331 13.8952 6.02795 13.8963C6.14151 13.8959 6.25029 13.8505 6.33046 13.7701C6.41063 13.6897 6.45565 13.5808 6.45564 13.4672V4.72179H7.70364L4.82718 1.23279C4.7873 1.18469 4.7373 1.14597 4.68075 1.1194C4.6242 1.09282 4.56248 1.07904 4.5 1.07904C4.43751 1.07904 4.3758 1.09282 4.31925 1.1194C4.2627 1.14597 4.2127 1.18469 4.17282 1.23279L1.29635 4.72179Z"
@@ -260,6 +284,41 @@ const Header = () => {
                   </svg>
                   Возврат
                 </Link>
+                <Popper
+                    open={openReturn}
+                    anchorEl={anchorRefReturn.current}
+                    role={undefined}
+                    transition
+                    // disablePortal
+                    style={{ zIndex: 10 }}
+                >
+                  {({ TransitionProps, placement }) => (
+                      <Grow
+                          {...TransitionProps}
+                          style={{
+                            transformOrigin:
+                                placement === 'bottom' ? 'center top' : 'center bottom',
+                          }}
+                      >
+                        <Paper>
+                          <ClickAwayListener onClickAway={handleCloseReturn}>
+                            <MenuList id="split-button-menu" style={{ display: "block" }}>
+                              {returnOptions.map((option, index) => (
+                                  <MenuItem
+                                      style={{ maxWidth: "100%" }}
+                                      key={option.name}
+                                      selected={index === selectedIndex}
+                                      onClick={(event) => handleMenuItemClickReturn(event, index)}
+                                  >
+                                    <Link to={option.link}>{option.name}</Link>
+                                  </MenuItem>
+                              ))}
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                  )}
+                </Popper>
               </li>
               <li>
                 <Link to="#">
