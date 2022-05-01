@@ -48,10 +48,13 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
   const addPrice = (e) => {
     setTypePriceList([...typePriceList, { name: null, currency_id: null, price: null}]);
   }
-  
 
   const removePrice = (index) => {
     setTypePriceList(typePriceList.filter((o, i) => index !== i));
+  };
+
+  const removeStorehouse = (index) => {
+    setStorehouseList(storehouseList.filter((o, i) => index !== i));
   };
 
   const findArrayDiff = (arr1, arr2, field) => {
@@ -139,6 +142,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
     const { name, value } = e.target;
     let v = formatField(value);
 
+    //to immediately change data
     setTypePriceList(prevState => {
       const updatedPriceList = prevState.map((price, i) => {
         if (i === index){
@@ -171,9 +175,9 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           open={openColorSizeModal}
           setOpen={setColorSizeModal}
           auxiliaryList={auxiliaryList}
-          typePriceList={typePriceList}
+          typePriceListExt={typePriceList}
           setTypePriceList={setTypePriceList}
-          storehouseList={storehouseList}
+          storehouseListExt={storehouseList}
           setStorehouseList={setStorehouseList}
           item={item}
           setItem={setItem}
@@ -446,7 +450,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
                           </Select>
                         </FormControl>
 
-                        <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
+                        <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removeStorehouse(i)}>X</button>
                       </div>)
                     })}
                   </div>

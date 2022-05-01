@@ -574,6 +574,7 @@ export default function EnhancedTable() {
                     <div className="table__data">
                       <p>
                         {formattedDate(item.created_at)}
+                        {item.number && <span>.#.№{item.number}</span> }
                       </p>
                       <p>
 

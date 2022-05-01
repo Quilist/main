@@ -28,9 +28,54 @@ const style = {
   height: '90%'
 };
 
-export default function ProductColorSizeModal({ open, setOpen, subItem, setSubItem, item, setItem, auxiliaryList, typePriceList, setTypePriceList, storehouseList, setStorehouseList }) {
+export default function ProductColorSizeModal({ open, setOpen, subItem, setSubItem, item, setItem, auxiliaryList, typePriceListExt, storehouseListExt }) {
   const handleClose = () => setOpen(false);
   const [itemEditIndex, setItemEditIndex] = React.useState(null);
+  const [typePriceList, setTypePriceList] = React.useState([]);
+  const [storehouseList, setStorehouseList] = React.useState([]);
+
+  React.useEffect(() => {
+    if(!subItem.name) {
+      typePriceListExt.map((price, i) => {
+        if (price.price){
+          delete price.price
+        }
+        if (price.currency_id){
+          delete price.currency_id
+        }
+        return price;
+      });
+    } else {
+      if(subItem.prices?.length > 0) {
+        typePriceListExt = subItem.prices;
+      }
+    }
+    setTypePriceList(typePriceListExt);
+    // eslint-disable-next-line
+  }, [typePriceListExt] )
+
+  React.useEffect(() => {
+    if(!subItem.name) {
+      storehouseListExt.map((store, i) => {
+        if (store.number){
+          delete store.number
+        }
+        if (store.price){
+          delete store.price
+        }
+        if (store.currency_id){
+          delete store.currency_id
+        }
+        return store;
+      });
+    } else {
+      if(subItem.leftovers?.length > 0) {
+        storehouseListExt = subItem.leftovers;
+      }
+    }
+    setStorehouseList(storehouseListExt);
+    // eslint-disable-next-line
+  }, [storehouseListExt] )
 
   React.useEffect(() => {
     if(subItem.name){
@@ -52,6 +97,10 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
     setTypePriceList(typePriceList.filter((o, i) => index !== i));
   };
 
+  const removeStorehouse = (index) => {
+    setStorehouseList(storehouseList.filter((o, i) => index !== i));
+  };
+
   const formatField = (value) => {
     let n;
     let h = parseInt(value);
@@ -66,6 +115,9 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
   const handleChange = e => {
     const { name, value } = e.target;
     let v = formatField(value);
+    if(name === 'note') {
+      v = String(v);
+    }
     setSubItem(prevItem => ({
       ...prevItem,
       [name]: v
@@ -75,7 +127,25 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
   const updateTypePrice = (e, index) => {
     const { name, value } = e.target;
     let v = formatField(value);
-    typePriceList[index][name] = v
+
+    //to immediately change data
+    setTypePriceList(prevState => {
+      const updatedPriceList = prevState.map((price, i) => {
+        if (i === index){
+          price[name] = v
+        }
+        return {
+          ...price
+        };
+      });
+
+      return updatedPriceList
+    })
+
+    if(name === 'name') {
+      checkIfCanAddPrice();
+      filteredTypePriceList();
+    }
   };
 
   const updateStorehouse = (e, index) => {
@@ -95,7 +165,10 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
       name: ''
     });
 
-    toggleOpenColor(false);
+    setSubItem({});
+    setTypePriceList([]);
+    setStorehouseList([]);
+    setItemEditIndex(null)
   };
 
 
@@ -136,7 +209,6 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
 
   //add
   const handleAdd = () => {
-    console.log('itemEditIndex', itemEditIndex)
     let priceData = [], storehouseData = [], data = subItem;
     if(typePriceList.length > 0) {
       typePriceList.forEach(function (typePrice) {
@@ -169,8 +241,32 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
     }
 
     setSubItem({});
+    setTypePriceList([]);
+    setStorehouseList([]);
     setItemEditIndex(null)
     handleClose();
+  };
+
+  const findArrayDiff = (arr1, arr2, field) => {
+    const filteredArray = arr1.filter(e=>arr2.findIndex(i=>i[field] == e[field]) === -1);
+
+    return filteredArray;
+  };
+
+  const checkIfCanAddPrice = () => {
+    let state = true;
+
+    const filteredArray = findArrayDiff(auxiliaryList.type_prices, typePriceList, 'name');
+    if(filteredArray.length === 0) {
+      state = false
+    }
+    return state;
+  };
+
+  const filteredTypePriceList = () => {
+    const filteredArray = findArrayDiff(auxiliaryList.type_prices, typePriceList, 'name')
+
+    return filteredArray;
   };
 
   return (
@@ -266,17 +362,31 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
 
               <div>
                 <h4>Цены</h4>
-                {typePriceList.map((priceItem, i) => {
+                {typePriceList?.map((priceItem, i) => {
                   return (<div key={i}>
-                    <TextField
-                      sx={{marginBottom: '15px'}}
-                      label="Наименование:"
-                      type="text"
-                      variant="standard"
-                      value={priceItem.name}
-                      name="name"
-                      onChange={(e) => updateTypePrice(e, i)}
-                    />
+                    {!priceItem.name &&
+                      <Select
+                        autoWidth
+                        label="Наименование:"
+                        value={priceItem.name}
+                        name="name"
+                        onChange={(e) => updateTypePrice(e, i)}
+                      >
+                        {filteredTypePriceList().map((type, typeIndex) => {
+                          return (<MenuItem key={type.name} value={type.name}>{type.name}</MenuItem>)
+                        })}
+                      </Select>
+                    }
+                    {priceItem.name &&
+                      <TextField
+                        sx={{marginBottom: '15px'}}
+                        label="Наименование:"
+                        type="text"
+                        variant="standard"
+                        value={priceItem.name}
+                        name="name"
+                      />
+                    }
                     <TextField
                       sx={{marginBottom: '15px', marginLeft: '5px'}}
                       label="Цена"
@@ -304,48 +414,82 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
                     <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
                   </div>)
                 })}
-                <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button>
+                {checkIfCanAddPrice() && <Button onClick={addPrice}  className={styles.button}  variant="outlined">+ Добавить цену</Button> }
 
-                <h4 style={{marginTop: '15px'}}>Остатки</h4>
-                {storehouseList.map((storehouse, i) => {
-                  return (<div key={i}>
-                    <TextField
-                      sx={{marginBottom: '15px'}}
-                      label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
-                      type="text"
-                      variant="standard"
-                      value={storehouse.number}
-                      name="number"
-                      onChange={(e) => updateStorehouse(e, i)}
-                    />
-                    <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
-                    <TextField
-                      sx={{marginBottom: '15px', marginLeft: '5px'}}
-                      label="Цена"
-                      type="number"
-                      variant="standard"
-                      value={storehouse.price}
-                      name="price"
-                      onChange={(e) => updateStorehouse(e, i)}
-                    />
-                    <FormControl sx={{m: 1, minWidth: 120}}>
-                      <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
-                      <Select
-                        autoWidth
-                        label="Тип цены:"
-                        value={storehouse.currency_id}
-                        name="currency_id"
-                        onChange={(e) => updateStorehouse(e, i)}
-                      >
-                        {auxiliaryList.currencies.map((type, typeIndex) => {
-                          return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-                        })}
-                      </Select>
-                    </FormControl>
+                {!subItem.id &&
+                  <div>
+                    <h4 style={{marginTop: '15px'}}>Остатки</h4>
+                    {storehouseList.map((storehouse, i) => {
+                      return (<div key={i}>
+                        <TextField
+                          sx={{marginBottom: '15px'}}
+                          label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
+                          type="text"
+                          variant="standard"
+                          value={storehouse.number}
+                          name="number"
+                          onChange={(e) => updateStorehouse(e, i)}
+                        />
+                        <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
+                        <TextField
+                          sx={{marginBottom: '15px', marginLeft: '5px'}}
+                          label="Цена"
+                          type="number"
+                          variant="standard"
+                          value={storehouse.price}
+                          name="price"
+                          onChange={(e) => updateStorehouse(e, i)}
+                        />
+                        <FormControl sx={{m: 1, minWidth: 120}}>
+                          <InputLabel id="demo-simple-select-autowidth-label">Валюта:</InputLabel>
+                          <Select
+                            autoWidth
+                            label="Тип цены:"
+                            value={storehouse.currency_id}
+                            name="currency_id"
+                            onChange={(e) => updateStorehouse(e, i)}
+                          >
+                            {auxiliaryList.currencies.map((type, typeIndex) => {
+                              return (<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
+                            })}
+                          </Select>
+                        </FormControl>
 
-                    <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removePrice(i)}>X</button>
-                  </div>)
-                })}
+                        <button  style={{marginTop: '15px'}} className={'MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root PayForm_button__YjScY css-1rwt2y5-MuiButtonBase-root-MuiButton-root'} variant="outlined" onClick={() => removeStorehouse(i)}>X</button>
+                      </div>)
+                    })}
+                  </div>
+                }
+                {subItem.id &&
+                  <div>
+                    <h4 style={{marginTop: '15px'}}>Остатки</h4>
+                    {storehouseList.map((storehouse, i) => {
+                      return (<div key={i}>
+                        <span style={{
+                          marginTop: "10px",
+                          display: "block",
+                          overflow: "hidden",
+                          border: "1px solid rgba(0, 0, 0, 0.12)",
+                          padding: "12px 0px 12px 0px",
+                          borderRadius: "10px"
+                        }}>
+                          <span style={{
+                            fontSize: "1rem",
+                            lineHeight: "1.5",
+                            letterSpacing: "0px",
+                            fontWeight: "400",
+                            display: "block",
+                            marginLeft: "12px"
+                          }}>
+                            <b> {storehouse.storehouse ? storehouse.storehouse.name : storehouse.name} </b> {storehouse.number}
+                            <b> шт </b> на {storehouse.price} <b>{storehouse.currency.name}</b>
+                          </span>
+                        </span>
+
+                      </div>)
+                    })}
+                  </div>
+                }
               </div>
 
 
