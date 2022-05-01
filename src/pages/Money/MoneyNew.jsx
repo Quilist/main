@@ -581,6 +581,9 @@ export default function EnhancedTable() {
                     <div className="table__account">
                       <p>
                         {item.cash_account?.name}
+                        {item.from_cash_account &&
+                          <p>{item.from_cash_account.name}</p>
+                        }
                       </p>
                     </div>
                     <div className="table__counterparty">
@@ -593,6 +596,9 @@ export default function EnhancedTable() {
                           </a> }
                         </p>
                       }
+                      {item.to_cash_account &&
+                        <p>{item.to_cash_account.name}</p>
+                      }
                     </div>
                     <div className="table__summury">
                       <p>
@@ -601,6 +607,15 @@ export default function EnhancedTable() {
                             <p>{amountItem.amount} {amountItem.currency.name}</p>
                           );
                         })}
+                        {item.from_currency &&
+                          <p>Отдал: {item.amount_pay} {item.from_currency.name}</p>
+                        }
+                        {item.to_currency &&
+                          <p>Получил: {item.amount_receive} {item.to_currency.name}</p>
+                        }
+                        {item.amount &&
+                          <p>{item.amount}  {item.currency.name}</p>
+                        }
                       </p>
                     </div>
                     <div className="table__comment">

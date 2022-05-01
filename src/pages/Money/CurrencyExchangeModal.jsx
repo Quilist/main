@@ -46,8 +46,16 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
   React.useEffect(() => {
     if(id) {
       api.find(id, 'moneyExchange').then(data => {
-        if (data.status === "error") alert(data.message)
-        else setItem(data.message);
+        if (data.status === "error") {
+          alert(data.message)
+        }
+        else {
+          const res = data.message;
+          const date = new Date(+res.created_at);
+          const formatDate = date.toISOString().split('T')[0]
+          res.created_at = formatDate;
+          setItem(res);
+        }
       })
     }
   }, [id])
@@ -64,7 +72,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
   }, [])
 
   React.useEffect(() => {
-    if (open) {
+    if (open && !id) {
       const date = new Date();
       const milliseconds = date.getTime();
       setItem({ exchange_rate: 1, created_at: milliseconds })
@@ -110,12 +118,23 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
         setOpen(false);
       })
     } else {
+      const data = item;
+      const date = new Date(data.created_at);
+      const milliseconds = date.getTime();
+      data.created_at = String(milliseconds)
       api.edit(id, item, 'moneyExchange').then(data => {
         if (data.status === "error") return console.log(data.message)
         setId(null);
         setOpen(false);
       })
     }
+  }
+
+  const handleDelete = () => {
+    api.remove(id, 'moneyExchange').then(data => {
+      if (data.status === "error") return alert(data.message)
+      setOpen(false);
+    })
   }
 
   return (
@@ -259,6 +278,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
           </FormControl>
 
           <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
+          {id && <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button> }
         </Box>
       </Modal>
     </div>
