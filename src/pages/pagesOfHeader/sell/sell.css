@@ -51,6 +51,7 @@ form {
     box-sizing: border-box;
 } */
 
+/*
 .btn {
     border: 1px solid #AFC2FF;
     border-radius: 100px;
@@ -66,6 +67,7 @@ form {
     max-width: 116px;
     background-color: #fff;
 }
+*/
 
 
 /* .navigation .navigation__logo {
@@ -196,22 +198,7 @@ form {
 .wrapper__setting {
     display: flex;
     align-items: center;
-    padding: 5px 10px 5px 30px;
-}
-
-.wrapper__setting a {
-    background-color: #70BE33;
-    color: #fff;
-    margin: 0;
-    transition: all 0.3s;
-}
-
-.wrapper__setting a:hover {
-    background-color: #87CB19;
-}
-
-.wrapper__setting a svg {
-    margin-right: 7px;
+    /* padding: 5px 10px 5px 30px;*/
 }
 
 .wrapper__setting_btns {
@@ -236,8 +223,8 @@ form {
 .form_edit {
     border: 2px solid #F3F5F8;
     /* max-width: 1070px; */
-    margin-left: 30px;
-    margin-right: 10px;
+    /* margin-left: 30px;
+     margin-right: 10px;*/
     margin-top: 20px;
     display: flex;
 }
@@ -247,6 +234,11 @@ form {
     padding: 25px 33px 33px 44px;
     /* max-width: 522px; */
     width: 100%;
+}
+.form__people.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .form_edit h4 {
@@ -261,10 +253,16 @@ form {
     margin-bottom: 19px;
     position: relative;
 }
+.purchase-wrap{
+    margin-right: 60px;
+}
+.purchase-wrap .btn-green{
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
 .form__input:before {
     content: '';
-    position: absolute;
     left: 0;
     width: 23px;
     height: 23px;
@@ -291,10 +289,24 @@ form {
     left: 10px;
 }
 
+
 .form__details .form__input:last-child::after {
     height: 180px;
     top: -160px;
 }
+.debt .form__input:last-child::after{
+    height: 120px;
+    top: -90px;
+}
+.debtSell .form__input:last-child::after{
+    height: 250px;
+    top: -220px;
+}
+.info .form__input:last-child::after{
+    height: 120px;
+    top: -90px;
+}
+
 
 .form__input.active-disable:before {
     background: #F6222E url(./img/error.svg) no-repeat center/contain;
@@ -325,6 +337,20 @@ form {
     border-color: #F3F5F8!important;
     border-radius: 12px!important;
     box-shadow: none!important;
+
+}
+.select.two {
+    width: auto;
+}
+.select.two [class$=control]{
+    width: 200px;
+    background-color: transparent!important;
+    border: none!important;
+    min-height: 30px!important;
+    max-height: 30px!important;
+}
+.select.two [class$=IndicatorsContainer]{
+    display: none!important;
 }
 
 .select [class$=menu] {
@@ -416,13 +442,6 @@ form {
     max-width: 500px;
 }
 
-.form__input .data input {
-    background-color: #F3F5F8;
-    padding: 11px 15px;
-    width: 100%;
-    border: none;
-    margin-left: 0;
-}
 
 .select:after,
 .data:after {
@@ -440,7 +459,6 @@ form {
     pointer-events: none;
     box-sizing: border-box;
 }
-
 .data:after {
     background: #f3f5f8 url(./img/calendar.svg) no-repeat center;
     right: 13px;
@@ -564,17 +582,7 @@ form {
 .form__setting {
     display: flex;
     align-items: center;
-}
-
-.form__setting a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 7px;
-    margin-left: 6px;
-    width: 24px;
-    height: 24px;
+    margin-bottom: 20px;
 }
 
 .select_short {
@@ -590,37 +598,7 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 29px;
-    margin-top: 29px;
-    padding-bottom: 30px;
-    margin-right: 10px;
-}
-
-.form__btns a {
-    margin: 0;
-    background-color: transparent;
-    border: 1px solid #FA9999;
-    color: #FA9999;
-}
-
-.form__btns a:hover {
-    color: #ffffff;
-    background-color: #F6222E;
-    border-color: #F6222E;
-}
-
-.form__btns a:last-child {
-    background-color: #F6222E;
-    border: 1px solid #F6222E;
-    color: #fff;
-}
-
-.form__btns a:last-child:hover {
-    background-color: #C9161FFF;
-}
-
-.form__btns a svg {
-    margin-right: 7px;
+    margin-top: 30px;
 }
 
 .form__btns a:first-child {
@@ -711,6 +689,9 @@ form {
     .fin-page {
         flex-direction: column;
     }
+    .form__details.debt, .form__details.debtSell{
+        display: none;
+    }
     /* search */
     .navigation .wrapper__search {
         display: block;
@@ -765,68 +746,6 @@ form {
     .navigation__list {
         margin-left: -17px;
     }
-    .button_container {
-        position: absolute;
-        top: 50%;
-        left: 15px;
-        height: 15px;
-        width: 24px;
-        cursor: pointer;
-        z-index: 100;
-        transition: opacity .25s ease;
-        transform: translateY(-50%);
-    }
-    .open .button_container {
-        top: 15px;
-        position: fixed;
-        transform: none;
-    }
-    .open .button_container:hover {
-        opacity: .7;
-    }
-    .button_container .top {
-        width: 29px;
-    }
-    .button_container .middle {
-        width: 21px;
-    }
-    .button_container .bottom {
-        width: 13px;
-    }
-    .open .button_container .top {
-        -webkit-transform: translateY(9px) translateX(0) rotate(45deg);
-        transform: translateY(9px) translateX(0) rotate(45deg);
-        background: #7096FF;
-        width: 30px;
-    }
-    .open .button_container .middle {
-        opacity: 0;
-        background: #7096FF;
-        width: 30px;
-    }
-    .open .button_container .bottom {
-        -webkit-transform: translateY(-9px) translateX(0) rotate(-45deg);
-        transform: translateY(-9px) translateX(0) rotate(-45deg);
-        background: #7096FF;
-        width: 30px;
-    }
-    .button_container span {
-        background: #7096FF;
-        border: none;
-        height: 4px;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transition: all .35s ease;
-        cursor: pointer;
-    }
-    .button_container span:nth-of-type(2) {
-        top: 9px;
-    }
-    .button_container span:nth-of-type(3) {
-        top: 18px;
-    }
     .navigation__mobile {
         position: fixed;
         display: block;
@@ -880,6 +799,9 @@ form {
     /* page=pay */
     .form_edit {
         max-width: 94%;
+    }
+    .purchase-wrap{
+        margin-right: 0;
     }
     .wrapper__setting,
     .form__btns {
