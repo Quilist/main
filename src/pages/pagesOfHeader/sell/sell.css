@@ -250,7 +250,7 @@ form {
 
 .form__input {
     display: flex;
-    margin-bottom: 19px;
+    margin-bottom: 10px;
     position: relative;
 }
 .purchase-wrap{
