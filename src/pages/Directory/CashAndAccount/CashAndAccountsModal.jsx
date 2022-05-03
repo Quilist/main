@@ -75,7 +75,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
-  const [acc, setAcc] = React.useState([]);
+  const [acc, setAcc] = React.useState({});
 
   const handleSearch = () => {
     api.account(account, token).then(data => {
@@ -453,7 +453,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 //                     onChange={(e) => updateAccount(e, i)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={elem.acc} onClick={setAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={elem.acc} onClick={e => setAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
