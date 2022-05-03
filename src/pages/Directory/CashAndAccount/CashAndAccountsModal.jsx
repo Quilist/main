@@ -444,6 +444,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 </div>
 
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="demo-simple-select-standard-label">Счет:</InputLabel>
                   <Select
                     autoWidth
                     label="Счета"
@@ -457,7 +458,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   </Select>
                 </FormControl>
 
-                <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
+                <div>
+                  <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
+                </div>
               </Box>
             </Modal>
           </React.Fragment>
