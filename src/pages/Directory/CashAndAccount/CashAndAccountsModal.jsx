@@ -9,6 +9,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
+import btn from '@/styles/modules/UserEditing.module.css';
 
 import { Dropdown } from 'semantic-ui-react';
 import API from '@/api/api'
@@ -69,6 +70,18 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [currency, setCurrency] = React.useState('UAH');
   const [balance, setBalance] = React.useState('');
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
+
+  const [accountList, setAccountList] = React.useState([]);
+
+  const [account, setAccount] = React.useState('');
+  const [token, setToken] = React.useState('');
+
+  const handleSearch = () => {
+    api.account({ account: account, token: token }).then(data => {
+      if (data.status === "error") alert(data.message)
+      else accountList(data.message)
+    });
+  }
 
   const api = new API();
 
@@ -404,26 +417,45 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   onChange={handleChangeField}
                 />
 
-                <TextField
-                  sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
-                  label="ID Автоклиент:"
-                  multiline
-                  maxRows={2}
-                  variant="standard"
-                  value={item.stream.autoclient_id}
-                  name="autoclient_id"
-                  onChange={handleChangeStreamField}
-                />
+                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <div>
+                    <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
+                  </div>
+                  <TextField
+                    sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
+                    label="ID Автоклиент:"
+                    multiline
+                    maxRows={2}
+                    variant="standard"
+                    value={account}
+                    name="autoclient_id"
+                    onChange={(e) => setAccount(e)}
+                  />
+                </div>
 
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
                   label="Token:" multiline
                   maxRows={2}
                   variant="standard"
-                  value={item.stream.token}
+                  value={token}
                   name="token"
-                  onChange={handleChangeStreamField}
+                  onChange={(e) => setToken(e)}
                 />
+
+                {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <Select
+                    autoWidth
+                    label="Счета"
+                    value="счет"
+                    name="account_id"
+                    onChange={(e) => updateAccount(e, i)}
+                  >
+                    {accountList.map((elem) => {
+                      return (<MenuItem key={elem.id} value={elem.id}>{elem.name}</MenuItem>)
+                    })}
+                  </Select>
+                </FormControl> */}
 
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
               </Box>
@@ -499,6 +531,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
           </React.Fragment>
         </Box>
       </Modal>
-    </div>
+    </div >
   );
 }
