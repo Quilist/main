@@ -75,7 +75,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
-  const [acc, setAcc] = React.useState('');
+  const [acc, setAcc] = React.useState([]);
 
   const handleSearch = () => {
     api.account(account, token).then(data => {
@@ -448,7 +448,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Select
                     autoWidth
                     label="Счета"
-                    value={`${acc[0].balanceIn} ${acc[0].currency}` || ''}
+                    value={acc.length !== 0 ? `${acc[0].balanceIn} ${acc[0].currency}` : 'Счет'}
                     name="account_id"
                     onChange={(e) => updateAccount(e, i)}
                   >
