@@ -448,7 +448,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Select
                     autoWidth
                     label="Счета"
-                    value={acc.length !== 0 ? `${acc[0].balanceIn} ${acc[0].currency}` : 'Счет'}
+                    value={acc ? `${acc.balanceIn} ${acc.currency}` : 'Счет'}
                     name="account_id"
 //                     onChange={(e) => updateAccount(e, i)}
                   >
