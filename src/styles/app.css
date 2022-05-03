@@ -12,7 +12,7 @@
 .sidebar.close~.home-section {
     left: 100px;
     width: calc(100% - 100px);
-    top: 60px;
+    top: 65px;
 }
 
 .home-section .home-content {
