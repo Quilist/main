@@ -520,6 +520,7 @@ body img[alt="cross"] {
     align-items: center;
     max-width: 730px;
     width: 100%;
+    padding: 0 0 0 10px;
 }
 
 .wrapper__menu ul li {
@@ -650,11 +651,11 @@ input::placeholder {
 /* .wrapper__filters */
 
 .wrapper__filters {
-    padding: 20px;
+    /*padding: 20px;*/
     display: flex;
     align-items: center;
     /* max-width: 1070px; */
-    padding: 10px 10px 5px 10px;
+    /*padding: 10px 10px 5px 10px;*/
     justify-content: space-between;
 }
 
@@ -745,9 +746,9 @@ body [class$="MuiList-root"]{
 
 /* table */
 
-.table {
-    padding: 10px;
-}
+/*.table {*/
+/*    padding: 10px;*/
+/*}*/
 
 .table__head {
     display: flex;
