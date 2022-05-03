@@ -75,6 +75,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
+  const [acc, setAcc] = React.useState('');
 
   const handleSearch = () => {
     api.account(account, token).then(data => {
@@ -429,31 +430,30 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   onChange={(e) => setAccount(e.target.value)}
                 />
 
-                <TextField
-                  sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
-                  label="Token:" multiline
-                  maxRows={2}
-                  variant="standard"
-                  value={token}
-                  name="token"
-                  onChange={(e) => setToken(e.target.value)}
-                />
-
                 <div>
+                  <TextField
+                    sx={{ marginBottom: '20px', width: '50%' }} id="standard-multiline-flexible"
+                    label="Token:" multiline
+                    maxRows={2}
+                    variant="standard"
+                    value={token}
+                    name="token"
+                    onChange={(e) => setToken(e.target.value)}
+                  />
                   <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
                 </div>
 
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <InputLabel id="demo-simple-select-standard-label">Счет:</InputLabel>
                   <Select
                     autoWidth
                     label="Счета"
-                    value="счет"
+                    value={`${acc[0].balanceIn} ${acc[0].currency}` || ''}
                     name="account_id"
                     onChange={(e) => updateAccount(e, i)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={elem.acc}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={elem.acc} onClick={e => setAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
