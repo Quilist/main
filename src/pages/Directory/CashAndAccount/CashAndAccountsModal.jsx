@@ -79,7 +79,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const handleSearch = () => {
     api.account(account, token).then(data => {
       if (data.status === "error") alert(data.message)
-      else accountList(data.message)
+      else setAccountList(data.message)
     });
   }
 
