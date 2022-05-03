@@ -6,7 +6,7 @@
     width: calc(100% - 280px);
     transition: all 0.5s ease;
     top: 85px;
-    padding: 0 10px 0px 10px;
+    padding: 0 10px 0px 0px;
 }
 
 .sidebar.close~.home-section {
