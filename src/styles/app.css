@@ -6,13 +6,13 @@
     width: calc(100% - 280px);
     transition: all 0.5s ease;
     top: 85px;
-    padding: 0 30px 30px 10px;
+    padding: 0 10px 0px 10px;
 }
 
 .sidebar.close~.home-section {
     left: 100px;
     width: calc(100% - 100px);
-    top: 85px;
+    top: 60px;
 }
 
 .home-section .home-content {
