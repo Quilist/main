@@ -300,7 +300,7 @@ footer a {
     }
     .form-reg_logo {
         margin-bottom: 30px;
-        margin-top: 30px;
+        margin-top: 30px!important;
         font-size: 23px;
     }
     .container {
@@ -308,7 +308,7 @@ footer a {
     }
     .overlay-container {
         position: absolute;
-        top: 355px !important;
+        top: 400px !important;
         left: 0;
         height: 50%;
         width: 100%;
