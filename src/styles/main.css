@@ -800,6 +800,11 @@ body [class$="MuiList-root"]{
     margin-bottom: 5px;
 }
 
+.table__item:hover {
+       background: linear-gradient(180deg, #FAFAFA 0%, #b0b0b0 100%); 
+       cursor: pointer;
+}
+
 .table__figure {
     width: 27px;
 }
