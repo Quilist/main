@@ -77,7 +77,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [token, setToken] = React.useState('');
 
   const handleSearch = () => {
-    api.account({ account: account, token: token }).then(data => {
+    api.account(account, token).then(data => {
       if (data.status === "error") alert(data.message)
       else accountList(data.message)
     });
@@ -407,6 +407,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
               <Box sx={style} className={styles.childModal}>
                 <img className={styles.modal_img} onClick={handleCloseChildModalPrivatL} src={crossImg} alt="cross" />
                 <div className={styles.modal_title}>Добавление нового счёта приват банк для юр лиц</div>
+
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:"
                   multiline
