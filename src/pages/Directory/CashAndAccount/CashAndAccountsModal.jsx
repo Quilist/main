@@ -443,7 +443,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
                 </div>
 
-                {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <Select
                     autoWidth
                     label="Счета"
@@ -452,10 +452,10 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     onChange={(e) => updateAccount(e, i)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.id} value={elem.id}>{elem.name}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={elem.acc}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
-                </FormControl> */}
+                </FormControl>
 
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
               </Box>
