@@ -127,8 +127,9 @@ class API {
         return await this.request("GET", "/currencies/options");
     }
     
-    async account(params) {
-        return await this.request("GET", `/cash_accounts/account`, params)
+    // Account
+    async account(id, token) {
+        return await this.request("GET", `/cash_accounts/account?id=${id}&token=${token}`)
     }
 }
 
