@@ -642,35 +642,30 @@ body{
         left: 15px;
     }
     .cost-list {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        margin-left: -8px;
-        margin-right: -8px;
+        width: 100%;
+        margin: auto;
     }
     .cost-item-wrap {
         padding: 0 8px;
-        width: 200px;
-        min-width: 200px;
+        width: 100%;
+        margin-bottom: 10px;
     }
     .cost-item {
-        height: 164px;
+        height: auto;
         padding: 20px;
+        align-items: self-start;
     }
     .cost-item-title{
         font-size: 20px;
         line-height: 27px;
-    }
-    .cost-list .cost-item-wrap:last-child .cost-item-title{
-        font-size: 16px;
-        line-height: 20px;
+        margin-bottom: 20px;
     }
     .cost-list::-webkit-scrollbar {
         display: none;
     }
     .btn-arrow-right{
         font-size: 14px;
-        padding: 14px 30px 14px 15px;
+        padding: 14px 70px 14px 15px;
     }
     .btn-arrow-right:after{
         right: 15px;
