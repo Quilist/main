@@ -210,6 +210,10 @@ body{
 .financing-img-per, .financing-img-dia, .financing-img-line-1, .financing-img-line-2, .financing-img-line-3{
     position: absolute;
 }
+.financing-img-per-wrap,.financing-img-dia-wrap{
+    width: 693px!important;
+    height: 502px!important;
+}
 .financing-img-per {
     top: -20%;
     right: 30%;
@@ -228,6 +232,15 @@ body{
     bottom: -20%;
     right: 10%;
 }
+.financing-img-lie-wrap{
+    position: relative!important;
+}
+.financing-img-lines{
+    width: 100%;
+    position: absolute!important;
+    top: -20%;
+}
+
 .financing-img-line-1, .financing-img-line-2, .financing-img-line-3{
     left: 0;
     width: 100%;
@@ -256,6 +269,11 @@ body{
 /* functional */
 .functional-section{
     position: relative;
+}
+.functional-img-line-wrap{
+    width: 100%;
+    position: absolute!important;
+    top: -20%;
 }
 .functional-img-line{
     position: absolute;
@@ -303,6 +321,11 @@ body{
 /* benefits */
 .benefits-section{
     position: relative;
+}
+.benefits-img-line-wrap{
+    width: 100%;
+    position: absolute!important;
+    top: 0;
 }
 .benefits-img-line{
     position: absolute;
@@ -559,9 +582,17 @@ body{
         margin-left: 70px;
         height: 250px;
     }
+
+    .financing-img-per-wrap, .financing-img-dia-wrap{
+        position: static!important;
+        height: auto!important;
+        width: auto!important;
+    }
     .financing-img-per{
         right: 5%;
         height: 100px;
+        bottom: 200px;
+        top: auto;
     }
     .financing-img-dia{
         width: 140px;
