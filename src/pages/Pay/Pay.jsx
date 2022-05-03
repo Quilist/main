@@ -200,7 +200,7 @@ function Pay() {
   return <>
     <div className="home-section">
       <div className="wrapper__setting">
-        <a href="#!" className="btn"  onClick={handleAdd}>
+        <a href="#!" className="btn btn-green"  onClick={handleAdd}>
           <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M4.51804 8.31521L11.875 0.958252L12.9944 2.07767L4.51804 10.554L0 6.036L1.11942 4.91659L4.51804 8.31521Z"
