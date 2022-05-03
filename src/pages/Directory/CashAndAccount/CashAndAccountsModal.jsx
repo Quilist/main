@@ -450,7 +450,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     label="Счета"
                     value={acc.length !== 0 ? `${acc[0].balanceIn} ${acc[0].currency}` : 'Счет'}
                     name="account_id"
-                    onChange={(e) => updateAccount(e, i)}
+//                     onChange={(e) => updateAccount(e, i)}
                   >
                     {accountList.map((elem) => {
                       return (<MenuItem key={elem.acc} value={elem.acc} onClick={e => setAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
