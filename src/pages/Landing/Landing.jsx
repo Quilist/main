@@ -71,10 +71,10 @@ ScrollTop.propTypes = {
 };
 
 const pages = [
-    {url: '', name: 'Функционал'},
-    {url: '', name: 'Переваги'},
-    {url: '', name: 'Вартість'},
-    {url: '', name: 'Контакти'},
+    {url: '#functional', name: 'Функционал'},
+    {url: '#benefits', name: 'Переваги'},
+    {url: '#cost', name: 'Вартість'},
+    {url: '#contact', name: 'Контакти'},
 ];
 
 export default function Landing(props) {
@@ -94,6 +94,7 @@ export default function Landing(props) {
     return (
         <>
             <div className={openMenu ? 'overflow show' : 'overflow hide'} onClick={toggleMenu}></div>
+
             <div className="header-wrap">
                 <Container className="container-wrap">
                     <div className="header-inside">
@@ -114,7 +115,7 @@ export default function Landing(props) {
                             <ul className="header-pages" >
                                 {pages.map((page) => {
                                     return (
-                                        <li><a href={page.url}>{page.name}</a></li>
+                                        <li><a href={page.url} onClick={toggleMenu}>{page.name}</a></li>
                                     );
                                 })}
                             </ul>
@@ -124,9 +125,10 @@ export default function Landing(props) {
                     </div>
                 </Container>
             </div>
+
             <Toolbar id="back-to-top-anchor" />
 
-            <section className="financing-section">
+            <section className="financing-section" id="financing">
                 <p className="title-block">Фінанси <b>вашого бізнеса</b> онлайн 24/7</p>
                 <div className="financing-img-wrap-lines">
                     <div className="financing-img-wrap">
@@ -143,7 +145,7 @@ export default function Landing(props) {
             </section>
 
             <Container className="container-wrap">
-                <section className="business-section wrap-block block-section">
+                <section className="business-section wrap-block block-section" id="business">
 
                     <div className="left-block">
                         <img src={Phone} alt=""/>
@@ -160,7 +162,7 @@ export default function Landing(props) {
             </Container>
 
             <Container className="container-wrap">
-                <section className="functional-section block-section">
+                <section className="functional-section block-section" id="functional">
                     <p className="title-block text-center">Функціонал <b>B-Fin</b></p>
                     <img src={LineScreenThree} alt="" className="functional-img-line"/>
                     <div className="functional-list">
@@ -198,7 +200,7 @@ export default function Landing(props) {
             </Container>
 
             <Container className="container-wrap">
-                <section className="benefits-section block-section">
+                <section className="benefits-section block-section" id="benefits">
                     <p className="title-block text-center">Переваги</p>
                     <img src={LineScreenFour} alt="" className="benefits-img-line"/>
                     <div className="benefits-list">
@@ -219,7 +221,7 @@ export default function Landing(props) {
             </Container>
 
             <Container className="container-wrap">
-                <section className="cost-section block-section">
+                <section className="cost-section block-section" id="cost">
                     <p className="title-block text-center">Вартість</p>
                     <div className="cost-list">
                         <div className="cost-item-wrap">
@@ -247,7 +249,7 @@ export default function Landing(props) {
             </Container>
 
             <Container className="container-wrap">
-                <section className="contact-section block-section">
+                <section className="contact-section block-section" id="contact">
                     <p className="title-block text-center">Контакти</p>
                     <div className="wrap-block">
                         <div className="left-block">
