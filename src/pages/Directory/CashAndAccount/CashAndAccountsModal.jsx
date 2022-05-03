@@ -417,21 +417,16 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   onChange={handleChangeField}
                 />
 
-                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <div>
-                    <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
-                  </div>
-                  <TextField
-                    sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
-                    label="ID Автоклиент:"
-                    multiline
-                    maxRows={2}
-                    variant="standard"
-                    value={account}
-                    name="autoclient_id"
-                    onChange={(e) => setAccount(e)}
-                  />
-                </div>
+                <TextField
+                  sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
+                  label="ID Автоклиент:"
+                  multiline
+                  maxRows={2}
+                  variant="standard"
+                  value={account}
+                  name="autoclient_id"
+                  onChange={(e) => setAccount(e.target.value)}
+                />
 
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
@@ -440,8 +435,12 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   variant="standard"
                   value={token}
                   name="token"
-                  onChange={(e) => setToken(e)}
+                  onChange={(e) => setToken(e.target.value)}
                 />
+
+                <div>
+                  <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
+                </div>
 
                 {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <Select
