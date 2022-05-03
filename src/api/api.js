@@ -126,6 +126,10 @@ class API {
     async getCurrenciesList() {
         return await this.request("GET", "/currencies/options");
     }
+    
+    async account(params) {
+        return await this.request("GET", `/cash_accounts/account`, params)
+    }
 }
 
 
