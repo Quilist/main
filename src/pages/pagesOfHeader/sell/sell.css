@@ -817,7 +817,6 @@ form {
     .form_edit {
         flex-direction: column;
         border: none;
-        padding: 10px;
         max-width: none;
         margin: 0;
     }
