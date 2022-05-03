@@ -1,8 +1,8 @@
 import './Landing.css';
 import { Link } from 'react-router-dom';
-
 import * as React from 'react';
-
+import Wow from 'wow.js';
+import Parallax from 'parallax-js'
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -78,6 +78,61 @@ const pages = [
 ];
 
 export default function Landing(props) {
+    const wow = new Wow();
+    wow.init();
+
+    const sceneEl = React.useRef(null);
+    const sceneElLine = React.useRef(null);
+    const sceneElThree = React.useRef(null);
+    const sceneElFour = React.useRef(null);
+    const sceneElFive = React.useRef(null);
+
+    React.useEffect(() => {
+        const parallaxInstance = new Parallax(sceneEl.current, {
+            relativeInput: true,
+        });
+        parallaxInstance.enable();
+
+        return () => parallaxInstance.disable();
+    }, [])
+
+    React.useEffect(() => {
+        const parallaxInstanceTwo = new Parallax(sceneElLine.current, {
+            relativeInput: true,
+            scalarX: false
+        });
+        parallaxInstanceTwo.enable();
+
+        return () => parallaxInstanceTwo.disable();
+    }, [])
+
+    React.useEffect(() => {
+        const parallaxInstanceThree= new Parallax(sceneElThree.current, {
+            relativeInput: true,
+        });
+        parallaxInstanceThree.enable();
+
+        return () => parallaxInstanceThree.disable();
+    }, [])
+
+    React.useEffect(() => {
+        const parallaxInstanceFour= new Parallax(sceneElFour.current, {
+            relativeInput: true,
+        });
+        parallaxInstanceFour.enable();
+
+        return () => parallaxInstanceFour.disable();
+    }, [])
+
+    React.useEffect(() => {
+        const parallaxInstanceFive= new Parallax(sceneElFive.current, {
+            relativeInput: true,
+        });
+        parallaxInstanceFive.enable();
+
+        return () => parallaxInstanceFive.disable();
+    }, [])
+
     const [openMenu, setOpenMenu] = React.useState(false)
     const toggleMenu = () => {
         let body = document.body;
@@ -120,7 +175,6 @@ export default function Landing(props) {
                                 })}
                             </ul>
                         </div>
-
                         <Link class="btn-login" to="/registration" underline="none">Войти</Link>
                     </div>
                 </Container>
@@ -129,28 +183,41 @@ export default function Landing(props) {
             <Toolbar id="back-to-top-anchor" />
 
             <section className="financing-section" id="financing">
-                <p className="title-block">Фінанси <b>вашого бізнеса</b> онлайн 24/7</p>
+                <p className="title-block wow fadeInUp">Фінанси <b>вашого бізнеса</b> онлайн 24/7</p>
                 <div className="financing-img-wrap-lines">
-                    <div className="financing-img-wrap">
-                        <img className="financing-img-main" src={FinancingMain} alt=""/>
-                        <img className="financing-img-per" src={FinancingPercenti} alt=""/>
-                        <img className="financing-img-dia" src={FinancingDiagramma} alt=""/>
+                    <div className="financing-img-wrap" ref={sceneEl}>
+                        <div className="" data-depth="0.2">
+                            <img className="financing-img-main" src={FinancingMain} alt=""/>
+                        </div>
+                        <div className="financing-img-per-wrap" data-depth="0.1">
+                            <img className="financing-img-per wow fadeInDown"  data-wow-offset="100" data-wow-delay="0.3s"  src={FinancingPercenti} alt=""/>
+                        </div>
+                        <div className="financing-img-dia-wrap" data-depth="0.3">
+                            <img className="financing-img-dia wow fadeInUp" data-depth="0.3" data-wow-offset="100"  data-wow-delay="0.3s" src={FinancingDiagramma} alt=""/>
+                        </div>
                     </div>
-                    <div className="financing-img-lines">
-                        <img className="financing-img-line-1" src={FinancingLineOne} alt=""/>
-                        <img className="financing-img-line-2" src={FinancingLineTwo} alt=""/>
-                        <img className="financing-img-line-3" src={FinancingLineThree} alt=""/>
+                    <div className="financing-img-lines" ref={sceneElLine}>
+                        <div className="financing-img-lie-wrap" data-depth="0.7">
+                            <img className="financing-img-line-1" src={FinancingLineOne} alt=""/>
+                        </div>
+                        <div className="financing-img-lie-wrap" data-depth="1">
+                            <img className="financing-img-line-2" src={FinancingLineTwo} alt=""/>
+                        </div>
+                        <div className="financing-img-lie-wrap" data-depth="0.5">
+                            <img className="financing-img-line-3" src={FinancingLineThree} alt=""/>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <Container className="container-wrap">
                 <section className="business-section wrap-block block-section" id="business">
-
-                    <div className="left-block">
-                        <img src={Phone} alt=""/>
+                    <div className="left-block wow fadeInLeft" ref={sceneElThree} data-wow-offset="200">
+                        <div className="" data-depth="0.3">
+                            <img src={Phone} alt=""/>
+                        </div>
                     </div>
-                    <div className="right-block">
+                    <div className="right-block wow fadeInRight" data-wow-offset="200">
                         <p className="title-block">Для якого <b>бізнесу</b> підходить</p>
                         <p className="desc-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                             eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -163,36 +230,40 @@ export default function Landing(props) {
 
             <Container className="container-wrap">
                 <section className="functional-section block-section" id="functional">
-                    <p className="title-block text-center">Функціонал <b>B-Fin</b></p>
-                    <img src={LineScreenThree} alt="" className="functional-img-line"/>
+                    <p className="title-block text-center wow fadeInUp" data-wow-offset="200">Функціонал <b>B-Fin</b></p>
+                    <div className="functional-img-line-wrap" ref={sceneElFour}>
+                        <div className="" data-depth="0.3">
+                            <img src={LineScreenThree} alt="" className="functional-img-line" />
+                        </div>
+                    </div>
                     <div className="functional-list">
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="200" data-wow-delay="0.1s">
                             Облік з/п
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="200" data-wow-delay="0.2s">
                             Облік коштів
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="200" data-wow-delay="0.3s">
                             Автоматизація
                             обліку
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="200" data-wow-delay="0.4s">
                             Облік податків
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="200" data-wow-delay="0.5s">
                             Гнучке
                             налаштування звітів
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="200" data-wow-delay="0.6s">
                             Інтеграція з CRM
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="100" data-wow-delay="0.7s">
                             Облік складу
                         </div>
-                        <div className="functional-item">
+                        <div className="functional-item wow fadeInUp" data-wow-offset="100" data-wow-delay="0.8s">
                             Облік клієнтів
                         </div>
-                        <div className="btn-black-wrap">
+                        <div className="btn-black-wrap wow fadeInRight" data-wow-offset="100" data-wow-delay="0.9s">
                             <a href="#" className="btn-black">Подробнее</a>
                         </div>
                     </div>
@@ -201,19 +272,24 @@ export default function Landing(props) {
 
             <Container className="container-wrap">
                 <section className="benefits-section block-section" id="benefits">
-                    <p className="title-block text-center">Переваги</p>
-                    <img src={LineScreenFour} alt="" className="benefits-img-line"/>
+                    <p className="title-block text-center wow fadeInUp" data-wow-offset="200">Переваги</p>
+                    <div className="benefits-img-line-wrap" ref={sceneElFive}>
+                        <div data-depth="0.2">
+                            <img src={LineScreenFour} alt="" className="benefits-img-line"/>
+                        </div>
+                    </div>
+
                     <div className="benefits-list">
-                        <div className="benefits-item-wrap">
+                        <div className="benefits-item-wrap wow fadeInLeft" data-wow-offset="200" data-wow-delay="0.1s">
                             <div className="benefits-item">Гнучкі налаштування прав доступу</div>
                         </div>
-                        <div className="benefits-item-wrap">
+                        <div className="benefits-item-wrap wow fadeInLeft" data-wow-offset="200" data-wow-delay="0.2s">
                             <div className="benefits-item">Вартість <br/> дешевого <br/> серверу 1С</div>
                         </div>
-                        <div className="benefits-item-wrap">
+                        <div className="benefits-item-wrap wow fadeInLeft" data-wow-offset="200" data-wow-delay="0.3s">
                             <div className="benefits-item">Швидкість <br/> роботи</div>
                         </div>
-                        <div className="benefits-item-wrap">
+                        <div className="benefits-item-wrap wow fadeInLeft" data-wow-offset="200" data-wow-delay="0.4s">
                             <div className="benefits-item">Адапивано <br/> під мобільний</div>
                         </div>
                     </div>
@@ -222,21 +298,21 @@ export default function Landing(props) {
 
             <Container className="container-wrap">
                 <section className="cost-section block-section" id="cost">
-                    <p className="title-block text-center">Вартість</p>
+                    <p className="title-block text-center wow fadeInUp" data-wow-offset="200">Вартість</p>
                     <div className="cost-list">
-                        <div className="cost-item-wrap">
+                        <div className="cost-item-wrap wow fadeIn" data-wow-offset="200" data-wow-delay="0.1s">
                             <div className="cost-item">
                                 <p className="cost-item-title">1 місяць <br/> безкоштовно</p>
                                 <a href="" className="btn-arrow-right cost-item-btn">Почати</a>
                             </div>
                         </div>
-                        <div className="cost-item-wrap">
+                        <div className="cost-item-wrap wow fadeIn" data-wow-offset="200" data-wow-delay="0.2s">
                             <div className="cost-item">
                                 <p className="cost-item-title">Всі функції <br/> 10$/місяць</p>
                                 <a href="" className="btn-arrow-right cost-item-btn">Почати</a>
                             </div>
                         </div>
-                        <div className="cost-item-wrap">
+                        <div className="cost-item-wrap wow fadeIn" data-wow-offset="200" data-wow-delay="0.3s">
                             <div className="cost-item">
                                 <p className="cost-item-title">Індивідувальні <br/> налаштування <br/>за домовленістю
                                 </p>
@@ -244,15 +320,15 @@ export default function Landing(props) {
                             </div>
                         </div>
                     </div>
-                    <p className="cost-note text-center">Ви можете замовити базове налаштування за 50$</p>
+                    <p className="cost-note text-center wow fadeInUp" data-wow-offset="100" data-wow-delay="0.4s">Ви можете замовити базове налаштування за 50$</p>
                 </section>
             </Container>
 
             <Container className="container-wrap">
                 <section className="contact-section block-section" id="contact">
-                    <p className="title-block text-center">Контакти</p>
+                    <p className="title-block text-center wow fadeInUp" data-wow-offset="200">Контакти</p>
                     <div className="wrap-block">
-                        <div className="left-block">
+                        <div className="left-block wow fadeInLeft" data-wow-offset="200">
                             <div className="contact-block">
                                 <div className="contact-item">
                                     <div className="contact-item-icon">
@@ -267,15 +343,15 @@ export default function Landing(props) {
                                 </div>
                                 <div className="contact-item">
                                     <div className="contact-item-icon">
-                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13 0C5.82021 0 0 5.82021 0 13C0 20.1798 5.82021 26 13 26C20.1798 26 26 20.1798 26 13C26 5.82021 20.1798 0 13 0ZM17.9996 14.667C17.9996 14.667 19.1493 15.8018 19.4323 16.3285C19.4404 16.3394 19.4445 16.3502 19.4472 16.3556C19.5623 16.5493 19.5894 16.6996 19.5325 16.812C19.4377 16.9989 19.1127 17.0909 19.0017 17.0991H16.9704C16.8296 17.0991 16.5344 17.0625 16.1769 16.816C15.902 16.6238 15.6311 16.3082 15.3671 16.0008C14.973 15.5431 14.6318 15.1477 14.2878 15.1477C14.2441 15.1476 14.2007 15.1545 14.1592 15.168C13.8992 15.252 13.566 15.623 13.566 16.6116C13.566 16.9203 13.3223 17.0977 13.1503 17.0977H12.22C11.9031 17.0977 10.2524 16.9867 8.7899 15.4443C6.99969 13.5552 5.38823 9.76625 5.37469 9.73104C5.27312 9.48594 5.48302 9.35458 5.71187 9.35458H7.76344C8.03698 9.35458 8.12635 9.52115 8.18865 9.66875C8.26177 9.84073 8.5299 10.5246 8.97 11.2937C9.68365 12.5477 10.121 13.0569 10.4718 13.0569C10.5375 13.0561 10.6021 13.0394 10.66 13.0081C11.1177 12.7535 11.0324 11.1218 11.0121 10.7832C11.0121 10.7196 11.0107 10.0533 10.7765 9.73375C10.6085 9.50219 10.3228 9.41417 10.1495 9.38167C10.2196 9.28486 10.3121 9.20636 10.419 9.15281C10.7331 8.99573 11.2992 8.97271 11.8611 8.97271H12.174C12.7833 8.98083 12.9404 9.0201 13.1611 9.07562C13.608 9.1826 13.6175 9.47104 13.5782 10.4582C13.566 10.7385 13.5539 11.0554 13.5539 11.4292C13.5539 11.5104 13.5498 11.5971 13.5498 11.6892C13.5363 12.1916 13.52 12.7617 13.8748 12.9959C13.9211 13.025 13.9745 13.0404 14.0292 13.0406C14.1524 13.0406 14.5234 13.0406 15.5282 11.3168C15.8381 10.7619 16.1074 10.1853 16.334 9.59156C16.3543 9.55635 16.4139 9.44802 16.4843 9.40604C16.5362 9.37955 16.5939 9.36607 16.6522 9.36677H19.064C19.3267 9.36677 19.5068 9.40604 19.5406 9.5076C19.6002 9.66875 19.5298 10.1603 18.4289 11.6512L17.9373 12.2999C16.9393 13.608 16.9393 13.6744 17.9996 14.667Z"
-                                                fill="#7096FF"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="26px" height="26px" viewBox="0 0 728.000000 724.000000" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,724.000000) scale(0.100000,-0.100000)" fill="#7096FF" stroke="none">
+                                                <path d="M3385 7209 c-902 -64 -1714 -437 -2336 -1075 -382 -392 -658 -840 -834 -1354 -129 -376 -189 -747 -189 -1165 0 -397 55 -748 175 -1115 107 -327 281 -678 464 -933 289 -403 610 -713 1006 -969 980 -637 2227 -752 3311 -307 1146 471 1978 1508 2182 2719 38 223 49 366 49 605 0 413 -55 759 -180 1140 -287 874 -928 1625 -1758 2059 -566 296 -1255 440 -1890 395z m617 -1264 c316 -32 680 -104 886 -177 415 -146 688 -414 810 -798 46 -145 90 -389 124 -685 19 -166 16 -668 -5 -830 -119 -911 -399 -1268 -1137 -1450 -332 -81 -558 -106 -1035 -112 l-380 -5 -40 -42 c-94 -96 -446 -467 -505 -531 -127 -139 -245 -255 -258 -255 -10 0 -12 85 -10 458 1 251 -1 466 -5 478 -5 14 -37 35 -95 61 -48 22 -122 57 -164 76 -351 162 -590 472 -698 906 -153 616 -102 1604 106 2046 245 522 868 833 1759 879 131 7 493 -4 647 -19z"/>
+                                                <path d="M3160 5775 c-733 -74 -1231 -353 -1422 -798 -100 -231 -162 -651 -162 -1102 0 -479 63 -843 192 -1100 112 -225 299 -400 539 -505 164 -72 232 -110 263 -149 53 -64 60 -107 60 -390 l1 -256 41 45 c23 25 142 149 265 277 179 185 232 235 266 247 33 12 115 16 402 20 368 5 480 12 713 46 420 62 725 174 923 342 103 87 222 274 278 438 98 283 162 773 147 1115 -21 453 -95 863 -192 1062 -58 118 -112 190 -217 290 -99 92 -221 167 -365 224 -233 91 -631 170 -991 199 -178 13 -584 11 -741 -5z m561 -555 c368 -38 618 -147 833 -364 227 -229 349 -519 371 -881 9 -143 -2 -189 -49 -205 -47 -15 -81 0 -94 42 -6 18 -16 83 -22 143 -30 314 -146 589 -325 771 -176 180 -455 300 -795 344 -49 7 -92 18 -102 27 -34 30 -18 106 25 123 29 12 38 12 158 0z m-1020 -46 c47 -14 67 -29 155 -117 55 -56 134 -150 176 -210 92 -130 184 -305 193 -369 10 -63 -20 -125 -88 -181 -139 -116 -161 -143 -178 -215 -18 -83 66 -287 183 -443 62 -82 215 -232 228 -224 4 3 10 -2 13 -9 7 -18 151 -113 233 -154 86 -43 169 -66 213 -57 20 4 44 8 54 9 26 3 101 78 141 141 34 52 123 117 163 118 36 1 173 -34 173 -45 0 -4 6 -8 13 -8 13 0 245 -153 322 -213 206 -160 255 -222 255 -320 0 -89 -94 -255 -198 -349 -89 -80 -262 -158 -352 -158 -146 0 -661 267 -999 517 -208 155 -494 425 -621 589 -36 46 -71 83 -77 84 -7 0 -12 4 -10 8 1 5 -24 45 -55 89 -189 263 -425 708 -472 889 -20 79 -20 195 0 265 50 170 197 321 354 363 72 19 115 19 181 0z m1157 -300 c42 -8 109 -26 149 -40 343 -114 588 -463 571 -814 -2 -53 -9 -95 -17 -104 -15 -17 -86 -22 -110 -7 -8 5 -21 56 -32 131 -33 214 -85 347 -179 452 -99 111 -239 180 -454 225 -134 27 -152 34 -161 63 -8 27 3 76 22 95 19 20 112 20 211 -1z m137 -374 c98 -48 175 -121 215 -205 73 -154 49 -309 -44 -291 -45 9 -56 25 -75 113 -31 145 -94 219 -216 254 -125 36 -138 43 -147 71 -13 39 9 80 52 95 54 20 126 7 215 -37z"/>
+                                            </g>
                                         </svg>
                                     </div>
-                                    <a href="https://vk.com/bfin" target="_blank"
-                                       className="contact-item-title">vk.com/bfin</a>
+                                    <a href="https://viber/bfin" target="_blank"
+                                       className="contact-item-title">viber/bfin</a>
                                 </div>
                                 <div className="contact-item">
                                     <div className="contact-item-icon">
@@ -301,11 +377,9 @@ export default function Landing(props) {
                                     <a href="https://goo.gl/maps/TeqNutw6tUvc41zv6" target="_blank"
                                        className="contact-item-title">м. Вишневе, вул. Промислова 8</a>
                                 </div>
-
-
                             </div>
                         </div>
-                        <div className="right-block">
+                        <div className="right-block wow fadeInRight" data-wow-offset="200">
                             <p className="title-block-two">Реквізити</p>
                             <p className="desc-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                                 eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -314,7 +388,6 @@ export default function Landing(props) {
                                 voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                         </div>
                     </div>
-
                 </section>
             </Container>
 
