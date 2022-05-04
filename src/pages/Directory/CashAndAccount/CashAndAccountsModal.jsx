@@ -129,7 +129,13 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   }
 
   const handleAdd = async () => {
-    if (elem) item.privat_business = elem;
+    if (elem) item.stream = {
+      acc: elem.acc,
+      balance: elem.balanceIn,
+      currency: elem.currency,
+      id: account,
+      token: token
+    };
 
     api.add(item, 'cashAndAccount').then(res => {
       if (res.status === "error") return alert(res.message);
