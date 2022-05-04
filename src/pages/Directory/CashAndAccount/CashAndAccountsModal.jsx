@@ -129,8 +129,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   }
 
   const handleAdd = async () => {
-    if (elem) {
-      console.log("OK")
+    if (elem.acc) {
       item.stream = {
         acc: elem.acc,
         balance: elem.balanceIn,
