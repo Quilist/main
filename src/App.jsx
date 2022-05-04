@@ -180,12 +180,14 @@ function App() {
 
             {/* Действия  */}
             <Route path="/accept" element={<> <AppLayout component={<Accept />} /> </>} />
-            <Route path="/buy" element={<> <AppLayout component={<Buy />} /> </>} />
+            <Route path="/buy" element={<> <AppLayout component={<BuyCreate />} /> </>} />
+            <Route path="/buy/:id" element={<> <AppLayout component={<BuyCreate />} /> </>} />
             <Route path="/buy/create" element={<> <AppLayout component={<BuyCreate />} /> </>} />
             <Route path="/inventory" element={<> <AppLayout component={<Inventory />} /> </>} />
             <Route path="/pay" element={<> <AppLayout component={<Pay />} /> </>} />
             <Route path="/retrieve" element={<> <AppLayout component={<Retrieve />} /> </>} />
             <Route path="/sell" element={<> <AppLayout component={<Sell />} /> </>} />
+            <Route path="/sell/:id" element={<> <AppLayout component={<Sell />} /> </>} />
             <Route path="/invoice" element={<> <AppLayout component={<Invoice />} /> </>} />
             <Route path="/order" element={<> <AppLayout component={<Order />} /> </>} />
 

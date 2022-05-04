@@ -97,7 +97,7 @@ function ProductHandle() {
     if(typePriceList?.length > 0) {
       typePriceList.forEach(function (typePrice) {
         if(typePrice.name && typePrice.currency_id && typePrice.price) {
-          priceData.push({ name: typePrice.name, currency_id: Number(typePrice.currency_id), price: Number(typePrice.price) });
+          priceData.push({ name: typePrice.name, currency_id: Number(typePrice.currency_id), price: Number(typePrice.price), type_price_id:  Number(typePrice.id)});
         }
       });
       data.prices = priceData

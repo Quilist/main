@@ -30,6 +30,7 @@ class API {
             productSize: '/products_sizes',
             moneyExchange: '/currency_exchange',
             moneyMoving: '/moving_money',
+            buySell: '/buy_sell',
         }
 
         return types[type];
