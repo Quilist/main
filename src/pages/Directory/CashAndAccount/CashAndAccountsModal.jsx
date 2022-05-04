@@ -9,6 +9,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
+
 import btn from '@/styles/modules/UserEditing.module.css';
 
 import { Dropdown } from 'semantic-ui-react';
@@ -75,7 +76,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
-  const [acc, setAcc] = React.useState({});
+  const [acc, setAcc] = React.useState([]);
 
   const handleSearch = () => {
     api.account(account, token).then(data => {
@@ -421,39 +422,39 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
-                  label="ID Автоклиент:"
-                  multiline
+                  label="Token:" multiline
                   maxRows={2}
                   variant="standard"
-                  value={account}
-                  name="autoclient_id"
-                  onChange={(e) => setAccount(e.target.value)}
+                  value={token}
+                  name="token"
+                  onChange={(e) => setToken(e.target.value)}
                 />
 
                 <div>
                   <TextField
-                    sx={{ marginBottom: '20px', width: '50%' }} id="standard-multiline-flexible"
-                    label="Token:" multiline
+                    sx={{ marginBottom: '20px', width: '52%' }} id="standard-multiline-flexible"
+                    label="ID Автоклиент:"
+                    multiline
                     maxRows={2}
                     variant="standard"
-                    value={token}
-                    name="token"
-                    onChange={(e) => setToken(e.target.value)}
+                    value={account}
+                    name="autoclient_id"
+                    onChange={(e) => setAccount(e.target.value)}
                   />
                   <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
                 </div>
 
-                 <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
                   <InputLabel id="demo-simple-select-standard-label">Счет:</InputLabel>
                   <Select
                     autoWidth
                     label="Счета"
                     value={acc ? `${acc.balanceIn} ${acc.currency}` : 'Счет'}
                     name="account_id"
-//                     onChange={(e) => updateAccount(e, i)}
+                  // onChange={(e) => updateAccount(e, i)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={elem.acc} onClick={e => setAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={elem} onClick={e => setAcc(e.target.value)}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
