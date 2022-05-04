@@ -449,11 +449,12 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Select
                     autoWidth
                     label="Счета"
-                    value={acc.length ? acc : ''}
+                    value={acc || ''}
                     name="account_id"
+                    onChange={(e) => setAcc(e.target.value)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={e => setAcc(e.target.value)}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
