@@ -78,7 +78,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [token, setToken] = React.useState('');
   const [acc, setAcc] = React.useState({});
 
-  const handleChangeAcc = (event) => setAcc(event.target.value);
+  const handleChangeAcc = (e) => setAcc(e);
   
   const handleSearch = () => {
     api.account(account, token).then(data => {
