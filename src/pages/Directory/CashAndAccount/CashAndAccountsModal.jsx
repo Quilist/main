@@ -76,9 +76,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
-  const [acc, setAcc] = React.useState({});
-
-  const handleChangeAcc = (e) => setAcc(e);
+  const [acc, setAcc] = React.useState('');
   
   const handleSearch = () => {
     api.account(account, token).then(data => {
@@ -451,11 +449,11 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Select
                     autoWidth
                     label="Счета"
-                    value={acc ? `${acc.balanceIn} ${acc.currency}` : 'Счет'}
+                    value={acc.length ? acc : 'Счет'}
                     name="account_id"
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={elem.acc} onClick={e => handleChangeAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={e => setAcc(e.target.value)}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
