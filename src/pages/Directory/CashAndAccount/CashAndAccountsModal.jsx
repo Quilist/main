@@ -449,7 +449,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Select
                     autoWidth
                     label="Счета"
-                    value={acc.length ? acc : 'Счет'}
+                    value={acc.length ? acc : ''}
                     name="account_id"
                   >
                     {accountList.map((elem) => {
