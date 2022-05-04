@@ -76,8 +76,10 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
-  const [acc, setAcc] = React.useState([]);
+  const [acc, setAcc] = React.useState({});
 
+  const handleChangeAcc = (event) => setAcc(event.target.value);
+  
   const handleSearch = () => {
     api.account(account, token).then(data => {
       if (data.status === "error") alert(data.message)
@@ -432,7 +434,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <div>
                   <TextField
-                    sx={{ marginBottom: '20px', width: '52%' }} id="standard-multiline-flexible"
+                    sx={{ marginBottom: '20px', width: '53%' }} id="standard-multiline-flexible"
                     label="ID Автоклиент:"
                     multiline
                     maxRows={2}
@@ -451,10 +453,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     label="Счета"
                     value={acc ? `${acc.balanceIn} ${acc.currency}` : 'Счет'}
                     name="account_id"
-                  // onChange={(e) => updateAccount(e, i)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={elem} onClick={e => setAcc(e.target.value)}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={elem.acc} onClick={e => handleChangeAcc(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
