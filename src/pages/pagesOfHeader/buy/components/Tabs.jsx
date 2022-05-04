@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Select from 'react-select';
+import SelectComponent from "@/components/Select/SelectComponent";
 import './Tabs.css'
 import DirectoryModal from "@/components/modal/DirectoryModal.jsx";
 import FormControl from "@mui/material/FormControl";
@@ -8,64 +8,29 @@ import DateAdapter from "@mui/lab/AdapterMoment";
 import DatePicker from "@mui/lab/DatePicker";
 import TextField from "@mui/material/TextField";
 
-const customStyles = {
-   option: (provided, state) => ({
-      ...provided,
-      color: state.isSelected || state.isFocused ? 'white' : 'black',
-      background: state.isSelected || state.isFocused ? '#7196ff' : 'white',
-   }),
-   singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
 
-      return {...provided, opacity, transition};
-   }
-};
-const optionsTypePrice = [
-   {value: '0', label: 'Тип цены ', isDisabled: true},
-   {value: 'saab', label: 'Закупочный'},
-   {value: 'opel', label: 'Розница'},
-   {value: 'audi', label: 'Цена без НДС'},
-];
-const optionsCurrency = [
-   {value: '0', label: 'Валюта', isDisabled: true},
-   {value: '1', label: 'Валюта1'},
-   {value: '2', label: 'Валюта2'},
-   {value: '3', label: 'Валюта3'},
-];
-const optionsOrg = [
-   {value: '0', label: 'Организация', isDisabled: true},
-   {value: '1', label: 'Организация1'},
-   {value: '2', label: 'Организация2'},
-   {value: '3', label: 'Организация3'},
-];
-const CustomOrg = ({innerRef, innerProps, isDisabled, children}) =>
-    !isDisabled ? (
-        <div ref={innerRef} {...innerProps} className="customReactSelectMenu">
-           {children}
-           <div className="customReactSelectFooter">
-              <button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>
-              <button className="btn-add-icon" onClick={event => event.preventDefault()}></button>
-           </div>
-        </div>
-    ) : null;
+function Tab({data, item, setItem, auxiliaryList}) {
 
-
-function Tab(props) {
-
-   const [visibleTab, setVisibleTab] = React.useState(props.data[0].id)
+   const [visibleTab, setVisibleTab] = React.useState(data[0].id)
    const [openDirectoryModal, setOpenDirectoryModal] = useState(false);
-   const [item, setItem] = React.useState({});
 
-   const handleDate = (value) => {
-      const date = new Date(value);
-      const milliseconds = date.getTime();
+   React.useEffect(() => {
       setItem(prevItem => ({
          ...prevItem,
-         date: milliseconds
+         products: [
+            {
+               product_id: null,
+               qnt: null,
+               unit: null,
+               price: null,
+               sum: null,
+            }
+         ]
       }));
-   }
-   const listTitles = props.data.map((item) =>
+      // eslint-disable-next-line
+   }, [])
+
+   const listTitles = data.map((item) =>
        <li onClick={() => setVisibleTab(item.id)}
            className={visibleTab === item.id ? "tab-title tab-title--active" : "tab-title"}>{item.tabTitle}</li>
    )
@@ -110,93 +75,6 @@ function Tab(props) {
          name: "Сумма"
       }
    ];
-   const [tableItem, setTableItem] = React.useState([
-      {
-         number: 1,
-         products: [
-            {
-               label: 'Дрова акация 33 см',
-               value: 1,
-            },
-            {
-               label: 'Дрова акация 34 см',
-               value: 2,
-            },
-         ],
-         qnt: '66,000',
-         unit: "м<sup>3</sup>/нас",
-         price: "980,00",
-         sum: "64 680,00",
-      },
-      {
-         number: 2,
-         products: [
-            {
-               label: 'Дрова акация 33 см',
-               value: 1,
-            },
-            {
-               label: 'Дрова акация 34 см',
-               value: 2,
-            },
-         ],
-         qnt: '66,000',
-         unit: "м<sup>3</sup>/нас",
-         price: "980,00",
-         sum: "64 680,00",
-      },
-      {
-         number: 3,
-         products: [
-            {
-               label: 'Дрова акация 33 см',
-               value: 1,
-            },
-            {
-               label: 'Дрова акация 34 см',
-               value: 2,
-            },
-         ],
-         qnt: '66,000',
-         unit: "м<sup>3</sup>/нас",
-         price: "980,00",
-         sum: "64 680,00",
-      },
-      {
-         number: 4,
-         products: [
-            {
-               label: 'Дрова акация 33 см',
-               value: 1,
-            },
-            {
-               label: 'Дрова акация 34 см',
-               value: 2,
-            },
-         ],
-         qnt: '66,000',
-         unit: "м<sup>3</sup>/нас",
-         price: "980,00",
-         sum: "64 680,00",
-      },
-   ]);
-   const removeTableItem = (index) => {
-      var ind = index -1;
-      setTableItem(tableItem.filter((o, i) => ind !== i));
-   };
-   var addNumber = tableItem[tableItem.length - 1]?.number;
-   const addItem = (e) => {
-      setTableItem([...tableItem, {
-         number: ++addNumber, products: [{
-            label: 'Дрова акация 33 см',
-            value: 1,
-         },
-            {
-               label: 'Дрова акация 34 см',
-               value: 2,
-            },], qnt: null, unit: "м<sup>3</sup>/нас", price: null, sum: null
-      }]);
-   }
 
 
    const CustomTable = ({innerRef, innerProps, isDisabled, children}) =>
@@ -209,6 +87,139 @@ function Tab(props) {
               </div>
            </div>
        ) : null;
+
+   const removeTableItem = (index) => {
+      const f = item.products.filter((o, i) => index !== i)
+      setItem(prevItem => ({
+         ...prevItem,
+         products: f
+      }));
+
+      countItemSum(f);
+   };
+
+   const addItem = (e) => {
+      // setItem([...item.products, {
+      //    product_id: null,
+      //    qnt: null,
+      //    unit: null,
+      //    price: null,
+      //    sum: null,
+      // }]);
+      setItem(prevItem => ({
+         ...prevItem,
+         products: [...item.products, {
+            product_id: null,
+            qnt: null,
+            unit: null,
+            price: null,
+            sum: null,
+         }]
+      }));
+   }
+
+   const formatField = (value) => {
+      let n;
+      let h = parseInt(value);
+      if(!isNaN(h)) {
+         n = h;
+      } else {
+         n = value;
+      }
+      return n;
+   };
+
+   const updateProduct = (e, index) => {
+      const updatedItemProduct = item.products.map((p, i) => {
+         if (i === index){
+            let leftover = null, price = null;
+            const storehouseIndex = e.leftovers?.findIndex((leftover) => leftover.storehouse_id === item.storehouse_id)
+            if (storehouseIndex !== -1) {
+               leftover = e.leftovers[storehouseIndex]
+            }
+            const priceIndex = e.prices?.findIndex((pr) => pr.type_price_id === item.type_price_id)
+            if (priceIndex !== -1) {
+               price = e.prices[priceIndex]
+            }
+            p = {}
+
+            p.qnt = 0
+            p.product_id = e.id
+            p.product = e
+            p.measure_id = e.measure_id
+            p.type = e.type
+            if(e.measure_id) {
+               p.measure_id = e.measure_id
+               p.measure = e.measure
+            }
+            if(leftover) {
+               p.leftover = leftover
+            } else {
+               delete p.leftover
+            }
+            if(price) {
+               p.price = Number(price.price)
+            } else {
+               p.price = 0
+            }
+         }
+         return {
+            ...p
+         };
+      });
+
+      setItem(prevItem => ({
+         ...prevItem,
+         products: updatedItemProduct,
+      }));
+   };
+
+   const countSum = (qnt, price, discount) => {
+      let sum = 0;
+      sum = qnt * price;
+      if(discount) {
+         sum = (sum - (sum * (discount/100))).toFixed(2)
+      }
+      return sum;
+   }
+
+   const countItemSum = (f) => {
+      let sum = 0;
+      const p = f || item.products;
+      p.map((p, i) => {
+         sum = sum + parseFloat(p.sum)
+      });
+      setItem(prevItem => ({
+         ...prevItem,
+         sum: sum
+      }));
+   }
+
+   const updateItemProduct = (e, index) => {
+      const { name, value } = e.target;
+      let v = formatField(value);
+
+      console.log('value', v)
+
+      const updatedItemProduct = item.products.map((p, i) => {
+         if (i === index){
+            p[name] = v
+            p.sum = countSum(p.qnt, p.price, p.discount);
+         }
+         return {
+            ...p
+         };
+      });
+
+      setItem(prevItem => ({
+         ...prevItem,
+         products: updatedItemProduct
+      }));
+
+      countItemSum();
+
+      console.log('item', item)
+   };
 
 
    const tableHeadTwo = [
@@ -383,6 +394,24 @@ function Tab(props) {
       {value: '3', label: 'Курьер 3'},
    ];*/
 
+   const findArrayDiff = (arr1, arr2, field1, field2) => {
+      const filteredArray = arr1.filter(e=>arr2.findIndex(i=>i[field1] == e[field2]) === -1);
+
+      return filteredArray;
+   };
+
+   const filteredProductList = () => {
+      let filteredArray = [];
+      if(auxiliaryList?.products && item?.products) {
+         filteredArray = findArrayDiff(auxiliaryList.products, item.products, 'product_id', 'id')
+      } else {
+         filteredArray = auxiliaryList.products
+      }
+
+      return filteredArray;
+   };
+
+
    return (
        <>
           <DirectoryModal
@@ -433,7 +462,7 @@ function Tab(props) {
                                      );
                                   })}
                                </tr>
-                               {tableItem.map((item, index) => {
+                               {item.products?.map((itemProduct, index) => {
                                   return (
                                       <tr key={index}>
                                          <td>
@@ -443,60 +472,56 @@ function Tab(props) {
                                             <p className="table-block-label">{tableHead[1].name}:</p>
                                             <div className="table-block-body">
                                                <div className="select two">
-                                                  <Select
-                                                      name={'id_product' + ++index}
-                                                      width='200px'
-                                                      styles={customStyles}
-                                                      options={item.products}
-                                                      defaultValue={item.products[0]}
-                                                      noOptionsMessage={() => "Ничего не найдено :("}
-                                                      components={{Menu: CustomTable}}
-                                                      theme={(theme) => ({
-                                                         ...theme,
-                                                         borderRadius: 12,
-                                                         colors: {
-                                                            ...theme.colors,
-                                                            primary25: '#4369cf',
-                                                            primary: '#7196ff',
-                                                         },
-                                                      })}
-                                                  >
-                                                  </Select>
+                                                  <SelectComponent
+                                                    list={filteredProductList()}
+                                                    value={itemProduct.product_id}
+                                                    label={itemProduct.product?.name || "Товар/Услуга"}
+                                                    field="product_id"
+                                                    setItem={setItem}
+                                                    isOnChange={true}
+                                                    onChange={(e) => updateProduct(e, index)}
+                                                  />
                                                </div>
                                             </div>
                                          </td>
                                          <td>
                                             <p className="table-block-label">{tableHead[2].name}:</p>
-                                            <div className="table-block-body"><input className="table-input"
-                                                                                     onKeyPress={(event) => {
-                                                                                        if (!/[0-9]/.test(event.key)) {
-                                                                                           event.preventDefault();
-                                                                                        }
-                                                                                     }} type="text"
-                                                                                     defaultValue={item.qnt}/>
+                                            <div className="table-block-body">
+                                               <input className="table-input"
+                                                      type="text"
+                                                      value={itemProduct.qnt}
+                                                      name="qnt"
+                                                      onChange={(e) => updateItemProduct(e, index)}
+                                               />
                                             </div>
                                          </td>
                                          <td>
                                             <p className="table-block-label">{tableHead[3].name}:</p>
                                             <div className="table-block-body">
-                                               <div dangerouslySetInnerHTML={{__html: item.unit}}></div>
+                                               {itemProduct.measure ? itemProduct.measure.name : itemProduct.measure_id}
+                                               {/*<div dangerouslySetInnerHTML={{__html: item.unit}}></div>*/}
                                             </div>
                                          </td>
 
                                          <td>
                                             <p className="table-block-label">{tableHead[4].name}:</p>
-                                            <div className="table-block-body"><input className="table-input"
-                                                                                     onKeyPress={(event) => {
-                                                                                        if (!/[0-9]/.test(event.key)) {
-                                                                                           event.preventDefault();
-                                                                                        }
-                                                                                     }} type="text"
-                                                                                     defaultValue={item.price}/>
+                                            <div className="table-block-body">
+                                               <input className="table-input"
+                                                 // onKeyPress={(event) => {
+                                                 //    if (!/[0-9]/.test(event.key)) {
+                                                 //       event.preventDefault();
+                                                 //    }
+                                                 // }}
+                                                      type="text"
+                                                      value={itemProduct.price}
+                                                      name="price"
+                                                      onChange={(e) => updateItemProduct(e, index)}
+                                               />
                                             </div>
                                          </td>
                                          <td>
                                             <p className="table-block-label">{tableHead[5].name}:</p>
-                                            <div className="table-block-body">{item.sum}</div>
+                                            <div className="table-block-body">{itemProduct.sum}</div>
 
                                          </td>
                                          <td className="table-delete-wrap">
@@ -557,25 +582,15 @@ function Tab(props) {
                                       <p className="table-block-label">{tableHeadTwo[1].name}:</p>
                                       <div className="table-block-body">
                                          <div className="select two">
-                                            <Select
-                                                name={'id_product' + ++index}
-                                                width='200px'
-                                                styles={customStyles}
-                                                options={item.products}
-                                                defaultValue={item.products[0]}
-                                                noOptionsMessage={() => "Ничего не найдено :("}
-                                                components={{Menu: CustomTableTwo}}
-                                                theme={(theme) => ({
-                                                   ...theme,
-                                                   borderRadius: 12,
-                                                   colors: {
-                                                      ...theme.colors,
-                                                      primary25: '#4369cf',
-                                                      primary: '#7196ff',
-                                                   },
-                                                })}
-                                            >
-                                            </Select>
+                                            <SelectComponent
+                                              list={filteredProductList()}
+                                              value={item.product_id}
+                                              label={item.product?.name || "Услуга"}
+                                              field="product_id"
+                                              setItem={setItem}
+                                              isOnChange={true}
+                                              onChange={(e) => updateProduct(e, index)}
+                                            />
                                          </div>
                                       </div>
                                    </td>
@@ -622,121 +637,7 @@ function Tab(props) {
                 </div>
                 <div
                     className={+visibleTab === 3 ? "tab-content tab-content-3" : "tab-content tab-content-3 hidden"}>
-                   <form action="#" className="form__details">
-                      <div className="form__output">
-                         <h3>Задолженность</h3>
-                         <h2>5000 uah</h2>
-                      </div>
-                      {/*  Организация */}
-                      <div className={"form__input " + (name.org ? 'active-cheked' : 'active-disable')}>
-                         {/* <!-- active-cheked - нужно добавлять этот класс к form__input - если зеленым -->
-                        <!-- active-disable - нужно добавлять этот класс к form__input - если красным --> */}
 
-                         <div className="select">
-                            <Select
-                                name="id_org"
-                                styles={customStyles}
-                                options={optionsOrg}
-                                defaultValue={optionsOrg[0]}
-                                components={{Menu: CustomOrg}}
-                                onChange={handleChangeValue.bind(this, 'org')}
-                                theme={(theme) => ({
-                                   ...theme,
-                                   borderRadius: 12,
-                                   colors: {
-                                      ...theme.colors,
-                                      primary25: '#4369cf',
-                                      primary: '#7196ff',
-                                   },
-                                })}
-                            >
-                            </Select>
-                         </div>
-                      </div>
-                      {/*  Цена */}
-                      <div
-                          className={"form__input " + (name.typePrice && name.currency ? 'active-cheked' : 'active-disable')}>
-                         <div className="select">
-                            <Select
-                                name="id_type_price"
-                                styles={customStyles}
-                                options={optionsTypePrice}
-                                defaultValue={optionsTypePrice[0]}
-                                onChange={handleChangeValue.bind(this, 'typePrice')}
-                                theme={(theme) => ({
-                                   ...theme,
-                                   borderRadius: 12,
-                                   colors: {
-                                      ...theme.colors,
-                                      primary25: '#4369cf',
-                                      primary: '#7196ff',
-                                   },
-                                })}
-                            >
-                            </Select>
-                         </div>
-                         &nbsp;
-                         <div className="select select_short">
-                            <Select
-                                name="id_currency"
-                                styles={customStyles}
-                                options={optionsCurrency}
-                                defaultValue={optionsCurrency[0]}
-                                onChange={handleChangeValue.bind(this, 'currency')}
-                                theme={(theme) => ({
-                                   ...theme,
-                                   borderRadius: 12,
-                                   colors: {
-                                      ...theme.colors,
-                                      primary25: '#4369cf',
-                                      primary: '#7196ff',
-                                   },
-                                })}
-                            >
-                            </Select>
-                         </div>
-                      </div>
-                      {/*  Дата */}
-                      <div className={"form__input " + (item.date ? 'active-cheked' : 'active-disable')}>
-                         <div className="data">
-                            <FormControl fullWidth className="date-picker">
-                               <LocalizationProvider dateAdapter={DateAdapter}>
-                                  <DatePicker
-                                      label="Дата"
-                                      value={item.date}
-
-                                      onChange={(newValue) => {
-                                         handleDate(newValue);
-                                      }}
-                                      renderInput={(params) => <TextField {...params} />}
-                                  />
-                               </LocalizationProvider>
-                            </FormControl>
-                         </div>
-                      </div>
-                      {/*  Курьер */}
-                      {/*<div className={"form__input " + (name.courier ? 'active-cheked' : 'active-disable')}>
-                         <div className="select">
-                            <Select
-                                name="courier"
-                                styles={customStyles}
-                                options={optionsСourier}
-                                defaultValue={optionsСourier[0]}
-                                onChange={handleChangeValue.bind(this, 'courier')}
-                                theme={(theme) => ({
-                                   ...theme,
-                                   borderRadius: 12,
-                                   colors: {
-                                      ...theme.colors,
-                                      primary25: '#4369cf',
-                                      primary: '#7196ff',
-                                   },
-                                })}
-                            >
-                            </Select>
-                         </div>
-                      </div>*/}
-                   </form>
                 </div>
              </div>
           </div>

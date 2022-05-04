@@ -3,7 +3,7 @@ import * as React from 'react';
 import Select from "react-select";
 import AddItemModal from "./AddItemModal";
 
-export default function SelectComponent({list, value, label, setItem, field, apiEntity}) {
+export default function SelectComponent({list, value, label, setItem, field, apiEntity, isShort, onChange, isOnChange}) {
   const [options, setOptions] = React.useState([]);
 
   // Select value
@@ -20,15 +20,21 @@ export default function SelectComponent({list, value, label, setItem, field, api
 
   React.useEffect(() => {
     if(value) {
-      const listIndex = list.findIndex((listItem) => listItem.id === value)
+      const listIndex = list?.length > 0 ? list.findIndex((listItem) => listItem.id === value) : -1;
       if (listIndex !== -1) {
-        setState({name: list[listIndex].name, id: value })
+        setState({name: list[listIndex].name ? list[listIndex].name : list[listIndex].f_name, id: value })
+      } else {
+        setState({name: label, id: value })
       }
     }
     // eslint-disable-next-line
   }, [value])
 
   const handleChange = (value) => {
+    if(isOnChange) {
+      onChange(value);
+      return;
+    }
     setItem(prevItem => ({
       ...prevItem,
       [field]: value.id
@@ -56,8 +62,8 @@ export default function SelectComponent({list, value, label, setItem, field, api
         {children}
         <div className="customReactSelectFooter">
           {/*<button className="btn-link" onClick={event => event.preventDefault()}>Показать еще</button>*/}
-          <button className="btn-link"></button>
-          <button className="btn-add-icon" onClick={handleOpen}></button>
+          {apiEntity && <button className="btn-link"></button> }
+          {apiEntity && <button className="btn-add-icon" onClick={handleOpen}></button> }
         </div>
       </div>
     ) : null;
@@ -78,13 +84,14 @@ export default function SelectComponent({list, value, label, setItem, field, api
 
   return (
     <>
-      <div className="select">
+      <div className={!isShort ? "select" : "select select_short"}>
         <Modal />
         <Select
           styles={customStyles}
           options={options}
-          getOptionLabel={(option)=>option.name}
+          getOptionLabel={(option)=>option.name ? option.name : option.f_name}
           getOptionValue={(option)=>option.id}
+          noOptionsMessage={() => "Ничего не найдено :("}
           value={state}
           components={{Menu: CustomMenuType}}
           onChange={value => handleChange(value)}
