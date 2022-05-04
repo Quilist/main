@@ -63,21 +63,18 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     setOpenChildModal(true);
   };
 
-  const [name, setName] = React.useState('');
   const [type_accounts, setType_accounts] = React.useState('');
   const [item, setItem] = React.useState({ stream: {} });
-  // type_accounts - 1 (Счёт) - false
-  // type_accounts - 2 (Касса) - true
-  const [currency, setCurrency] = React.useState('UAH');
-  const [balance, setBalance] = React.useState('');
-  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
 
+  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]); 1
   const [accountList, setAccountList] = React.useState([]);
 
   const [account, setAccount] = React.useState('');
   const [token, setToken] = React.useState('');
   const [acc, setAcc] = React.useState('');
-  
+
+  const [elem, setElem] = React.useState({});
+
   const handleSearch = () => {
     api.account(account, token).then(data => {
       if (data.status === "error") alert(data.message)
@@ -87,7 +84,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const api = new API();
 
-  const addBalance = (e) => {
+  const addBalance = () => {
     setBalanceList([...balanceList, { currency_id: null, balance: null }]);
   }
 
@@ -108,9 +105,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   };
 
   const clearForm = () => {
-    setName('');
     setType_accounts('');
-    setBalance('');
+    setAcc('');
     setBalanceList([])
     setItem({ stream: {} })
     setOpenChildModal(false);
@@ -133,6 +129,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   }
 
   const handleAdd = async () => {
+    if (elem) item.privat_business = elem;
+
     api.add(item, 'cashAndAccount').then(res => {
       if (res.status === "error") return alert(res.message);
       setOpen(false);
@@ -258,7 +256,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible" label="Название:" multiline maxRows={2}
                   variant="standard"
-                  value={item.name}
+                  value={item.name || ''}
                   name="name"
                   onChange={handleChangeField}
                 />
@@ -269,7 +267,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     label={'Тип (касса или счёт)'}
-                    value={item.type_order}
+                    value={item.type_order || ''}
                     name="type_order"
                     onChange={(e) => handleAccountType(e)}
                   >
@@ -432,7 +430,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <div>
                   <TextField
-                    sx={{ marginBottom: '20px', width: '53%' }} id="standard-multiline-flexible"
+                    sx={{ marginBottom: '20px', width: '53.8%' }} id="standard-multiline-flexible"
                     label="ID Автоклиент:"
                     multiline
                     maxRows={2}
@@ -454,7 +452,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     onChange={(e) => setAcc(e.target.value)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      return (<MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={() => setElem(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
                     })}
                   </Select>
                 </FormControl>
