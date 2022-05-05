@@ -300,6 +300,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                               onChange={(e) => updateBalance(e, i)}
                             >
                               {auxiliaryList.currencies.map((currency, currencyIndex) => {
+                                console.log(auxiliaryList)
                                 return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
                               })}
                             </Select>
