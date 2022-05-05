@@ -66,9 +66,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [type_accounts, setType_accounts] = React.useState('');
   const [item, setItem] = React.useState({ stream: {} });
 
-  const [currency, setCurrency] = React.useState('');
-  const [balance, setBalance] = React.useState('');
-
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]); 1
   const [accountList, setAccountList] = React.useState([]);
 
@@ -291,29 +288,34 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 {type_accounts === 'account' &&
                   <div>
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
-                      <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-                        <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-standard-label"
-                          id="demo-simple-select-standard"
-                          value={currency}
-                          name="currency_id"
-                          onChange={(e) => setCurrency(e.target.value)}
-                        >
-                          {auxiliaryList.currencies.map((currency) => {
-                            return (<MenuItem key={currency.id} value={currency.name}>{currency.name}</MenuItem>)
-                          })}
-                        </Select>
-                      </FormControl>
+                      {balanceList.map((c, i) => {
+                        return (<div key={i}>
+                          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+                            <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-standard-label"
+                              id="demo-simple-select-standard"
+                              value={c.currency}
+                              name="currency_id"
+                              onChange={(e) => updateBalance(e, i)}
+                            >
+                              {auxiliaryList.currencies.map((currency, currencyIndex) => {
+                                return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                              })}
+                            </Select>
+                          </FormControl>
 
-                      <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                        label="Стартовый баланс:"
-                        type="number"
-                        variant="standard"
-                        value={balance}
-                        name="balance"
-                        onChange={(e) => setBalance(e.target.value)}
-                      />
+                          <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                            label="Стартовый баланс:"
+                            type="number"
+                            variant="standard"
+                            value={c.value}
+                            name="balance"
+                            onChange={(e) => updateBalance(e, i)}
+                          />
+                        </div>)
+                      })}
+
                     </FormControl>
                   </div>
                 }
