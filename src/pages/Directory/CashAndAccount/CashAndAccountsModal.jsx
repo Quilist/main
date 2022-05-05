@@ -66,6 +66,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [type_accounts, setType_accounts] = React.useState('');
   const [item, setItem] = React.useState({ stream: {} });
 
+  const [currency, setCurrency] = React.useState('');
+  const [balance, setBalance] = React.useState('');
+
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]); 1
   const [accountList, setAccountList] = React.useState([]);
 
@@ -293,12 +296,12 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                         <Select
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
-                          value="test"
+                          value={currency}
                           name="currency_id"
-                          onChange={(e) => updateBalance(e, i)}
+                          onChange={(e) => setCurrency(e.target.value)}
                         >
                           {auxiliaryList.currencies.map((currency) => {
-                            return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                            return (<MenuItem key={currency.id} value={currency.name}>{currency.name}</MenuItem>)
                           })}
                         </Select>
                       </FormControl>
@@ -307,9 +310,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                         label="Стартовый баланс:"
                         type="number"
                         variant="standard"
-                        value="test"
+                        value={balance}
                         name="balance"
-                        onChange={(e) => updateBalance(e, i)}
+                        onChange={(e) => setBalance(e.target.value)}
                       />
                     </FormControl>
                   </div>
