@@ -94,6 +94,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const updateBalance = (e, index) => {
     const { name, value } = e.target;
+    
+    console.log(e.target)
 
     balanceList[index][name] = value
     balanceList[index] = Object.assign({}, balanceList[index]);
@@ -289,8 +291,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <div>
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
                       {balanceList.map((c, i) => {
-                        console.log(c.currency)
-                        console.log(c.value)
                         return (<div key={i}>
                           <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
                             <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
