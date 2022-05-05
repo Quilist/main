@@ -295,12 +295,11 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                             <Select
                               labelId="demo-simple-select-standard-label"
                               id="demo-simple-select-standard"
-                              value={c.currency}
+                              value={c.currency || ''}
                               name="currency_id"
                               onChange={(e) => updateBalance(e, i)}
                             >
                               {auxiliaryList.currencies.map((currency, currencyIndex) => {
-                                console.log(auxiliaryList)
                                 return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
                               })}
                             </Select>
