@@ -94,8 +94,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const updateBalance = (e, index) => {
     const { name, value } = e.target;
-    
-    console.log(e.target)
 
     balanceList[index][name] = value
     balanceList[index] = Object.assign({}, balanceList[index]);
@@ -290,34 +288,29 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 {type_accounts === 'account' &&
                   <div>
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
-                      {balanceList.map((c, i) => {
-                        return (<div key={i}>
-                          <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-                            <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
-                            <Select
-                              labelId="demo-simple-select-standard-label"
-                              id="demo-simple-select-standard"
-                              value={c.currency || ''}
-                              name="currency_id"
-                              onChange={(e) => updateBalance(e, i)}
-                            >
-                              {auxiliaryList.currencies.map((currency, currencyIndex) => {
-                                return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
-                              })}
-                            </Select>
-                          </FormControl>
+                      <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+                        <InputLabel id="demo-simple-select-standard-label">Валюта:</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-standard-label"
+                          id="demo-simple-select-standard"
+                          value="test"
+                          name="currency_id"
+                          onChange={(e) => updateBalance(e, i)}
+                        >
+                          {auxiliaryList.currencies.map((currency) => {
+                            return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                          })}
+                        </Select>
+                      </FormControl>
 
-                          <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                            label="Стартовый баланс:"
-                            type="number"
-                            variant="standard"
-                            value={c.value}
-                            name="balance"
-                            onChange={(e) => updateBalance(e, i)}
-                          />
-                        </div>)
-                      })}
-
+                      <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                        label="Стартовый баланс:"
+                        type="number"
+                        variant="standard"
+                        value="test"
+                        name="balance"
+                        onChange={(e) => updateBalance(e, i)}
+                      />
                     </FormControl>
                   </div>
                 }
