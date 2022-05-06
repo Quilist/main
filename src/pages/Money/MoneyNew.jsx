@@ -358,18 +358,16 @@ export default function EnhancedTable() {
                 <a href="#!" className="wrapper__box">
                   <span style={{ color: 'red' }} onClick={() => removeCashAccountUser(item)}>X</span>
                   <h3>
-                    {`
-                    ${item.cash_account.name}
-                    ${item.cash_account.cash_accounts_balance[0].balance} 
-                    ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
-                    `}
+                    {`${item.cash_account.name} ${item.cash_account.cash_accounts_balance[0].balance}`}
+                  </h3>
+                  <h3>
+                    {currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
                   </h3>
                   <p>
-                    {`
-                    ${item.cash_account.name}
-                    ${item.cash_account.cash_accounts_balance[0].balance} 
-                    ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
-                    `}
+                    {`${item.cash_account.name} ${item.cash_account.cash_accounts_balance[0].balance}`}
+                  </p>
+                  <p>
+                    {currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
                   </p>
                 </a>
               );
