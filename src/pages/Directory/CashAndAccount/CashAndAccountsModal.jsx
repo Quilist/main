@@ -92,8 +92,14 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     setBalanceList(balanceList.filter((o, i) => index !== i));
   };
 
-  const updateBalance = (e, index = 0) => {
+  const updateBalance = (e, index = 0, add) => {
     const { name, value } = e.target;
+
+    if (add) {
+      const index = auxiliaryList.currencies.findIndex(elem => elem.name === value);
+
+      if (index !== -1) auxiliaryList.currencies.splice(index, 1);
+    }
 
     balanceList[index][name] = value
     balanceList[index] = Object.assign({}, balanceList[index]);
@@ -107,8 +113,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const clearForm = () => {
     setType_accounts('');
     setAcc('');
-    setBalanceList([{ currency_id: null, balance: null }]);
-    setItem({ stream: {} });
+    setBalanceList([{ currency_id: null, balance: null }])
+    setItem({ stream: {} })
     setOpenChildModal(false);
     setOpenChildModalPrivat(false);
     setOpenChildModalPrivatL(false);
@@ -317,7 +323,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   </div>
                 }
 
-
                 {type_accounts === 'cash' &&
                   <div>
                     <FormControl variant="standard" style={{ width: '100%', marginBottom: '20px' }}>
@@ -330,7 +335,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                               label="Валюта"
                               value={c.currency}
                               name="currency_id"
-                              onChange={(e) => updateBalance(e, i)}
+                              onChange={(e) => updateBalance(e, i, "add")}
                             >
                               {auxiliaryList.currencies.map((currency, currencyIndex) => {
                                 return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
