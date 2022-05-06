@@ -348,12 +348,10 @@ export default function EnhancedTable() {
                 <a href="#!" className="wrapper__box">
                   <span style={{ color: 'red' }} onClick={() => removeCashAccountUser(item)}>X</span>
                   <h3>
-                    {item.cash_account_id}
-                    {item.cash_account.name}
+                    {`${item.cash_account_id} ${item.cash_account.name}`}
                   </h3>
                   <p>
-                    {item.cash_account_id}
-                    {item.cash_account.name}
+                    {`${item.cash_account_id} ${item.cash_account.name}`}
                   </p>
                 </a>
               );
