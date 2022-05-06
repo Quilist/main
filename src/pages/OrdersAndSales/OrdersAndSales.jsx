@@ -21,7 +21,7 @@ export default function EnhancedTable() {
   };
 
   React.useEffect(() => {
-    const queryParams = { type: 'sale' }
+    const queryParams = { type: 'sell' }
     api.all('buySell', queryParams).then(data => {
       if (data.status === "error") alert(data.message)
       else setItems(data.message.items)

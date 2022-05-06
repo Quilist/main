@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useParams, useNavigate} from 'react-router-dom'
+import {Link, useParams, useSearchParams , useNavigate} from 'react-router-dom'
 import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 import PayForm from './components/PayForm';
@@ -19,7 +19,8 @@ import MenuItem from "@mui/material/MenuItem";
 import {useDocumentTitle} from "@/hooks/useDocumentTitle";
 
 function Pay() {
-  const { id } = useParams()
+  const { id } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isSuccess, setIsSuccess] = React.useState(null);
   const [isRedirect, setIsRedirect] = React.useState(false);
   const [auxiliaryList, setAuxiliaryList] = React.useState({
@@ -46,6 +47,7 @@ function Pay() {
     receive_balance: 'Ввод остатков',
   }
   const currentPathName = new URL(window.location.href).pathname.split('/')[1];
+  const [item, setItem] = React.useState({});
 
   const receiveOptions = [
     { name: 'Печатать', link: '/sell' },
@@ -94,7 +96,7 @@ function Pay() {
   const [data] = React.useState(null)
   const api = new API();
 
-  const [item, setItem] = React.useState({});
+
   const [error, setError] = React.useState({
     cash_account_id: "",
     type_id: "",
@@ -261,6 +263,7 @@ function Pay() {
         currentPathName={currentPathName}
         auxiliaryList={auxiliaryList}
         id={id}
+        searchParams={searchParams}
       />
       <div className="form__btns">
         <a href="#!" className="btn">
