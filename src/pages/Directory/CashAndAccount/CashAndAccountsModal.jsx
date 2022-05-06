@@ -99,7 +99,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     if (add) {
       const index = auxiliaryCurrency.findIndex(elem => elem.id === value);
-
+      console.log(index)
       if (index !== -1) auxiliaryCurrency.splice(index, 1);
     }
 
