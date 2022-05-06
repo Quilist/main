@@ -294,7 +294,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                           <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
-                            value={item.cash_accounts_balance[0].currency_id || ''}
+                            value={item.cash_accounts_balance[0]?.currency_id || ''}
                             name="currency_id"
                             onChange={(e) => updateBalance(e)}
                           >
@@ -308,7 +308,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                           label="Стартовый баланс:"
                           type="number"
                           variant="standard"
-                          value={item.cash_accounts_balance[0].balance || ''}
+                          value={item.cash_accounts_balance[0]?.balance || ''}
                           name="balance"
                           onChange={(e) => updateBalance(e)}
                         />
