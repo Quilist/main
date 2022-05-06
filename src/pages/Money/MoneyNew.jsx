@@ -354,7 +354,7 @@ export default function EnhancedTable() {
       <section className="home-section">
         <div className="wrapper" >
           <div className="wrapper__company">
-            {cashAccountUserList.map((item, index) => {
+            {cashAccountUserList.map((item) => {
               const balance = item.cash_account.cash_accounts_balance[0].balance;
               const index = currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
 
