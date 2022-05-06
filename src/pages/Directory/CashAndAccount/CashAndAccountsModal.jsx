@@ -109,8 +109,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const clearForm = () => {
     setType_accounts('');
     setAcc('');
-    setBalanceList([])
-    setItem({ stream: {} })
+    setBalanceList([{ currency_id: null, balance: null }]);
+    setItem({ stream: {} });
     setOpenChildModal(false);
     setOpenChildModalPrivat(false);
     setOpenChildModalPrivatL(false);
