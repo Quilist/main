@@ -360,14 +360,6 @@ export default function EnhancedTable() {
                   <h3>
                     {item.cash_account.name}
                   </h3>
-                  <h3>
-                    {`
-                    ${item.cash_account.cash_accounts_balance[0].balance} ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
-                    `}
-                  </h3>
-                  <p>
-                    {item.cash_account.name}
-                  </p>
                   <p>
                     {`
                     ${item.cash_account.cash_accounts_balance[0].balance} ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
