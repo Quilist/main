@@ -47,11 +47,16 @@ export default function EnhancedTable() {
 
   React.useEffect(() => {
     api.auxiliary('cashAndAccount').then(data => {
-      if (data.status === "error") alert(data.message)
-      else setCurrency(data.message.currencies)
+      if (data.status === "error") return alert(data.message);
+
+      const balance = item.cash_account.cash_accounts_balance[0].balance;
+      const index = data.currencies.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
+
+      const curr = index !== -1 ? data.currencies[index].name : ''
+      setCurrency(`${balance} ${curr}`);
     })
     // eslint-disable-next-line
-  }, [open]);
+  }, []);
 
   const handleOpenCurrencyExchangeModal = (id) => {
     setOpenCurrencyExchangeModal(true);
@@ -361,9 +366,7 @@ export default function EnhancedTable() {
                     {item.cash_account.name}
                   </h3>
                   <p>
-                    {`
-                    ${item.cash_account.cash_accounts_balance[0].balance} ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
-                    `}
+                    {currency}
                   </p>
                 </a>
               );
