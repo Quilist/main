@@ -102,6 +102,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
       ...prevItem,
       balance: balanceList
     }));
+    
+    console.log(item)
   };
 
   const clearForm = () => {
