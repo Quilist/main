@@ -358,8 +358,7 @@ export default function EnhancedTable() {
               console.log(currency)
               const index = currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
 
-              const curr = index !== -1 ? currency.currencies[index].name : '';
-              
+              const curr = index !== -1 ? currency[index].name : '';
               return (
                 <a href="#!" className="wrapper__box">
                   <span style={{ color: 'red' }} onClick={() => removeCashAccountUser(item)}>X</span>
