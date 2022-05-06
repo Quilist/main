@@ -22,7 +22,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import moment from "moment";
 
-function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList, id }) {
+function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList, id, searchParams }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
   const [payType, setPayType] = React.useState('cash');
   const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null, type_pay: 'payment'}]);
@@ -77,11 +77,32 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
     const currentDate = moment().format("YYYY-MM-DD");
     if(!item.type) {
-      setItem({type_order: 'cash', type: currentPathName, created_at: currentDate});
+      console.log('searchParams22', searchParams.get('supplier_id'))
+      setItem(prevItem => ({
+        ...prevItem,
+        type_order: 'cash', type: currentPathName, created_at: currentDate
+      }));
+      console.log('item1, ', item)
+      //setItem({type_order: 'cash', type: currentPathName, created_at: currentDate});
     }
 
     // eslint-disable-next-line
   }, [auxiliaryList] )
+
+  React.useEffect(() => {
+    if(searchParams.get('supplier_id')) {
+      setItem(prevItem => ({
+        ...prevItem,
+        type_id: Number(searchParams.get('supplier_id'))
+      }));
+    }
+    if(searchParams.get('client_id')) {
+      setItem(prevItem => ({
+        ...prevItem,
+        type_id: Number(searchParams.get('client_id'))
+      }));
+    }
+  }, [searchParams] )
 
   React.useEffect(() => {
     if(id && !loaded) {
@@ -96,9 +117,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       if(item.id) {
         setLoaded(true)
       }
-
     }
-
   }, [item] )
 
   const togglePayType = (e) => {

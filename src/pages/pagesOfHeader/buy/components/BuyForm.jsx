@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import FormControl from "@mui/material/FormControl";
+import { Link } from 'react-router-dom';
 
 const data = [
     {
@@ -131,13 +132,16 @@ function BuyForm({ item, setItem, auxiliaryList, id }) {
                         <div
                             className={"form__input purchase-wrap " + (name.purchase ? 'active-cheked' : 'active-disable')}>
                             <SelectComponent
-                              list={auxiliaryList?.statuses}
-                              value={item.status}
+                              list={auxiliaryList?.types_doc}
+                              value={item.type_doc}
                               label="Закупка"
-                              field="status"
+                              field="type_doc"
                               setItem={setItem}
                             />
-                            <button type="button" className="btn btn-green">Оплатить</button>
+                            { id && <Link to={{pathname: '/pay_supplier',
+                                search: `?supplier_id=${item.supplier_id}`,
+                            }}
+                                          className="btn btn-green">Оплатить</Link> }
                         </div>
                         {/* ------------------------------ Поставщик ------------------------------ */}
                         <div

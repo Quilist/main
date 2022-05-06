@@ -26,7 +26,7 @@ function PageSellWrap() {
     const [openReceive, setOpenReceive] = React.useState(false);
     const anchorReceiveRef = React.useRef(null);
     const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
-    const [item, setItem] = React.useState({ status: 'sale', type: 'sell'});
+    const [item, setItem] = React.useState({ type_doc: 'sale', type: 'sell', status: 'pending' });
     const [auxiliaryList, setAuxiliaryList] = React.useState({});
     const api = new API();
     const { id } = useParams()
@@ -164,6 +164,7 @@ function PageSellWrap() {
                 item={item}
                 setItem={setItem}
                 auxiliaryList={auxiliaryList}
+                id={id}
             />
             <div class="form__btns">
                 <a href="/#" class="btn btn-green">
@@ -174,14 +175,14 @@ function PageSellWrap() {
                 <a href="/#" class="btn btn-red-border">
                     Отмена
                 </a>
-                <a href="/#" class="btn btn-red" onClick={handleRemove}>
+                <button type="button" class="btn btn-red" onClick={handleRemove}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z" fill="white" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z" fill="white" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z" fill="white" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z" fill="white" />
                     </svg> Удалить
-                </a>
+                </button>
             </div>
         </section>
     </>
