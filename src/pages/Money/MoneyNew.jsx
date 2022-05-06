@@ -104,6 +104,21 @@ export default function EnhancedTable() {
   };
 
   const search = useSelector((state) => state);
+  const [currency, setCurrency] = React.useState('');
+
+  React.useEffect(() => {
+    api.auxiliary('cashAndAccount').then(data => {
+      if (data.status === "error") return alert(data.message);
+
+      const balance = item.cash_account.cash_accounts_balance[0].balance;
+      const index = data.currencies.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
+
+      const curr = index !== -1 ? data.currencies[index].name : ''
+      console.log(item)
+      setCurrency(`${balance} ${curr}`);
+    })
+    // eslint-disable-next-line
+  }, []);
 
   React.useEffect(() => {
     searchData(search.searchReducer);
@@ -304,21 +319,6 @@ export default function EnhancedTable() {
       getAllCashAccountUser();
     })
   };
-  
-  const [currency, setCurrency] = React.useState('');
-
-  React.useEffect(() => {
-    api.auxiliary('cashAndAccount').then(data => {
-      if (data.status === "error") return alert(data.message);
-
-      const balance = item.cash_account.cash_accounts_balance[0].balance;
-      const index = data.currencies.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
-
-      const curr = index !== -1 ? data.currencies[index].name : ''
-      setCurrency(`${balance} ${curr}`);
-    })
-    // eslint-disable-next-line
-  }, []);
 
   const { startDate, endDate } = dateState;
   const handleDateRangePickerCallback = (startDate, endDate) => {
