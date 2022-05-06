@@ -105,12 +105,11 @@ export default function EnhancedTable() {
 
   const search = useSelector((state) => state);
   
-  const [currency, setCurrency] = React.useState('');
+  const [currency, setCurrency] = React.useState([]);
   
   React.useEffect(() => {
     api.auxiliary('cashAndAccount').then(data => {
       if (data.status === "error") return alert(data.message);
-
       setCurrency(data.message.currencies);
     })
     // eslint-disable-next-line
@@ -356,6 +355,7 @@ export default function EnhancedTable() {
           <div className="wrapper__company">
             {cashAccountUserList.map((item) => {
               const balance = item.cash_account.cash_accounts_balance[0].balance;
+              console.log(currency)
               const index = currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
 
               const curr = index !== -1 ? currency.currencies[index].name : '';
