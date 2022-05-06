@@ -42,6 +42,16 @@ export default function EnhancedTable() {
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
+  
+  const [currency, setCurrency] = React.useState('');
+
+  React.useEffect(() => {
+    api.auxiliary('cashAndAccount').then(data => {
+      if (data.status === "error") alert(data.message)
+      else setCurrency(data.message.currencies)
+    })
+    // eslint-disable-next-line
+  }, [open]);
 
   const handleOpenCurrencyExchangeModal = (id) => {
     setOpenCurrencyExchangeModal(true);
@@ -348,10 +358,18 @@ export default function EnhancedTable() {
                 <a href="#!" className="wrapper__box">
                   <span style={{ color: 'red' }} onClick={() => removeCashAccountUser(item)}>X</span>
                   <h3>
-                    {`${item.cash_account.name}\n${item.cash_account.cash_accounts_balance[0].balance}`}
+                    {`
+                    ${item.cash_account.name}
+                    ${item.cash_account.cash_accounts_balance[0].balance} 
+                    ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
+                    `}
                   </h3>
                   <p>
-                    {`${item.cash_account.name}\n${item.cash_account.cash_accounts_balance[0].balance}`}
+                    {`
+                    ${item.cash_account.name}
+                    ${item.cash_account.cash_accounts_balance[0].balance} 
+                    ${currency[currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id)].name}
+                    `}
                   </p>
                 </a>
               );
