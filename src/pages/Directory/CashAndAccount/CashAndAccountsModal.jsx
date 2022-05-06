@@ -66,7 +66,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [type_accounts, setType_accounts] = React.useState('');
   const [item, setItem] = React.useState({ stream: {} });
 
-  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]); 1
+  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]); 
   const [accountList, setAccountList] = React.useState([]);
 
   const [account, setAccount] = React.useState('');
@@ -74,6 +74,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [acc, setAcc] = React.useState('');
 
   const [elem, setElem] = React.useState({});
+
+  const auxiliaryCurrency = [...auxiliaryList.currencies];
 
   const handleSearch = () => {
     api.account(account, token).then(data => {
@@ -96,9 +98,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     const { name, value } = e.target;
 
     if (add) {
-      const index = auxiliaryList.currencies.findIndex(elem => elem.id === value);
-
-      if (index !== -1) auxiliaryList.currencies.splice(index, 1);
+      const index = auxiliaryCurrency.findIndex(elem => elem.name === value);
+      
+      if (index !== -1) auxiliaryCurrency.splice(index, 1);
     }
 
     balanceList[index][name] = value
@@ -304,7 +306,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                             name="currency_id"
                             onChange={(e) => updateBalance(e)}
                           >
-                            {auxiliaryList.currencies.map((currency, currencyIndex) => {
+                            {auxiliaryCurrency.map((currency, currencyIndex) => {
                               return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
                             })}
                           </Select>
@@ -337,8 +339,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                               name="currency_id"
                               onChange={(e) => updateBalance(e, i, "add")}
                             >
-                              {auxiliaryList.currencies.map((currency, currencyIndex) => {
-                                return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
+                              {auxiliaryCurrency.map((currency, currencyIndex) => {
+                                return (<MenuItem key={currency.id} value={currency.id}>{auxiliaryList.currencies[currencyIndex].name}</MenuItem>)
                               })}
                             </Select>
                           </FormControl>
