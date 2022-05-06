@@ -106,6 +106,15 @@ export default function EnhancedTable() {
   const search = useSelector((state) => state);
   
   const [currency, setCurrency] = React.useState('');
+  
+  React.useEffect(() => {
+    api.auxiliary('cashAndAccount').then(data => {
+      if (data.status === "error") return alert(data.message);
+
+      setCurrency(data.message.currencies);
+    })
+    // eslint-disable-next-line
+  }, []);
 
   React.useEffect(() => {
     searchData(search.searchReducer);
@@ -316,22 +325,8 @@ export default function EnhancedTable() {
     }));
     setDateState({ startDate, endDate });
   };
-  const dateRange =
-    startDate.format('MMMM D, YYYY');
   
-  React.useEffect(() => {
-    api.auxiliary('cashAndAccount').then(data => {
-      if (data.status === "error") return alert(data.message);
-
-      const balance = item.cash_account.cash_accounts_balance[0].balance;
-      const index = data.currencies.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
-
-      const curr = index !== -1 ? data.currencies[index].name : ''
-      console.log(item)
-      setCurrency(`${balance} ${curr}`);
-    })
-    // eslint-disable-next-line
-  }, []);
+  const dateRange = startDate.format('MMMM D, YYYY');
 
   return (
     <>
@@ -360,6 +355,11 @@ export default function EnhancedTable() {
         <div className="wrapper" >
           <div className="wrapper__company">
             {cashAccountUserList.map((item, index) => {
+              const balance = item.cash_account.cash_accounts_balance[0].balance;
+              const index = currency.findIndex(elem => elem.id === item.cash_account.cash_accounts_balance[0].currency_id);
+
+              const curr = index !== -1 ? currency.currencies[index].name : '';
+              
               return (
                 <a href="#!" className="wrapper__box">
                   <span style={{ color: 'red' }} onClick={() => removeCashAccountUser(item)}>X</span>
@@ -367,7 +367,7 @@ export default function EnhancedTable() {
                     {item.cash_account.name}
                   </h3>
                   <p>
-                    {currency}
+                    {`${balance} ${curr}`}
                   </p>
                 </a>
               );
