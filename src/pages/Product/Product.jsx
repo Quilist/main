@@ -170,6 +170,18 @@ export default function EnhancedTable() {
     return price;
   };
 
+  const getLeftover = (item) => {
+    let leftover = null;
+
+    if(item.leftovers?.length > 0) {
+      item.leftovers.forEach(function (l) {
+        leftover = leftover + l.qnt;
+      });
+    }
+
+    return leftover;
+  };
+
   const handleCloseCreateMenu = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -318,7 +330,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__paysend">
                       <p>
-                        {item.qnt}
+                        {getLeftover(item)}
                       </p>
                     </div>
                     <div className="table__account">

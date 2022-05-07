@@ -139,7 +139,13 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
   };
 
   const updateTypePrice = (e, index) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    let typePriceId = null;
+    if(typeof value == 'object') {
+      typePriceId = value.id
+      value = value.name
+
+    }
     let v = formatField(value);
 
     //to immediately change data
@@ -147,6 +153,9 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
       const updatedPriceList = prevState.map((price, i) => {
         if (i === index){
           price[name] = v
+          if(typePriceId) {
+            price.id = Number(typePriceId);
+          }
         }
         return {
           ...price
@@ -288,11 +297,11 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           <FormControl fullWidth>
             <TextField
               sx={{marginBottom: '15px'}}
-              label="Остаток:"
+              label="Мин запас:"
               type="text"
               variant="standard"
-              value={item.qnt}
-              name="qnt"
+              value={item.min_stock}
+              name="min_stock"
               onChange={handleChange}
             />
           </FormControl>
@@ -366,7 +375,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
                     onChange={(e) => updateTypePrice(e, i)}
                   >
                     {filteredTypePriceList().map((type, typeIndex) => {
-                      return (<MenuItem key={type.name} value={type.name}>{type.name}</MenuItem>)
+                      return (<MenuItem key={type.name} value={type}>{type.name}</MenuItem>)
                     })}
                   </Select>
                 }

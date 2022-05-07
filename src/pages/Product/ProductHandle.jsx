@@ -94,10 +94,11 @@ function ProductHandle() {
 
   const handleAdd = () =>  {
     let priceData = [], storehouseData = [], data = item;
+
     if(typePriceList?.length > 0) {
       typePriceList.forEach(function (typePrice) {
         if(typePrice.name && typePrice.currency_id && typePrice.price) {
-          priceData.push({ name: typePrice.name, currency_id: Number(typePrice.currency_id), price: Number(typePrice.price), type_price_id:  Number(typePrice.id)});
+          priceData.push({ name: typePrice.name, currency_id: Number(typePrice.currency_id), price: Number(typePrice.price), type_price_id: typePrice.type_price_id ? Number(typePrice.type_price_id) : Number(typePrice.id)});
         }
       });
       data.prices = priceData
@@ -117,7 +118,6 @@ function ProductHandle() {
       delete item.leftovers;
     }
 
-    console.log('item', data)
     if(!id) {
       api.add(data, 'product').then(data => {
         if (data.status === "error") return console.log(data.message)

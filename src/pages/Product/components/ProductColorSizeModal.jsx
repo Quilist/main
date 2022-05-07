@@ -334,11 +334,11 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
                 <FormControl fullWidth>
                   <TextField
                     sx={{marginBottom: '15px'}}
-                    label="Остаток:"
+                    label="Мин запас:"
                     type="text"
                     variant="standard"
-                    value={subItem.qnt}
-                    name="qnt"
+                    value={subItem.min_stock}
+                    name="min_stock"
                     onChange={handleChange}
                   />
                 </FormControl>

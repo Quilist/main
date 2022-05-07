@@ -482,7 +482,7 @@ export default function EnhancedTable() {
                               </Accordion>
                             </TableCell>
                             <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.mobile[0]}</TableCell>
-                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.duty}</TableCell>
+                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{parseFloat( row.debit ) - parseFloat( row.credit )}</TableCell>
                             <TableCell align="right" className={styles.table_narrow}>
                               <div className={styles.table__action__wide} style={{ marginRight: '10px' }}>
                                 <span onClick={handleClick} className={styles.action__btn}>
