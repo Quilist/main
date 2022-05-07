@@ -238,8 +238,17 @@ export default function EnhancedTable() {
     return formatDate;
   };
 
-  const getType = (item) => {
+  const getType = (item, isShort) => {
     let type = null;
+    if(isShort) {
+      if (item.type.indexOf('pay') !== -1) {
+        type = 'Кому:'
+      }
+      if (item.type.indexOf('receive') !== -1) {
+        type = 'От:'
+      }
+      return type;
+    }
     if (item.type) {
       if (item.type.indexOf('pay') !== -1) {
         type = 'Оплата'
@@ -294,10 +303,16 @@ export default function EnhancedTable() {
   };
 
   const searchData = (search) => {
-    setQueryParams(prevItem => ({
-      ...prevItem,
-      search: search,
-    }));
+    if(search) {
+      setQueryParams(prevItem => ({
+        ...prevItem,
+        search: search,
+      }));
+    } else {
+      let state = {...queryParams};
+      delete state.search;
+      setQueryParams(state);
+    }
   };
 
   const handleCloseCreateMenu = (event) => {
@@ -570,7 +585,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__mob">
                       {item.type ?
-                        <p>{item.type_item ? item.type_item.name : ''}</p>
+                        <p>{item.type_item ? getType(item, true) + ' ' + item.type_item.name : ''}</p>
                         :
                         <p>
                           {item.type && <a href="#!">

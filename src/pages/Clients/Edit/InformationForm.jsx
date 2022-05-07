@@ -6,12 +6,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputAdornment from '@mui/material/InputAdornment';
 
-function InformationForm({ address, setAddress, arrears, setArrears, discount, setDiscount, notes, setNotes, setMainArreas }) {
+function InformationForm({ currentUser, address, setAddress, arrears, setArrears, discount, setDiscount, notes, setNotes, setMainArreas }) {
 
   const [currency, setCurrency] = React.useState('1-UAH');
   const currentCurrency = currency.split('-')
   useEffect(() => {
-    setMainArreas((Number(currentCurrency[0]) * arrears).toFixed(1))
+    setMainArreas((Number(currentCurrency[0]) * (arrears)).toFixed(1))
     // eslint-disable-next-line
   }, [arrears])
 
@@ -38,6 +38,7 @@ function InformationForm({ address, setAddress, arrears, setArrears, discount, s
           type="number"
           variant="standard"
           InputProps={{
+            readOnly: true,
             endAdornment: <InputAdornment position="start">{currentCurrency[1]}</InputAdornment>,
           }}
         />

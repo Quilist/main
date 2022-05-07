@@ -157,6 +157,19 @@ export default function EnhancedTable() {
     return data;
   };
 
+  const getPrice = (item) => {
+    let price = null;
+
+    if(item.prices?.length > 0) {
+      const index = item.prices.findIndex((price) => price.name.toLowerCase() === 'закупочная')
+      if(index !== -1) {
+        price = item.prices[index].price + ' ' + item.prices[index].currency.name;
+      }
+    }
+
+    return price;
+  };
+
   const handleCloseCreateMenu = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -287,12 +300,12 @@ export default function EnhancedTable() {
                         {item.name}
                       </p>
                       <p>
-                        {item.price}
+                        {getPrice(item)}
                       </p>
                     </div>
                     <div className="table__mob table__summury">
                       <p>
-                        {item.min_stock} {item.measure.name}
+                        {item.qnt} {item.measure.name}
                       </p>
                     </div>
                     <div className="table__data">
@@ -305,12 +318,12 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__paysend">
                       <p>
-                        {item.min_stock}
+                        {item.qnt}
                       </p>
                     </div>
                     <div className="table__account">
                       <p>
-
+                        {getPrice(item)}
                       </p>
                     </div>
                     <div className="table__paysend">

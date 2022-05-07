@@ -57,8 +57,8 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
   React.useEffect(() => {
     if(!subItem.name) {
       storehouseListExt.map((store, i) => {
-        if (store.number){
-          delete store.number
+        if (store.qnt){
+          delete store.qnt
         }
         if (store.price){
           delete store.price
@@ -221,8 +221,8 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
 
     if(storehouseList.length > 0) {
       storehouseList.forEach(function (storehouse) {
-        if(storehouse.id && storehouse.currency_id && storehouse.number && storehouse.price) {
-          storehouseData.push({ storehouse_id: Number(storehouse.id), number: Number(storehouse.number), currency_id: Number(storehouse.currency_id), price: Number(storehouse.price) });
+        if(storehouse.id && storehouse.currency_id && storehouse.qnt && storehouse.price) {
+          storehouseData.push({ storehouse_id: Number(storehouse.id), qnt: Number(storehouse.qnt), currency_id: Number(storehouse.currency_id), price: Number(storehouse.price) });
         }
       });
       data.leftovers = storehouseData
@@ -334,11 +334,11 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
                 <FormControl fullWidth>
                   <TextField
                     sx={{marginBottom: '15px'}}
-                    label="Мин запас:"
+                    label="Остаток:"
                     type="text"
                     variant="standard"
-                    value={subItem.min_stock}
-                    name="min_stock"
+                    value={subItem.qnt}
+                    name="qnt"
                     onChange={handleChange}
                   />
                 </FormControl>
@@ -426,8 +426,8 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
                           label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
                           type="text"
                           variant="standard"
-                          value={storehouse.number}
-                          name="number"
+                          value={storehouse.qnt}
+                          name="qnt"
                           onChange={(e) => updateStorehouse(e, i)}
                         />
                         <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
@@ -481,7 +481,7 @@ export default function ProductColorSizeModal({ open, setOpen, subItem, setSubIt
                             display: "block",
                             marginLeft: "12px"
                           }}>
-                            <b> {storehouse.storehouse ? storehouse.storehouse.name : storehouse.name} </b> {storehouse.number}
+                            <b> {storehouse.storehouse ? storehouse.storehouse.name : storehouse.name} </b> {storehouse.qnt}
                             <b> шт </b> на {storehouse.price} <b>{storehouse.currency.name}</b>
                           </span>
                         </span>

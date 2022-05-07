@@ -21,7 +21,15 @@ export default function Sidebar() {
   const [isDrop, setDrop] = useState(false);
   const [isDropDirectory, setIsDropDirectory] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const headerTitle = document.title;
+  const [headerTitle, setHeaderTitle] = React.useState( '');
+  const target = document.querySelector('head > title');
+
+  if(target.textContent) {
+    setTimeout(function(){
+      setHeaderTitle(target.textContent)
+    }, 10);
+  }
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };

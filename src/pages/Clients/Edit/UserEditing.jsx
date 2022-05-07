@@ -61,13 +61,14 @@ function UserEditing() {
     if (id && currentUser) {
       // ==============================================================
       const { address, company, discount, duty, group, mail, mobile, name, notes } = currentUser;
+      const dutyFixed = parseFloat( currentUser.debit ) - parseFloat( currentUser.credit );
       setName(name)
       setPhone(mobile)
       setMail(mail || ['', '', ''])
       setCompany(company)
       setGroup(group)
       setAddress(address)
-      setArrears(duty)
+      setArrears(dutyFixed)
       setDiscount(discount)
       setNotes(notes)
       // =============================================================== 
@@ -163,6 +164,7 @@ function UserEditing() {
         <div className={styles.boxesWrapper}>
           <div className={styles.boxesWrapper__user}>
             <UserForm
+              currentUser={currentUser}
               name={name}
               setName={setName}
               phone={phone}
@@ -178,6 +180,7 @@ function UserEditing() {
 
           <div className={styles.boxesWrapper__information}>
             <InformationForm
+              currentUser={currentUser}
               address={address}
               setAddress={setAddress}
               arrears={arrears}

@@ -105,8 +105,8 @@ function ProductHandle() {
 
     if(storehouseList?.length > 0) {
       storehouseList.forEach(function (storehouse) {
-        if(storehouse.id && storehouse.currency_id && storehouse.number && storehouse.price) {
-          storehouseData.push({ storehouse_id: Number(storehouse.id), number: Number(storehouse.number), currency_id: Number(storehouse.currency_id), price: Number(storehouse.price) });
+        if(storehouse.id && storehouse.currency_id && storehouse.qnt && storehouse.price) {
+          storehouseData.push({ storehouse_id: Number(storehouse.id), qnt: Number(storehouse.qnt), currency_id: Number(storehouse.currency_id), price: Number(storehouse.price) });
         }
       });
       data.leftovers = storehouseData

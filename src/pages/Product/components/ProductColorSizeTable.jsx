@@ -91,7 +91,7 @@ export default function ProductColorSizeTable({item, setItem, subItem, setSubIte
                   goToEdit(item)
                 }}>
                   <p>
-                    {item.min_stock}
+                    {item.qnt}
                   </p>
                 </div>
                 <div className="table__data">

@@ -180,7 +180,7 @@ function Pay() {
 
   const handleReturn = () => {
     navigate(-1)
-    setIsRedirect(true)
+    //setIsRedirect(true)
   }
 
   const handleCloseReceive = (event) => {
@@ -277,6 +277,9 @@ function Pay() {
         <button type="button" onClick={handleReturn} className="btn">
           Отмена
         </button>
+        <Link to={-1} className="btn">
+          Отмена2
+        </Link>
         <a href="#!" className="btn" onClick={handleRemove} >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"

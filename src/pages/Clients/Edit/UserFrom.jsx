@@ -7,7 +7,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import styles from '@/styles/modules/UserEditing.module.css';
 
-function UserForm({ name, setName, phone, setPhone, mail, setMail, company, setCompany, group, setGroup }) {
+function UserForm({ currentUser, name, setName, phone, setPhone, mail, setMail, company, setCompany, group, setGroup }) {
   // PHONE
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {

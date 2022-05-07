@@ -288,11 +288,11 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
           <FormControl fullWidth>
             <TextField
               sx={{marginBottom: '15px'}}
-              label="Мин запас:"
+              label="Остаток:"
               type="text"
               variant="standard"
-              value={item.min_stock}
-              name="min_stock"
+              value={item.qnt}
+              name="qnt"
               onChange={handleChange}
             />
           </FormControl>
@@ -421,8 +421,8 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
                           label={storehouse.storehouse ? storehouse.storehouse.name : storehouse.name}
                           type="text"
                           variant="standard"
-                          value={storehouse.number}
-                          name="number"
+                          value={storehouse.qnt}
+                          name="qnt"
                           onChange={(e) => updateStorehouse(e, i)}
                         />
                         <span style={{marginBottom: '15px', marginLeft: '5px', marginTop: '5px'}}>шт на</span>
@@ -476,7 +476,7 @@ function ProductForm({ item, setItem, auxiliaryList, typePriceList, setTypePrice
                             display: "block",
                             marginLeft: "12px"
                           }}>
-                            <b> {storehouse.storehouse ? storehouse.storehouse.name : storehouse.name} </b> {storehouse.number}
+                            <b> {storehouse.storehouse ? storehouse.storehouse.name : storehouse.name} </b> {storehouse.qnt}
                             <b> шт </b> на {storehouse.price} <b>{storehouse.currency.name}</b>
                           </span>
                         </span>

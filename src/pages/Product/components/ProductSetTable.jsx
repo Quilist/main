@@ -116,9 +116,9 @@ export default function ProductSetTable({item, setItem, subItem, setSubItem, ope
                 </div>
                 <div className="table__data" >
                   <input type="text"
-                         value={item.min_stock}
+                         value={item.qnt}
                          className="short-input"
-                         name="min_stock"
+                         name="qnt"
                          onChange={(e) => updateSetData(e, index)}
                   />
                 </div>

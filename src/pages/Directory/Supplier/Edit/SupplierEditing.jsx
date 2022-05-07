@@ -66,13 +66,14 @@ function UserEditing() {
     if (id && currentUser) {
       // ==============================================================
       const { address, company, discount, duty, group, mail, mobile, name, note, edrpou, code_nds } = currentUser;
+      const dutyFixed = parseFloat( currentUser.debit ) - parseFloat( currentUser.credit );
       setName(name)
       setPhone(mobile)
       setMail(mail)
       setCompany(company)
       setGroup(group)
       setAddress(address)
-      setArrears(duty)
+      setArrears(dutyFixed)
       setDiscount(discount)
       setNote(note)
       setEdrpou(edrpou)

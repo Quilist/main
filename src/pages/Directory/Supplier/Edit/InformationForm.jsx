@@ -38,6 +38,7 @@ function InformationForm({ address, setAddress, arrears, setArrears, discount, s
           type="number"
           variant="standard"
           InputProps={{
+            readOnly: true,
             endAdornment: <InputAdornment position="start">{currentCurrency[1]}</InputAdornment>,
           }}
         />
