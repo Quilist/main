@@ -396,7 +396,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 />
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                  label="Номер карты:"
+                  label="Пароль:"
                   type="number"
                   variant="standard"
                   value={item.stream.merchant_pass}
