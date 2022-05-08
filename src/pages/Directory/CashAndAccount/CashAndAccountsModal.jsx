@@ -66,7 +66,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [type_accounts, setType_accounts] = React.useState('');
   const [item, setItem] = React.useState({ stream: {} });
 
-  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
+  const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]); 1
   const [accountList, setAccountList] = React.useState([]);
 
   const [account, setAccount] = React.useState('');
@@ -386,6 +386,24 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   name="name"
                   onChange={handleChangeField}
                 />
+
+                <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                  label="Merchant id:"
+                  variant="standard"
+                  value={item.stream.merchant_id}
+                  name="merchant_id"
+                  onChange={handleChangeStreamField}
+                />
+
+                <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                  label="Номер карты:"
+                  type="number"
+                  variant="standard"
+                  value={item.stream.merchant_pass}
+                  name="merchant_pass"
+                  onChange={handleChangeStreamField}
+                />
+
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Номер карты:"
                   type="number"
