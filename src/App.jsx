@@ -42,13 +42,20 @@ import InstructionsForDeletingUserData from '@/pages/Low/InstructionsForDeleting
 
 import Product from '@/pages/Product/Product';
 import ProductHandle from '@/pages/Product/ProductHandle';
+import ProductMoving from '@/pages/Product/Moving/Moving';
+import ProductWriteOff from '@/pages/Product/WriteOff/WriteOff';
+import ProductPosting from '@/pages/Product/Posting/Posting';
 
-import ImportOfGoods from '@/pages/Product/ImportOfGoods';
+import ImportOfGoods from '@/pages/Product/Import/Import';
 import Revaluation from '@/pages/Product/Revaluation';
 import SavePriceList from '@/pages/Product/SavePriceList';
 
 import ReturnSell from '@/pages/pagesOfHeader/sell/PageSellReturn';
 import ReturnBuy from '@/pages/pagesOfHeader/buy/BuyCreateReturn';
+
+//Производство
+import Manufacture from '@/pages/Manufacture/Manufacture';
+import ManufactureHandle from '@/pages/Manufacture/ManufactureHandle';
 
 // справочник
 import DirectoryCategory from '@/pages/Directory/DirectoryCategory/DirectoryCategory'
@@ -145,7 +152,14 @@ function App() {
             <Route path="/products/create" element={<> <AppLayout component={<ProductHandle />} /> </>} />
             <Route path="/products/:id" element={<> <AppLayout component={<ProductHandle />} /> </>} />
             <Route path="/revaluation" element={<> <AppLayout component={<Revaluation />} /> </>} />
+            <Route path="/products_moving" element={<> <AppLayout component={<ProductMoving />} /> </>} />
+            <Route path="/products_moving/:id" element={<> <AppLayout component={<ProductMoving />} /> </>} />
+            <Route path="/products_write_off" element={<> <AppLayout component={<ProductWriteOff />} /> </>} />
+            <Route path="/products_write_off/:id" element={<> <AppLayout component={<ProductWriteOff />} /> </>} />
+            <Route path="/products_posting" element={<> <AppLayout component={<ProductPosting />} /> </>} />
+            <Route path="/products_posting/:id" element={<> <AppLayout component={<ProductPosting />} /> </>} />
             <Route path="/import_products" element={<> <AppLayout component={<ImportOfGoods />} /> </>} />
+            <Route path="/import_products/:id" element={<> <AppLayout component={<ImportOfGoods />} /> </>} />
             <Route path="/save_price_list" element={<> <AppLayout component={<SavePriceList />} /> </>} />
 
             {/* Отчеты  */}
@@ -176,6 +190,11 @@ function App() {
 
             {/* Обработка моих юрлиц */}
             <Route path="/editing_legal_entities" element={<> <AppLayout component={<LegalEntityEditing />} /> </>} />
+
+            {/* Производство  */}
+            <Route path="/manufacture" element={<> <AppLayout component={<Manufacture />} /> </>} />
+            <Route path="/manufacture/create" element={<> <AppLayout component={<ManufactureHandle />} /> </>} />
+            <Route path="/manufacture/:id" element={<> <AppLayout component={<ManufactureHandle />} /> </>} />
 
 
             {/* Действия  */}

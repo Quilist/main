@@ -66,7 +66,7 @@ export default function IncomeItemEditModal({ open, setOpenEditModal, id }) {
       >
         <Box sx={style} className={styles.childModal}>
           <img className={styles.modal_img} onClick={handleCloseModal} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Редактирование статьи расходов</div>
+          <div className={styles.modal_title}>Редактирование статьи доходов</div>
           <TextField
             sx={{marginBottom: '20px', width: '70%'}}
             id="standard-multiline-flexible"

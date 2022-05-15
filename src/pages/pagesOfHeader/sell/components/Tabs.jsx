@@ -333,7 +333,7 @@ function Tab({data, item, setItem, auxiliaryList}) {
                                                {itemProduct.leftover &&
                                                  <div>
                                                     <hr/>
-                                                    <p>Остаток: Всего: {itemProduct.leftover.number}, Свободно: {itemProduct.leftover.number}</p>
+                                                    <p>Остаток: Всего: {itemProduct.leftover.qnt}, Свободно: {itemProduct.leftover.qnt}</p>
                                                </div>
                                                }
                                             </div>

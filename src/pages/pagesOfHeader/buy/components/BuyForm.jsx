@@ -260,6 +260,7 @@ function BuyForm({ item, setItem, auxiliaryList, id }) {
                     <label htmlFor="">Заметки</label>
                     <textarea cols="30"
                               rows="10"
+                              value={item.note}
                               name="note"
                               onChange={handleChange}
                     ></textarea>

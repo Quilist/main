@@ -28,6 +28,15 @@ class API {
             productGroup: '/products_groups',
             productColor: '/products_colors',
             productSize: '/products_sizes',
+
+            productPosting: '/products_posting',
+            productWriteOff: '/products_write_off',
+            productMoving: '/products_moving',
+            productImport: '/products_import',
+
+            manufacture: '/manufacture',
+            allMove: '/all_moves',
+
             moneyExchange: '/currency_exchange',
             moneyMoving: '/moving_money',
             buySell: '/buy_sell',

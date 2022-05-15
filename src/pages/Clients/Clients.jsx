@@ -443,7 +443,7 @@ export default function EnhancedTable() {
                               <div className={styles.table__name_wide}>{row.name}</div>
                               <Accordion className={styles.table_accordion}>
                                 <AccordionSummary className={styles.user__name}>
-                                  <div className={styles.accordion__name}>{row.name}</div>
+                                  <div className={styles.accordion__name}>{row.name} <br/>{parseFloat( row.debit ) - parseFloat( row.credit )}</div>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                   <div style={{ marginTop: '10px' }}>
@@ -453,7 +453,7 @@ export default function EnhancedTable() {
                                           <img className={styles.table__icon} src={phoneImg} alt="phone" /><div>
                                             <span style={{ fontSize: '14px' }}>1:&nbsp;</span>
                                           </div>
-                                          {row.mobile[0] || 'не указан'}</div>
+                                          {row.mobile[0] || 'не указан'} </div>
                                       </a>
                                     </div>
                                     <div style={{ marginBottom: '14px', lineHeight: '1' }} className={styles.row__mobile}>

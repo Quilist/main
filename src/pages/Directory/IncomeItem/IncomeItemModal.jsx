@@ -49,7 +49,7 @@ export default function IncomeItemModal({ open, setOpen }) {
       >
         <Box className={styles.modal} sx={style}>
           <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
-          <div className={styles.modal_title}>Добавление статьи расходов</div>
+          <div className={styles.modal_title}>Добавление статьи доходов</div>
 
           <TextField sx={{ marginBottom: '30px', width: '70%' }} value={name} onChange={(e) => setName(e.target.value)}
                      label="Наименование:"
