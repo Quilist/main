@@ -14,6 +14,8 @@ import arrowImg from './img/arrow.png';
 import crossImg from './img/cross.png';
 import "./sidebar.css";
 import * as React from "react";
+import {useDispatch} from "react-redux";
+import {addSearch} from "@/store/actions";
 
 export default function Sidebar() {
   const [searchState, setSearchState] = React.useState('navigation');
@@ -23,6 +25,13 @@ export default function Sidebar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [headerTitle, setHeaderTitle] = React.useState( '');
   const target = document.querySelector('head > title');
+  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+
+  const handleSearch = (text) => {
+    setSearchValue(text);
+    dispatch(addSearch(text))
+  };
 
   if(target.textContent) {
     setTimeout(function(){
@@ -129,7 +138,11 @@ export default function Sidebar() {
         </Link>
         <div className="wrapper__search">
           <form>
-            <input type="text" placeholder="Поиск" />
+            <input type="text"
+                   placeholder="Поиск"
+                   value={searchValue}
+                   onChange={(e) => handleSearch(e.target.value)}
+            />
             <button type="submit"></button>
           </form>
           <div className="btn-search" id="wrapper__search" onClick={handleSearchState}>
@@ -204,6 +217,19 @@ export default function Sidebar() {
                   <li>
                     <Link className="link_name" to="/products">
                       Товары и услуги
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <Link to="/manufacture">
+                  <i className="bx bx-package"></i>
+                  <span className="link_name">Производство</span>
+                </Link>
+                <ul className="sub-menu blank">
+                  <li>
+                    <Link className="link_name" to="/manufacture">
+                      Производство
                     </Link>
                   </li>
                 </ul>

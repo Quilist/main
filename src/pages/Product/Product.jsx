@@ -245,6 +245,27 @@ export default function EnhancedTable() {
                           </Link>
                         </MenuList>
                         <MenuList id="split-button-menu">
+                          <Link to="/products_moving">
+                            <MenuItem style={{ height: "30px" }}>
+                              Перемещение
+                            </MenuItem>
+                          </Link>
+                        </MenuList>
+                        <MenuList id="split-button-menu">
+                          <Link to="/products_write_off">
+                            <MenuItem style={{ height: "30px" }}>
+                              Списание
+                            </MenuItem>
+                          </Link>
+                        </MenuList>
+                        <MenuList id="split-button-menu">
+                          <Link to="/products_posting">
+                            <MenuItem style={{ height: "30px" }}>
+                              Оприходование
+                            </MenuItem>
+                          </Link>
+                        </MenuList>
+                        <MenuList id="split-button-menu">
                           <Link to="/revaluation">
                             <MenuItem style={{ height: "30px" }}>
                               Скачать прайс-лист
@@ -317,7 +338,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__mob table__summury">
                       <p>
-                        {item.qnt} {item.measure.name}
+                        {getLeftover(item)} {item.measure.name}
                       </p>
                     </div>
                     <div className="table__data">

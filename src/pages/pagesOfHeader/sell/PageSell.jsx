@@ -172,9 +172,9 @@ function PageSellWrap() {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.51804 8.31521L11.875 0.958252L12.9944 2.07767L4.51804 10.554L0 6.036L1.11942 4.91659L4.51804 8.31521Z" fill="white" />
                     </svg> Сохранить
                 </a>
-                <a href="/#" class="btn btn-red-border">
+                <Link to={-1} class="btn btn-red-border">
                     Отмена
-                </a>
+                </Link>
                 {id && <button type="button" className="btn btn-red" onClick={handleRemove}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
