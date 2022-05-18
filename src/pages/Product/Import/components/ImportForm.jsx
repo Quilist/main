@@ -34,10 +34,14 @@ function ImportForm({ item, setItem, auxiliaryList, id }) {
 
   React.useEffect(() => {
     if(auxiliaryList.income_items?.length > 0) {
-      setItem(prevItem => ({
-        ...prevItem,
-        income_items_id: auxiliaryList.income_items[0].id
-      }));
+      const importIncomeItem = auxiliaryList.income_items.filter((o, i) => o.name.toLowerCase() == 'ввод остатков')
+      if(importIncomeItem.length > 0) {
+        setItem(prevItem => ({
+          ...prevItem,
+          income_items_id: importIncomeItem[0].id
+        }));
+      }
+
     }
     if(auxiliaryList.storehouses?.length > 0) {
       setItem(prevItem => ({
@@ -119,6 +123,7 @@ function ImportForm({ item, setItem, auxiliaryList, id }) {
                 label="Статья доходов"
                 field="client_id"
                 setItem={setItem}
+                isDisabled={true}
               />
             </div>
 

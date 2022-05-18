@@ -27,7 +27,8 @@ function Pay() {
     cash_accounts: [],
     currencies: [],
     legal_entites: [],
-    items: []
+    items: [],
+    user_settings: []
   });
 
   const [openReceive, setOpenReceive] = React.useState(false);
@@ -277,9 +278,6 @@ function Pay() {
         <button type="button" onClick={handleReturn} className="btn">
           Отмена
         </button>
-        <Link to={-1} className="btn">
-          Отмена2
-        </Link>
         <a href="#!" className="btn" onClick={handleRemove} >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"

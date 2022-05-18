@@ -3,7 +3,7 @@ import * as React from 'react';
 import Select from "react-select";
 import AddItemModal from "./AddItemModal";
 
-export default function SelectComponent({list, value, label, setItem, field, apiEntity, isShort, onChange, isOnChange}) {
+export default function SelectComponent({list, value, label, setItem, field, apiEntity, isShort, onChange, isOnChange, isDisabled}) {
   const [options, setOptions] = React.useState([]);
 
   // Select value
@@ -95,6 +95,7 @@ export default function SelectComponent({list, value, label, setItem, field, api
           value={state}
           components={{Menu: CustomMenuType}}
           onChange={value => handleChange(value)}
+          isDisabled={isDisabled}
           theme={(theme) => ({
             ...theme,
             borderRadius: 12,

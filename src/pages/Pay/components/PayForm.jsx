@@ -25,9 +25,8 @@ import moment from "moment";
 function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, auxiliaryList, id, searchParams }) {
   const payTypes = { cash: 'Наличные', bank_account: 'Касса'}
   const [payType, setPayType] = React.useState('cash');
-  const [paymentList, setPaymentList] = React.useState([{ currency_id: null, amount: null, type_pay: 'payment'}]);
-
-  const [changeList, setChangeList] = React.useState([{ currency_id: null, amount: null, type_pay: 'change'}]);
+  const [paymentList, setPaymentList] = React.useState([]);
+  const [changeList, setChangeList] = React.useState([]);
   const [payCurrencyList, setPayCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
   const [changeCurrencyList, setChangeCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
   const [cashAccountCurrencyList, setCashAccountCurrencyList] = React.useState([{ value: 0, label: 'Валюта', isDisabled: true }]);
@@ -59,7 +58,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
 
     if(auxiliaryList.cash_accounts.length > 0) {
       const caArr = auxiliaryList.cash_accounts.map((item, index) => {
-        return { value: item.id, label: item.name }
+        return { value: item.id, label: item.name, type_order: item.type_order }
       });
       caArr.unshift({ value: 0, label: 'Выберите кассу/счёт', isDisabled: true });
 
@@ -86,8 +85,45 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
       //setItem({type_order: 'cash', type: currentPathName, created_at: currentDate});
     }
 
+    if(auxiliaryList.user_settings) {
+      if(auxiliaryList.user_settings.storehouse_id) {
+        setItem(prevItem => ({
+          ...prevItem,
+          storehouse_id: auxiliaryList.user_settings.storehouse_id
+        }));
+      }
+      if(auxiliaryList.user_settings.legal_entity_id) {
+        setItem(prevItem => ({
+          ...prevItem,
+          legal_entity_id: auxiliaryList.user_settings.legal_entity_id
+        }));
+
+        const indexLegalEntity = auxiliaryList.legal_entites.findIndex((childItem) => childItem.id === auxiliaryList.user_settings.legal_entity_id)
+        if (indexLegalEntity !== -1) {
+          const legalEntityCashAccount = auxiliaryList.legal_entites[indexLegalEntity].cash_accounts
+          if(legalEntityCashAccount.length > 0) {
+            setItem(prevItem => ({
+              ...prevItem,
+              cash_account_id: legalEntityCashAccount[0].cash_account_id,
+              type_order: 'bank_account'
+            }));
+          }
+        }
+      }
+      if(auxiliaryList.user_settings.currency_id) {
+        setPaymentList([{ currency_id: auxiliaryList.user_settings.currency_id, amount: null, type_pay: 'payment'}]);
+        setChangeList([{ currency_id: auxiliaryList.user_settings.currency_id, amount: null, type_pay: 'payment'}]);
+      } else {
+        setPaymentList([{ currency_id: null, amount: null, type_pay: 'payment'}]);
+        setChangeList([{ currency_id: null, amount: null, type_pay: 'payment'}]);
+      }
+    }
     // eslint-disable-next-line
   }, [auxiliaryList] )
+
+  React.useEffect(() => {
+    console.log('paymentList', paymentList)
+  }, [paymentList] )
 
   React.useEffect(() => {
     if(searchParams.get('supplier_id')) {
@@ -151,13 +187,13 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   }
 
   const addPayment = (e) => {
-    setPaymentList([...paymentList, { currency_id: null, amount: null, type_pay: 'payment'}]);
+    setPaymentList([...paymentList, { currency_id: auxiliaryList.user_settings?.currency_id || null, amount: null, type_pay: 'payment'}]);
     console.log('paymentList', paymentList)
     handleAddValues()
   }
 
   const addChange = (e) => {
-    setChangeList([...changeList, { currency_id: null, amount: null, type_pay: 'change'}]);
+    setChangeList([...changeList, { currency_id: auxiliaryList.user_settings?.currency_id || null, amount: null, type_pay: 'change'}]);
   }
 
   const removePayment = (index) => {
@@ -290,11 +326,32 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
           });
           cArr.unshift({ value: 0, label: 'Валюта', isDisabled: true });
           setCashAccountCurrencyList(cArr)
+
+          if(cashAccount.legal_entites.length > 0) {
+            setItem(prevItem => ({
+              ...prevItem,
+              legal_entity_id: cashAccount.legal_entites[0].legal_entity_id,
+            }));
+          }
+
         } else {
           setCashAccountCurrencyList([{ value: 0, label: 'Валюта', isDisabled: true }])
         }
       }
+    }
 
+    if(name == 'legal_entity_id') {
+      const indexLegalEntity = auxiliaryList.legal_entites.findIndex((childItem) => childItem.id === value)
+      if (indexLegalEntity !== -1) {
+        const legalEntityCashAccount = auxiliaryList.legal_entites[indexLegalEntity].cash_accounts
+        if(legalEntityCashAccount.length > 0) {
+          setItem(prevItem => ({
+            ...prevItem,
+            cash_account_id: legalEntityCashAccount[0].cash_account_id,
+            type_order: 'bank_account'
+          }));
+        }
+      }
     }
 
     setItem(prevItem => ({
@@ -392,18 +449,25 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     }
     if(type == 'pay_currency') {
       array = payCurrencyList
-      if(item.payments && item.payments.length > 0) {
-        if(item.payments[indexType]) {
-          itemTypeValue = item.payments[indexType].currency_id
+      if(paymentList[indexType]?.currency_id) {
+        itemTypeValue = paymentList[indexType].currency_id
+      } else {
+        if(item.payments && item.payments.length > 0) {
+          if(item.payments[indexType]) {
+            itemTypeValue = item.payments[indexType].currency_id
+          }
         }
       }
-
     }
     if(type == 'change_currency') {
       array = changeCurrencyList
-      if(item.changes && item.payments.length > 0) {
-        if(item.changes[indexType]) {
-          itemTypeValue = item.changes[indexType].currency_id
+      if(changeList[indexType]?.currency_id) {
+        itemTypeValue = changeList[indexType].currency_id
+      } else {
+        if(item.changes && item.payments.length > 0) {
+          if(item.changes[indexType]) {
+            itemTypeValue = item.changes[indexType].currency_id
+          }
         }
       }
     }
@@ -439,6 +503,16 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
   const selectedChangeCurrency = (type, index) => {
     return selectedValue(type, index);
   }
+
+  const filteredCashAccountList = () => {
+    let type = item.type_order;
+    if(item.type_order == 'bank_account') {
+      type = 'account';
+    }
+    console.log('cashAccountList',cashAccountList)
+    const a = cashAccountList.filter((o, i) => o.type_order == type);
+    return a;
+  };
 
   return (
     <>
@@ -501,7 +575,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
                 styles={customStyles}
                 value={selectedCashAccountId('cash_account_id')}
                 onChange={event => handleChange(Object.assign(event, { name: 'cash_account_id'}))}
-                options={cashAccountList}
+                options={filteredCashAccountList()}
                 defaultValue={cashAccountList[0]}
                 components={{ Menu: CustomMenuCashAccounts }}
                 theme={(theme) => ({

@@ -190,6 +190,7 @@ function App() {
 
             {/* Обработка моих юрлиц */}
             <Route path="/editing_legal_entities" element={<> <AppLayout component={<LegalEntityEditing />} /> </>} />
+            <Route path="/editing_legal_entities/:id" element={<> <AppLayout component={<LegalEntityEditing />} /> </>} />
 
             {/* Производство  */}
             <Route path="/manufacture" element={<> <AppLayout component={<Manufacture />} /> </>} />
@@ -256,7 +257,9 @@ function App() {
            
             {/* Возврат */}
             <Route path="/return/sell" element={<> <AppLayout component={<ReturnSell />} /> </>} />
+            <Route path="/return/sell/:id" element={<> <AppLayout component={<ReturnSell />} /> </>} />
             <Route path="/return/buy" element={<> <AppLayout component={<ReturnBuy />} /> </>} />
+            <Route path="/return/buy/:id" element={<> <AppLayout component={<ReturnBuy />} /> </>} />
 
           </Routes>
         </Router>

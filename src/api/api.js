@@ -40,6 +40,8 @@ class API {
             moneyExchange: '/currency_exchange',
             moneyMoving: '/moving_money',
             buySell: '/buy_sell',
+
+            userSettings: '/user_settings',
         }
 
         return types[type];

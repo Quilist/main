@@ -96,7 +96,7 @@ function UserEditing() {
         company,
         group,
         address,
-        duty: mainArreas,
+        debit: mainArreas,
         discount,
         note,
         edrpou
@@ -132,7 +132,7 @@ function UserEditing() {
         company,
         group,
         address,
-        duty: mainArreas,
+        debit: mainArreas,
         discount,
         note,
         edrpou
@@ -192,6 +192,7 @@ function UserEditing() {
               edrpou={edrpou}
               setEdrpou={setEdrpou}
               handleSearch={handleSearch}
+              id={id}
             />
           </div>
 
@@ -207,6 +208,7 @@ function UserEditing() {
               setNote={setNote}
               setMainArreas={setMainArreas}
               codeNdc={codeNdc}
+              id={id}
             />
           </div>
         </div>

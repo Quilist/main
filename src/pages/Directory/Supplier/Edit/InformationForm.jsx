@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputAdornment from '@mui/material/InputAdornment';
 
-function InformationForm({ address, setAddress, arrears, setArrears, discount, setDiscount, note, setNote, setMainArreas, codeNdc }) {
+function InformationForm({ address, setAddress, arrears, setArrears, discount, setDiscount, note, setNote, setMainArreas, codeNdc, id }) {
 
   const [currency, setCurrency] = React.useState('1-UAH');
   const currentCurrency = currency.split('-')
@@ -38,7 +38,7 @@ function InformationForm({ address, setAddress, arrears, setArrears, discount, s
           type="number"
           variant="standard"
           InputProps={{
-            readOnly: true,
+            readOnly: id ? true : false,
             endAdornment: <InputAdornment position="start">{currentCurrency[1]}</InputAdornment>,
           }}
         />

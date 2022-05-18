@@ -89,7 +89,7 @@ function UserEditing() {
         company,
         group,
         address,
-        duty: mainArreas,
+        debit: mainArreas,
         discount,
         notes
       }
@@ -124,7 +124,7 @@ function UserEditing() {
         company,
         group,
         address,
-        duty: mainArreas,
+        debit: mainArreas,
         discount,
         notes
       }
@@ -175,6 +175,7 @@ function UserEditing() {
               setCompany={setCompany}
               group={group}
               setGroup={setGroup}
+              id={id}
             />
           </div>
 
@@ -190,6 +191,7 @@ function UserEditing() {
               notes={notes}
               setNotes={setNotes}
               setMainArreas={setMainArreas}
+              id={id}
             />
           </div>
         </div>

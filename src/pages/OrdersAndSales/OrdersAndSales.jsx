@@ -16,8 +16,8 @@ export default function EnhancedTable() {
   useDocumentTitle("Заказы и продажи");
 
   const typeOptions = {
-    sale: 'Продажа',
-    order: 'Заказ'
+    sell: 'Продажа',
+    sell_return: 'Продажа Возврат',
   };
 
   React.useEffect(() => {
@@ -46,9 +46,12 @@ export default function EnhancedTable() {
   };
 
   const goToEdit = (item) => {
-    //(item.type == 'sell') {
+    if(item.type == 'sell') {
       navigate(`/sell/${item.id}`)
-    //}
+    }
+    if(item.type == 'sell_return') {
+      navigate(`/return/sell/${item.id}`)
+    }
   };
 
   const tableHeader = [
@@ -165,7 +168,7 @@ export default function EnhancedTable() {
                     </div>
                     <div className="table__paysend">
                       <p>
-                        {getType(item.status)}
+                        {getType(item.type)}
                       </p>
                     </div>
                     <div className="table__paysend">

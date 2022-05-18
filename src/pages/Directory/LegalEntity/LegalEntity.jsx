@@ -263,8 +263,9 @@ export default function LegalEntity() {
    const { setUserId } = useUserId();
 
    const handleRedirect = (id) => {
-      setUserId(id)
-      setIsRedirect(true);
+      //setUserId(id)
+      //setIsRedirect(true);
+      navigate(`/editing_legal_entities/${id}`);
    };
    React.useEffect(() => {
       if (isRedirect) {
