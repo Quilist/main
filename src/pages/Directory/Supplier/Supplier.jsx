@@ -395,7 +395,7 @@ export default function Supplier() {
                                                          <div style={{ display: 'flex', alignItems: 'center' }}>
                                                             <img className={styles.table__icon} src={dutyImg} alt="phone" />&nbsp;<div>
                                                             </div>
-                                                            {row.duty || '0'} UAH</div>
+                                                            {parseFloat( row.debit ) - parseFloat( row.credit )} UAH</div>
                                                       </div>
                                                    </div>
                                                 </AccordionDetails>
