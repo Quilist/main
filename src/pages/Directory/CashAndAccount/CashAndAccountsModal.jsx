@@ -225,7 +225,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     if (value.length > 11) return;
     
-    date[name] = value;
+    date[name] += value;
     
     if (value.length === 2) date[name] += '.';
     if (value.length === 5) date[name] += '.';
@@ -429,7 +429,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Дата 1"
-                  placeholder="(ДД.ММ.ГГГГ)"
+
                   variant="standard"
                   value={date.first}
                   name="first"
@@ -438,7 +438,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Дата 2"
-                  placeholder="(ДД.ММ.ГГГГ)"
+    
                   variant="standard"
                   value={date.second}
                   name="second"
