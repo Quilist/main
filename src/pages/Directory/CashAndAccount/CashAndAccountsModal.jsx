@@ -235,9 +235,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     const { name, value } = e.target;
     const data = Number(e.nativeEvent.data) || null;
 
-    if (value.length > 10 || isNaN(data)) return;
+    if (value.length > 10 || !isNaN(data)) return;
     
-    console.log(data)
     date[name] = value;
 
     if (value.length === 2) date[name] += '.';
