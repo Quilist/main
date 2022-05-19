@@ -234,6 +234,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleChangeDate = e => {
     const { name, value } = e.target;
+    
+    console.log(e)
 
     if (value.length > 10) return;
 
