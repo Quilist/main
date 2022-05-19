@@ -221,6 +221,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   };
 
   const handleClearDate = e => {
+    console.log(e)
     if (e.which !== 8) return;
 
     const { name, value } = e.target;
@@ -234,8 +235,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleChangeDate = e => {
     const { name, value } = e.target;
-    
-    console.log(e)
 
     if (value.length > 10) return;
 
