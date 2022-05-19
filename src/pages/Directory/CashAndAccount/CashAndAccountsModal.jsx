@@ -223,6 +223,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const handleChangeDate = e => {
     let { name, value } = e.target;
 
+    if (value.length > 11) return;
+
     switch (name) {
       case "first":
         if (value.length === 2) value += '.';
@@ -431,7 +433,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Дата 1: (ДД.ММ.ГГГГ)"
-                  type="number"
                   variant="standard"
                   value={date.first}
                   name="first"
@@ -440,7 +441,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Дата 2: (ДД.ММ.ГГГГ)"
-                  type="number"
                   variant="standard"
                   value={date.second}
                   name="second"
