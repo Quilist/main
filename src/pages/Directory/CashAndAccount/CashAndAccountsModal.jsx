@@ -67,6 +67,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [item, setItem] = React.useState({ stream: {} });
 
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
+  const [date, setDate] = React.useState({ first: '', second: '' });
   const [accountList, setAccountList] = React.useState([]);
 
   const [account, setAccount] = React.useState('');
@@ -219,6 +220,22 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     streamData[name] = value
   };
 
+  const handleChangeDate = e => {
+    let { name, value } = e.target;
+
+    switch (name) {
+      case "first":
+        if (value.length === 2) value += '.';
+        if (value.length === 5) value += '.';
+        setDate({ first: value, second: date.second });
+        break;
+      case "second":
+        if (value.length === 2) value += '.';
+        if (value.length === 5) value += '.';
+        setDate({ first: date.first, second: value });
+        break;
+    }
+  }
 
   return (
     <div>
@@ -411,6 +428,25 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   name="card_number"
                   onChange={handleChangeStreamField}
                 />
+
+                <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                  label="Дата 1: (ДД.ММ.ГГГГ)"
+                  type="number"
+                  variant="standard"
+                  value={date.first}
+                  name="first"
+                  onChange={handleChangeDate}
+                />
+
+                <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                  label="Дата 2: (ДД.ММ.ГГГГ)"
+                  type="number"
+                  variant="standard"
+                  value={date.second}
+                  name="second"
+                  onChange={handleChangeDate}
+                />
+
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
               </Box>
             </Modal>
