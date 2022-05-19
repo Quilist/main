@@ -220,17 +220,27 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     streamData[name] = value
   };
 
+  const handleClearDate = e => {
+    if (e.which !== 8) return;
+
+    const { name, value } = e.target;
+
+    if (value.length == 3 || value.length == 6) {
+      date[name] = value.slice(0, value.length - 1);
+
+      setDate({ first: date.first, second: date.second });
+    }
+  }
+
   const handleChangeDate = e => {
     const { name, value } = e.target;
 
-    if (value.length > 11) return;
-    
+    if (value.length > 10) return;
+
     date[name] = value;
-    
+
     if (value.length === 2) date[name] += '.';
     if (value.length === 5) date[name] += '.';
-    
-    console.log(date)
 
     setDate({ first: date.first, second: date.second });
   }
@@ -428,21 +438,23 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 />
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                  label="Дата 1"
-
+                  label="Дата начало:"
+                  placeholder="ДД.ММ.ГГГГ"
                   variant="standard"
                   value={date.first}
                   name="first"
                   onChange={handleChangeDate}
+                  onKeyDown={handleClearDate}
                 />
 
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                  label="Дата 2"
-    
+                  label="Дата конец:"
+                  placeholder="ДД.ММ.ГГГГ"
                   variant="standard"
                   value={date.second}
                   name="second"
                   onChange={handleChangeDate}
+                  onKeyDown={handleClearDate}
                 />
 
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
