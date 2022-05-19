@@ -233,9 +233,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleChangeDate = e => {
     const { name, value } = e.target;
-    const data = Number(e.nativeEvent.data) ? e.nativeEvent.data : undefined;
+    const data = Number.isFinite(Number(e.nativeEvent.data));
 
-    if (value.length > 10 || isNaN(data)) return;
+    if (value.length > 10 || !data) return;
 
     date[name] = value;
 
