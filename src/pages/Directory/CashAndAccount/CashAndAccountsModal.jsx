@@ -136,7 +136,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
         balance: elem.balanceIn,
         currency: elem.currency,
         id: account,
-        token: token
+        token: token,
+        date: date 
       };
     }
 
