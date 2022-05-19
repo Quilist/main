@@ -232,7 +232,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     
     console.log(date)
 
-    setDate(date);
+    setDate({ first: date.first, second: date.second });
   }
 
   return (
