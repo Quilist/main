@@ -234,12 +234,14 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const handleChangeDate = e => {
     const { name, value } = e.target;
 
-    if (value.length > 10 || !Number(e.nativeEvent.data)) return;
+    if (value.length > 10) return;
 
-    date[name] = value;
+    if (Number(e.nativeEvent.data)) {
+      date[name] = value;
 
-    if (value.length === 2) date[name] += '.';
-    if (value.length === 5) date[name] += '.';
+      if (value.length === 2) date[name] += '.';
+      if (value.length === 5) date[name] += '.';
+    }
 
     setDate({ first: date.first, second: date.second });
   }
