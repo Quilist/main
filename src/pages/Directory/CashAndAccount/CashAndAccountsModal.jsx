@@ -236,6 +236,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     if (value.length > 10) return;
 
+    console.log(e.nativeEvent.data)
     if (Number(e.nativeEvent.data)) {
       date[name] = value;
 
