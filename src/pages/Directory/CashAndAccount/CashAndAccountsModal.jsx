@@ -221,21 +221,19 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   };
 
   const handleClearDate = e => {
-    console.log(e)
     if (e.which !== 8) return;
 
     const { name, value } = e.target;
 
     if (value.length == 3 || value.length == 6) {
       date[name] = value.slice(0, value.length - 1);
-
       setDate({ first: date.first, second: date.second });
     }
   }
 
   const handleChangeDate = e => {
     const { name, value } = e.target;
-
+    console.log(e)
     if (value.length > 10) return;
 
     date[name] = value;
