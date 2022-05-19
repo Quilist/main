@@ -216,7 +216,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const handleChangeStreamField = e => {
     const { name, value } = e.target;
 
-    let streamData = item.stream
+    const streamData = item.stream
     streamData[name] = value
   };
 
@@ -233,8 +233,8 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleChangeDate = e => {
     const { name, value } = e.target;
-    console.log(e)
-    if (value.length > 10) return;
+
+    if (value.length > 10 || !Number(e.nativeEvent.data)) return;
 
     date[name] = value;
 
