@@ -136,8 +136,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
         balance: elem.balanceIn,
         currency: elem.currency,
         id: account,
-        token: token,
-        date: date 
+        token: token
       };
     }
 
@@ -228,13 +227,15 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     if (value.length == 3 || value.length == 6) {
       date[name] = value.slice(0, value.length - 1);
+
       setDate({ first: date.first, second: date.second });
+      handleChangeStreamField(e);
     }
   }
 
   const handleChangeDate = e => {
     const { name, value } = e.target;
-    const data = Number.isFinite(Number(e.nativeEvent.data));
+    const data = Number.isFinite(Number(e.nativeEvent.data))
 
     if (value.length > 10 || !data) return;
 
@@ -244,6 +245,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     if (value.length === 5) date[name] += '.';
 
     setDate({ first: date.first, second: date.second });
+    handleChangeStreamField(e);
   }
 
   return (
