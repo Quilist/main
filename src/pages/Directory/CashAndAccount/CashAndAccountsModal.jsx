@@ -225,10 +225,12 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     if (value.length > 11) return;
     
-    date[name] += value;
+    date[name] = value;
     
     if (value.length === 2) date[name] += '.';
     if (value.length === 5) date[name] += '.';
+    
+    console.log(date)
 
     setDate(date);
   }
