@@ -86,12 +86,7 @@ function PayForm({ item, setItem, error, setError, pageTypes, currentPathName, a
     }
 
     if(auxiliaryList.user_settings) {
-      if(auxiliaryList.user_settings.storehouse_id) {
-        setItem(prevItem => ({
-          ...prevItem,
-          storehouse_id: auxiliaryList.user_settings.storehouse_id
-        }));
-      }
+
       if(auxiliaryList.user_settings.legal_entity_id) {
         setItem(prevItem => ({
           ...prevItem,
