@@ -112,7 +112,7 @@ export default function EnhancedTable() {
   const getTransations = () => {
     api.getNewTransations().then(data => {
       if (data.status === "error") console.log(data.message)
-      else setCashAccountUserList([...cashAccountUserList, data.message.items])
+      else setCashAccountUserList([...cashAccountUserList, ...data.message.items])
     })
   }
 
