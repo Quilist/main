@@ -43,7 +43,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
   const api = new API();
 
   React.useEffect(() => {
-    if(id) {
+    if (id) {
       api.find(id, 'moneyMoving').then(data => {
         if (data.status === "error") {
           alert(data.message)
@@ -82,7 +82,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
   const formatField = (value) => {
     let n;
     let h = parseInt(value);
-    if(!isNaN(h)) {
+    if (!isNaN(h)) {
       n = h;
     } else {
       n = value;
@@ -109,7 +109,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
   }
 
   const handleAdd = () => {
-    if(!id) {
+    if (!id) {
       api.add(item, 'moneyMoving').then(data => {
         if (data.status === "error") return console.log(data.message)
         setId(null);
@@ -246,7 +246,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
           </FormControl>
 
           <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
-          {id && <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button> }
+          {id && <Button variant="contained" color="error" onClick={handleDelete} className={styles.modal_bankbtn}>Удалить</Button>}
         </Box>
       </Modal>
     </div>

@@ -5,6 +5,7 @@ import API from '@/api/api';
 
 import CurrencyExchangeModal from "./CurrencyExchangeModal";
 import MovingMoneyModal from "./MovingMoneyModal";
+import TransationModal from "./TransationModal";
 
 import { useState } from "react";
 //import Table from "@/components/Table/Table"
@@ -22,7 +23,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Popper from "@mui/material/Popper";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import moment from 'moment';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { useSelector } from "react-redux";
 
 export default function EnhancedTable() {
@@ -32,9 +33,14 @@ export default function EnhancedTable() {
   const [items, setItems] = React.useState([])
 
   const [openCurrencyExchangeModal, setOpenCurrencyExchangeModal] = React.useState(false);
+  const [openTransationModal, setOpenTransationModal] = React.useState(false);
+
   const [openMovingMoney, setOpenMovingMoney] = React.useState(false);
+
   const [currencyExchangeId, setCurrencyExchangeId] = React.useState(null);
   const [movingMoneyId, setMovingMoneyId] = React.useState(null);
+  const [transationId, setTransationId] = React.useState(null);
+
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const [cashAccountUserList, setCashAccountUserList] = useState([]);
@@ -42,11 +48,11 @@ export default function EnhancedTable() {
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
- 
+
   const handleOpenCurrencyExchangeModal = (id) => {
     setOpenCurrencyExchangeModal(true);
     let h = parseInt(id);
-    if(!isNaN(h)) {
+    if (!isNaN(h)) {
       setCurrencyExchangeId(id);
     }
   };
@@ -54,7 +60,7 @@ export default function EnhancedTable() {
   const handleOpenMovingMoney = (id) => {
     setOpenMovingMoney(true);
     let h = parseInt(id);
-    if(!isNaN(h)) {
+    if (!isNaN(h)) {
       setMovingMoneyId(id);
     }
   };
@@ -90,9 +96,9 @@ export default function EnhancedTable() {
 
   const getAll = () => {
     console.log('queryParams', queryParams)
-    api.all('money', queryParams).then(data => {
-      if (data.status === "error") console.log(data.message)
-      else setItems(data.message.items)
+    api.all('money', queryParams).then(data => { //, queryParams
+      if (data.status === "error") return console.log(data.message)
+      setItems(data.message.items)
     })
   };
 
@@ -103,10 +109,17 @@ export default function EnhancedTable() {
     })
   };
 
+  const getTransations = () => {
+    api.getNewTransations().then(data => {
+      if (data.status === "error") console.log(data.message)
+      else setCashAccountUserList([...cashAccountUserList, data.message.items])
+    })
+  }
+
   const search = useSelector((state) => state);
-  
+
   const [currency, setCurrency] = React.useState([]);
-  
+
   React.useEffect(() => {
     api.auxiliary('cashAndAccount').then(data => {
       if (data.status === "error") return alert(data.message);
@@ -121,32 +134,35 @@ export default function EnhancedTable() {
   }, [search])
 
   React.useEffect(() => {
-    getAll();
+    if (queryParams && !openTransationModal && !openCurrencyExchangeModal && !openMovingMoney) {
+      getAll();
+    }
     // eslint-disable-next-line
-  }, [queryParams])
+  }, [queryParams, openTransationModal, openCurrencyExchangeModal, openMovingMoney])
 
   React.useEffect(() => {
-    if(!openCashModal) {
+    if (!openCashModal) {
       getAllCashAccountUser();
+      getTransations();
     }
     // eslint-disable-next-line
   }, [openCashModal])
 
-  React.useEffect(() => {
-    if (!openCurrencyExchangeModal || !openMovingMoney) {
-      getAll();
-      //setItems(mockResponse.message.items)
-    }
-    // eslint-disable-next-line
-  }, [openCurrencyExchangeModal, openMovingMoney])
+  // React.useEffect(() => {
+  //   if (!openCurrencyExchangeModal && !openMovingMoney) {
+  //     getAll();
+  //     //setItems(mockResponse.message.items)
+  //   }
+  //   // eslint-disable-next-line
+  // }, [openCurrencyExchangeModal, openMovingMoney])
 
 
   React.useEffect(() => {
     // eslint-disable-next-line
   }, [cashAndAccountsList])
 
-  const listElement =  React.useRef(null);
-  const listElementTwo =  React.useRef(null);
+  const listElement = React.useRef(null);
+  const listElementTwo = React.useRef(null);
 
   const showDropDown = (item) => {
     listElement.current.classList.toggle("hidden");
@@ -199,14 +215,19 @@ export default function EnhancedTable() {
   };
 
   const goToEdit = (item) => {
-    if(item.type) {
+    if (item.type) {
       navigate(`/${item.type}/${item.id}`)
     }
-    if(item.amount_receive) {
+    if (item.amount_receive) {
       handleOpenCurrencyExchangeModal(item.id);
     }
-    if(item.to_cash_account_id) {
+    if (item.to_cash_account_id) {
       handleOpenMovingMoney(item.id);
+    }
+
+    if (!item.type && !item.to_cash_account_id && !item.exchange_rate) {
+      setTransationId(item.id);
+      setOpenTransationModal(true);
     }
   };
 
@@ -235,12 +256,13 @@ export default function EnhancedTable() {
   const formattedDate = (milliseconds) => {
     const date = new Date(+milliseconds);
     const formatDate = date.toISOString().split('T')[0]
+
     return formatDate;
   };
 
   const getType = (item, isShort) => {
     let type = null;
-    if(isShort) {
+    if (isShort) {
       if (item.type.indexOf('pay') !== -1) {
         type = 'Кому:'
       }
@@ -252,14 +274,14 @@ export default function EnhancedTable() {
     if (item.type) {
       if (item.type.indexOf('pay') !== -1) {
         type = 'Оплата'
-        const payIndex = payOptions.findIndex((payItem) => payItem.link === '/'+item.type)
+        const payIndex = payOptions.findIndex((payItem) => payItem.link === '/' + item.type)
         if (payIndex !== -1) {
           type = type + ' ' + payOptions[payIndex].name;
         }
       }
       if (item.type.indexOf('receive') !== -1) {
         type = 'Прием'
-        const payIndex = receiveOptions.findIndex((payItem) => payItem.link === '/'+item.type)
+        const payIndex = receiveOptions.findIndex((payItem) => payItem.link === '/' + item.type)
         if (receiveOptions !== -1) {
           type = type + ' ' + receiveOptions[payIndex].name;
         }
@@ -283,7 +305,7 @@ export default function EnhancedTable() {
 
   const getAmountList = (item) => {
     let amountList = [];
-    if(item.payments && item.payments.length > 0) {
+    if (item.payments && item.payments.length > 0) {
       const totalList = item.payments.filter(v => v.type_pay === "total");
       if (totalList.length > 0) {
         amountList = totalList.map((item, index) => {
@@ -303,13 +325,13 @@ export default function EnhancedTable() {
   };
 
   const searchData = (search) => {
-    if(search) {
+    if (search) {
       setQueryParams(prevItem => ({
         ...prevItem,
         search: search,
       }));
     } else {
-      let state = {...queryParams};
+      let state = { ...queryParams };
       delete state.search;
       setQueryParams(state);
     }
@@ -339,7 +361,7 @@ export default function EnhancedTable() {
     }));
     setDateState({ startDate, endDate });
   };
-  
+
   const dateRange = startDate.format('MMMM D, YYYY');
 
   return (
@@ -363,6 +385,13 @@ export default function EnhancedTable() {
         setOpen={setOpenCashModal}
         cashAndAccountsList={cashAndAccountsList}
         setCashAndAccountsList={setCashAndAccountsList}
+      />
+
+      <TransationModal
+        open={openTransationModal}
+        setOpen={setOpenTransationModal}
+        id={transationId}
+        setId={setTransationId}
       />
 
       <section className="home-section">
@@ -401,8 +430,8 @@ export default function EnhancedTable() {
               Создать
               <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
-                      fill="#fff" />
+                  d="M0.191786 6.35781C0.190775 6.35681 0.189766 6.35581 0.18876 6.3548C-0.0629201 6.10312 -0.0629202 5.69507 0.18876 5.44339L5.20155 0.430597C5.45323 0.178917 5.86128 0.178916 6.11296 0.430597C6.36464 0.682277 6.36464 1.09033 6.11296 1.34201L1.55589 5.89908L6.11298 10.4562C6.36466 10.7079 6.36466 11.1159 6.11298 11.3676C5.8613 11.6193 5.45325 11.6193 5.20157 11.3676L0.191786 6.35781Z"
+                  fill="#fff" />
               </svg>
             </a>
             <Popper
@@ -411,7 +440,7 @@ export default function EnhancedTable() {
               role={undefined}
               transition
               // disablePortal
-              style={{ zIndex: "10"}}
+              style={{ zIndex: "10" }}
               placement="bottom-start"
             >
               {({ TransitionProps, placement }) => (
@@ -518,7 +547,7 @@ export default function EnhancedTable() {
                 }}
                 onCallback={handleDateRangePickerCallback}
               >
-                <p style={{ cursor: 'pointer'}}>
+                <p style={{ cursor: 'pointer' }}>
                   {dateState.startDate.format('MMMM D, YYYY')} - {dateState.endDate.format('MMMM D, YYYY')}
                 </p>
               </DateRangePicker>
@@ -530,15 +559,15 @@ export default function EnhancedTable() {
               <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="0.941177" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="16" y="6.58824" width="5.64706" height="0.941176" rx="0.470588"
-                      transform="rotate(-180 16 6.58824)" fill="#7096FF" />
+                  transform="rotate(-180 16 6.58824)" fill="#7096FF" />
                 <rect y="10.353" width="5.64706" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="7.52942" y="0.941177" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <rect x="8.47058" y="6.58824" width="8.47059" height="0.941176" rx="0.470588"
-                      transform="rotate(-180 8.47058 6.58824)" fill="#7096FF" />
+                  transform="rotate(-180 8.47058 6.58824)" fill="#7096FF" />
                 <rect x="7.52942" y="10.353" width="8.47059" height="0.941176" rx="0.470588" fill="#7096FF" />
                 <circle cx="5.17645" cy="1.41176" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5" />
                 <circle cx="10.8235" cy="6.11765" r="1.16176" transform="rotate(-180 10.8235 6.11765)" fill="white"
-                        stroke="#7096FF" stroke-width="0.5" />
+                  stroke="#7096FF" stroke-width="0.5" />
                 <circle cx="5.17645" cy="10.8235" r="1.16176" fill="white" stroke="#7096FF" stroke-width="0.5" />
               </svg>
               Фильтр
@@ -562,26 +591,26 @@ export default function EnhancedTable() {
               height={470}
               endMessage={
                 <p style={{ textAlign: "center" }}>
-                  { items.paginations && <b>Всего записей: {items.paginations.total}</b> }
+                  {items.paginations && <b>Всего записей: {items.paginations.total}</b>}
                 </p>
               }
             >
               {items.map((item, index) => {
                 return (
                   <div className="table__item"
-                       onClick={() => {
-                         goToEdit(item)
-                       }}
-                    >
+                    onClick={() => {
+                      goToEdit(item)
+                    }}
+                  >
                     <div className="table__figure">
-                      { item.type && item.type.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {item.type && item.type.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
-                              fill="#45D064" />
-                      </svg> }
-                      { item.type && item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727"/>
-                      </svg> }
+                          d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
+                          fill="#45D064" />
+                      </svg>}
+                      {item.type && item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727" />
+                      </svg>}
                     </div>
                     <div className="table__mob">
                       {item.type ?
@@ -590,7 +619,7 @@ export default function EnhancedTable() {
                         <p>
                           {item.type && <a href="#!">
                             Установить
-                          </a> }
+                          </a>}
                         </p>
                       }
                       <p>
@@ -606,15 +635,17 @@ export default function EnhancedTable() {
                     <div className="table__data">
                       <p>
                         {formattedDate(item.created_at)}
-                        {item.number && <span>.#.№{item.number}</span> }
+                        {/* {item.number && <span>.#.№{item.number}</span>} че это???? */}
                       </p>
                       <p>
-
                       </p>
                     </div>
                     <div className="table__paysend">
                       <p>
-                        {getType(item)}
+                        {getType(item) ? getType(item) :
+                          <a href="#!">
+                            Установить
+                          </a>}
                       </p>
                     </div>
                     <div className="table__account">
@@ -630,9 +661,9 @@ export default function EnhancedTable() {
                         <p>{item.type_item ? item.type_item.name : ''}</p>
                         :
                         <p>
-                          {item.type && <a href="#!">
+                          {!item.type && !item.to_cash_account && !item.exchange_rate && <a href="#!">
                             Установить
-                          </a> }
+                          </a>}
                         </p>
                       }
                       {item.to_cash_account &&

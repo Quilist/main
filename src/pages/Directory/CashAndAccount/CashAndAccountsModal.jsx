@@ -10,8 +10,6 @@ import MenuItem from '@mui/material/MenuItem';
 import crossImg from '@/static/img/cross.png';
 import styles from '@/styles/modules/CashAndAccounts.module.css';
 
-import btn from '@/styles/modules/UserEditing.module.css';
-
 import { Dropdown } from 'semantic-ui-react';
 import API from '@/api/api'
 
@@ -70,14 +68,10 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [date, setDate] = React.useState({ first: '', second: '' });
   const [accountList, setAccountList] = React.useState([]);
 
-  const [account, setAccount] = React.useState('');
-  const [token, setToken] = React.useState('');
   const [acc, setAcc] = React.useState('');
 
-  const [elem, setElem] = React.useState({});
-
   const handleSearch = () => {
-    api.account(account, token).then(data => {
+    api.account(item.stream.id, item.stream.token).then(data => {
       if (data.status === "error") alert(data.message)
       else setAccountList(data.message)
     });
@@ -130,15 +124,15 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   }
 
   const handleAdd = async () => {
-    if (elem.acc) {
-      item.stream = {
-        acc: elem.acc,
-        balance: elem.balanceIn,
-        currency: elem.currency,
-        id: account,
-        token: token
-      };
-    }
+    // if (elem.acc) {
+    //   item.stream = {
+    //     acc: elem.acc,
+    //     balance: elem.balanceIn,
+    //     currency: elem.currency,
+    //     id: account,
+    //     token: token
+    //   };
+    // }
 
     api.add(item, 'cashAndAccount').then(res => {
       if (res.status === "error") return alert(res.message);
@@ -160,6 +154,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleCloseChildModalPrivat = () => {
     setOpenChildModalPrivat(false);
+    setDate({ first: '', second: '' })
     clearForm();
   }
 
@@ -181,18 +176,23 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const handleModelBank = () => {
     switch (bankFunction) {
       case "OpenChildModalPrivat":
+        handleAccountType({ target: { value: "account", name: "type_order" } });
         setType('privatbank_individual');
         setOpenChildModalPrivat(true);
+
         break;
       case "OpenChildModalPrivatL":
+        handleAccountType({ target: { value: "account", name: "type_order" } });
         setType('privatbank_legal_entity');
         setOpenChildModalPrivatL(true);
         break;
       case "OpenChildModalPumb":
+        handleAccountType({ target: { value: "account", name: "type_order" } });
         setType('pumb');
         setOpenChildModalPumb(true);
         break;
       case "OpenChildModalMono":
+        handleAccountType({ target: { value: "account", name: "type_order" } });
         setType('monobank');
         setOpenChildModalMono(true);
         break;
@@ -257,7 +257,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
         aria-describedby="modal-modal-description"
       >
         <Box className={styles.modal} sx={style}>
-          <div className={openChildModal ? styles.modal_wrapper : ''}>
+          <div className={openChildModal || openChildModalPrivatL || openChildModalMono || openChildModalPumb ? styles.modal_wrapper : ''}>
             <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
             <div className={styles.modal_title}>Как хотите добавить?</div>
             <div className={styles.modal_subtitle}>Создать счёт и вносить платежи вручную.</div>
@@ -307,7 +307,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     name="type_order"
                     onChange={(e) => handleAccountType(e)}
                   >
-                    {auxiliaryList.types.map((type, typeIndex) => {
+                    {auxiliaryList.types.map((type) => {
                       return (<MenuItem key={type.value} value={type.value}>{type.name}</MenuItem>)
                     })}
                   </Select>
@@ -326,7 +326,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                             name="currency_id"
                             onChange={(e) => updateBalance(e)}
                           >
-                            {auxiliaryList.currencies.map((currency, currencyIndex) => {
+                            {auxiliaryList.currencies.map((currency) => {
                               return (<MenuItem key={currency.id} value={currency.id}>{currency.name}</MenuItem>)
                             })}
                           </Select>
@@ -450,16 +450,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   onKeyDown={handleClearDate}
                 />
 
-                <TextField sx={{ marginBottom: '30px', width: '70%' }}
-                  label="Дата конец:"
-                  placeholder="ДД.ММ.ГГГГ"
-                  variant="standard"
-                  value={date.second}
-                  name="second"
-                  onChange={handleChangeDate}
-                  onKeyDown={handleClearDate}
-                />
-
                 <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
               </Box>
             </Modal>
@@ -493,9 +483,9 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   label="Token:" multiline
                   maxRows={2}
                   variant="standard"
-                  value={token}
+                  value={item.token}
                   name="token"
-                  onChange={(e) => setToken(e.target.value)}
+                  onChange={handleChangeStreamField}
                 />
 
                 <div>
@@ -505,11 +495,11 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     multiline
                     maxRows={2}
                     variant="standard"
-                    value={account}
-                    name="autoclient_id"
-                    onChange={(e) => setAccount(e.target.value)}
+                    value={item.id}
+                    name="id"
+                    onChange={handleChangeStreamField}
                   />
-                  <Button onClick={handleSearch} className={btn.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
+                  <Button onClick={handleSearch} className={styles.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
                 </div>
 
                 <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
@@ -522,10 +512,33 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                     onChange={(e) => setAcc(e.target.value)}
                   >
                     {accountList.map((elem) => {
-                      return (<MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={() => setElem(elem)}>{elem.balanceIn} {elem.currency}</MenuItem>)
+                      const object = {
+                        stream: {
+                          ...item.stream,
+                          acc: elem.acc,
+                          balance: elem.balanceIn,
+                          currency: elem.currency,
+                        }
+                      }
+
+                      return (
+                        <MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={() => setItem(items => ({ ...items, ...object }))}>
+                          {elem.balanceIn} {elem.currency}
+                        </MenuItem>
+                      )
                     })}
                   </Select>
                 </FormControl>
+
+                <TextField sx={{ marginBottom: '30px', width: '70%' }}
+                  label="Дата начало:"
+                  placeholder="ДД.ММ.ГГГГ"
+                  variant="standard"
+                  value={date.first}
+                  name="first"
+                  onChange={handleChangeDate}
+                  onKeyDown={handleClearDate}
+                />
 
                 <div>
                   <Button variant="contained" onClick={handleAdd} className={styles.modal_bankbtn}>Ок</Button>
