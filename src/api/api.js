@@ -56,14 +56,14 @@ class API {
             },
             credentials: "include"
         }
-        if(body) {
+        if (body) {
             data.body = JSON.stringify(body);
         }
         let query;
-        if(params) {
+        if (params) {
             query = Object.keys(params)
-              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-              .join('&');
+                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                .join('&');
             url = url + '?' + query;
         }
 
@@ -85,6 +85,10 @@ class API {
             email: email,
             password: password
         });
+    }
+
+    async logout() {
+        return await this.request("POST", "/auth/logout");
     }
 
     async changePassword(code, password) {
@@ -133,15 +137,18 @@ class API {
         return await this.request("GET", `${url}/auxiliary/data`, null, params);
     }
 
-
     //Currencies
     async getCurrenciesList() {
         return await this.request("GET", "/currencies/options");
     }
-    
+
     // Account
     async account(id, token) {
         return await this.request("GET", `/cash_accounts/account?id=${id}&token=${token}`)
+    }
+
+    async getNewTransations() {
+        return await this.request("GET", "/money/transations");
     }
 }
 
