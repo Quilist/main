@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import CashAndAccountsModal from './CashAndAccountsModal';
 import EditModal from './EditModal';
@@ -18,6 +19,7 @@ import styles from '@/styles/modules/CashAndAccounts.module.css';
 export default function CashAndAccount() {
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
    const [auxiliaryList, setAuxiliaryList] = React.useState({ currencies: [], types: [] });
 
    useDocumentTitle("Кассы и счета");
@@ -85,11 +87,10 @@ export default function CashAndAccount() {
                      auxiliaryList={auxiliaryList}
                   />
                }
-               <Paper sx={{ width: "100%", mb: 2, mt: 2 }}>
-                  <div style={{ marginTop: "15px", marginBottom: "15px", paddingLeft: "16px", paddingRight: "8px" }}>
-                     <Button onClick={handleOpen} variant="contained">Додати</Button>
-                  </div>
-
+               <div style={{ marginBottom: '30px', width: '97%' }}>
+                  <Button onClick={handleOpen} variant="contained">Создать</Button>
+               </div>
+               <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                   <TableContainer>
                      <Table stickyHeader aria-label="sticky table">
                         <TableHead>

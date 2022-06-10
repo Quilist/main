@@ -65,7 +65,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   const [item, setItem] = React.useState({ stream: {} });
 
   const [balanceList, setBalanceList] = React.useState([{ currency_id: null, balance: null }]);
-  const [date, setDate] = React.useState({ first: '', second: '' });
+  const [date, setDate] = React.useState({ first: '' });
   const [accountList, setAccountList] = React.useState([]);
 
   const [acc, setAcc] = React.useState('');
@@ -103,6 +103,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     setType_accounts('');
     setAcc('');
     setBalanceList([{ currency_id: null, balance: null }])
+    setDate({ first: '' });
     setItem({ stream: {} })
     setOpenChildModal(false);
     setOpenChildModalPrivat(false);
@@ -124,16 +125,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
   }
 
   const handleAdd = async () => {
-    // if (elem.acc) {
-    //   item.stream = {
-    //     acc: elem.acc,
-    //     balance: elem.balanceIn,
-    //     currency: elem.currency,
-    //     id: account,
-    //     token: token
-    //   };
-    // }
-
     api.add(item, 'cashAndAccount').then(res => {
       if (res.status === "error") return alert(res.message);
       setOpen(false);
@@ -154,7 +145,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
   const handleCloseChildModalPrivat = () => {
     setOpenChildModalPrivat(false);
-    setDate({ first: '', second: '' })
+    setDate({ first: '' })
     clearForm();
   }
 
@@ -179,7 +170,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
         handleAccountType({ target: { value: "account", name: "type_order" } });
         setType('privatbank_individual');
         setOpenChildModalPrivat(true);
-
         break;
       case "OpenChildModalPrivatL":
         handleAccountType({ target: { value: "account", name: "type_order" } });
@@ -218,6 +208,10 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
     const streamData = item.stream
     streamData[name] = value
+    setItem(prevItem => ({
+      ...prevItem,
+      stream: streamData
+    }));
   };
 
   const handleClearDate = e => {
@@ -228,7 +222,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     if (value.length == 3 || value.length == 6) {
       date[name] = value.slice(0, value.length - 1);
 
-      setDate({ first: date.first, second: date.second });
+      setDate({ first: date.first });
       handleChangeStreamField(e);
     }
   }
@@ -244,7 +238,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     if (value.length === 2) date[name] += '.';
     if (value.length === 5) date[name] += '.';
 
-    setDate({ first: date.first, second: date.second });
+    setDate({ first: date.first });
     handleChangeStreamField(e);
   }
 
