@@ -7,11 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import CurrencyExchangeModal from './CurrencyExchangeModal';
 import CurrencyExchangeEditModal from './CurrencyExchangeEditModal';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Currency.module.css';
@@ -25,7 +24,7 @@ export default function CurrencyExchangeExchange() {
   const [rows, setRows] = React.useState([]);
   const [currenciesList, setCurrenciesList] = React.useState([]);
   const api = new API()
-  
+
   useDocumentTitle("Валютные пары");
 
   // Modal
@@ -46,7 +45,7 @@ export default function CurrencyExchangeExchange() {
         if (data.status === "error") alert(data.message)
         else setRows(data.message.items)
       })
-      
+
       api.auxiliary('currencyExchange').then(data => {
         if (data.status === "error") alert(data.message)
         else setCurrenciesList(data.message)
@@ -89,10 +88,10 @@ export default function CurrencyExchangeExchange() {
               currenciesList={currenciesList}
             />
           }
-          <div style={{ marginBottom: '30px', width: '97%' }}>
-            <Button onClick={handleOpen} variant="contained">Создать</Button>
-          </div>
-          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+          <Paper sx={{ width: '100%', mb: 2, mt: 2 }}>
+            <div style={{ marginTop: "15px", marginBottom: "15px", paddingLeft: "16px", paddingRight: "8px" }}>
+              <Button onClick={handleOpen} variant="contained">Додати</Button>
+            </div>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>

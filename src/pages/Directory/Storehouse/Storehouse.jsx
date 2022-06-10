@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import StorehouseModal from './StorehouseModal';
 import StorehouseEditModal from './StorehouseEditModal';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from '@/styles/modules/Storehouse.module.css';
@@ -70,11 +70,10 @@ export default function Storehouse() {
               items={rows}
             />
           }
-
-          <div style={{ marginBottom: '30px', width: '97%' }}>
-            <Button onClick={handleOpen} variant="contained">Создать</Button>
-          </div>
-          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+          <Paper sx={{ width: '100%', mb: 2, mt: 2 }}>
+            <div style={{ marginTop: "15px", marginBottom: "15px", paddingLeft: "16px", paddingRight: "8px" }}>
+              <Button onClick={handleOpen} variant="contained">Додати</Button>
+            </div>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
