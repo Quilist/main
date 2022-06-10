@@ -16,8 +16,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
@@ -25,7 +23,7 @@ import Button from "@mui/material/Button";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import useUserId from "@/hooks/useUserId";
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 
@@ -173,10 +171,8 @@ const EnhancedTableToolbar = (props) => {
                id="tableTitle"
                component="div"
             >
-               {/* ================================================================= */}
-               {/* <Button onClick={handleAdd} variant="contained">Создать</Button> */}
                <div style={{ marginTop: "15px", marginBottom: "15px" }}>
-                  <Button variant="contained" onClick={handleAdd}>Создать</Button>
+                  <Button variant="contained" onClick={handleAdd}>Додати</Button>
                </div>
             </Typography>
          )}
@@ -250,9 +246,7 @@ export default function LegalEntity() {
       setPage(0);
    };
 
-   const handleChangeDense = (event) => {
-      setDense(event.target.checked);
-   };
+
 
    const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -370,10 +364,6 @@ export default function LegalEntity() {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                      />
                   </Paper>
-                  <FormControlLabel
-                     control={<Switch checked={dense} onChange={handleChangeDense} />}
-                     label="Dense padding"
-                  />
                </Box>
             </div>
          </section>
