@@ -19,7 +19,6 @@ import styles from '@/styles/modules/CashAndAccounts.module.css';
 export default function CashAndAccount() {
    const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
    const [auxiliaryList, setAuxiliaryList] = React.useState({ currencies: [], types: [] });
 
    useDocumentTitle("Кассы и счета");
@@ -87,10 +86,11 @@ export default function CashAndAccount() {
                      auxiliaryList={auxiliaryList}
                   />
                }
-               <div style={{ marginBottom: '30px', width: '97%' }}>
-                  <Button onClick={handleOpen} variant="contained">Создать</Button>
-               </div>
-               <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+               <Paper sx={{ width: "100%", mb: 2, mt: 2 }}>
+                  <div style={{ marginTop: "15px", marginBottom: "15px", paddingLeft: "16px", paddingRight: "8px" }}>
+                     <Button onClick={handleOpen} variant="contained">Додати</Button>
+                  </div>
+
                   <TableContainer>
                      <Table stickyHeader aria-label="sticky table">
                         <TableHead>

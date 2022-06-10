@@ -16,14 +16,12 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import styles from "@/styles/modules/BankDetail.module.css";
@@ -89,15 +87,6 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          {/* <Checkbox
-                  color="primary"
-                  indeterminate={numSelected > 0 && numSelected < rowCount}
-                  checked={rowCount > 0 && numSelected === rowCount}
-                  onChange={onSelectAllClick}
-                  inputProps={{
-                     'aria-label': 'select all desserts',
-                  }}
-               /> */}
         </TableCell>
         {headCells.map((headCell) => {
           const isWrongForNarrow = headCell.id === 'duty' || headCell.id === 'mobile'
@@ -188,13 +177,13 @@ const EnhancedTableToolbar = (props) => {
         >
           {/* ================================================================= */}
           {/* <Button onClick={handleAdd} variant="contained">Создать</Button> */}
-          <div style={{ marginTop: "25px", marginBottom: "15px" }}>
+          <div style={{ marginTop: "15px", marginBottom: "15px" }}>
             <ButtonGroup
               variant="contained"
               ref={anchorRef}
               aria-label="split button"
             >
-              <Button onClick={handleAdd}>Создать</Button>
+              <Button onClick={handleAdd}>Додати</Button>
             </ButtonGroup>
           </div>
         </Typography>
@@ -271,9 +260,6 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -367,10 +353,6 @@ export default function EnhancedTable() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </Paper>
-            <FormControlLabel
-              control={<Switch checked={dense} onChange={handleChangeDense} />}
-              label="Dense padding"
-            />
           </Box>
         </div>
       </section>
