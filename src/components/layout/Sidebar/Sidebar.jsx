@@ -14,8 +14,8 @@ import arrowImg from './img/arrow.png';
 import crossImg from './img/cross.png';
 import "./sidebar.css";
 import * as React from "react";
-import {useDispatch} from "react-redux";
-import {addSearch} from "@/store/actions";
+import { useDispatch } from "react-redux";
+import { addSearch } from "@/store/actions";
 
 export default function Sidebar() {
   const [searchState, setSearchState] = React.useState('navigation');
@@ -23,7 +23,7 @@ export default function Sidebar() {
   const [isDrop, setDrop] = useState(false);
   const [isDropDirectory, setIsDropDirectory] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [headerTitle, setHeaderTitle] = React.useState( '');
+  const [headerTitle, setHeaderTitle] = React.useState('');
   const target = document.querySelector('head > title');
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
@@ -33,8 +33,8 @@ export default function Sidebar() {
     dispatch(addSearch(text))
   };
 
-  if(target.textContent) {
-    setTimeout(function(){
+  if (target.textContent) {
+    setTimeout(function () {
       setHeaderTitle(target.textContent)
     }, 10);
   }
@@ -50,7 +50,7 @@ export default function Sidebar() {
   };
   const handleClickAway = (e) => {
     const mobileBurgerClassList = ['bottom', 'middle', 'top', 'menu-gumb'];
-    if(!mobileBurgerClassList.includes(e.target.className)) {
+    if (!mobileBurgerClassList.includes(e.target.className)) {
       if (typeof e.target.className === 'string') {
         const component = (e.target.className).slice(0, 8)
         if (component !== 'arrowImg') {
@@ -60,7 +60,7 @@ export default function Sidebar() {
         setActiveSidebar(true)
       }
     }
-    if(window.screen.width < 992 && isActiveSidebar){
+    if (window.screen.width < 992 && isActiveSidebar) {
       document.body.classList.remove('fixed');
     } else if (window.screen.width < 992) {
       document.body.classList.add('fixed');
@@ -120,7 +120,7 @@ export default function Sidebar() {
   }
 
   let decodeToken = Buffer.from(document.cookie.split("token=")[1], 'base64').toString('utf-8');
-  
+
   try { decodeToken = JSON.parse(decodeToken.substring(0, decodeToken.length - decodeToken.slice(decodeToken.indexOf("}") + 1).length)); }
   catch (e) { console.log(e.message) }
 
@@ -132,16 +132,16 @@ export default function Sidebar() {
       {/*</div>*/}
       <div onClickAway={(e) => handleClickAway(e)} className={isActiveSidebar ? 'overflow-block hidden' : 'overflow-block'}></div>
       <div className={searchState}>
-      <button type="button" className="menu-gumb" onClick={toggleSidebar}></button>
+        <button type="button" className="menu-gumb" onClick={toggleSidebar}></button>
         <Link to="#" className="navigation__logo">
           {headerTitle}
         </Link>
         <div className="wrapper__search">
           <form>
             <input type="text"
-                   placeholder="Поиск"
-                   value={searchValue}
-                   onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Поиск"
+              value={searchValue}
+              onChange={(e) => handleSearch(e.target.value)}
             />
             <button type="submit"></button>
           </form>
@@ -163,7 +163,7 @@ export default function Sidebar() {
       <ClickAwayListener onClickAway={(e) => handleClickAway(e)}>
         <div className={isActiveSidebar ? "sidebar close" : "sidebar"}>
           <div className={isActiveSidebar ? "burger-menu burger" : "burger-menu cross"}>
-             <p className={isActiveSidebar ? 'sidebar-title hidden' : 'sidebar-title '}>Меню</p>
+            <p className={isActiveSidebar ? 'sidebar-title hidden' : 'sidebar-title '}>Меню</p>
             <img src={burgerImg} onClick={toggleSidebar} className={isActiveSidebar ? 'burger-menu__img' : 'icon-hide'} alt="burgerMenu" />
             <img src={crossImg} onClick={toggleSidebar} className={!isActiveSidebar ? "cross-menu__img" : "icon-hide"} alt="cross" />
           </div>
@@ -277,12 +277,11 @@ export default function Sidebar() {
                 <div className="iocn-link">
                   <Link to="/directory">
                     <i className='bx bx-library'></i>
-                    <span className="link_name sub">Справочник</span>
+                    <span className="link_name sub">Довідник</span>
                   </Link>
                   <i className='bx bxs-chevron-down arrow' onClick={dropDownDirectory}></i>
                 </div>
                 <ul className="sub-menu">
-                  <li><Link className="link_name" to="/directory">Справочник</Link></li>
                   <li><Link to="/cash_accounts">Кассы и счета</Link></li>
                   <li><Link to="/banks_details">Банки и реквизиты</Link></li>
                   <li><Link to="/legal_entities">Мои юр. лица</Link></li>
@@ -307,7 +306,6 @@ export default function Sidebar() {
                   <i className="bx bxs-chevron-down arrow" onClick={dropDown}></i>
                 </div>
                 <ul className="sub-menu">
-                  <li><Link className="link_name" to="/reports">Отчеты</Link></li>
                   <li><Link to="/sales-and-orders">Заказы и продажи</Link></li>
                   <li><Link to="/purchases-and-receipts">Заказы поставщикам</Link></li>
                   <li><Link to="/products">Товары</Link></li>

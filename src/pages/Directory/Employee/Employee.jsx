@@ -10,7 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import useEmployeeId from '@/hooks/useEmployeeId';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import pencilImg from '@/static/img/pencil.png';
@@ -48,7 +48,7 @@ export default function Employee() {
    const handleNavigate = (id) => {
       setEmployeeId(id);
       setIsRedirect(true);
-      navigate('/employees/'+id)
+      navigate('/employees/' + id)
    }
    const handleAdd = () => {
       setEmployeeId('Add');
@@ -69,10 +69,11 @@ export default function Employee() {
       <>
          <section className="home-section">
             <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>
-               <div style={{ marginBottom: '30px', width: '97%' }}>
-                  <Button onClick={handleAdd} variant="contained">Добавить</Button>
-               </div>
-               <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+               <Paper sx={{ width: '100%', mb: 2, mt: 2 }}>
+                  <div style={{ marginTop: "15px", marginBottom: "15px", paddingLeft: "16px", paddingRight: "8px" }}>
+                     <Button onClick={handleAdd} variant="contained">Додати</Button>
+                  </div>
+
                   <TableContainer>
                      <Table stickyHeader aria-label="sticky table">
                         <TableHead>

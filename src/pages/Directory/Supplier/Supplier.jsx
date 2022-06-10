@@ -31,7 +31,7 @@ import useUserId from "@/hooks/useUserId";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import API from '@/api/api';
 
 import phoneImg from '@/static/img/phone.png';
@@ -200,10 +200,8 @@ const EnhancedTableToolbar = (props) => {
                id="tableTitle"
                component="div"
             >
-               {/* ================================================================= */}
-               {/* <Button onClick={handleAdd} variant="contained">Создать</Button> */}
                <div style={{ marginTop: "15px", marginBottom: "15px" }}>
-                  <Button variant="contained" onClick={handleAdd}>Создать</Button>
+                  <Button variant="contained" onClick={handleAdd}>Додати</Button>
                </div>
             </Typography>
          )}
@@ -236,7 +234,6 @@ export default function Supplier() {
    const [page, setPage] = React.useState(0);
    const [dense, setDense] = React.useState(true);
    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-   const [isRedirect, setIsRedirect] = React.useState(false);
 
 
    // ==========Запрос на сервер=================
@@ -277,10 +274,6 @@ export default function Supplier() {
       setPage(0);
    };
 
-   const handleChangeDense = (event) => {
-      setDense(event.target.checked);
-   };
-
    const isSelected = (name) => selected.indexOf(name) !== -1;
 
    // Avoid a layout jump when reaching the last page with empty rows.
@@ -291,7 +284,7 @@ export default function Supplier() {
 
    const handleRedirect = (id) => {
       setUserId(id)
-      navigate("/suppliers/"+id);
+      navigate("/suppliers/" + id);
    };
 
    // ACTIONS 
@@ -395,14 +388,14 @@ export default function Supplier() {
                                                          <div style={{ display: 'flex', alignItems: 'center' }}>
                                                             <img className={styles.table__icon} src={dutyImg} alt="phone" />&nbsp;<div>
                                                             </div>
-                                                            {parseFloat( row.debit ) - parseFloat( row.credit )} UAH</div>
+                                                            {parseFloat(row.debit) - parseFloat(row.credit)} UAH</div>
                                                       </div>
                                                    </div>
                                                 </AccordionDetails>
                                              </Accordion>
                                           </TableCell>
                                           <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.mobile}</TableCell>
-                                          <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{parseFloat( row.debit ) - parseFloat( row.credit )}</TableCell>
+                                          <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{parseFloat(row.debit) - parseFloat(row.credit)}</TableCell>
                                           <TableCell align="right" className={styles.table_narrow}>
                                              <div className={styles.table__action__wide} style={{ marginRight: '10px' }}>
                                                 <span onClick={handleClick} className={styles.action__btn}>
@@ -452,10 +445,6 @@ export default function Supplier() {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                      />
                   </Paper>
-                  <FormControlLabel
-                     control={<Switch checked={dense} onChange={handleChangeDense} />}
-                     label="Dense padding"
-                  />
                </Box>
             </div>
          </section>
