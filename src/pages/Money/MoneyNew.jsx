@@ -611,6 +611,11 @@ export default function EnhancedTable() {
                       {item.type && item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727" />
                       </svg>}
+                      {!item.type &&
+                        <img
+                          width="20"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADSUlEQVRoge1Zy0tUURz+fvPIZhjtgb1oLKRoKnosooeLMMiCFkP0GEht06IWLdoU1KZoGRH1F9QiFMFpkQVKmZgu7EEkPbSSDHPshZag5rzOOb8WtZCcOTZnzoDE/eBu5vf4vu+eO+dxL+DAgQMHDvIA2Wo0fiyyyJtGDZOqAGgzgFIAxX84JgAME9CjGE/JRQ2+m9FBG7x5G+BIxBf3yssAHwdQ9I9lEoRGocSpkoa7I/nw52VgsvZgUAnZAmCDUQPGF2ZUFUebek01GBsYqw6XUoo7QVhn2gMAGPjoIrUjEG3+alLvMWZOiCuM/MT/wUoJXANQbVJsNALj+/etl6xem9ZnADNcWxbcaenOtdBoBNIifYAszmAAiFkdAZCzAZcJG0u5S0kFzZVWkk8r5Z0n3PESpTgipRrW1bBUe020GI0AC1Wmv/90tbT14dUpP9z6vqeSGGjUFJWZaDEyoJRcpou7iW5OZ0rcU0mvrqzERIuZAaG6iVCZKUZA+8KOrjfTasY8AfYoXdtREy1GBpZ2du3KtUaSiLDUphhtLczXgRwwtG3bGiXVxRnSWk16F9zAt+3blwikm1hivi7PRVxn0r+gBj5t3VCWEokHANZoExk3lj9/YbQfKpiB95s2LVYpvs+k9OKBTyxxxpSnIAbehkLFbpYPJPPaGVInmHCo/FWv0QwEFMjAXI/rPEu5kfVpKRBHynvePcmHy+Z+BgDwIRQKMdRLAHM0aXEwHV7V19ecL5/1EVAidRJEWcUT8JOZwqv7+9tt8Nk3oHgnkP3hYcbR0MCAFfFAAQyw1O6TmkKDsds2+ewbUOwHZx4BZr5um68A/wHhzxoU4pltPqMDjQ4s5WOWEhmujnUjI0YHdwezGdYXMj4R9k9OuM8RqAa/j4kxJtT7U55LFI3GbfNZNfA5HPYHvLINwI7pUX5U7A7stm3C6ixUJCbPCZFJPACg4geNngUw08EmJ1g1IBPJGn0G1WI2GxCJ5EyvRoxenehg2UAiBmBV9gy28k1gKqwaSCeT9cS4kC1OjHqbfIDlWSgWDPriHncbgIq/Ywx0+YWsKhsasjoLWV8HYsGgb0yIswTUAlgBYJCAuoDHc9m2eAcOHPwH+AUUGnKQQDa3VAAAAABJRU5ErkJggg=="
+                        />}
                     </div>
                     <div className="table__mob">
                       {item.type ?
