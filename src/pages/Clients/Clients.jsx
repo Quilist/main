@@ -24,20 +24,14 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Grow from "@mui/material/Grow";
-import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
 import useUserId from "@/hooks/useUserId";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import API from '@/api/api';
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 import phoneImg from '@/static/img/phone.png';
 import mailImg from '@/static/img/mail.png';
@@ -165,10 +159,6 @@ EnhancedTableHead.propTypes = {
 const EnhancedTableToolbar = (props) => {
   const [isRedirect, setIsRedirect] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
   const { setUserId } = useUserId()
 
   const handleAdd = () => {
@@ -216,72 +206,30 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          {/* ================================================================= */}
-          {/* <Button onClick={handleAdd} variant="contained">Создать</Button> */}
-          <div style={{ marginTop: "25px", marginBottom: "15px" }}>
-            <ButtonGroup
-              variant="contained"
-              ref={anchorRef}
-              aria-label="split button"
-            >
-              <Button onClick={handleAdd}>Создать</Button>
-              <Button
-                size="small"
-                aria-controls={open ? "split-button-menu" : undefined}
-                aria-expanded={open ? "true" : undefined}
-                aria-label="select merge strategy"
-                aria-haspopup="menu"
-                onClick={handleToggle}
-              >
-                <ArrowDropDownIcon />
-              </Button>
-            </ButtonGroup>
-            <Popper
-              open={open}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-              style={{ zIndex: "10" }}
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin: placement === "center bottom",
-                    marginLeft: "76px",
-                  }}
-                >
-                  <Paper style={{ background: "#6b8b9c" }}>
-                    <MenuList id="split-button-menu">
-                      <Link to="/import_clients">
-                        <MenuItem style={{ height: "30px", color: "#fff" }}>
-                          Импортировать клиентов
-                        </MenuItem>
-                      </Link>
-                    </MenuList>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
+          <div style={{ marginTop: "15px", marginBottom: "15px", paddingLeft: "16px", paddingRight: "8px" }}>
+            <Button onClick={handleAdd} variant="contained">Додати</Button>
           </div>
-        </Typography>
-      )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
+        </Typography>
+      )
+      }
+
+      {
+        numSelected > 0 ? (
+          <Tooltip title="Delete">
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Filter list">
+            <IconButton>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )
+      }
+    </Toolbar >
   );
 };
 
@@ -299,11 +247,6 @@ export default function EnhancedTable() {
   const [isRedirect, setIsRedirect] = React.useState(false);
 
   useDocumentTitle("Клиенты")
-  // React.useEffect(() => {
-  //   document.title = "Клиенты"
-  //   // eslint-disable-next-line
-  // }, [])
-
 
   // ==========Запрос на сервер=================
   const [rows, setRows] = React.useState([])
@@ -358,14 +301,8 @@ export default function EnhancedTable() {
   const handleRedirect = (id) => {
     setUserId(id)
     setIsRedirect(true);
-    navigate("/clients/"+id);
+    navigate("/clients/" + id);
   };
-  // React.useEffect(() => {
-  //   if (isRedirect) {
-  //     navigate("/clients");
-  //   }
-  //   // eslint-disable-next-line
-  // }, [isRedirect]);
 
   // ACTIONS 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -443,7 +380,7 @@ export default function EnhancedTable() {
                               <div className={styles.table__name_wide}>{row.name}</div>
                               <Accordion className={styles.table_accordion}>
                                 <AccordionSummary className={styles.user__name}>
-                                  <div className={styles.accordion__name}>{row.name} <br/>{parseFloat( row.debit ) - parseFloat( row.credit )}</div>
+                                  <div className={styles.accordion__name}>{row.name} <br />{parseFloat(row.debit) - parseFloat(row.credit)}</div>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                   <div style={{ marginTop: '10px' }}>
@@ -475,24 +412,24 @@ export default function EnhancedTable() {
                                       <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <img className={styles.table__icon} src={dutyImg} alt="phone" />&nbsp;<div>
                                         </div>
-                                        {parseFloat( row.debit ) - parseFloat( row.credit )} UAH</div>
+                                        {parseFloat(row.debit) - parseFloat(row.credit)} UAH</div>
                                     </div>
                                   </div>
                                 </AccordionDetails>
                               </Accordion>
                             </TableCell>
                             <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{row.mobile[0]}</TableCell>
-                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{parseFloat( row.debit ) - parseFloat( row.credit )}</TableCell>
+                            <TableCell className={styles.table_wide} align="right" style={{ fontSize: '17px' }}>{parseFloat(row.debit) - parseFloat(row.credit)}</TableCell>
                             <TableCell align="right" className={styles.table_narrow}>
                               <div className={styles.table__action__wide} style={{ marginRight: '10px' }}>
                                 <span onClick={handleClick} className={styles.action__btn}>
                                   <i style={{ marginRight: '6px' }} className="fas fa-angle-down"></i>
-                                  Создать
+                                  Додати
                                 </span>
                               </div>
                               <div className={styles.table__action__narrow} style={{ marginRight: '-6px' }}>
                                 <span onClick={handleClick} className={styles.action__btn}>
-                                  <div>Создать <i style={{ marginRight: '6px' }} className="fas fa-angle-down"></i></div>
+                                  <div>Додати <i style={{ marginRight: '6px' }} className="fas fa-angle-down"></i></div>
                                 </span>
                               </div>
                               <Menu
@@ -509,8 +446,6 @@ export default function EnhancedTable() {
                                 </div>
                               </Menu>
                             </TableCell>
-                            {/* <TableCell align="right">{row.carbs}</TableCell> */}
-                            {/* <TableCell align="right">{row.protein}</TableCell> */}
                           </TableRow>
                         );
                       })}

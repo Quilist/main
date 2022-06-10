@@ -18,15 +18,12 @@ import OrdersAndSales from '@/pages/OrdersAndSales/OrdersAndSales';
 import Money from '@/pages/Money/MoneyNew';
 import PurchasesAndStorage from '@/pages/PurchasesAndStorage/PurchasesAndStorage';
 import Reports from '@/pages/Reports/Reports';
-import Cost from '@/pages/pagesOfReports/PageCosts';
-import Debt from '@/pages/pagesOfReports/PageDebts';
-import FinancialResult from '@/pages/pagesOfReports/PageFinancialResult';
-import Income from '@/pages/pagesOfReports/PageIncome';
-import PriceList from '@/pages/pagesOfReports/PagePriceList';
-import PurchaseAndReceipt from '@/pages/pagesOfReports/PagePurchasesAndReceipts';
-import ReconciliationAct from '@/pages/pagesOfReports/PageReconciliationActs';
-import ReportMoney from '@/pages/pagesOfReports/PageReportMoney';
-import SaleAndOrder from '@/pages/pagesOfReports/PageSalesAndOrders';
+import Cost from '@/pages/Reports/linksOfReports/Costs';
+import Debt from '@/pages/Reports/linksOfReports/Debts';
+import FinancialResult from '@/pages/Reports/linksOfReports/FinancialResult';
+import PurchaseAndReceipt from '@/pages/Reports/linksOfReports/PurchasesAndReceipts';
+import ReportMoney from '@/pages/Reports/linksOfReports/ReportMoney';
+import SaleAndOrder from '@/pages/Reports/linksOfReports/SalesAndOrders';
 import History from '@/pages/History/History';
 import Settings from '@/pages/Settings/Settings';
 import Accept from '@/pages/pagesOfHeader/PageAccept';
@@ -166,10 +163,7 @@ function App() {
             <Route path="/costs" element={<> <AppLayout component={<Cost />} /> </>} />
             <Route path="/debts" element={<> <AppLayout component={<Debt />} /> </>} />
             <Route path="/financial-result" element={<> <AppLayout component={<FinancialResult />} /> </>} />
-            <Route path="/income" element={<> <AppLayout component={<Income />} /> </>} />
-            <Route path="/price-list" element={<> <AppLayout component={<PriceList />} /> </>} />
             <Route path="/purchases-and-receipts" element={<> <AppLayout component={<PurchaseAndReceipt />} /> </>} />
-            <Route path="/reconciliation-acts" element={<> <AppLayout component={<ReconciliationAct />} /> </>} />
             <Route path="/report-money" element={<> <AppLayout component={<ReportMoney />} /> </>} />
             <Route path="/sales-and-orders" element={<> <AppLayout component={<SaleAndOrder />} /> </>} />
 
@@ -254,7 +248,7 @@ function App() {
             {/* Политика безопасности */}
             <Route path="/politika_konfidentsialnosti_dlya_facebook_com" element={<> <AppLayout component={<PolitikaKonfidentsialnostiFacebook />} /> </>} />
             <Route path="/instructions-for-deleting-user-data" element={<> <AppLayout component={<InstructionsForDeletingUserData />} /> </>} />
-           
+
             {/* Возврат */}
             <Route path="/return/sell" element={<> <AppLayout component={<ReturnSell />} /> </>} />
             <Route path="/return/sell/:id" element={<> <AppLayout component={<ReturnSell />} /> </>} />

@@ -37,7 +37,7 @@ function Posting() {
     })
 
     api.find(0, 'userSettings').then(data => {
-      if(data.status == 'OK') {
+      if (data.status == 'OK') {
         setItem(data.message)
       }
     })
@@ -72,7 +72,7 @@ function Posting() {
     setOpenReceive((prevOpen) => !prevOpen);
   };
 
-  const handleAdd = () =>  {
+  const handleAdd = () => {
     let data = item;
     const id = item.id || 0
     api.edit(id, data, 'userSettings').then(data => {
@@ -141,6 +141,10 @@ function Posting() {
         setItem={setItem}
         auxiliaryList={auxiliaryList}
       />
+      <div>тут импорт клиентов</div>
+      <div>тут импорт товаров</div>
+      <div>тут настройки смс шаблонов при заказе</div>
+
       <div class="form__btns">
         <a href="/#" class="btn btn-green">
           <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">

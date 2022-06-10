@@ -306,7 +306,6 @@ export default function Sidebar() {
                   <i className="bx bxs-chevron-down arrow" onClick={dropDown}></i>
                 </div>
                 <ul className="sub-menu">
-                  <li><Link className="link_name" to="/reports">Отчеты</Link></li>
                   <li><Link to="/sales-and-orders">Заказы и продажи</Link></li>
                   <li><Link to="/purchases-and-receipts">Заказы поставщикам</Link></li>
                   <li><Link to="/products">Товары</Link></li>
