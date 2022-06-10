@@ -277,11 +277,12 @@ export default function Sidebar() {
                 <div className="iocn-link">
                   <Link to="/directory">
                     <i className='bx bx-library'></i>
-                    <span className="link_name sub">Довідник</span>
+                    <span className="link_name sub">Справочник</span>
                   </Link>
                   <i className='bx bxs-chevron-down arrow' onClick={dropDownDirectory}></i>
                 </div>
                 <ul className="sub-menu">
+                  <li><Link className="link_name" to="/directory">Справочник</Link></li>
                   <li><Link to="/cash_accounts">Кассы и счета</Link></li>
                   <li><Link to="/banks_details">Банки и реквизиты</Link></li>
                   <li><Link to="/legal_entities">Мои юр. лица</Link></li>
@@ -306,6 +307,7 @@ export default function Sidebar() {
                   <i className="bx bxs-chevron-down arrow" onClick={dropDown}></i>
                 </div>
                 <ul className="sub-menu">
+                  <li><Link className="link_name" to="/reports">Отчеты</Link></li>
                   <li><Link to="/sales-and-orders">Заказы и продажи</Link></li>
                   <li><Link to="/purchases-and-receipts">Заказы поставщикам</Link></li>
                   <li><Link to="/products">Товары</Link></li>
