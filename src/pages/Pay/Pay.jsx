@@ -1,12 +1,6 @@
 import React from 'react';
-import {Link, useParams, useSearchParams , useNavigate} from 'react-router-dom'
-import Sidebar from '@/components/layout/Sidebar/Sidebar';
-
+import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import PayForm from './components/PayForm';
-
-import Button from '@mui/material/Button';
-
-import styles from '@/styles/modules/PayForm.module.css'
 import API from '@/api/api'
 import Share from "../pagesOfHeader/sell/img/share1.svg";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -16,12 +10,11 @@ import Paper from "@mui/material/Paper";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
-import {useDocumentTitle} from "@/hooks/useDocumentTitle";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 function Pay() {
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isSuccess, setIsSuccess] = React.useState(null);
   const [isRedirect, setIsRedirect] = React.useState(false);
   const [auxiliaryList, setAuxiliaryList] = React.useState({
     cash_accounts: [],
@@ -36,7 +29,7 @@ function Pay() {
   const [selectedReceiveIndex, setSelectedReceiveIndex] = React.useState(1);
 
   const pageTypes = {
-    pay_supplier: 'Поставщик',
+    pay_supplier: 'Поставщику',
     pay_customer: 'Клиенту(возврат)',
     pay_expend: 'Прочий расход',
     pay_salary: 'Зарплата',
@@ -55,16 +48,16 @@ function Pay() {
     { name: 'Отправить', link: '/sell' },
   ];
 
-  useDocumentTitle("Оплата");
+  useDocumentTitle(pageTypes[currentPathName]);
 
   React.useEffect(() => {
-    if(id) {
+    if (id) {
       api.find(id, 'money').then(data => {
         let res = data.message
         const date = new Date(+res.created_at);
         const formatDate = date.toISOString().split('T')[0]
         res.created_at = formatDate
-        if(res.payments && res.payments.length > 0) {
+        if (res.payments && res.payments.length > 0) {
           const payListFiltered = res.payments.filter(v => v.type_pay === "payment");
           const changeListFiltered = res.payments.filter(v => v.type_pay === "change");
           const totalListFiltered = res.payments.filter(v => v.type_pay === "total");
@@ -155,7 +148,7 @@ function Pay() {
     data.created_at = String(milliseconds)
 
 
-    if(!id) {
+    if (!id) {
       api.add(data, 'money').then(data => {
         if (data.status === "error") return console.log(data.message)
         navigate('/money')
@@ -203,16 +196,16 @@ function Pay() {
   return <>
     <div className="home-section">
       <div className="wrapper__setting">
-        <a href="#!" className="btn btn-green"  onClick={handleAdd}>
+        <a href="#!" className="btn btn-green" onClick={handleAdd}>
           <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M4.51804 8.31521L11.875 0.958252L12.9944 2.07767L4.51804 10.554L0 6.036L1.11942 4.91659L4.51804 8.31521Z"
-                  fill="white"/>
+              d="M4.51804 8.31521L11.875 0.958252L12.9944 2.07767L4.51804 10.554L0 6.036L1.11942 4.91659L4.51804 8.31521Z"
+              fill="white" />
           </svg>
           Сохранить
         </a>
         <div className="wrapper__setting_btns">
-          <img onClick={handleToggleReceive} src={Share} alt="React Logo"/>
+          <img onClick={handleToggleReceive} src={Share} alt="React Logo" />
           <ButtonGroup variant="contained" ref={anchorReceiveRef} aria-label="split button">
           </ButtonGroup>
           <Popper
@@ -220,9 +213,9 @@ function Pay() {
             anchorEl={anchorReceiveRef.current}
             role={undefined}
             transition
-            style={{paddingRight: 10}}
+            style={{ paddingRight: 10 }}
           >
-            {({TransitionProps, placement}) => (
+            {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
                 style={{
@@ -239,7 +232,7 @@ function Pay() {
                           selected={index === selectedReceiveIndex}
                           onClick={(event) => handleMenuItemClickReceive(event, index)}
                         >
-                          <Link to={option.link} style={{color: 'black'}}>{option.name}</Link>
+                          <Link to={option.link} style={{ color: 'black' }}>{option.name}</Link>
                         </MenuItem>
                       ))}
                     </MenuList>
@@ -248,13 +241,8 @@ function Pay() {
               </Grow>
             )}
           </Popper>
-          {/* <a href="/#" class="btn">Печать</a>
-          <a href="/#" class="btn">Отправить</a> */}
         </div>
       </div>
-      <h3 className="wrapper__title">
-        Изменение {pageTypes[currentPathName]}
-      </h3>
       <PayForm
         item={item}
         setItem={setItem}
@@ -270,8 +258,8 @@ function Pay() {
         <a href="#!" className="btn">
           <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M4.51804 8.31521L11.875 0.958252L12.9944 2.07767L4.51804 10.554L0 6.036L1.11942 4.91659L4.51804 8.31521Z"
-                  fill="white"/>
+              d="M4.51804 8.31521L11.875 0.958252L12.9944 2.07767L4.51804 10.554L0 6.036L1.11942 4.91659L4.51804 8.31521Z"
+              fill="white" />
           </svg>
           Сохранить
         </a>
@@ -281,58 +269,22 @@ function Pay() {
         <a href="#!" className="btn" onClick={handleRemove} >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
-                  fill="white"/>
+              d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
+              fill="white" />
             <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
-                  fill="white"/>
+              d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
+              fill="white" />
             <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
-                  fill="white"/>
+              d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
+              fill="white" />
             <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
-                  fill="white"/>
+              d="M4.70392 3.65204L1.05188 0L0 1.05188L3.65204 4.70392L0.00012467 8.35583L1.05201 9.40772L4.70392 5.7558L8.35582 9.4077L9.4077 8.35582L5.7558 4.70392L9.40782 1.0519L8.35594 1.80587e-05L4.70392 3.65204Z"
+              fill="white" />
           </svg>
           Удалить
         </a>
       </div>
     </div>
-    {/*<section className="home-section">*/}
-    {/*  <div className="home-content" style={{ display: 'flex', flexDirection: 'column' }}>*/}
-    {/*    <div className={styles.buttonsWrapper}>*/}
-    {/*      <div className={styles.main_btns}>*/}
-    {/*        <Button onClick={handleAdd} className={styles.button} variant="contained">Сохранить</Button>*/}
-    {/*      </div>*/}
-    {/*      <div>*/}
-    {/*        <Button className={styles.button} variant="outlined">Печать</Button>*/}
-    {/*        <Button className={styles.button} variant="outlined">Отправить</Button>*/}
-    {/*      </div>*/}
-    {/*    </div>*/}
-    {/*    {isSuccess &&*/}
-    {/*      <div className={styles.success}>*/}
-    {/*        Вы успешно {isSuccess}!*/}
-    {/*      </div>*/}
-    {/*    }*/}
-
-    {/*    <div className={styles.boxesWrapper}>*/}
-    {/*      <PayForm*/}
-    {/*        item={item}*/}
-    {/*        setItem={setItem}*/}
-    {/*        pageTypes={pageTypes}*/}
-    {/*        currentPathName={currentPathName}*/}
-    {/*      />*/}
-    {/*    </div>*/}
-
-    {/*    <div className={styles.buttonsWrapper}>*/}
-    {/*      <div className={styles.main_btns}>*/}
-    {/*        <Button className={styles.button} variant="contained">Удалить</Button>*/}
-    {/*      </div>*/}
-    {/*      <div>*/}
-    {/*        <Button onClick={handleReturn} className={styles.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Отмена</Button>*/}
-    {/*      </div>*/}
-    {/*    </div>*/}
-    {/*  </div>*/}
-    {/*</section>*/}
   </>
 }
 

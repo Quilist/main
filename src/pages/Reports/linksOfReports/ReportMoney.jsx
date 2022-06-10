@@ -1,9 +1,12 @@
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 function ReportMoney() {
+  useDocumentTitle("Залишки грошей");
+
   return <>
     <section className="home-section">
       <div className="home-content">
-        Отчеты Деньги
+        Залишки грошей
       </div>
     </section>
   </>

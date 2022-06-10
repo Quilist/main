@@ -1,12 +1,13 @@
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-function SalesAndOrders() {
+export default function SalesAndOrders() {
+  useDocumentTitle("Звіт реалізація");
   return <>
     <section className="home-section">
       <div className="home-content">
-        Продажи и заказы
+        Звіт реалізація
       </div>
     </section>
   </>
 }
 
-export default SalesAndOrders;
