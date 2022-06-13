@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import crossImg from '@/static/img/cross.png';
+import TextField from '@mui/material/TextField';
 import styles from '@/styles/modules/Modal.module.css';
 import API from '@/api/api';
 import FormControl from "@mui/material/FormControl";
@@ -24,7 +25,7 @@ const style = {
     pb: 3,
 };
 
-export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
+export default function CurrencyExchangeModal({ open, setOpen, id, setId, note, setNote }) {
     const [items, setItems] = React.useState({});
     const [counterparty, setCounterparty] = React.useState([]);
 
@@ -33,6 +34,8 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
     const handleClose = () => {
         setOpen(false);
         setCounterparty([]);
+        setId(null);
+        setNote('')
         setItems({});
         setTypeId(0);
     };
@@ -100,6 +103,14 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId }) {
                 <Box className={styles.modal} sx={style}>
                     <img className={styles.modal_img} onClick={handleClose} src={crossImg} alt="cross" />
                     <div className={styles.modal_title}>Настройка транзакций</div>
+
+                    <TextField sx={{ marginBottom: '30px', width: '100%' }} id="standard-multiline-flexible"
+                        disabled
+                        multiline
+                        label="Заметки"
+                        value={note || ""}
+                        variant="standard"
+                    />
 
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Тип оплаты</InputLabel>

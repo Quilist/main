@@ -41,10 +41,13 @@ export default function EnhancedTable() {
   const [movingMoneyId, setMovingMoneyId] = React.useState(null);
   const [transationId, setTransationId] = React.useState(null);
 
+  const [note, setNote] = React.useState('');
+
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
   const [cashAccountUserList, setCashAccountUserList] = useState([]);
   const [queryParams, setQueryParams] = useState({ date_from: moment().startOf('day').valueOf(), date_to: moment().endOf('day').valueOf() });
+
   const anchorRef = React.useRef(null);
   const navigate = useNavigate()
   const api = new API();
@@ -96,11 +99,19 @@ export default function EnhancedTable() {
 
   const getAll = () => {
     console.log('queryParams', queryParams)
-    api.all('money', queryParams).then(data => { //, queryParams
+    api.all('money', queryParams).then(async data => {
       if (data.status === "error") return console.log(data.message)
       setItems(data.message.items)
+      getTransations(data.message.items);
     })
   };
+
+  const getTransations = (items) => {
+    api.getNewTransations().then(data => {
+      if (data.status === "error") return console.log(data.message)
+      setItems([...items, ...data.message.items])
+    })
+  }
 
   const getAllCashAccountUser = () => {
     api.all('cashAccountUser').then(data => {
@@ -108,13 +119,6 @@ export default function EnhancedTable() {
       else setCashAccountUserList(data.message.items)
     })
   };
-
-  const getTransations = () => {
-    api.getNewTransations().then(data => {
-      if (data.status === "error") console.log(data.message)
-      else setItems([...items, ...data.message.items])
-    })
-  }
 
   const search = useSelector((state) => state);
 
@@ -134,27 +138,18 @@ export default function EnhancedTable() {
   }, [search])
 
   React.useEffect(() => {
-    if (queryParams && !openTransationModal && !openCurrencyExchangeModal && !openMovingMoney) {
+    if (!openTransationModal && !openCurrencyExchangeModal && !openMovingMoney) {
       getAll();
     }
     // eslint-disable-next-line
-  }, [queryParams, openTransationModal, openCurrencyExchangeModal, openMovingMoney])
+  }, [openTransationModal, openCurrencyExchangeModal, openMovingMoney])
 
   React.useEffect(() => {
     if (!openCashModal) {
       getAllCashAccountUser();
-      getTransations();
     }
     // eslint-disable-next-line
   }, [openCashModal])
-
-  // React.useEffect(() => {
-  //   if (!openCurrencyExchangeModal && !openMovingMoney) {
-  //     getAll();
-  //     //setItems(mockResponse.message.items)
-  //   }
-  //   // eslint-disable-next-line
-  // }, [openCurrencyExchangeModal, openMovingMoney])
 
 
   React.useEffect(() => {
@@ -224,13 +219,12 @@ export default function EnhancedTable() {
     if (item.to_cash_account_id) {
       handleOpenMovingMoney(item.id);
     }
-
     if (!item.type && !item.to_cash_account_id && !item.exchange_rate) {
       setTransationId(item.id);
+      setNote(item.note)
       setOpenTransationModal(true);
     }
   };
-
 
   const tableHeader = [
     {
@@ -392,6 +386,8 @@ export default function EnhancedTable() {
         setOpen={setOpenTransationModal}
         id={transationId}
         setId={setTransationId}
+        note={note}
+        setNote={setNote}
       />
 
       <section className="home-section">
@@ -603,26 +599,33 @@ export default function EnhancedTable() {
                     }}
                   >
                     <div className="table__figure">
-                      {item.type && item.type.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {item?.type && item?.type?.indexOf('receive') !== -1 && <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                           d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
                           fill="#45D064" />
                       </svg>}
-                      {item.type && item.type.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {item?.type && item?.type?.indexOf('pay') !== -1 && <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727" />
                       </svg>}
-                      {!item.type &&
-                        <img
-                          width="20"
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADSUlEQVRoge1Zy0tUURz+fvPIZhjtgb1oLKRoKnosooeLMMiCFkP0GEht06IWLdoU1KZoGRH1F9QiFMFpkQVKmZgu7EEkPbSSDHPshZag5rzOOb8WtZCcOTZnzoDE/eBu5vf4vu+eO+dxL+DAgQMHDvIA2Wo0fiyyyJtGDZOqAGgzgFIAxX84JgAME9CjGE/JRQ2+m9FBG7x5G+BIxBf3yssAHwdQ9I9lEoRGocSpkoa7I/nw52VgsvZgUAnZAmCDUQPGF2ZUFUebek01GBsYqw6XUoo7QVhn2gMAGPjoIrUjEG3+alLvMWZOiCuM/MT/wUoJXANQbVJsNALj+/etl6xem9ZnADNcWxbcaenOtdBoBNIifYAszmAAiFkdAZCzAZcJG0u5S0kFzZVWkk8r5Z0n3PESpTgipRrW1bBUe020GI0AC1Wmv/90tbT14dUpP9z6vqeSGGjUFJWZaDEyoJRcpou7iW5OZ0rcU0mvrqzERIuZAaG6iVCZKUZA+8KOrjfTasY8AfYoXdtREy1GBpZ2du3KtUaSiLDUphhtLczXgRwwtG3bGiXVxRnSWk16F9zAt+3blwikm1hivi7PRVxn0r+gBj5t3VCWEokHANZoExk3lj9/YbQfKpiB95s2LVYpvs+k9OKBTyxxxpSnIAbehkLFbpYPJPPaGVInmHCo/FWv0QwEFMjAXI/rPEu5kfVpKRBHynvePcmHy+Z+BgDwIRQKMdRLAHM0aXEwHV7V19ecL5/1EVAidRJEWcUT8JOZwqv7+9tt8Nk3oHgnkP3hYcbR0MCAFfFAAQyw1O6TmkKDsds2+ewbUOwHZx4BZr5um68A/wHhzxoU4pltPqMDjQ4s5WOWEhmujnUjI0YHdwezGdYXMj4R9k9OuM8RqAa/j4kxJtT7U55LFI3GbfNZNfA5HPYHvLINwI7pUX5U7A7stm3C6ixUJCbPCZFJPACg4geNngUw08EmJ1g1IBPJGn0G1WI2GxCJ5EyvRoxenehg2UAiBmBV9gy28k1gKqwaSCeT9cS4kC1OjHqbfIDlWSgWDPriHncbgIq/Ywx0+YWsKhsasjoLWV8HYsGgb0yIswTUAlgBYJCAuoDHc9m2eAcOHPwH+AUUGnKQQDa3VAAAAABJRU5ErkJggg=="
-                        />}
+                      {!item.type && +item.payments[0].amount > 0 &&
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M7 0C6.2268 0 5.6 0.626802 5.6 1.4V5.60001H1.4C0.626802 5.60001 0 6.22681 0 7.00001C0 7.77321 0.626801 8.40001 1.4 8.40001H5.6V12.6C5.6 13.3732 6.2268 14 7 14C7.7732 14 8.4 13.3732 8.4 12.6V8.40001H12.6C13.3732 8.40001 14 7.77321 14 7.00001C14 6.22681 13.3732 5.60001 12.6 5.60001H8.4V1.4C8.4 0.626801 7.7732 0 7 0Z"
+                            fill="#45D064" />
+                        </svg>
+                      }
+                      {!item.type && +item.payments[0].amount < 0 &&
+                        <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="14" y="0.600006" width="2.8" height="14" rx="1.4" transform="rotate(90 14 0.600006)" fill="#EE2727" />
+                        </svg>
+                      }
                     </div>
                     <div className="table__mob">
                       {item.type ?
                         <p>{item.type_item ? getType(item, true) + ' ' + item.type_item.name : ''}</p>
                         :
                         <p>
-                          {item.type && <a href="#!">
+                          {!item.type && <a href="#!">
                             Установить
                           </a>}
                         </p>
@@ -678,6 +681,8 @@ export default function EnhancedTable() {
                     <div className="table__summury">
                       <p>
                         {getAmountList(item).map((amountItem) => {
+
+                          console.log(amountItem)
                           return (
                             <p>{amountItem.amount} {amountItem.currency.name}</p>
                           );
@@ -706,7 +711,7 @@ export default function EnhancedTable() {
         </div>
 
 
-      </section>
+      </section >
 
 
     </>
