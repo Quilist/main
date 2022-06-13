@@ -142,7 +142,7 @@ export default function EnhancedTable() {
       getAll();
     }
     // eslint-disable-next-line
-  }, [openTransationModal, openCurrencyExchangeModal, openMovingMoney])
+  }, [dateState, openTransationModal, openCurrencyExchangeModal, openMovingMoney])
 
   React.useEffect(() => {
     if (!openCashModal) {
