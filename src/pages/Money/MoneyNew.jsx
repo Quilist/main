@@ -42,6 +42,7 @@ export default function EnhancedTable() {
   const [transationId, setTransationId] = React.useState(null);
 
   const [note, setNote] = React.useState('');
+  const [amount, setAmount] = React.useState('');
 
   const [openCashModal, setOpenCashModal] = useState(false);
   const [cashAndAccountsList, setCashAndAccountsList] = useState([]);
@@ -98,7 +99,6 @@ export default function EnhancedTable() {
   };
 
   const getAll = () => {
-    console.log('queryParams', queryParams)
     api.all('money', queryParams).then(async data => {
       if (data.status === "error") return console.log(data.message)
       setItems(data.message.items)
@@ -150,7 +150,6 @@ export default function EnhancedTable() {
     }
     // eslint-disable-next-line
   }, [openCashModal])
-
 
   React.useEffect(() => {
     // eslint-disable-next-line
@@ -222,9 +221,11 @@ export default function EnhancedTable() {
     if (!item.type && !item.to_cash_account_id && !item.exchange_rate) {
       setTransationId(item.id);
       setNote(item.note)
+      setAmount(Number(item.payments[0].amount));
       setOpenTransationModal(true);
     }
   };
+
 
   const tableHeader = [
     {
@@ -388,6 +389,8 @@ export default function EnhancedTable() {
         setId={setTransationId}
         note={note}
         setNote={setNote}
+        amount={amount}
+        setAmount={setAmount}
       />
 
       <section className="home-section">
@@ -682,7 +685,6 @@ export default function EnhancedTable() {
                       <p>
                         {getAmountList(item).map((amountItem) => {
 
-                          console.log(amountItem)
                           return (
                             <p>{amountItem.amount} {amountItem.currency.name}</p>
                           );

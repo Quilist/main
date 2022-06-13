@@ -25,7 +25,7 @@ const style = {
     pb: 3,
 };
 
-export default function CurrencyExchangeModal({ open, setOpen, id, setId, note, setNote }) {
+export default function CurrencyExchangeModal({ open, setOpen, id, setId, note, setNote, amount, setAmount }) {
     const [items, setItems] = React.useState({});
     const [counterparty, setCounterparty] = React.useState([]);
 
@@ -38,22 +38,26 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId, note, 
         setNote('')
         setItems({});
         setTypeId(0);
+        setAmount(null);
     };
 
     const types = {
-        "Принять от клиента": { type: "receive_customer", endpoint: "client" },
-        "Принять от поставщика": { type: "receive_supplier", endpoint: "supplier" },
-        "Принять прочее поступление": { type: "receive_income", endpoint: "incomeItem" },
-        "Принять взнос от собственника": { type: "receive_owner", endpoint: "user" },
-
-        "Оплатить поставщику": { type: "pay_supplier", endpoint: "supplier" },
-        "Оплатить клиенту(возврат)": { type: "pay_customer", endpoint: "client" },
-        "Оплатить прочий расход": { type: "pay_expend", endpoint: "expenditure" },
-        "Оплатить зарплату": { type: "pay_salary", endpoint: "employees" },
-        "Оплатить собственнику": { type: "pay_owner", endpoint: "user" },
+        receive: {
+            "Принять от клиента": { type: "receive_customer", endpoint: "client" },
+            "Принять от поставщика": { type: "receive_supplier", endpoint: "supplier" },
+            "Принять прочее поступление": { type: "receive_income", endpoint: "incomeItem" },
+            "Принять взнос от собственника": { type: "receive_owner", endpoint: "user" },
+        },
+        pay: {
+            "Оплатить поставщику": { type: "pay_supplier", endpoint: "supplier" },
+            "Оплатить клиенту(возврат)": { type: "pay_customer", endpoint: "client" },
+            "Оплатить прочий расход": { type: "pay_expend", endpoint: "expenditure" },
+            "Оплатить зарплату": { type: "pay_salary", endpoint: "employees" },
+            "Оплатить собственнику": { type: "pay_owner", endpoint: "user" },
+        }
     }
 
-    const keys = Object.keys(types);
+    const keys = Object.keys(amount > 0 ? types.receive : types.pay);
 
     const handleChangeItems = e => {
         const { name, value } = e.target;
@@ -67,7 +71,7 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId, note, 
         const { value } = e.target;
 
         handleChangeItems(e);
-        api.all(types[value].endpoint)
+        api.all(amount > 0 ? types.receive[value].endpoint : types.pay[value].endpoint)
             .then(res => {
                 if (res.status === "error") return alert(res.message);
                 setCounterparty(res.message.items);
@@ -75,7 +79,10 @@ export default function CurrencyExchangeModal({ open, setOpen, id, setId, note, 
     }
 
     const handleEdit = () => {
-        const object = { type: types[items.pay_type].type, type_id: typeId }
+        const object = {
+            type: amount > 0 ? types.receive[items.pay_type].type : types.pay[items.pay_type].type,
+            type_id: typeId
+        }
 
         api.edit(id, object, "pay")
             .then(res => {
