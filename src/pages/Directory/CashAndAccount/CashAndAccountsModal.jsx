@@ -105,6 +105,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
     setBalanceList([{ currency_id: null, balance: null }])
     setDate({ first: '' });
     setItem({ stream: {} })
+    setAccountList([])
     setOpenChildModal(false);
     setOpenChildModalPrivat(false);
     setOpenChildModalPrivatL(false);
@@ -475,7 +476,6 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                 <TextField
                   sx={{ marginBottom: '20px', width: '70%' }} id="standard-multiline-flexible"
                   label="Token:" multiline
-                  maxRows={2}
                   variant="standard"
                   value={item.token}
                   name="token"
@@ -484,7 +484,7 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
 
                 <div>
                   <TextField
-                    sx={{ marginBottom: '20px', width: '53.8%' }} id="standard-multiline-flexible"
+                    sx={{ marginBottom: '20px', width: '54%' }} id="standard-multiline-flexible"
                     label="ID Автоклиент:"
                     multiline
                     maxRows={2}
@@ -496,34 +496,37 @@ export default function CashAndAccountsModal({ open, setOpen, auxiliaryList }) {
                   <Button onClick={handleSearch} className={styles.button} style={{ color: '#9C27B0', borderColor: '#9C27B0' }} variant="outlined">Поиск</Button>
                 </div>
 
-                <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
-                  <InputLabel id="demo-simple-select-standard-label">Счет:</InputLabel>
-                  <Select
-                    autoWidth
-                    label="Счета"
-                    value={acc || ''}
-                    name="account_id"
-                    onChange={(e) => setAcc(e.target.value)}
-                  >
-                    {accountList.map((elem) => {
-                      const object = {
-                        stream: {
-                          ...item.stream,
-                          acc: elem.acc,
-                          balance: elem.balanceIn,
-                          currency: elem.currency,
-                        }
-                      }
+                {accountList[0] &&
+                  <div>
+                    <FormControl variant="standard" style={{ width: '70%', marginBottom: '20px' }}>
+                      <InputLabel id="demo-simple-select-standard-label">Счет:</InputLabel>
+                      <Select
+                        autoWidth
+                        label="Счета"
+                        value={acc || ''}
+                        name="account_id"
+                        onChange={(e) => setAcc(e.target.value)}
+                      >
+                        {accountList.map((elem) => {
+                          const object = {
+                            stream: {
+                              ...item.stream,
+                              acc: elem.acc,
+                              balance: elem.balanceIn,
+                              currency: elem.currency,
+                            }
+                          }
 
-                      return (
-                        <MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={() => setItem(items => ({ ...items, ...object }))}>
-                          {elem.balanceIn} {elem.currency}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
-                </FormControl>
-
+                          return (
+                            <MenuItem key={elem.acc} value={`${elem.balanceIn} ${elem.currency}`} onClick={() => setItem(items => ({ ...items, ...object }))}>
+                              {elem.balanceIn} {elem.currency}
+                            </MenuItem>
+                          )
+                        })}
+                      </Select>
+                    </FormControl>
+                  </div>
+                }
                 <TextField sx={{ marginBottom: '30px', width: '70%' }}
                   label="Дата начало:"
                   placeholder="ДД.ММ.ГГГГ"
