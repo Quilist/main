@@ -109,7 +109,7 @@ export default function EnhancedTable() {
   const getTransations = (items) => {
     api.getNewTransations().then(data => {
       if (data.status === "error") return console.log(data.message)
-      setItems([...items, ...data.message.items])
+      setItems([...data.message.items, ...items])
     })
   }
 
